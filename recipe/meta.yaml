@@ -13,7 +13,7 @@ source:
       - 0001-remove-objective-c-target.patch  # [win]
 
 build:
-  number: 0
+  number: 1
   # Requires C++ 11, VS 2008 is not supported
   skip: True  # [win and vc<14]
 
@@ -42,6 +42,10 @@ test:
   commands:
     - grpc_cpp_plugin < /dev/null  # [not win]
     - grpc_cpp_plugin < NUL  # [win]
+    - if not exist %PREFIX%\\Library\\lib\\address_sorting.lib exit 1  # [win]
+    - if not exist %PREFIX%\\Library\\lib\\gpr.lib exit 1  # [win]
+    - if not exist %PREFIX%\\Library\\lib\\grpc.lib exit 1  # [win]
+    - if not exist %PREFIX%\\Library\\lib\\grpc++.lib exit 1  # [win]
 
 about:
   home: https://grpc.io/
@@ -63,3 +67,4 @@ extra:
   recipe-maintainers:
     - pitrou
     - xhochy
+    - wesm
