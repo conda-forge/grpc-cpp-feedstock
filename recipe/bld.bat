@@ -17,7 +17,7 @@ cmake ..  ^
       -GNinja ^
       -DCMAKE_BUILD_TYPE=Release ^
       -DCMAKE_PREFIX_PATH=%CONDA_PREFIX% ^
-      -DCMAKE_INSTALL_PREFIX=%PREFIX% ^
+      -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% ^
       -DgRPC_CARES_PROVIDER="package" ^
       -DgRPC_GFLAGS_PROVIDER="package" ^
       -DgRPC_PROTOBUF_PROVIDER="package" ^

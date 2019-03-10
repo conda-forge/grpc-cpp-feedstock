@@ -122,5 +122,6 @@ Feedstock Maintainers
 =====================
 
 * [@pitrou](https://github.com/pitrou/)
+* [@wesm](https://github.com/wesm/)
 * [@xhochy](https://github.com/xhochy/)
 
