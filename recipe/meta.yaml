@@ -1,5 +1,5 @@
 {% set name = "grpc-cpp" %}
-{% set version = "1.21.2" %}
+{% set version = "1.21.3" %}
 
 package:
   name: {{ name | lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   - url: https://github.com/grpc/grpc/archive/v{{ version }}.tar.gz
-    sha256: 7c889426528f5b500e6c9eaf71e97b46293ebe89a45031cf2a5c5090518c63e7
+    sha256: 50747c8939c535b1059f19534de263eb9b7570b5347390fb24b0bbce8763e9a4
     patches:
       # Building the Objective C plugin fails on Windows, skip it.
       - 0001-remove-objective-c-target.patch  # [win]
