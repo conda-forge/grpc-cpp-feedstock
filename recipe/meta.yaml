@@ -17,7 +17,7 @@ build:
   # Requires C++ 11, VS 2008 is not supported
   skip: True  # [win and vc<14]
   run_exports:
-    - grpc-cpp
+    - {{ pin_subpackage('grpc-cpp', max_pin='x.x') }}
 
 requirements:
   build:
