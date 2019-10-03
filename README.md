@@ -30,10 +30,10 @@ Current build status
       </a>
     </td>
   </tr><tr>
-    <td>Appveyor</td>
+    <td>Drone</td>
     <td>
-      <a href="https://ci.appveyor.com/project/conda-forge/grpc-cpp-feedstock/branch/master">
-        <img alt="windows" src="https://img.shields.io/appveyor/ci/conda-forge/grpc-cpp-feedstock/master.svg?label=Windows">
+      <a href="https://cloud.drone.io/conda-forge/grpc-cpp-feedstock">
+        <img alt="linux" src="https://img.shields.io/drone/build/conda-forge/master.svg?label=Linux">
       </a>
     </td>
   </tr>
