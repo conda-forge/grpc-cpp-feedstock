@@ -13,12 +13,10 @@ cxx_compiler_version:
 docker_image:
 - condaforge/linux-anvil-ppc64le
 libprotobuf:
-- '3.10'
+- '3.11'
 openssl:
 - 1.1.1a
 pin_run_as_build:
-  libprotobuf:
-    max_pin: x.x
   openssl:
     max_pin: x.x.x
   zlib:
