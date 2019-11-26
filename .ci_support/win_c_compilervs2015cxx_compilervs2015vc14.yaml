@@ -7,12 +7,10 @@ channel_targets:
 cxx_compiler:
 - vs2015
 libprotobuf:
-- '3.10'
+- '3.11'
 openssl:
 - 1.1.1a
 pin_run_as_build:
-  libprotobuf:
-    max_pin: x.x
   openssl:
     max_pin: x.x.x
   vc:
