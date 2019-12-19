@@ -8,9 +8,9 @@ package:
 source:
   - url: https://github.com/grpc/grpc/archive/v{{ version }}.tar.gz
     sha256: 2fcb7f1ab160d6fd3aaade64520be3e5446fc4c6fa7ba6581afdc4e26094bd81
-    patches:
-      # Building the Objective C plugin fails on Windows, skip it.
-      - 0001-remove-objective-c-target.patch  # [win]
+    #patches:
+    #  # Building the Objective C plugin fails on Windows, skip it.
+    #  - 0001-remove-objective-c-target.patch  # [win]
 
 build:
   number: 0
