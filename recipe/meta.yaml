@@ -25,6 +25,7 @@ requirements:
     - libprotobuf
     - ninja
   host:
+    - abseil-cpp
     - c-ares
     - gflags
     - libprotobuf
