@@ -17,6 +17,7 @@ cmake ..  \
       -DProtobuf_ROOT=$PREFIX \
       -DgRPC_SSL_PROVIDER="package" \
       -DgRPC_ZLIB_PROVIDER="package" \
+      -DgRPC_ABSL_PROVIDER="package" \
       -DCMAKE_AR=${AR} \
       -DCMAKE_RANLIB=${RANLIB} \
 
