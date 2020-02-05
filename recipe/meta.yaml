@@ -10,7 +10,7 @@ source:
     sha256: 3ccc4e5ae8c1ce844456e39cc11f1c991a7da74396faabe83d779836ef449bce
 
 build:
-  number: 0
+  number: 1
   # Requires C++ 11, VS 2008 is not supported
   skip: True  # [win and vc<14]
   run_exports:
@@ -32,6 +32,7 @@ requirements:
     - openssl
     - zlib
   run:
+    - abseil-cpp
     # Need to pin libprotobuf to the same version used when building,
     # otherwise we may get a different SO ABI version.
     # For example 3.6.1 is ABI-incompatible with 3.6.0...
