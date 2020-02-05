@@ -1,5 +1,5 @@
 {% set name = "grpc-cpp" %}
-{% set version = "1.26.0" %}
+{% set version = "1.27.0" %}
 
 package:
   name: {{ name | lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   - url: https://github.com/grpc/grpc/archive/v{{ version }}.tar.gz
-    sha256: 2fcb7f1ab160d6fd3aaade64520be3e5446fc4c6fa7ba6581afdc4e26094bd81
+    sha256: 3ccc4e5ae8c1ce844456e39cc11f1c991a7da74396faabe83d779836ef449bce
 
 build:
   number: 0
@@ -25,6 +25,7 @@ requirements:
     - libprotobuf
     - ninja
   host:
+    - abseil-cpp
     - c-ares
     - gflags
     - libprotobuf
