@@ -29,13 +29,6 @@ Current build status
         <img alt="macOS" src="https://img.shields.io/travis/com/conda-forge/grpc-cpp-feedstock/master.svg?label=macOS">
       </a>
     </td>
-  </tr><tr>
-    <td>Drone</td>
-    <td>
-      <a href="https://cloud.drone.io/conda-forge/grpc-cpp-feedstock">
-        <img alt="linux" src="https://img.shields.io/drone/build/conda-forge/master.svg?label=Linux">
-      </a>
-    </td>
   </tr>
     
   <tr>
