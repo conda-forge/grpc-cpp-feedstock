@@ -7,7 +7,7 @@ package:
 
 source:
   - url: https://github.com/grpc/grpc/archive/v{{ version }}.tar.gz
-    sha256: 3ccc4e5ae8c1ce844456e39cc11f1c991a7da74396faabe83d779836ef449bce
+    sha256: 2df2804a89dc707b8402b4c946956203d2bc1814a4ef4d09a40fa2c4ae1729b8
 
 build:
   number: 0
