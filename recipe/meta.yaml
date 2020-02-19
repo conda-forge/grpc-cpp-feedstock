@@ -10,7 +10,7 @@ source:
     sha256: 49c1cca77d07877b878b396b42655c71a412dc14bb95d4f959d6c8971a6bb908
 
 build:
-  number: 0
+  number: 1
   # Requires C++ 11, VS 2008 is not supported
   skip: True  # [win and vc<14]
   run_exports:
@@ -33,10 +33,6 @@ requirements:
     - zlib
   run:
     - abseil-cpp
-    # Need to pin libprotobuf to the same version used when building,
-    # otherwise we may get a different SO ABI version.
-    # For example 3.6.1 is ABI-incompatible with 3.6.0...
-    - {{ pin_compatible("libprotobuf", min_pin="x.x.x", max_pin="x.x.x") }}
     - zlib
 
 test:
