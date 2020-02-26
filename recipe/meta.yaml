@@ -1,5 +1,5 @@
 {% set name = "grpc-cpp" %}
-{% set version = "1.27.2" %}
+{% set version = "1.27.3" %}
 
 package:
   name: {{ name | lower }}
@@ -7,12 +7,12 @@ package:
 
 source:
   - url: https://github.com/grpc/grpc/archive/v{{ version }}.tar.gz
-    sha256: 49c1cca77d07877b878b396b42655c71a412dc14bb95d4f959d6c8971a6bb908
+    sha256: c2ab8a42a0d673c1acb596d276055adcc074c1116e427f118415da3e79e52969
 
 build:
-  number: 1
+  number: 0
   # Requires C++ 11, VS 2008 is not supported
-  skip: True  # [win and vc<14]
+  skip: true  # [win and vc<14]
   run_exports:
     - {{ pin_subpackage('grpc-cpp', max_pin='x.x') }}
 
@@ -46,10 +46,10 @@ test:
 
 about:
   home: https://grpc.io/
-  license: "Apache 2.0"
+  license: Apache 2.0
   license_family: APACHE
   license_file: LICENSE
-  summary: "gRPC - A high-performance, open-source universal RPC framework"
+  summary: gRPC - A high-performance, open-source universal RPC framework
   description: |
     gRPC is a modern, open source, high-performance remote procedure call
     (RPC) framework that can run anywhere. gRPC enables client and server
