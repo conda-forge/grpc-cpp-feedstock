@@ -10,7 +10,7 @@ source:
     sha256: 49c1cca77d07877b878b396b42655c71a412dc14bb95d4f959d6c8971a6bb908
 
 build:
-  number: 1
+  number: 2
   # Requires C++ 11, VS 2008 is not supported
   skip: True  # [win and vc<14]
   run_exports:
@@ -25,7 +25,7 @@ requirements:
     - libprotobuf
     - ninja
   host:
-    - abseil-cpp
+    - abseil-cpp =20200225
     - c-ares
     - gflags
     - libprotobuf
