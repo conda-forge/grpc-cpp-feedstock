@@ -1,5 +1,7 @@
 BUILD:
 - aarch64-conda_cos7-linux-gnu
+abseil_cpp:
+- '20200225.1'
 c_compiler:
 - gcc
 c_compiler_version:
@@ -23,6 +25,8 @@ libprotobuf:
 openssl:
 - 1.1.1
 pin_run_as_build:
+  abseil-cpp:
+    max_pin: x.x
   openssl:
     max_pin: x.x.x
   zlib:
