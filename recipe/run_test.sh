@@ -8,3 +8,8 @@ protoc -I$RECIPE_DIR --plugin=protoc-gen-grpc=$PREFIX/bin/grpc_cpp_plugin --grpc
 
 test -f hello.grpc.pb.h
 test -f hello.grpc.pb.cc
+
+test -f $PREFIX/lib/libgrpc${SHLIB_EXT}
+test -f $PREFIX/lib/libgrpc_unsecure${SHLIB_EXT}
+test -f $PREFIX/lib/libgrpc++${SHLIB_EXT}
+test -f $PREFIX/lib/libgrpc++_unsecure${SHLIB_EXT}

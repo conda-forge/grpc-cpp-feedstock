@@ -13,8 +13,6 @@ libprotobuf:
 openssl:
 - 1.1.1
 pin_run_as_build:
-  abseil-cpp:
-    max_pin: x.x
   openssl:
     max_pin: x.x.x
   vc:
@@ -23,9 +21,5 @@ pin_run_as_build:
     max_pin: x.x
 vc:
 - '14'
-zip_keys:
-- - vc
-  - c_compiler
-  - cxx_compiler
 zlib:
 - '1.2'
