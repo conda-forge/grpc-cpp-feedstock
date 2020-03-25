@@ -8,3 +8,8 @@ if errorlevel 1 exit 1
 
 if not exist hello.grpc.pb.h exit 1
 if not exist hello.grpc.pb.cc exit 1
+
+if not exist %PREFIX%\\Library\\bin\\address_sorting.dll exit 1
+if not exist %PREFIX%\\Library\\bin\\gpr.dll exit 1
+if not exist %PREFIX%\\Library\\lib\\grpc.dll exit 1
+if not exist %PREFIX%\\Library\\lib\\grpc++.dll exit 1

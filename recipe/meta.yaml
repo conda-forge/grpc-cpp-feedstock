@@ -10,7 +10,7 @@ source:
     sha256: c2ab8a42a0d673c1acb596d276055adcc074c1116e427f118415da3e79e52969
 
 build:
-  number: 1
+  number: 2
   # Requires C++ 11, VS 2008 is not supported
   skip: true  # [win and vc<14]
   run_exports:
@@ -35,18 +35,9 @@ requirements:
     - abseil-cpp
     - zlib
 
-test:
-  commands:
-    - grpc_cpp_plugin < /dev/null  # [not win]
-    - grpc_cpp_plugin < NUL  # [win]
-    - if not exist %PREFIX%\\Library\\lib\\address_sorting.lib exit 1  # [win]
-    - if not exist %PREFIX%\\Library\\lib\\gpr.lib exit 1  # [win]
-    - if not exist %PREFIX%\\Library\\lib\\grpc.lib exit 1  # [win]
-    - if not exist %PREFIX%\\Library\\lib\\grpc++.lib exit 1  # [win]
-
 about:
   home: https://grpc.io/
-  license: Apache 2.0
+  license: Apache-2.0
   license_family: APACHE
   license_file: LICENSE
   summary: gRPC - A high-performance, open-source universal RPC framework
