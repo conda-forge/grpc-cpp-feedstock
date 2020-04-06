@@ -1,5 +1,5 @@
 {% set name = "grpc-cpp" %}
-{% set version = "1.28.0" %}
+{% set version = "1.28.1" %}
 
 package:
   name: {{ name | lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   - url: https://github.com/grpc/grpc/archive/v{{ version }}.tar.gz
-    sha256: d6277f77e0bb922d3f6f56c0f93292bb4cfabfc3c92b31ee5ccea0e100303612
+    sha256: 4cbce7f708917b6e58b631c24c59fe720acc8fef5f959df9a58cdf9558d0a79b
 
 build:
   number: 0
