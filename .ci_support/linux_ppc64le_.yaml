@@ -14,6 +14,8 @@ cxx_compiler_version:
 - '8'
 docker_image:
 - condaforge/linux-anvil-ppc64le
+gflags:
+- '2.2'
 libprotobuf:
 - '3.11'
 openssl:
