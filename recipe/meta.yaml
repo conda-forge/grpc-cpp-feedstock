@@ -10,7 +10,7 @@ source:
     sha256: 4cbce7f708917b6e58b631c24c59fe720acc8fef5f959df9a58cdf9558d0a79b
 
 build:
-  number: 1
+  number: 2
   # Requires C++ 11, VS 2008 is not supported
   skip: true  # [win and vc<14]
   run_exports:
