@@ -1,5 +1,5 @@
 {% set name = "grpc-cpp" %}
-{% set version = "1.28.1" %}
+{% set version = "1.29.0" %}
 
 package:
   name: {{ name | lower }}
@@ -7,10 +7,10 @@ package:
 
 source:
   - url: https://github.com/grpc/grpc/archive/v{{ version }}.tar.gz
-    sha256: 4cbce7f708917b6e58b631c24c59fe720acc8fef5f959df9a58cdf9558d0a79b
+    sha256: c0a6b40a222e51bea5c53090e9e65de46aee2d84c7fa7638f09cb68c3331b983
 
 build:
-  number: 2
+  number: 0
   # Requires C++ 11, VS 2008 is not supported
   skip: true  # [win and vc<14]
   run_exports:
