@@ -6,13 +6,13 @@ package:
   version: {{ version }}
 
 source:
-  - url: https://github.com/grpc/grpc/archive/v{{ version }}.tar.gz
-    sha256: c0a6b40a222e51bea5c53090e9e65de46aee2d84c7fa7638f09cb68c3331b983
+  url: https://github.com/grpc/grpc/archive/v{{ version }}.tar.gz
+  sha256: c0a6b40a222e51bea5c53090e9e65de46aee2d84c7fa7638f09cb68c3331b983
+  patches:
+    - aarch64-tcp-header.patch  # [aarch64]
 
 build:
   number: 1
-  # Requires C++ 11, VS 2008 is not supported
-  skip: true  # [win and vc<14]
   run_exports:
     - {{ pin_subpackage('grpc-cpp', max_pin='x.x') }}
 
