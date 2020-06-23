@@ -19,7 +19,5 @@ pin_run_as_build:
     max_pin: x.x.x
   zlib:
     max_pin: x.x
-vc:
-- '14'
 zlib:
 - '1.2'
