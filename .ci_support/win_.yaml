@@ -8,8 +8,6 @@ channel_targets:
 - conda-forge main
 cxx_compiler:
 - vs2017
-gflags:
-- '2.2'
 libprotobuf:
 - '3.12'
 openssl:
