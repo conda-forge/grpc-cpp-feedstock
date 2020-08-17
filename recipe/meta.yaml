@@ -29,6 +29,7 @@ requirements:
     - c-ares
     - libprotobuf
     - openssl
+    - re2
     - zlib
   run:
     - zlib
