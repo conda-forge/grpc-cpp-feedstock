@@ -27,6 +27,8 @@ pin_run_as_build:
     max_pin: x.x.x
   zlib:
     max_pin: x.x
+re2:
+- 2020.08.01
 target_platform:
 - osx-64
 zlib:
