@@ -5,7 +5,7 @@ set -ex
 mkdir -p build-cpp
 pushd build-cpp
 
-cmake ..  \
+cmake ${CMAKE_ARGS} ..  \
       -GNinja \
       -DBUILD_SHARED_LIBS=ON \
       -DCMAKE_BUILD_TYPE=Release \
