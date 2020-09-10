@@ -28,6 +28,7 @@ requirements:
     - abseil-cpp
     - c-ares
     - libprotobuf
+    - re2
     - openssl
     - zlib
   run:

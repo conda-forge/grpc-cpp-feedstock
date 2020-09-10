@@ -19,9 +19,9 @@ cmake ..  \
       -DgRPC_SSL_PROVIDER="package" \
       -DgRPC_ZLIB_PROVIDER="package" \
       -DgRPC_ABSL_PROVIDER="package" \
+      -DgRPC_RE2_PROVIDER="package" \
       -DCMAKE_AR=${AR} \
       -DCMAKE_RANLIB=${RANLIB} \
 
-cmake --build . --config Release --target install
-
+ninja install
 popd
