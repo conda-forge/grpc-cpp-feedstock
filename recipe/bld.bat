@@ -23,6 +23,7 @@ cmake ..  ^
       -DgRPC_GFLAGS_PROVIDER="package" ^
       -DgRPC_PROTOBUF_PROVIDER="package" ^
       -DgRPC_SSL_PROVIDER="package" ^
+      -DgRPC_RE2_PROVIDER="package" ^
       -DgRPC_ZLIB_PROVIDER="package"
 
 cmake --build . --config Release --target install

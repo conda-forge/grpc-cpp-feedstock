@@ -1,5 +1,5 @@
 {% set name = "grpc-cpp" %}
-{% set version = "1.30.2" %}
+{% set version = "1.32.0" %}
 
 package:
   name: {{ name | lower }}
@@ -7,12 +7,12 @@ package:
 
 source:
   url: https://github.com/grpc/grpc/archive/v{{ version }}.tar.gz
-  sha256: ba74b97a2f1b4e22ec5fb69d639d849d2069fb58ea7d6579a31f800af6fe3b6c
+  sha256: f880ebeb2ccf0e47721526c10dd97469200e40b5f101a0d9774eb69efa0bd07a
   patches:
     - aarch64-tcp-header.patch  # [aarch64]
 
 build:
-  number: 1
+  number: 0
   run_exports:
     - {{ pin_subpackage('grpc-cpp', max_pin='x.x') }}
 
@@ -28,6 +28,7 @@ requirements:
     - abseil-cpp
     - c-ares
     - libprotobuf
+    - re2
     - openssl
     - zlib
   run:
