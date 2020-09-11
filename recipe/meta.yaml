@@ -10,6 +10,7 @@ source:
   sha256: f880ebeb2ccf0e47721526c10dd97469200e40b5f101a0d9774eb69efa0bd07a
   patches:
     - aarch64-tcp-header.patch  # [aarch64]
+    - force-protoc-executable.patch
 
 build:
   number: 0
@@ -24,6 +25,12 @@ requirements:
     # `protoc` is also used for building
     - libprotobuf
     - ninja
+    # We need all host deps also in build for cross-compiling
+    - abseil-cpp  # [build_platform != target_platform]
+    - c-ares      # [build_platform != target_platform]
+    - re2         # [build_platform != target_platform]
+    - openssl     # [build_platform != target_platform]
+    - zlib        # [build_platform != target_platform]
   host:
     - abseil-cpp
     - c-ares
