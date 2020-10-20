@@ -5,9 +5,11 @@ Home: https://grpc.io/
 
 Package license: Apache-2.0
 
-Feedstock license: BSD-3-Clause
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/grpc-cpp-feedstock/blob/master/LICENSE.txt)
 
 Summary: gRPC - A high-performance, open-source universal RPC framework
+
+Documentation: https://grpc.io/docs/
 
 gRPC is a modern, open source, high-performance remote procedure call
 (RPC) framework that can run anywhere. gRPC enables client and server
