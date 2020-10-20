@@ -27,5 +27,8 @@ re2:
 - 2020.10.01
 target_platform:
 - linux-64
+zip_keys:
+- - c_compiler_version
+  - cxx_compiler_version
 zlib:
 - '1.2'
