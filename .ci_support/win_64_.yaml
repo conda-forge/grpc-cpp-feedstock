@@ -1,21 +1,13 @@
 abseil_cpp:
-- '20200225.2'
+- '20200923.2'
 c_compiler:
-- gcc
-c_compiler_version:
-- '8'
-cdt_name:
-- cos7
+- vs2017
 channel_sources:
 - conda-forge,defaults
 channel_targets:
 - conda-forge main
 cxx_compiler:
-- gxx
-cxx_compiler_version:
-- '8'
-docker_image:
-- condaforge/linux-anvil-ppc64le
+- vs2017
 libprotobuf:
 - '3.13'
 openssl:
@@ -28,9 +20,6 @@ pin_run_as_build:
 re2:
 - 2020.10.01
 target_platform:
-- linux-ppc64le
-zip_keys:
-- - c_compiler_version
-  - cxx_compiler_version
+- win-64
 zlib:
 - '1.2'

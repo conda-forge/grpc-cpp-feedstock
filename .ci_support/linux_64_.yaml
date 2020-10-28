@@ -1,17 +1,13 @@
-BUILD:
-- aarch64-conda_cos7-linux-gnu
 abseil_cpp:
-- '20200225.2'
+- '20200923.2'
 c_compiler:
 - gcc
 c_compiler_version:
 - '7'
-cdt_arch:
-- aarch64
 cdt_name:
-- cos7
+- cos6
 channel_sources:
-- conda-forge
+- conda-forge,defaults
 channel_targets:
 - conda-forge main
 cxx_compiler:
@@ -19,7 +15,7 @@ cxx_compiler:
 cxx_compiler_version:
 - '7'
 docker_image:
-- condaforge/linux-anvil-aarch64
+- condaforge/linux-anvil-comp7
 libprotobuf:
 - '3.13'
 openssl:
@@ -32,7 +28,7 @@ pin_run_as_build:
 re2:
 - 2020.10.01
 target_platform:
-- linux-aarch64
+- linux-64
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
