@@ -1,9 +1,9 @@
 abseil_cpp:
-- '20200225.2'
+- '20200923.2'
 c_compiler:
 - gcc
 c_compiler_version:
-- '7'
+- '9'
 cdt_name:
 - cos6
 channel_sources:
@@ -13,11 +13,11 @@ channel_targets:
 cxx_compiler:
 - gxx
 cxx_compiler_version:
-- '7'
+- '9'
 docker_image:
-- condaforge/linux-anvil-comp7
+- quay.io/condaforge/linux-anvil-comp7
 libprotobuf:
-- '3.13'
+- '3.14'
 openssl:
 - 1.1.1
 pin_run_as_build:
