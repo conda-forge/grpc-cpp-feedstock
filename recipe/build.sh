@@ -82,4 +82,10 @@ cmake ${CMAKE_ARGS} ..  \
       -DProtobuf_PROTOC_EXECUTABLE=$BUILD_PREFIX/bin/protoc
 
 ninja install
+
+# These are in conflict with the re2 package.
+rm -rf ${PREFIX}/include/re2
+rm -rf ${PREFIX}/lib/libre2.a
+rm -rf ${PREFIX}/lib/pkgconfig/re2.pc
+
 popd

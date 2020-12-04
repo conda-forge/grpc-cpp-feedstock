@@ -11,9 +11,13 @@ source:
   patches:
     - aarch64-tcp-header.patch  # [aarch64]
     - force-protoc-executable.patch
+  # You can use module version of re2 if you add this and chage build.sh:
+  # - git_url: https://github.com/google/re2
+  #   git_ref: aecba11114cf1fac5497aeb844b6966106de3eb6
+  #   folder: third_party/re2
 
 build:
-  number: 1
+  number: 3
   run_exports:
     - {{ pin_subpackage('grpc-cpp', max_pin='x.x') }}
 
@@ -23,7 +27,7 @@ requirements:
     - {{ compiler('cxx') }}
     - cmake
     # `protoc` is also used for building
-    - libprotobuf
+    - libprotobuf =3.14
     - ninja
     # We need all host deps also in build for cross-compiling
     - abseil-cpp  # [build_platform != target_platform]
@@ -32,14 +36,30 @@ requirements:
     - openssl     # [build_platform != target_platform]
     - zlib        # [build_platform != target_platform]
   host:
+    # Works on macOS, fails to link on Linux.
+    # - abseil-cpp =20200923
+    # - abseil-cpp =20200225
     - abseil-cpp
     - c-ares
-    - libprotobuf
+    - libprotobuf =3.14
     - re2
     - openssl
     - zlib
   run:
+    # Need to pin libprotobuf to the same version used when building,
+    # otherwise we may get a different SO ABI version.
+    # For example 3.6.1 is ABI-incompatible with 3.6.0...
+    - {{ pin_compatible("libprotobuf", min_pin="x.x.x", max_pin="x.x.x") }}
     - zlib
+
+test:
+  commands:
+    - grpc_cpp_plugin < /dev/null  # [not win]
+    - grpc_cpp_plugin < NUL  # [win]
+    - if not exist %PREFIX%\\Library\\lib\\address_sorting.lib exit 1  # [win]
+    - if not exist %PREFIX%\\Library\\lib\\gpr.lib exit 1  # [win]
+    - if not exist %PREFIX%\\Library\\lib\\grpc.lib exit 1  # [win]
+    - if not exist %PREFIX%\\Library\\lib\\grpc++.lib exit 1  # [win]
 
 about:
   home: https://grpc.io/
