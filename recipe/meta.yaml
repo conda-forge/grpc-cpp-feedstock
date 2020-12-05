@@ -26,6 +26,7 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - cmake
+    - pkg-config  # [unix]
     # `protoc` is also used for building
     - libprotobuf =3.14
     - ninja
@@ -37,9 +38,9 @@ requirements:
     - zlib        # [build_platform != target_platform]
   host:
     # Works on macOS, fails to link on Linux.
-    # - abseil-cpp =20200923
+    - abseil-cpp =20200923
     # - abseil-cpp =20200225
-    - abseil-cpp
+    # - abseil-cpp
     - c-ares
     - libprotobuf =3.14
     - re2
