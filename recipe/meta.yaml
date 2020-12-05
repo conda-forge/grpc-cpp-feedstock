@@ -1,6 +1,16 @@
 {% set name = "grpc-cpp" %}
 {% set version = "1.33.2" %}
 
+# It is not currently possible to compile grpc-cpp on Windows in shared mode:
+# _h_env\Library\include\google/protobuf/io/coded_stream.h(1250):
+#   warning C4251: 'google::protobuf::io::CodedOutputStream::default_serialization_deterministic_': struct 'std::atomic<bool>'
+#   needs to have dll-interface to be used by clients of class 'google::protobuf::io::CodedOutputStream'
+# LINK : fatal error LNK1181: cannot open input file 'gpr.lib'
+# .. and, considering that this constrains a lot of things like openssl, I have decided to unify to static on all platforms.
+# {% set static_build = 'yes' %}  # [win]
+# {% set static_build = 'no' %}  # [not win]
+{% set static_build = 'yes' %}
+
 package:
   name: {{ name | lower }}
   version: {{ version }}
@@ -20,11 +30,23 @@ build:
   number: 3
   run_exports:
     - {{ pin_subpackage('grpc-cpp', max_pin='x.x') }}
+{% if static_build == 'yes' %}
+  ignore_run_exports:
+    - abseil-cpp
+    - c-ares
+    - re2
+    - openssl
+    - zlib
+{% endif %}
+  script_env:
+    - STATIC_BUILD={{ static_build }}
 
 requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
+    - m2-patch  # [win]
+    - patch  # [not win]
     - cmake
     - pkg-config  # [unix]
     # `protoc` is also used for building
@@ -37,10 +59,26 @@ requirements:
     - openssl     # [build_platform != target_platform]
     - zlib        # [build_platform != target_platform]
   host:
-    # Works on macOS, fails to link on Linux.
-    - abseil-cpp =20200923
-    # - abseil-cpp =20200225
-    # - abseil-cpp
+    # Works on macOS, fails to link on Linux (same problem on x86_64 and ppc64le), using either AD or CF packages:
+    #
+    # libgrpc.so.13.0.0: undefined reference to `absl::lts_2020_09_23::strings_internal::CatPieces[abi:cxx11](std::initializer_list<absl::lts_2020_09_23::string_view>)' (and)
+    # bool absl::lts_2020_09_23::str_format_internal::FormatArgImpl::Dispatch<absl::lts_2020_09_23::string_view>(absl::lts_2020_09_23::str_format_internal::FormatArgImpl::Data, absl::lts_2020_09_23::str_format_internal::FormatConve>
+    # absl::lts_2020_09_23::string_view::find(absl::lts_2020_09_23::string_view, unsigned long) const
+    # absl::lts_2020_09_23::Status::GetPayload(absl::lts_2020_09_23::string_view) const
+    # absl::lts_2020_09_23::ByChar::Find(absl::lts_2020_09_23::string_view, unsigned long) const
+    # absl::lts_2020_09_23::Status::Status(absl::lts_2020_09_23::StatusCode, absl::lts_2020_09_23::string_view)
+    # absl::lts_2020_09_23::optional_internal::throw_bad_optional_access()
+    # absl::lts_2020_09_23::Status::SetPayload(absl::lts_2020_09_23::string_view, absl::lts_2020_09_23::Cord)
+    # absl::lts_2020_09_23::string_view::rfind(absl::lts_2020_09_23::string_view, unsigned long) const
+    # absl::lts_2020_09_23::numbers_internal::safe_strto32_base(absl::lts_2020_09_23::string_view, int*, int)
+    # absl::lts_2020_09_23::string_view::find(char, unsigned long) const
+    # absl::lts_2020_09_23::string_view::rfind(char, unsigned long) const
+    # absl::lts_2020_09_23::numbers_internal::safe_strto64_base(absl::lts_2020_09_23::string_view, long*, int)
+    # absl::lts_2020_09_23::EqualsIgnoreCase(absl::lts_2020_09_23::string_view, absl::lts_2020_09_23::string_view)
+    # TODO :: Figure out what is different between these builds.
+    - abseil-cpp  # [not linux]
+    # conda-forge have this version and it works fine.
+    - abseil-cpp =20200225  # [linux]
     - c-ares
     - libprotobuf =3.14
     - re2
@@ -54,6 +92,8 @@ requirements:
     - zlib
 
 test:
+  files:
+    - tests/include/*
   commands:
     - grpc_cpp_plugin < /dev/null  # [not win]
     - grpc_cpp_plugin < NUL  # [win]
