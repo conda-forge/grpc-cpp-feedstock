@@ -1,13 +1,13 @@
 MACOSX_DEPLOYMENT_TARGET:
 - '11.0'
 abseil_cpp:
-- '20200225.2'
+- '20200923.2'
 c_compiler:
 - clang
 c_compiler_version:
 - '11'
 channel_sources:
-- conda-forge/label/rust_dev,conda-forge,https://conda-web.anaconda.org/conda-forge
+- conda-forge/label/rust_dev,conda-forge
 channel_targets:
 - conda-forge main
 cxx_compiler:
@@ -15,7 +15,7 @@ cxx_compiler:
 cxx_compiler_version:
 - '11'
 libprotobuf:
-- '3.13'
+- '3.14'
 macos_machine:
 - arm64-apple-darwin20.0.0
 openssl:

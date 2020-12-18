@@ -2,6 +2,12 @@
 
 set -ex
 
+if [[ "${target_platform}" == osx* ]]; then
+  export CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_CXX_STANDARD=14"
+else
+  export CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_CXX_STANDARD=17"
+fi
+
 if [[ "$CONDA_BUILD_CROSS_COMPILATION" == 1 ]]; then
 
     mkdir -p build-host
@@ -77,8 +83,6 @@ cmake ${CMAKE_ARGS} ..  \
       -DgRPC_ZLIB_PROVIDER="package" \
       -DgRPC_ABSL_PROVIDER="package" \
       -DgRPC_RE2_PROVIDER="package" \
-      -DCMAKE_AR=${AR} \
-      -DCMAKE_RANLIB=${RANLIB} \
       -DProtobuf_PROTOC_EXECUTABLE=$BUILD_PREFIX/bin/protoc
 
 ninja install
