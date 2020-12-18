@@ -2,6 +2,12 @@
 
 set -ex
 
+if [[ "${target_platform}" == osx* ]]; then
+  export CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_CXX_STANDARD=14"
+else
+  export CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_CXX_STANDARD=17"
+fi
+
 if [[ "$CONDA_BUILD_CROSS_COMPILATION" == 1 ]]; then
 
     mkdir -p build-host
@@ -26,7 +32,6 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == 1 ]]; then
           -GNinja \
           -DBUILD_SHARED_LIBS=OFF \
           -DCMAKE_BUILD_TYPE=Release \
-	  -DCMAKE_CXX_STANDARD=17 \
           -DCMAKE_PREFIX_PATH=$BUILD_PREFIX \
           -DCMAKE_INSTALL_PREFIX=$BUILD_PREFIX \
           -DgRPC_CARES_PROVIDER="package" \
@@ -68,7 +73,6 @@ cmake ${CMAKE_ARGS} ..  \
       -DBUILD_SHARED_LIBS=ON \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
-      -DCMAKE_CXX_STANDARD=17 \
       -DCMAKE_PREFIX_PATH=$PREFIX \
       -DCMAKE_INSTALL_PREFIX=$PREFIX \
       -DgRPC_CARES_PROVIDER="package" \
