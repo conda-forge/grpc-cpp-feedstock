@@ -1,5 +1,5 @@
 {% set name = "grpc-cpp" %}
-{% set version = "1.35.0" %}
+{% set version = "1.36.0" %}
 
 # It is not currently possible to compile grpc-cpp on Windows in shared mode:
 # _h_env\Library\include\google/protobuf/io/coded_stream.h(1250):
@@ -26,7 +26,7 @@ package:
 
 source:
   url: https://github.com/grpc/grpc/archive/v{{ version }}.tar.gz
-  sha256: 27dd2fc5c9809ddcde8eb6fa1fa278a3486566dfc28335fca13eb8df8bd3b958
+  sha256: 1a5127c81487f4e3e57973bb332f04b9159f94d860c207e096d8a587d371edbd
   patches:
     - aarch64-tcp-header.patch  # [aarch64]
     - force-protoc-executable.patch
