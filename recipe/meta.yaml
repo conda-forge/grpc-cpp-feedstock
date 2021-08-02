@@ -11,6 +11,8 @@ source:
   patches:
     - aarch64-tcp-header.patch  # [aarch64]
     - force-protoc-executable.patch
+    # https://github.com/grpc/grpc/issues/26857
+    - 0001-Revert-cmake-don-t-export-grpc_cpp_plugin-when-cross.patch
 
 build:
   number: 1
