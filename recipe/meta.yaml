@@ -60,7 +60,8 @@ requirements:
     - cmake
     - pkg-config  # [unix]
     # `protoc` is also used for building
-    - libprotobuf =3.14
+    - libprotobuf =3.14  # [not (osx and arm64)]
+    - libprotobuf =3.17  # [osx and arm64]
     - ninja
     # We need all host deps also in build for cross-compiling
     - abseil-cpp  # [build_platform != target_platform]
@@ -71,7 +72,8 @@ requirements:
   host:
     - abseil-cpp
     - c-ares
-    - libprotobuf =3.14
+    - libprotobuf =3.14  # [not (osx and arm64)]
+    - libprotobuf =3.17  # [osx and arm64]
     - re2
     - openssl
     - zlib

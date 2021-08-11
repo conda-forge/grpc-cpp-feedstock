@@ -68,6 +68,10 @@ else
   BUILD_SHARED_LIBS=ON
 fi
 
+if [[ $target_platform == osx-* ]]; then
+  ln -s $BUILD_PREFIX/bin/${HOST}-ar ${HOST}-ar
+  ln -s $BUILD_PREFIX/bin/${HOST}-ranlib ${HOST}-ranlib
+fi
 cmake ${CMAKE_ARGS} ..  \
       -GNinja \
       -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS} \
