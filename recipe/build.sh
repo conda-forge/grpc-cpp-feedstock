@@ -23,13 +23,15 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == 1 ]]; then
     export CC=$CC_FOR_BUILD
     export CXX=$CXX_FOR_BUILD
     export LDFLAGS=${LDFLAGS//$PREFIX/$BUILD_PREFIX}
+    export PKG_CONFIG_PATH=${BUILD_PREFIX}/lib/pkgconfig
 
     # Unset them as we're ok with builds that are either slow or non-portable
     unset CFLAGS
     unset CXXFLAGS
 
-    cmake ${CMAKE_ARGS} ..  \
+    cmake ..  \
           -GNinja \
+          -DCMAKE_POLICY_DEFAULT_CMP0074=NEW \
           -DBUILD_SHARED_LIBS=OFF \
           -DCMAKE_BUILD_TYPE=Release \
           -DCMAKE_PREFIX_PATH=$BUILD_PREFIX \
