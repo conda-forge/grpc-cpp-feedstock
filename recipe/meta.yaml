@@ -15,7 +15,7 @@ source:
     - 0001-Revert-cmake-don-t-export-grpc_cpp_plugin-when-cross.patch
 
 build:
-  number: 2
+  number: 3
   run_exports:
     - {{ pin_subpackage('grpc-cpp', max_pin='x.x') }}
 
