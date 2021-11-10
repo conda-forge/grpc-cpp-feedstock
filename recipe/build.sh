@@ -38,6 +38,7 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == 1 ]]; then
           -DgRPC_GFLAGS_PROVIDER="package" \
           -DgRPC_PROTOBUF_PROVIDER="package" \
           -DProtobuf_ROOT=$BUILD_PREFIX \
+          -DCMAKE_POLICY_DEFAULT_CMP0074=NEW \
           -DgRPC_SSL_PROVIDER="package" \
           -DgRPC_ZLIB_PROVIDER="package" \
           -DgRPC_ABSL_PROVIDER="package" \
