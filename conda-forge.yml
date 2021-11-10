@@ -1,5 +1,10 @@
-bot: {automerge: true}
-build_platform: {osx_arm64: osx_64}
+bot:
+  automerge: true
+build_platform:
+  osx_arm64: osx_64
 conda_forge_output_validation: true
-provider: {linux_aarch64: azure, linux_ppc64le: azure, win: azure}
+provider:
+  linux_aarch64: azure
+  linux_ppc64le: azure
+  win: azure
 test_on_native_only: true
