@@ -9,13 +9,12 @@ source:
   url: https://github.com/grpc/grpc/archive/v{{ version }}.tar.gz
   sha256: 12a4a6f8c06b96e38f8576ded76d0b79bce13efd7560ed22134c2f433bc496ad
   patches:
-    # - aarch64-tcp-header.patch  # [aarch64]
     - force-protoc-executable.patch
     # https://github.com/grpc/grpc/issues/26857
     - 0001-Revert-cmake-don-t-export-grpc_cpp_plugin-when-cross.patch
 
 build:
-  number: 0
+  number: 1
   run_exports:
     - {{ pin_subpackage('grpc-cpp', max_pin='x.x') }}
 
