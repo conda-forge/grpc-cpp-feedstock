@@ -9,16 +9,9 @@ else
 fi
 
 if [[ "$CONDA_BUILD_CROSS_COMPILATION" == 1 ]]; then
-
+  (
     mkdir -p build-host
     pushd build-host
-
-    # Store original flags
-    export CC_ORIG=$CC
-    export CXX_ORIG=$CXX
-    export LDFLAGS_ORIG=$LDFLAGS
-    export CFLAGS_ORIG=$CFLAGS
-    export CXXFLAGS_ORIG=$CXXFLAGS
 
     export CC=$CC_FOR_BUILD
     export CXX=$CXX_FOR_BUILD
@@ -57,15 +50,8 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == 1 ]]; then
     ninja grpc_cpp_plugin
     cp grpc_cpp_plugin $BUILD_PREFIX/bin/grpc_cpp_plugin
 
-    # Restore original flags
-    export CC=$CC_ORIG
-    export CXX=$CXX_ORIG
-    export LDFLAGS=$LDFLAGS_ORIG
-    export CFLAGS=$CFLAGS_ORIG
-    export CXXFLAGS=$CXXFLAGS_ORIG
-
     popd
-
+  )
 fi
 
 mkdir -p build-cpp
