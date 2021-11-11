@@ -24,7 +24,7 @@ pin_run_as_build:
   zlib:
     max_pin: x.x
 re2:
-- 2021.09.01
+- 2021.11.01
 target_platform:
 - linux-64
 zip_keys:
