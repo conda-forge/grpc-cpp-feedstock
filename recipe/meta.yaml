@@ -10,8 +10,6 @@ source:
   sha256: b2f2620c762427bfeeef96a68c1924319f384e877bc0e084487601e4cc6e434c
   patches:
     - force-protoc-executable.patch
-    # https://github.com/grpc/grpc/issues/26857
-    - 0001-Revert-cmake-don-t-export-grpc_cpp_plugin-when-cross.patch
 
 build:
   number: 0
