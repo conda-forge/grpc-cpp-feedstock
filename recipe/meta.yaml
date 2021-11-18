@@ -1,5 +1,5 @@
 {% set name = "grpc-cpp" %}
-{% set version = "1.41.1" %}
+{% set version = "1.42.0" %}
 
 package:
   name: {{ name | lower }}
@@ -7,14 +7,12 @@ package:
 
 source:
   url: https://github.com/grpc/grpc/archive/v{{ version }}.tar.gz
-  sha256: 12a4a6f8c06b96e38f8576ded76d0b79bce13efd7560ed22134c2f433bc496ad
+  sha256: b2f2620c762427bfeeef96a68c1924319f384e877bc0e084487601e4cc6e434c
   patches:
     - force-protoc-executable.patch
-    # https://github.com/grpc/grpc/issues/26857
-    - 0001-Revert-cmake-don-t-export-grpc_cpp_plugin-when-cross.patch
 
 build:
-  number: 2
+  number: 0
   run_exports:
     - {{ pin_subpackage('grpc-cpp', max_pin='x.x') }}
 
