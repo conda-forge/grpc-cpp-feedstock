@@ -1,5 +1,5 @@
 {% set name = "grpc-cpp" %}
-{% set version = "1.39.0" %}
+{% set version = "1.42.0" %}
 
 # It is not currently possible to compile grpc-cpp on Windows in shared mode:
 # _h_env\Library\include\google/protobuf/io/coded_stream.h(1250):
@@ -26,9 +26,8 @@ package:
 
 source:
   url: https://github.com/grpc/grpc/archive/v{{ version }}.tar.gz
-  sha256: b16992aa1c949c10d5d5ce2a62f9d99fa7de77da2943e643fb66dcaf075826d6
+  sha256: b2f2620c762427bfeeef96a68c1924319f384e877bc0e084487601e4cc6e434c
   patches:
-    - aarch64-tcp-header.patch  # [aarch64]
     - force-protoc-executable.patch
   # You can use module version of re2 if you add this and chage build.sh:
   # - git_url: https://github.com/google/re2
@@ -55,9 +54,10 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
+
     - m2-patch  # [win]
     - patch  # [not win]
-    - cmake
+    - cmake >=3.5.1
     - pkg-config  # [unix]
     # `protoc` is also used for building
     - libprotobuf  # [not (osx and arm64)]
