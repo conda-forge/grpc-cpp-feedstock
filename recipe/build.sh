@@ -2,11 +2,7 @@
 
 set -ex
 
-if [[ "${target_platform}" == osx* ]]; then
-  export CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_CXX_STANDARD=14"
-else
-  export CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_CXX_STANDARD=17"
-fi
+export CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_CXX_STANDARD=17"
 
 if [[ "$CONDA_BUILD_CROSS_COMPILATION" == 1 ]]; then
   (
