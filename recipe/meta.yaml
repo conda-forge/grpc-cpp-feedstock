@@ -1,5 +1,5 @@
 {% set name = "grpc-cpp" %}
-{% set version = "1.43.2" %}
+{% set version = "1.44.0" %}
 
 package:
   name: {{ name | lower }}
@@ -7,12 +7,12 @@ package:
 
 source:
   url: https://github.com/grpc/grpc/archive/v{{ version }}.tar.gz
-  sha256: b74ce7d26fe187970d1d8e2c06a5d3391122f7bc1fdce569aff5e435fb8fe780
+  sha256: 8c05641b9f91cbc92f51cc4a5b3a226788d7a63f20af4ca7aaca50d92cc94a0d
   patches:
     - force-protoc-executable.patch
 
 build:
-  number: 2
+  number: 0
   run_exports:
     - {{ pin_subpackage('grpc-cpp', max_pin='x.x') }}
 
