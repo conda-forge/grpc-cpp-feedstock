@@ -2,3 +2,6 @@ c_compiler_version:    # [linux]
 - '11'                 # [linux]
 cxx_compiler_version:  # [linux]
 - '11'                 # [linux]
+
+channel_targets:
+  - conda-forge grpc_dev
