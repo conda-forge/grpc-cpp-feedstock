@@ -9,6 +9,8 @@ Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/grpc-cpp-feedst
 
 Summary: gRPC - A high-performance, open-source universal RPC framework
 
+Development: https://github.com/grpc/grpc
+
 Documentation: https://grpc.io/docs/
 
 gRPC is a modern, open source, high-performance remote procedure call
