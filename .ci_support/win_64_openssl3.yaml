@@ -3,7 +3,7 @@ abseil_cpp:
 c_compiler:
 - vs2017
 channel_sources:
-- conda-forge
+- conda-forge/label/abseil_dev,conda-forge
 channel_targets:
 - conda-forge grpc_dev
 cxx_compiler:
