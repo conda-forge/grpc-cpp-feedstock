@@ -55,6 +55,7 @@ about:
     This package contains the gRPC C++ libraries and header files, as well
     as the code generation plugins.
   doc_url: https://grpc.io/docs/
+  dev_url: https://github.com/grpc/grpc
 
 extra:
   recipe-maintainers:
