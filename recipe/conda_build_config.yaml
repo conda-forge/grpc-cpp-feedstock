@@ -2,3 +2,11 @@ c_compiler_version:    # [linux]
 - '11'                 # [linux]
 cxx_compiler_version:  # [linux]
 - '11'                 # [linux]
+
+# hmaarrfk: As of May 4, 2022
+# Tensorflow 2.7.1 and 2.8 are still using
+# abseil 20210324
+# We keep two builds for that reason
+abseil_cpp:
+- '20210324.2'
+- '20211102.0'
