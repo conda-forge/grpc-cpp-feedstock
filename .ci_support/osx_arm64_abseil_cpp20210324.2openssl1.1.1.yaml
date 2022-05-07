@@ -1,11 +1,11 @@
 MACOSX_DEPLOYMENT_TARGET:
-- '10.9'
+- '11.0'
 abseil_cpp:
-- '20211102.0'
+- '20210324.2'
 c_compiler:
 - clang
 c_compiler_version:
-- '12'
+- '13'
 channel_sources:
 - conda-forge
 channel_targets:
@@ -13,11 +13,11 @@ channel_targets:
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-- '12'
+- '13'
 libprotobuf:
 - '3.20'
 macos_machine:
-- x86_64-apple-darwin13.4.0
+- arm64-apple-darwin20.0.0
 openssl:
 - 1.1.1
 pin_run_as_build:
@@ -26,7 +26,7 @@ pin_run_as_build:
 re2:
 - 2022.04.01
 target_platform:
-- osx-64
+- osx-arm64
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
