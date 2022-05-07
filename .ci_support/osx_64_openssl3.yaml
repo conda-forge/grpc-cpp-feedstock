@@ -1,32 +1,32 @@
+MACOSX_DEPLOYMENT_TARGET:
+- '10.9'
 abseil_cpp:
-- '20211102.0'
+- '20210324.2'
 c_compiler:
-- gcc
+- clang
 c_compiler_version:
-- '11'
-cdt_name:
-- cos7
+- '13'
 channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
 cxx_compiler:
-- gxx
+- clangxx
 cxx_compiler_version:
-- '11'
-docker_image:
-- quay.io/condaforge/linux-anvil-cos7-x86_64
+- '13'
 libprotobuf:
-- '3.19'
+- '3.20'
+macos_machine:
+- x86_64-apple-darwin13.4.0
 openssl:
-- 1.1.1
+- '3'
 pin_run_as_build:
   zlib:
     max_pin: x.x
 re2:
 - 2022.02.01
 target_platform:
-- linux-ppc64le
+- osx-64
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
