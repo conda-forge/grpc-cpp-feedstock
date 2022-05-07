@@ -2,7 +2,11 @@
 
 set -ex
 
-export CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_CXX_STANDARD=17"
+if [[ "${abseil_cpp}" == "20210324.2" && "${target_platform}" == osx-* ]]; then
+  export CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_CXX_STANDARD=14"
+else
+  export CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_CXX_STANDARD=17"
+fi
 
 if [[ "$CONDA_BUILD_CROSS_COMPILATION" == 1 ]]; then
   (
