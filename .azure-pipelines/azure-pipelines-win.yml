@@ -8,11 +8,17 @@ jobs:
     vmImage: windows-2019
   strategy:
     matrix:
-      win_64_openssl1.1.1:
-        CONFIG: win_64_openssl1.1.1
+      win_64_abseil_cpp20210324.2openssl1.1.1:
+        CONFIG: win_64_abseil_cpp20210324.2openssl1.1.1
         UPLOAD_PACKAGES: 'True'
-      win_64_openssl3:
-        CONFIG: win_64_openssl3
+      win_64_abseil_cpp20210324.2openssl3:
+        CONFIG: win_64_abseil_cpp20210324.2openssl3
+        UPLOAD_PACKAGES: 'True'
+      win_64_abseil_cpp20211102.0openssl1.1.1:
+        CONFIG: win_64_abseil_cpp20211102.0openssl1.1.1
+        UPLOAD_PACKAGES: 'True'
+      win_64_abseil_cpp20211102.0openssl3:
+        CONFIG: win_64_abseil_cpp20211102.0openssl3
         UPLOAD_PACKAGES: 'True'
   timeoutInMinutes: 360
   variables:
@@ -52,10 +58,9 @@ jobs:
 
       condition: contains(variables['CONFIG'], 'vs2008')
       displayName: Patch vs2008 (if needed)
-
     - task: CondaEnvironment@1
       inputs:
-        packageSpecs: 'python=3.9 conda-build conda "conda-forge-ci-setup=3" pip boa' # Optional
+        packageSpecs: 'python=3.9 conda-build conda pip boa conda-forge-ci-setup=3' # Optional
         installOptions: "-c conda-forge"
         updateConda: true
       displayName: Install conda-build and activate environment
