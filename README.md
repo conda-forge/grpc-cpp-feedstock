@@ -66,62 +66,6 @@ Current build status
                 </a>
               </td>
             </tr><tr>
-              <td>linux_aarch64_abseil_cpp20210324.2openssl1.1.1</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=master&jobName=linux&configuration=linux_aarch64_abseil_cpp20210324.2openssl1.1.1" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64_abseil_cpp20210324.2openssl3</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=master&jobName=linux&configuration=linux_aarch64_abseil_cpp20210324.2openssl3" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64_abseil_cpp20211102.0openssl1.1.1</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=master&jobName=linux&configuration=linux_aarch64_abseil_cpp20211102.0openssl1.1.1" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_aarch64_abseil_cpp20211102.0openssl3</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=master&jobName=linux&configuration=linux_aarch64_abseil_cpp20211102.0openssl3" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_ppc64le_abseil_cpp20210324.2openssl1.1.1</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=master&jobName=linux&configuration=linux_ppc64le_abseil_cpp20210324.2openssl1.1.1" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_ppc64le_abseil_cpp20210324.2openssl3</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=master&jobName=linux&configuration=linux_ppc64le_abseil_cpp20210324.2openssl3" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_ppc64le_abseil_cpp20211102.0openssl1.1.1</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=master&jobName=linux&configuration=linux_ppc64le_abseil_cpp20211102.0openssl1.1.1" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_ppc64le_abseil_cpp20211102.0openssl3</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=master">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=master&jobName=linux&configuration=linux_ppc64le_abseil_cpp20211102.0openssl3" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
               <td>osx_64_abseil_cpp20210324.2openssl1.1.1</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=master">
