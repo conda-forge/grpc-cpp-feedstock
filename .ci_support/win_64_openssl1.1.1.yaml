@@ -1,5 +1,3 @@
-abseil_cpp:
-- '20211102.0'
 c_compiler:
 - vs2017
 channel_sources:

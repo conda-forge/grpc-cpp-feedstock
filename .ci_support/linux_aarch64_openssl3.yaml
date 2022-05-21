@@ -1,7 +1,5 @@
 BUILD:
 - aarch64-conda_cos7-linux-gnu
-abseil_cpp:
-- '20211102.0'
 c_compiler:
 - gcc
 c_compiler_version:
