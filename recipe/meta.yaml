@@ -25,13 +25,13 @@ requirements:
     - libprotobuf
     - ninja
     # We need all host deps also in build for cross-compiling
-    - abseil-cpp  # [build_platform != target_platform]
+    - abseil-cpp 20211102.0  # [build_platform != target_platform]
     - c-ares      # [build_platform != target_platform]
     - re2         # [build_platform != target_platform]
     - openssl     # [build_platform != target_platform]
     - zlib        # [build_platform != target_platform]
   host:
-    - abseil-cpp
+    - abseil-cpp 20211102.0
     - c-ares
     - libprotobuf
     - re2
