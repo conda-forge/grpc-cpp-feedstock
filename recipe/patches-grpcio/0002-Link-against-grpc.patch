@@ -20,13 +20,16 @@ index 2931f139d1..0590bdc7f1 100644
  # For local development use only: This skips building gRPC Core and its
  # dependencies, including protobuf and boringssl. This allows "incremental"
  # compilation by first building gRPC Core using make, then building only the
-@@ -348,6 +350,9 @@ if BUILD_WITH_SYSTEM_CARES:
+@@ -348,6 +350,12 @@ if BUILD_WITH_SYSTEM_CARES:
      EXTENSION_LIBRARIES += ('cares',)
  if BUILD_WITH_SYSTEM_RE2:
      EXTENSION_LIBRARIES += ('re2',)
 +if BUILD_WITH_SYSTEM_GRPC_CORE:
 +    EXTENSION_LIBRARIES += ('gpr', 'grpc', )
-+
++    import pathlib
++    if "win32" in sys.platform:
++        EXTENSION_LIBRARIES += ('libprotoc', 'libprotobuf', 'libprotobuf-lite', 'upb', 'address_sorting', )
++        EXTENSION_LIBRARIES += tuple(lib.stem for lib in pathlib.Path(os.environ['LIBRARY_LIB']).glob('absl_*.lib'))
  
  DEFINE_MACROS = (('_WIN32_WINNT', 0x600),)
  asm_files = []

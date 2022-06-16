@@ -7,6 +7,7 @@ export GRPC_PYTHON_BUILD_SYSTEM_CARES="True"
 export GRPC_PYTHON_USE_PREBUILT_GRPC_CORE=""
 export GRPC_PYTHON_BUILD_SYSTEM_GRPC_CORE="True"
 export GRPC_PYTHON_BUILD_WITH_CYTHON="True"
+export GRPC_PYTHON_BUILD_SYSTEM_RE2="True"
 
 if [[ "${target_platform}" == linux-* ]]; then
     # set these so the default in setup.py are not used
@@ -23,4 +24,4 @@ fi
 ln -s "$(which $CC)" "$SRC_DIR/cc"
 export PATH="$SRC_DIR:$PATH"
 
-$PYTHON -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv
+$PYTHON -m pip install . --no-deps --ignore-installed --no-cache-dir -v
