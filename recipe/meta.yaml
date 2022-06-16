@@ -19,8 +19,8 @@ source:
 outputs:
   - name: grpc-cpp
     version: {{ version}}
-    script: build-cpp.sh  # [not win]
-    script: build-cpp.bat # [win]
+    script: build-cpp.sh   # [not win]
+    script: build-cpp.bat  # [win]
     build:
       number: 0
       run_exports:
@@ -53,8 +53,8 @@ outputs:
 
   - name: grpcio
     version: {{ version }}
-    script: build-grpcio.sh  # [not win]
-    script: build-grpcio.bat # [win]
+    script: build-grpcio.sh   # [not win]
+    script: build-grpcio.bat  # [win]
     build:
       skip: true  # [python_impl == 'pypy']
     requirements:
