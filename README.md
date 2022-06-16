@@ -38,87 +38,465 @@ Current build status
         <table>
           <thead><tr><th>Variant</th><th>Status</th></tr></thead>
           <tbody><tr>
-              <td>linux_64_openssl1.1.1</td>
+              <td>linux_64_openssl1.1.1python3.10.____cpythonpython_implcpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_64_openssl1.1.1" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_64_openssl1.1.1python3.10.____cpythonpython_implcpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_64_openssl3</td>
+              <td>linux_64_openssl1.1.1python3.7.____cpythonpython_implcpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_64_openssl3" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_64_openssl1.1.1python3.7.____cpythonpython_implcpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_aarch64_openssl1.1.1</td>
+              <td>linux_64_openssl1.1.1python3.8.____73_pypypython_implpypy</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_aarch64_openssl1.1.1" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_64_openssl1.1.1python3.8.____73_pypypython_implpypy" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_aarch64_openssl3</td>
+              <td>linux_64_openssl1.1.1python3.8.____cpythonpython_implcpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_aarch64_openssl3" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_64_openssl1.1.1python3.8.____cpythonpython_implcpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_ppc64le_openssl1.1.1</td>
+              <td>linux_64_openssl1.1.1python3.9.____73_pypypython_implpypy</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_ppc64le_openssl1.1.1" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_64_openssl1.1.1python3.9.____73_pypypython_implpypy" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_ppc64le_openssl3</td>
+              <td>linux_64_openssl1.1.1python3.9.____cpythonpython_implcpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_ppc64le_openssl3" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_64_openssl1.1.1python3.9.____cpythonpython_implcpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>osx_64_openssl1.1.1</td>
+              <td>linux_64_openssl3python3.10.____cpythonpython_implcpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=osx&configuration=osx_64_openssl1.1.1" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_64_openssl3python3.10.____cpythonpython_implcpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>osx_64_openssl3</td>
+              <td>linux_64_openssl3python3.7.____cpythonpython_implcpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=osx&configuration=osx_64_openssl3" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_64_openssl3python3.7.____cpythonpython_implcpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>osx_arm64_openssl1.1.1</td>
+              <td>linux_64_openssl3python3.8.____73_pypypython_implpypy</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=osx&configuration=osx_arm64_openssl1.1.1" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_64_openssl3python3.8.____73_pypypython_implpypy" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>osx_arm64_openssl3</td>
+              <td>linux_64_openssl3python3.8.____cpythonpython_implcpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=osx&configuration=osx_arm64_openssl3" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_64_openssl3python3.8.____cpythonpython_implcpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>win_64_openssl1.1.1</td>
+              <td>linux_64_openssl3python3.9.____73_pypypython_implpypy</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=win&configuration=win_64_openssl1.1.1" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_64_openssl3python3.9.____73_pypypython_implpypy" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>win_64_openssl3</td>
+              <td>linux_64_openssl3python3.9.____cpythonpython_implcpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=win&configuration=win_64_openssl3" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_64_openssl3python3.9.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_aarch64_openssl1.1.1python3.10.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_aarch64_openssl1.1.1python3.10.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_aarch64_openssl1.1.1python3.7.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_aarch64_openssl1.1.1python3.7.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_aarch64_openssl1.1.1python3.8.____73_pypypython_implpypy</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_aarch64_openssl1.1.1python3.8.____73_pypypython_implpypy" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_aarch64_openssl1.1.1python3.8.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_aarch64_openssl1.1.1python3.8.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_aarch64_openssl1.1.1python3.9.____73_pypypython_implpypy</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_aarch64_openssl1.1.1python3.9.____73_pypypython_implpypy" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_aarch64_openssl1.1.1python3.9.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_aarch64_openssl1.1.1python3.9.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_aarch64_openssl3python3.10.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_aarch64_openssl3python3.10.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_aarch64_openssl3python3.7.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_aarch64_openssl3python3.7.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_aarch64_openssl3python3.8.____73_pypypython_implpypy</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_aarch64_openssl3python3.8.____73_pypypython_implpypy" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_aarch64_openssl3python3.8.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_aarch64_openssl3python3.8.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_aarch64_openssl3python3.9.____73_pypypython_implpypy</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_aarch64_openssl3python3.9.____73_pypypython_implpypy" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_aarch64_openssl3python3.9.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_aarch64_openssl3python3.9.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_ppc64le_openssl1.1.1python3.10.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_ppc64le_openssl1.1.1python3.10.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_ppc64le_openssl1.1.1python3.7.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_ppc64le_openssl1.1.1python3.7.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_ppc64le_openssl1.1.1python3.8.____73_pypypython_implpypy</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_ppc64le_openssl1.1.1python3.8.____73_pypypython_implpypy" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_ppc64le_openssl1.1.1python3.8.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_ppc64le_openssl1.1.1python3.8.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_ppc64le_openssl1.1.1python3.9.____73_pypypython_implpypy</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_ppc64le_openssl1.1.1python3.9.____73_pypypython_implpypy" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_ppc64le_openssl1.1.1python3.9.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_ppc64le_openssl1.1.1python3.9.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_ppc64le_openssl3python3.10.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_ppc64le_openssl3python3.10.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_ppc64le_openssl3python3.7.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_ppc64le_openssl3python3.7.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_ppc64le_openssl3python3.8.____73_pypypython_implpypy</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_ppc64le_openssl3python3.8.____73_pypypython_implpypy" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_ppc64le_openssl3python3.8.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_ppc64le_openssl3python3.8.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_ppc64le_openssl3python3.9.____73_pypypython_implpypy</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_ppc64le_openssl3python3.9.____73_pypypython_implpypy" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_ppc64le_openssl3python3.9.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux_ppc64le_openssl3python3.9.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_64_openssl1.1.1python3.10.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=osx&configuration=osx_64_openssl1.1.1python3.10.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_64_openssl1.1.1python3.7.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=osx&configuration=osx_64_openssl1.1.1python3.7.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_64_openssl1.1.1python3.8.____73_pypypython_implpypy</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=osx&configuration=osx_64_openssl1.1.1python3.8.____73_pypypython_implpypy" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_64_openssl1.1.1python3.8.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=osx&configuration=osx_64_openssl1.1.1python3.8.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_64_openssl1.1.1python3.9.____73_pypypython_implpypy</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=osx&configuration=osx_64_openssl1.1.1python3.9.____73_pypypython_implpypy" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_64_openssl1.1.1python3.9.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=osx&configuration=osx_64_openssl1.1.1python3.9.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_64_openssl3python3.10.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=osx&configuration=osx_64_openssl3python3.10.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_64_openssl3python3.7.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=osx&configuration=osx_64_openssl3python3.7.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_64_openssl3python3.8.____73_pypypython_implpypy</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=osx&configuration=osx_64_openssl3python3.8.____73_pypypython_implpypy" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_64_openssl3python3.8.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=osx&configuration=osx_64_openssl3python3.8.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_64_openssl3python3.9.____73_pypypython_implpypy</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=osx&configuration=osx_64_openssl3python3.9.____73_pypypython_implpypy" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_64_openssl3python3.9.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=osx&configuration=osx_64_openssl3python3.9.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_openssl1.1.1python3.10.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=osx&configuration=osx_arm64_openssl1.1.1python3.10.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_openssl1.1.1python3.8.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=osx&configuration=osx_arm64_openssl1.1.1python3.8.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_openssl1.1.1python3.9.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=osx&configuration=osx_arm64_openssl1.1.1python3.9.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_openssl3python3.10.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=osx&configuration=osx_arm64_openssl3python3.10.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_openssl3python3.8.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=osx&configuration=osx_arm64_openssl3python3.8.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64_openssl3python3.9.____cpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=osx&configuration=osx_arm64_openssl3python3.9.____cpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>win_64_openssl1.1.1python3.10.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=win&configuration=win_64_openssl1.1.1python3.10.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>win_64_openssl1.1.1python3.7.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=win&configuration=win_64_openssl1.1.1python3.7.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>win_64_openssl1.1.1python3.8.____73_pypypython_implpypy</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=win&configuration=win_64_openssl1.1.1python3.8.____73_pypypython_implpypy" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>win_64_openssl1.1.1python3.8.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=win&configuration=win_64_openssl1.1.1python3.8.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>win_64_openssl1.1.1python3.9.____73_pypypython_implpypy</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=win&configuration=win_64_openssl1.1.1python3.9.____73_pypypython_implpypy" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>win_64_openssl1.1.1python3.9.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=win&configuration=win_64_openssl1.1.1python3.9.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>win_64_openssl3python3.10.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=win&configuration=win_64_openssl3python3.10.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>win_64_openssl3python3.7.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=win&configuration=win_64_openssl3python3.7.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>win_64_openssl3python3.8.____73_pypypython_implpypy</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=win&configuration=win_64_openssl3python3.8.____73_pypypython_implpypy" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>win_64_openssl3python3.8.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=win&configuration=win_64_openssl3python3.8.____cpythonpython_implcpython" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>win_64_openssl3python3.9.____73_pypypython_implpypy</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=win&configuration=win_64_openssl3python3.9.____73_pypypython_implpypy" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>win_64_openssl3python3.9.____cpythonpython_implcpython</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=win&configuration=win_64_openssl3python3.9.____cpythonpython_implcpython" alt="variant">
                 </a>
               </td>
             </tr>
@@ -134,7 +512,7 @@ Current release info
 
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-grpc--cpp-green.svg)](https://anaconda.org/conda-forge/grpc-cpp) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/grpc-cpp.svg)](https://anaconda.org/conda-forge/grpc-cpp) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/grpc-cpp.svg)](https://anaconda.org/conda-forge/grpc-cpp) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/grpc-cpp.svg)](https://anaconda.org/conda-forge/grpc-cpp) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-grpcio-green.svg)](https://anaconda.org/conda-forge/grpcio) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/grpcio.svg)](https://anaconda.org/conda-forge/grpcio) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/grpcio.svg)](https://anaconda.org/conda-forge/grpcio) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/grpcio.svg)](https://anaconda.org/conda-forge/grpcio) |
 
 Installing grpc-cpp
 ===================
@@ -146,41 +524,41 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `grpc-cpp` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `grpcio` can be installed with `conda`:
 
 ```
-conda install grpc-cpp
-```
-
-or with `mamba`:
-
-```
-mamba install grpc-cpp
-```
-
-It is possible to list all of the versions of `grpc-cpp` available on your platform with `conda`:
-
-```
-conda search grpc-cpp --channel conda-forge
+conda install grpcio
 ```
 
 or with `mamba`:
 
 ```
-mamba search grpc-cpp --channel conda-forge
+mamba install grpcio
+```
+
+It is possible to list all of the versions of `grpcio` available on your platform with `conda`:
+
+```
+conda search grpcio --channel conda-forge
+```
+
+or with `mamba`:
+
+```
+mamba search grpcio --channel conda-forge
 ```
 
 Alternatively, `mamba repoquery` may provide more information:
 
 ```
 # Search all versions available on your platform:
-mamba repoquery search grpc-cpp --channel conda-forge
+mamba repoquery search grpcio --channel conda-forge
 
-# List packages depending on `grpc-cpp`:
-mamba repoquery whoneeds grpc-cpp --channel conda-forge
+# List packages depending on `grpcio`:
+mamba repoquery whoneeds grpcio --channel conda-forge
 
-# List dependencies of `grpc-cpp`:
-mamba repoquery depends grpc-cpp --channel conda-forge
+# List dependencies of `grpcio`:
+mamba repoquery depends grpcio --channel conda-forge
 ```
 
 
