@@ -1,6 +1,5 @@
 {% set name = "grpc-split" %}
 {% set version = "1.46.3" %}
-{% set number = "1" %}
 
 package:
   name: {{ name | lower }}
@@ -17,13 +16,14 @@ source:
     - patches-grpcio/0001-fix-win-commands.patch       # [win]
     - patches-grpcio/0001-fix-win-setup.patch          # [win]
 
+build:
+  number: 1
+
 outputs:
   - name: grpc-cpp
-    version: {{ version}}
     script: build-cpp.sh   # [not win]
     script: build-cpp.bat  # [win]
     build:
-      number: {{ number}}
       run_exports:
         - {{ pin_subpackage('grpc-cpp', max_pin='x.x') }}
 
@@ -53,11 +53,9 @@ outputs:
         - openssl
 
   - name: grpcio
-    version: {{ version }}
     script: build-grpcio.sh   # [not win]
     script: build-grpcio.bat  # [win]
     build:
-      number: {{ number }}
       skip: true  # [python_impl == 'pypy']
     requirements:
       build:
