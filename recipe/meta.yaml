@@ -1,5 +1,6 @@
 {% set name = "grpc-split" %}
 {% set version = "1.46.3" %}
+{% set number = "1" %}
 
 package:
   name: {{ name | lower }}
@@ -22,7 +23,7 @@ outputs:
     script: build-cpp.sh   # [not win]
     script: build-cpp.bat  # [win]
     build:
-      number: 0
+      number: {{ number}}
       run_exports:
         - {{ pin_subpackage('grpc-cpp', max_pin='x.x') }}
 
@@ -56,6 +57,7 @@ outputs:
     script: build-grpcio.sh   # [not win]
     script: build-grpcio.bat  # [win]
     build:
+      number: {{ number }}
       skip: true  # [python_impl == 'pypy']
     requirements:
       build:
