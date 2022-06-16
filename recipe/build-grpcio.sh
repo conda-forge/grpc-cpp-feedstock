@@ -21,7 +21,7 @@ if [[ "$target_platform" == osx-64 ]]; then
     export CFLAGS="$CFLAGS -DTARGET_OS_OSX=1"
 fi
 
-ln -s "$(which $CC)" "$SRC_DIR/cc"
+ln -sf "$(which $CC)" "$SRC_DIR/cc"
 export PATH="$SRC_DIR:$PATH"
 
 $PYTHON -m pip install . --no-deps --ignore-installed --no-cache-dir -v
