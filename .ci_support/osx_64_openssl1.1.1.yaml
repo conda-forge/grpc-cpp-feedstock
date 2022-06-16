@@ -1,15 +1,23 @@
+MACOSX_DEPLOYMENT_TARGET:
+- '10.9'
 c_compiler:
-- vs2017
+- clang
+c_compiler_version:
+- '13'
 channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
 cxx_compiler:
-- vs2017
+- clangxx
+cxx_compiler_version:
+- '13'
 libprotobuf:
 - '3.20'
+macos_machine:
+- x86_64-apple-darwin13.4.0
 openssl:
-- '3'
+- 1.1.1
 pin_run_as_build:
   python:
     min_pin: x.x
@@ -18,14 +26,15 @@ pin_run_as_build:
     max_pin: x.x
 python:
 - 3.10.* *_cpython
-python_impl:
-- cpython
+- 3.7.* *_cpython
+- 3.8.* *_cpython
+- 3.9.* *_cpython
 re2:
 - 2022.04.01
 target_platform:
-- win-64
+- osx-64
 zip_keys:
-- - python
-  - python_impl
+- - c_compiler_version
+  - cxx_compiler_version
 zlib:
 - '1.2'
