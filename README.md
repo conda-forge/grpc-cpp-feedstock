@@ -252,7 +252,7 @@ Feedstock Maintainers
 =====================
 
 * [@h-vetinari](https://github.com/h-vetinari/)
-* [@mvanniekerk](https://github.com/mvanniekerk/)
+* [@mariusvniekerk](https://github.com/mariusvniekerk/)
 * [@pitrou](https://github.com/pitrou/)
 * [@wesm](https://github.com/wesm/)
 * [@xhochy](https://github.com/xhochy/)
