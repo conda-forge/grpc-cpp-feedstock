@@ -1,0 +1,31 @@
+From 02388177eb9f5e6c416fd3f1490ef70af8554ff7 Mon Sep 17 00:00:00 2001
+From: Marius van Niekerk <marius.v.niekerk@gmail.com>
+Date: Tue, 14 Jun 2022 07:50:29 -0400
+Subject: [PATCH 3/3] windows-ssl-lib-names
+
+---
+ setup.py | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/setup.py b/setup.py
+index 0590bdc7f1..69f800aa00 100644
+--- a/setup.py
++++ b/setup.py
+@@ -340,10 +340,10 @@ if "win32" in sys.platform:
+         'ws2_32',
+     )
+ if BUILD_WITH_SYSTEM_OPENSSL:
+-    EXTENSION_LIBRARIES += (
+-        'ssl',
+-        'crypto',
+-    )
++    if not "win32" in sys.platform:
++        EXTENSION_LIBRARIES += ('ssl', 'crypto',)
++    else:
++        EXTENSION_LIBRARIES += ('libssl', 'libcrypto',)
+ if BUILD_WITH_SYSTEM_ZLIB:
+     EXTENSION_LIBRARIES += ('z',)
+ if BUILD_WITH_SYSTEM_CARES:
+-- 
+2.35.3
+

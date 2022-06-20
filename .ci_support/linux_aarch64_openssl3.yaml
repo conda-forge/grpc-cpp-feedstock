@@ -23,8 +23,16 @@ libprotobuf:
 openssl:
 - '3'
 pin_run_as_build:
+  python:
+    min_pin: x.x
+    max_pin: x.x
   zlib:
     max_pin: x.x
+python:
+- 3.10.* *_cpython
+- 3.7.* *_cpython
+- 3.8.* *_cpython
+- 3.9.* *_cpython
 re2:
 - 2022.04.01
 target_platform:

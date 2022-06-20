@@ -1,4 +1,4 @@
-{% set name = "grpc-cpp" %}
+{% set name = "grpc-split" %}
 {% set version = "1.46.3" %}
 
 package:
@@ -10,35 +10,98 @@ source:
   sha256: d6cbf22cb5007af71b61c6be316a79397469c58c82a942552a62e708bce60964
   patches:
     - force-protoc-executable.patch
+    - patches-grpcio/0001-Monkey-patch-distutils.ccompiler.spawn-to-elide-std-.patch
+    - patches-grpcio/0002-Link-against-grpc.patch
+    - patches-grpcio/0003-windows-ssl-lib-names.patch  # [win]
+    - patches-grpcio/0001-fix-win-commands.patch       # [win]
+    - patches-grpcio/0001-fix-win-setup.patch          # [win]
 
 build:
-  number: 0
-  run_exports:
-    - {{ pin_subpackage('grpc-cpp', max_pin='x.x') }}
+  number: 1
 
-requirements:
-  build:
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
-    - cmake >=3.5.1
-    # `protoc` is also used for building
-    - libprotobuf
-    - ninja
-    # We need all host deps also in build for cross-compiling
-    - abseil-cpp 20211102.0  # [build_platform != target_platform]
-    - c-ares      # [build_platform != target_platform]
-    - re2         # [build_platform != target_platform]
-    - openssl     # [build_platform != target_platform]
-    - zlib        # [build_platform != target_platform]
-  host:
-    - abseil-cpp 20211102.0
-    - c-ares
-    - libprotobuf
-    - re2
-    - openssl
-    - zlib
-  run:
-    - zlib
+outputs:
+  - name: grpc-cpp
+    script: build-cpp.sh   # [not win]
+    script: build-cpp.bat  # [win]
+    build:
+      run_exports:
+        - {{ pin_subpackage('grpc-cpp', max_pin='x.x') }}
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - cmake >=3.5.1
+        # `protoc` is also used for building
+        - libprotobuf
+        - ninja
+        # We need all host deps also in build for cross-compiling
+        - abseil-cpp 20211102.0  # [build_platform != target_platform]
+        - c-ares      # [build_platform != target_platform]
+        - re2         # [build_platform != target_platform]
+        - openssl     # [build_platform != target_platform]
+        - zlib        # [build_platform != target_platform]
+      host:
+        - abseil-cpp 20211102.0
+        - c-ares
+        - libprotobuf
+        - re2
+        - openssl
+        - zlib
+      run:
+        - zlib
+        - openssl
+
+  - name: grpcio
+    script: build-grpcio.sh   # [not win]
+    script: build-grpcio.bat  # [win]
+    requirements:
+      build:
+        - python                                 # [build_platform != target_platform]
+        - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+        - cython                                 # [build_platform != target_platform]
+        - abseil-cpp 20211102.0                  # [build_platform != target_platform]
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+      host:
+        - python
+        - pip
+        - setuptools
+        - cython
+        - six >=1.6.0
+        - abseil-cpp 20211102.0
+        - {{ pin_subpackage('grpc-cpp', exact=True) }}
+        - c-ares
+        - libprotobuf
+        - re2
+        - openssl
+        - pthread-stubs                               # [linux]
+      run:
+        - python
+        - setuptools
+        - six >=1.6.0
+        - {{ pin_subpackage('grpc-cpp', exact=True) }}
+        - openssl
+        - zlib
+        - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.9") }}  # [osx and x86_64]
+    test:
+      files:
+        - grpcio_distribtest.py
+      requires:
+        - pip
+      imports:
+        - grpc
+        - grpc._cython
+        - grpc._cython._cygrpc
+        - grpc.beta
+        - grpc.framework
+        - grpc.framework.common
+        - grpc.framework.foundation
+        - grpc.framework.interfaces
+        - grpc.framework.interfaces.base
+        - grpc.framework.interfaces.face
+      commands:
+        - python -m pip check
+        - python grpcio_distribtest.py
 
 about:
   home: https://grpc.io/
@@ -62,3 +125,4 @@ extra:
     - xhochy
     - wesm
     - h-vetinari
+    - mariusvniekerk
