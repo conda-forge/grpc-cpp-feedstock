@@ -30,7 +30,7 @@ python:
 - 3.8.* *_cpython
 - 3.9.* *_cpython
 re2:
-- 2022.04.01
+- 2022.06.01
 target_platform:
 - linux-ppc64le
 zip_keys:
