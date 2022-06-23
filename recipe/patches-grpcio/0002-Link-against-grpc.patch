@@ -1,17 +1,17 @@
-From 04180ac03d5a41d1b96b8ee0bec84af6d89e74c5 Mon Sep 17 00:00:00 2001
+From cffc62e09b2172c88e1c33937ad0cb90c6f6d2fa Mon Sep 17 00:00:00 2001
 From: Marius van Niekerk <marius.v.niekerk@gmail.com>
 Date: Mon, 13 Jun 2022 17:13:07 -0400
 Subject: [PATCH 2/3] Link against grpc
 
 ---
- setup.py | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ setup.py | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/setup.py b/setup.py
-index 2931f139d1..0590bdc7f1 100644
+index 33cfcbafe6..5ec25bff12 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -166,6 +166,8 @@ BUILD_WITH_SYSTEM_RE2 = _env_bool_value('GRPC_PYTHON_BUILD_SYSTEM_RE2', 'False')
+@@ -172,6 +172,8 @@ BUILD_WITH_SYSTEM_ABSL = os.environ.get('GRPC_PYTHON_BUILD_SYSTEM_ABSL', False)
  BUILD_WITH_STATIC_LIBSTDCXX = _env_bool_value(
      'GRPC_PYTHON_BUILD_WITH_STATIC_LIBSTDCXX', 'False')
  
@@ -20,20 +20,20 @@ index 2931f139d1..0590bdc7f1 100644
  # For local development use only: This skips building gRPC Core and its
  # dependencies, including protobuf and boringssl. This allows "incremental"
  # compilation by first building gRPC Core using make, then building only the
-@@ -348,6 +350,12 @@ if BUILD_WITH_SYSTEM_CARES:
-     EXTENSION_LIBRARIES += ('cares',)
- if BUILD_WITH_SYSTEM_RE2:
-     EXTENSION_LIBRARIES += ('re2',)
+@@ -362,6 +364,12 @@ if BUILD_WITH_SYSTEM_RE2:
+ if BUILD_WITH_SYSTEM_ABSL:
+     EXTENSION_LIBRARIES += tuple(
+         lib.stem[3:] for lib in pathlib.Path('/usr').glob('lib*/libabsl_*.so'))
 +if BUILD_WITH_SYSTEM_GRPC_CORE:
 +    EXTENSION_LIBRARIES += ('gpr', 'grpc', )
-+    import pathlib
 +    if "win32" in sys.platform:
 +        EXTENSION_LIBRARIES += ('libprotoc', 'libprotobuf', 'libprotobuf-lite', 'upb', 'address_sorting', )
 +        EXTENSION_LIBRARIES += tuple(lib.stem for lib in pathlib.Path(os.environ['LIBRARY_LIB']).glob('absl_*.lib'))
++
  
  DEFINE_MACROS = (('_WIN32_WINNT', 0x600),)
  asm_files = []
-@@ -454,6 +459,9 @@ def cython_extensions_and_necessity():
+@@ -468,6 +476,9 @@ def cython_extensions_and_necessity():
              prefix + 'libgpr.a', prefix + 'libgrpc.a'
          ]
          core_c_files = []
