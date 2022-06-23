@@ -1,7 +1,7 @@
 From 8d3a46d8804ba9a9fea16848f74809dbf60a94e8 Mon Sep 17 00:00:00 2001
 From: Marius van Niekerk <marius.v.niekerk@gmail.com>
 Date: Tue, 14 Jun 2022 07:50:29 -0400
-Subject: [PATCH 3/3] windows-ssl-lib-names
+Subject: [PATCH 3/4] windows-ssl-lib-names
 
 ---
  setup.py | 8 ++++----
