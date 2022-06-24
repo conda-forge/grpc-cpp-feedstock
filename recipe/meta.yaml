@@ -14,7 +14,7 @@ source:
     - patches-grpcio/0002-Link-against-grpc.patch
     - patches-grpcio/0003-windows-ssl-lib-names.patch  # [win]
     - patches-grpcio/0001-fix-win-commands.patch       # [win]
-    - patches-grpcio/0004-Fix-winows-setup.patch          # [win]
+    - patches-grpcio/0004-Fix-windows-setup.patch      # [win]
 
 build:
   number: 0
