@@ -1,5 +1,5 @@
 {% set name = "grpc-split" %}
-{% set version = "1.46.3" %}
+{% set version = "1.47.0" %}
 
 package:
   name: {{ name | lower }}
@@ -7,21 +7,21 @@ package:
 
 source:
   url: https://github.com/grpc/grpc/archive/v{{ version }}.tar.gz
-  sha256: d6cbf22cb5007af71b61c6be316a79397469c58c82a942552a62e708bce60964
+  sha256: 271bdc890bf329a8de5b65819f0f9590a5381402429bca37625b63546ed19e54
   patches:
     - force-protoc-executable.patch
     - patches-grpcio/0001-Monkey-patch-distutils.ccompiler.spawn-to-elide-std-.patch
     - patches-grpcio/0002-Link-against-grpc.patch
     - patches-grpcio/0003-windows-ssl-lib-names.patch  # [win]
     - patches-grpcio/0001-fix-win-commands.patch       # [win]
-    - patches-grpcio/0001-fix-win-setup.patch          # [win]
+    - patches-grpcio/0004-Fix-windows-setup.patch      # [win]
 
 build:
-  number: 1
+  number: 0
 
 outputs:
   - name: grpc-cpp
-    script: build-cpp.sh   # [not win]
+    script: build-cpp.sh  # [not win]
     script: build-cpp.bat  # [win]
     build:
       run_exports:
@@ -52,7 +52,7 @@ outputs:
         - openssl
 
   - name: grpcio
-    script: build-grpcio.sh   # [not win]
+    script: build-grpcio.sh  # [not win]
     script: build-grpcio.bat  # [win]
     requirements:
       build:
