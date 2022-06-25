@@ -3,6 +3,7 @@ bot:
   - 1.43.x
   - 1.44.x
   - 1.45.x
+  - 1.46.x
   automerge: true
 build_platform:
   linux_aarch64: linux_64
