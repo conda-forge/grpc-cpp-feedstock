@@ -28,6 +28,9 @@ outputs:
         - {{ pin_subpackage('grpc-cpp', max_pin='x.x') }}
     requirements:
       build:
+        - python                                 # [build_platform != target_platform]
+        - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+        - cython                                 # [build_platform != target_platform]
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - cmake >=3.5.1
