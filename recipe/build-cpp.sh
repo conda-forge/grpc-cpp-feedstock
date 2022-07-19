@@ -2,7 +2,11 @@
 
 set -ex
 
-if [[ "${abseil_cpp}" == "20210324.2" && "${target_platform}" == osx-* ]]; then
+echo CONFIG
+
+# Unconditionally set target platform for older abseil version,
+# when updating abseil relax CXX_STANDARD pin
+if [[ "${target_platform}" == osx-* ]]; then
   export CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_CXX_STANDARD=14"
 else
   export CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_CXX_STANDARD=17"

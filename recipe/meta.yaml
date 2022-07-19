@@ -41,6 +41,8 @@ outputs:
         - openssl     # [build_platform != target_platform]
         - zlib        # [build_platform != target_platform]
       host:
+        # Note, pinned to older abseil version.
+        # Update to build.sh required if moving to updated abseil.
         - abseil-cpp 20210324.2
         - c-ares
         - libprotobuf
