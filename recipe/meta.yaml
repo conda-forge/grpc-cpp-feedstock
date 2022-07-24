@@ -68,7 +68,7 @@ outputs:
         - setuptools
         - cython
         - six >=1.6.0
-        - abseil-cpp 20211102.0
+        - abseil-cpp 20220623.0
         - {{ pin_subpackage('grpc-cpp', exact=True) }}
         - c-ares
         - libprotobuf
