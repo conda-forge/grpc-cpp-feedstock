@@ -1,0 +1,19 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 25990a5d8a..7ca88c9bdf 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -228,10 +228,10 @@ endif()
+ 
+ # Add c++14 flags
+ if (NOT DEFINED CMAKE_CXX_STANDARD)
+-  set(CMAKE_CXX_STANDARD 14)
++  set(CMAKE_CXX_STANDARD 11)
+ else()
+-  if (CMAKE_CXX_STANDARD LESS 14)
+-    message(FATAL_ERROR "CMAKE_CXX_STANDARD is less than 14, please specify at least SET(CMAKE_CXX_STANDARD 14)")
++  if (CMAKE_CXX_STANDARD LESS 11)
++    message(FATAL_ERROR "CMAKE_CXX_STANDARD is less than 11, please specify at least SET(CMAKE_CXX_STANDARD 11)")
+   endif()
+ endif()
+ if (NOT DEFINED CMAKE_CXX_STANDARD_REQUIRED)
+
