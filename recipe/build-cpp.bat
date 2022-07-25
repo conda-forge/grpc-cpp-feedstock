@@ -1,5 +1,8 @@
 @echo on
 
+echo %CFLAGS%
+echo %CXXFLAGS%
+
 mkdir build-cpp
 if errorlevel 1 exit 1
 
@@ -7,6 +10,7 @@ cd build-cpp
 
 cmake ..  ^
       -GNinja ^
+      -DCMAKE_VERBOSE_MAKEFILE=ON ^
       -DCMAKE_BUILD_TYPE=Release ^
       -DCMAKE_PREFIX_PATH=%CONDA_PREFIX% ^
       -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% ^
