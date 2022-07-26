@@ -3,6 +3,11 @@ c_compiler_version:    # [linux]
 cxx_compiler_version:  # [linux]
 - '11'                 # [linux]
 
+c_compiler:            # [win]
+- vs2019               # [win]
+cxx_compiler:          # [win]
+- vs2019               # [win]
+
 abseil_cpp:
  # The latest version in conda-forge-pinnings
  - '20211102.0'
