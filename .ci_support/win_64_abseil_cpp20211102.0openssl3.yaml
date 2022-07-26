@@ -1,19 +1,13 @@
+abseil_cpp:
+- '20211102.0'
 c_compiler:
-- gcc
-c_compiler_version:
-- '11'
-cdt_name:
-- cos6
+- vs2017
 channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
 cxx_compiler:
-- gxx
-cxx_compiler_version:
-- '11'
-docker_image:
-- quay.io/condaforge/linux-anvil-cos7-x86_64
+- vs2017
 libprotobuf:
 - '3.20'
 openssl:
@@ -32,9 +26,6 @@ python:
 re2:
 - 2022.06.01
 target_platform:
-- linux-64
-zip_keys:
-- - c_compiler_version
-  - cxx_compiler_version
+- win-64
 zlib:
 - '1.2'
