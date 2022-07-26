@@ -1,44 +1,53 @@
-From 081b276b4838afafb079e3aa3346ad0c16840602 Mon Sep 17 00:00:00 2001
-From: Marius van Niekerk <marius.v.niekerk@gmail.com>
-Date: Thu, 23 Jun 2022 10:57:17 -0400
-Subject: [PATCH 4/4] Fix windows setup
-
----
- setup.py | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
-
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 25990a5d8a..7ca88c9bdf 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -228,10 +228,10 @@ endif()
+ 
+ # Add c++14 flags
+ if (NOT DEFINED CMAKE_CXX_STANDARD)
+-  set(CMAKE_CXX_STANDARD 14)
++  set(CMAKE_CXX_STANDARD 11)
+ else()
+-  if (CMAKE_CXX_STANDARD LESS 14)
+-    message(FATAL_ERROR "CMAKE_CXX_STANDARD is less than 14, please specify at least SET(CMAKE_CXX_STANDARD 14)")
++  if (CMAKE_CXX_STANDARD LESS 11)
++    message(FATAL_ERROR "CMAKE_CXX_STANDARD is less than 11, please specify at least SET(CMAKE_CXX_STANDARD 11)")
+   endif()
+ endif()
+ if (NOT DEFINED CMAKE_CXX_STANDARD_REQUIRED)
 diff --git a/setup.py b/setup.py
-index b59a67504e..3a0bf25a29 100644
+index ec27fe478f..c8004763fe 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -24,7 +24,6 @@ from distutils.unixccompiler import UnixCCompiler
- UnixCCompiler.src_extensions.append('.S')
- del UnixCCompiler
- 
--from distutils import cygwinccompiler
- from distutils import extension as _extension
- from distutils import util
- import os
-@@ -206,6 +205,9 @@ ENABLE_DOCUMENTATION_BUILD = _env_bool_value(
- 
- def check_linker_need_libatomic():
-     """Test if linker on system needs libatomic."""
-+    if sys.platform == 'win32':
-+        return False
-+
+@@ -207,7 +207,7 @@ def check_linker_need_libatomic():
      code_test = (b'#include <atomic>\n' +
                   b'int main() { return std::atomic<int64_t>{}; }')
      cxx = shlex.split(os.environ.get('CXX', 'c++'))
-@@ -257,7 +259,7 @@ def monkeypatch_spawn_using_cxx11_for_cxx_only():
+-    cpp_test = subprocess.Popen(cxx + ['-x', 'c++', '-std=c++14', '-'],
++    cpp_test = subprocess.Popen(cxx + ['-x', 'c++', '-std=c++11', '-'],
+                                 stdin=PIPE,
+                                 stdout=PIPE,
+                                 stderr=PIPE)
+@@ -217,7 +217,7 @@ def check_linker_need_libatomic():
+     # Double-check to see if -latomic actually can solve the problem.
+     # https://github.com/grpc/grpc/issues/22491
+     cpp_test = subprocess.Popen(
+-        [cxx, '-x', 'c++', '-std=c++14', '-', '-latomic'],
++        [cxx, '-x', 'c++', '-std=c++11', '-', '-latomic'],
+         stdin=PIPE,
+         stdout=PIPE,
+         stderr=PIPE)
+@@ -235,7 +235,7 @@ def check_linker_need_libatomic():
  EXTRA_ENV_COMPILE_ARGS = os.environ.get('GRPC_PYTHON_CFLAGS', None)
  EXTRA_ENV_LINK_ARGS = os.environ.get('GRPC_PYTHON_LDFLAGS', None)
  if EXTRA_ENV_COMPILE_ARGS is None:
 -    EXTRA_ENV_COMPILE_ARGS = ' -std=c++14'
-+    EXTRA_ENV_COMPILE_ARGS = ' '
++    EXTRA_ENV_COMPILE_ARGS = ' -std=c++11'
      if 'win32' in sys.platform:
          if sys.version_info < (3, 5):
              EXTRA_ENV_COMPILE_ARGS += ' -D_hypot=hypot'
-@@ -269,10 +271,6 @@ if EXTRA_ENV_COMPILE_ARGS is None:
+@@ -247,10 +247,6 @@ if EXTRA_ENV_COMPILE_ARGS is None:
                  EXTRA_ENV_COMPILE_ARGS += ' -D_ftime=_ftime32 -D_timeb=__timeb32 -D_ftime_s=_ftime32_s'
              else:
                  EXTRA_ENV_COMPILE_ARGS += ' -D_ftime=_ftime64 -D_timeb=__timeb64'
@@ -49,6 +58,3 @@ index b59a67504e..3a0bf25a29 100644
      elif "linux" in sys.platform:
          EXTRA_ENV_COMPILE_ARGS += ' -fvisibility=hidden -fno-wrapv -fno-exceptions'
      elif "darwin" in sys.platform:
--- 
-2.35.3
-
