@@ -2,3 +2,14 @@ c_compiler_version:    # [linux]
 - '11'                 # [linux]
 cxx_compiler_version:  # [linux]
 - '11'                 # [linux]
+
+abseil_cpp:
+ # The latest version in conda-forge-pinnings
+ - '20211102.0'
+ # The future version we want to migrate to
+ - '20220623.0'
+
+# As of 2022/07/26 grpc and abseil_cpp are zipped together
+grpc_cpp:
+ - '1.47'
+ - '1.47'
