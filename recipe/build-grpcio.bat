@@ -10,8 +10,6 @@ set "GRPC_PYTHON_BUILD_SYSTEM_ZLIB=True"
 set "GRPC_PYTHON_BUILD_WITH_CYTHON=True"
 set "GRPC_PYTHON_CFLAGS=/DPB_FIELD_16BIT"
 
- set "EXTRA_ENV_COMPILE_ARGS=-std:c++11"
-
 :: clearing this regenerates it with cython and fixes phtread usage
 del src\python\grpcio\grpc\_cython\cygrpc.cpp
 
