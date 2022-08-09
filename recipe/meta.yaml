@@ -17,6 +17,7 @@ source:
 
 build:
   number: 1
+  # libabseil builds only exist since 20220623.0
   skip: true   # [abseil_cpp == '20211102.0']
 
 outputs:
@@ -24,6 +25,8 @@ outputs:
     script: build-cpp.sh  # [not win]
     script: build-cpp.bat  # [win]
     build:
+      # libabseil builds only exist since 20220623.0
+      skip: true   # [abseil_cpp == '20211102.0']
       run_exports:
         - {{ pin_subpackage('grpc-cpp', max_pin='x.x') }}
     requirements:
@@ -58,6 +61,9 @@ outputs:
   - name: grpcio
     script: build-grpcio.sh  # [not win]
     script: build-grpcio.bat  # [win]
+    build:
+      # libabseil builds only exist since 20220623.0
+      skip: true   # [abseil_cpp == '20211102.0']
     requirements:
       build:
         - python                                 # [build_platform != target_platform]
