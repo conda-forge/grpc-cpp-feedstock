@@ -36,13 +36,17 @@ outputs:
         - libprotobuf
         - ninja
         # We need all host deps also in build for cross-compiling
-        - abseil-cpp  # [build_platform != target_platform]
+        - libabseil   # [build_platform != target_platform]
         - c-ares      # [build_platform != target_platform]
         - re2         # [build_platform != target_platform]
         - openssl     # [build_platform != target_platform]
         - zlib        # [build_platform != target_platform]
       host:
-        - abseil-cpp
+        - libabseil                   # [unix]
+        # windows not ready for C++17 of shared abseil builds yet;
+        # keep one line unpinned for migrator to pick it up
+        - libabseil-static            # [win]
+        - libabseil-static =*=cxx14*  # [win]
         - c-ares
         - libprotobuf
         - re2
@@ -60,7 +64,7 @@ outputs:
         - python                                 # [build_platform != target_platform]
         - cross-python_{{ target_platform }}     # [build_platform != target_platform]
         - cython                                 # [build_platform != target_platform]
-        - abseil-cpp
+        - libabseil                              # [build_platform != target_platform]
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
       host:
@@ -69,7 +73,11 @@ outputs:
         - setuptools
         - cython
         - six >=1.6.0
-        - abseil-cpp
+        - libabseil                   # [unix]
+        # windows not ready for C++17 of shared abseil builds yet;
+        # keep one line unpinned for migrator to pick it up
+        - libabseil-static            # [win]
+        - libabseil-static =*=cxx14*  # [win]
         - {{ pin_subpackage('grpc-cpp', exact=True) }}
         - c-ares
         - libprotobuf
