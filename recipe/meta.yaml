@@ -1,8 +1,7 @@
-{% set name = "grpc-split" %}
 {% set version = "1.48.0" %}
 
 package:
-  name: {{ name | lower }}
+  name: grpc-split
   version: {{ version }}
 
 source:
@@ -135,3 +134,4 @@ extra:
     - wesm
     - h-vetinari
     - mariusvniekerk
+  feedstock-name: grpc-cpp
