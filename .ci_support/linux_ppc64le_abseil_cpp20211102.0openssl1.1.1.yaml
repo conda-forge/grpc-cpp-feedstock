@@ -1,5 +1,5 @@
 abseil_cpp:
-- '20220623.0'
+- '20211102.0'
 c_compiler:
 - gcc
 c_compiler_version:

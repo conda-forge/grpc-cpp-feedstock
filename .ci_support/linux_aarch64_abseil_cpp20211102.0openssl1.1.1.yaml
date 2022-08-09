@@ -1,9 +1,13 @@
+BUILD:
+- aarch64-conda_cos7-linux-gnu
 abseil_cpp:
-- '20220623.0'
+- '20211102.0'
 c_compiler:
 - gcc
 c_compiler_version:
 - '11'
+cdt_arch:
+- aarch64
 cdt_name:
 - cos7
 channel_sources:
@@ -36,7 +40,7 @@ python:
 re2:
 - 2022.06.01
 target_platform:
-- linux-ppc64le
+- linux-aarch64
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
