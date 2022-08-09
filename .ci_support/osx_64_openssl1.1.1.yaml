@@ -1,15 +1,23 @@
-abseil_cpp:
-- '20211102.0'
+MACOSX_DEPLOYMENT_TARGET:
+- '10.9'
 c_compiler:
-- vs2019
+- clang
+c_compiler_version:
+- '13'
 channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
 cxx_compiler:
-- vs2019
+- clangxx
+cxx_compiler_version:
+- '13'
+libabseil:
+- '20220623.0'
 libprotobuf:
 - '3.20'
+macos_machine:
+- x86_64-apple-darwin13.4.0
 openssl:
 - 1.1.1
 pin_run_as_build:
@@ -26,6 +34,9 @@ python:
 re2:
 - 2022.06.01
 target_platform:
-- win-64
+- osx-64
+zip_keys:
+- - c_compiler_version
+  - cxx_compiler_version
 zlib:
 - '1.2'
