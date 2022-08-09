@@ -1,6 +1,7 @@
 __migrator:
   build_number: 1
   kind: version
+  use_local: True
   migration_number: 2
 
 # TODO: Make sure to remove the associated zip keys in the final file
