@@ -17,7 +17,7 @@ source:
     - patches-grpcio/0001-fix-win-setup.patch          # [win]
 
 build:
-  number: 2
+  number: 3
 
 outputs:
   - name: grpc-cpp
@@ -47,9 +47,6 @@ outputs:
         - re2
         - openssl
         - zlib
-      run:
-        - zlib
-        - openssl
 
   - name: grpcio
     script: build-grpcio.sh   # [not win]
@@ -80,8 +77,6 @@ outputs:
         - setuptools
         - six >=1.6.0
         - {{ pin_subpackage('grpc-cpp', exact=True) }}
-        - openssl
-        - zlib
         - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.9") }}  # [osx and x86_64]
     test:
       files:
