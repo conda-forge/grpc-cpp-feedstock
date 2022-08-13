@@ -2,6 +2,8 @@ BUILD:
 - aarch64-conda_cos7-linux-gnu
 abseil_cpp:
 - '20220623.0'
+c_ares:
+- '1'
 c_compiler:
 - gcc
 c_compiler_version:
