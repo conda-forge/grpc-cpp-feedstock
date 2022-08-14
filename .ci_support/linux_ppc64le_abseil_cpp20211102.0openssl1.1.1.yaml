@@ -1,5 +1,7 @@
 abseil_cpp:
 - '20211102.0'
+c_ares:
+- '1'
 c_compiler:
 - gcc
 c_compiler_version:
