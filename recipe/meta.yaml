@@ -37,8 +37,6 @@ requirements:
     - re2
     - openssl
     - zlib
-  run:
-    - zlib
 
 about:
   home: https://grpc.io/
