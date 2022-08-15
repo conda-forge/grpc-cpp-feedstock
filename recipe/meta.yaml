@@ -54,6 +54,12 @@ outputs:
         - re2
         - openssl
         - zlib
+      run:
+        - ucrt  # [win]
+        # the following should not be necessary, but grpc currently
+        # sets zlib & abseil as non-private
+        - libabseil-static ={{ libabseil_static }}=cxx14*  # [win]
+        - zlib
 
   - name: grpcio
     script: build-grpcio.sh  # [not win]
