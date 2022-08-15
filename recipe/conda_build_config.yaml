@@ -10,11 +10,3 @@ abseil_cpp:
 # As of 2022/07/26 grpc and abseil_cpp are zipped together
 grpc_cpp:
  - '1.47'
-
-# new abseil builds are not zipped in the pinning, but should
-# move in lockstep with abseil-cpp until that is removed
-libabseil:
- - '20220623.0'
-
-libabseil_static:
- - '20220623.0'
