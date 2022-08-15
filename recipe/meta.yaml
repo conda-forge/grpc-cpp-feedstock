@@ -61,10 +61,12 @@ outputs:
         # https://discourse.cmake.org/t/questions-about-find-package-cli-msvc/6194
         - {{ compiler('c') }}
         - cmake
+      files:
+        - cf_test/
       commands:
-        - cmake --find-package -DNAME=gRPC -DLANGUAGE=C -DMODE=EXIST -DCOMPILER_ID=GNU    # [linux]
-        - cmake --find-package -DNAME=gRPC -DLANGUAGE=C -DMODE=EXIST -DCOMPILER_ID=Clang  # [osx]
-        - cmake --find-package -DNAME=gRPC -DLANGUAGE=C -DMODE=EXIST -DCOMPILER_ID=MSVC   # [win]
+        - cd cf_test
+        - cmake $CMAKE_ARGS .   # [unix and (build_platform == target_platform)]
+        - cmake %CMAKE_ARGS% .  # [win]
 
   - name: grpcio
     script: build-grpcio.sh   # [not win]
