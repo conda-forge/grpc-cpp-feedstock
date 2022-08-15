@@ -9,6 +9,12 @@ source:
   sha256: ba7c36989ad8a52c813adeebb0c65869283448f496dbb2868c75f69941dec6a9
   patches:
     - force-protoc-executable.patch
+    # no point in marking baselibs or vendored libs (e.g. upb) as private
+    - patches-grpc/0001-mark-linkage-of-c-ares-openssl-re2-zlib-as-private.patch
+    # since grpc uses internal abseil targets and we're already building
+    # against shared abseil on unix anyway, only make private on win
+    - patches-grpc/0002-mark-abseil-linkage-as-private.patch  # [win]
+    - patches-grpc/0003-add-missing-gpr-linkage-for-grpc_csharp_ext.patch
     - patches-grpcio/0001-Monkey-patch-distutils.ccompiler.spawn-to-elide-std-.patch
     - patches-grpcio/0002-Link-against-grpc.patch
     - patches-grpcio/0003-windows-ssl-lib-names.patch  # [win]
