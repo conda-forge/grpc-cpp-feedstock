@@ -98,6 +98,7 @@ outputs:
         - libprotobuf
         - re2
         - openssl
+        - zlib
         - pthread-stubs                               # [linux]
       run:
         - python
