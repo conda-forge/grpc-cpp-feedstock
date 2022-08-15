@@ -50,9 +50,10 @@ outputs:
         - re2
         - openssl
         - zlib
-      # these should not be necessary, but grpc currently sets
-      # zlib & abseil as non-private
       run:
+        - ucrt  # [win]
+        # the following should not be necessary, but grpc currently
+        # sets zlib & abseil as non-private
         - libabseil-static ={{ libabseil_static }}=cxx11*  # [win]
         - zlib
     test:
