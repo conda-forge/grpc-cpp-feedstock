@@ -16,7 +16,7 @@ source:
     - patches-grpcio/0001-fix-win-setup.patch          # [win]
 
 build:
-  number: 1
+  number: 2
 
 outputs:
   - name: grpc-cpp
@@ -49,6 +49,11 @@ outputs:
         - libprotobuf
         - re2
         - openssl
+        - zlib
+      # these should not be necessary, but grpc currently sets
+      # zlib & abseil as non-private
+      run:
+        - libabseil-static ={{ libabseil_static }}=cxx11*  # [win]
         - zlib
 
   - name: grpcio
