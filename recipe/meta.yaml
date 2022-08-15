@@ -12,7 +12,7 @@ source:
     - force-protoc-executable.patch
 
 build:
-  number: 4
+  number: 5
   run_exports:
     - {{ pin_subpackage('grpc-cpp', max_pin='x.x') }}
 
