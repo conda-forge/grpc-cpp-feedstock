@@ -61,6 +61,7 @@ outputs:
         # https://discourse.cmake.org/t/questions-about-find-package-cli-msvc/6194
         - {{ compiler('c') }}
         - cmake
+        - make   # [linux]
       files:
         - cf_test/
       commands:
