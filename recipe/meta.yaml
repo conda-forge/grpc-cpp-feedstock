@@ -9,6 +9,7 @@ source:
   sha256: e266aa0d9d9cddb876484a370b94f468248594a96ca0b6f87c21f969db2b8c5b
   patches:
     - force-protoc-executable.patch
+    - patches-grpc/0001-Link-libraries-privately.patch
     - patches-grpcio/0001-Monkey-patch-distutils.ccompiler.spawn-to-elide-std-.patch
     - patches-grpcio/0002-Link-against-grpc.patch
     - patches-grpcio/0003-windows-ssl-lib-names.patch  # [win]
