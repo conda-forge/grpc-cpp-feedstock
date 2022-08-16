@@ -3,5 +3,7 @@ c_compiler_version:    # [linux]
 cxx_compiler_version:  # [linux]
 - '11'                 # [linux]
 
-libabseil:             # [unix]
-- '20211102.0'         # [unix] 
+libabseil:
+- '20211102.0'
+libabseil_static:
+- '20211102.0'
