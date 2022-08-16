@@ -40,7 +40,7 @@ outputs:
         - openssl     # [build_platform != target_platform]
         - zlib        # [build_platform != target_platform]
       host:
-        - libabseil                   # [unix]
+        - libabseil 20211102.0                   # [unix]
         # windows not ready for C++17 of shared abseil builds yet;
         # keep one line unpinned for migrator to pick it up
         - libabseil-static 20211102.0            # [win]
