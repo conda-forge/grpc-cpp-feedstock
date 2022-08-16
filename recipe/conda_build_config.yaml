@@ -2,3 +2,10 @@ c_compiler_version:    # [linux]
 - '11'                 # [linux]
 cxx_compiler_version:  # [linux]
 - '11'                 # [linux]
+
+# As of 2022/07/26 grpc and abseil_cpp are zipped together
+abseil_cpp:
+  # The future version we want to migrate to
+  - '20220623.0'
+grpc_cpp:
+  - '1.48'
