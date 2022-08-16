@@ -40,10 +40,10 @@ outputs:
         - openssl     # [build_platform != target_platform]
         - zlib        # [build_platform != target_platform]
       host:
-        - libabseil 20211102.0                   # [unix]
+        - libabseil 20211102.0                 # [unix]
         # windows not ready for C++17 of shared abseil builds yet;
         # keep one line unpinned for migrator to pick it up
-        - libabseil-static 20211102.0            # [win]
+        - libabseil-static 20211102.0          # [win]
         - libabseil-static =20211102.0=cxx11*  # [win]
         - c-ares
         - libprotobuf
@@ -78,7 +78,7 @@ outputs:
         - python                                 # [build_platform != target_platform]
         - cross-python_{{ target_platform }}     # [build_platform != target_platform]
         - cython                                 # [build_platform != target_platform]
-        - libabseil 20211102.0                              # [build_platform != target_platform]
+        - libabseil 20211102.0                   # [build_platform != target_platform]
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
       host:
@@ -87,10 +87,10 @@ outputs:
         - setuptools
         - cython
         - six >=1.6.0
-        - libabseil 20211102.0                   # [unix]
+        - libabseil 20211102.0                 # [unix]
         # windows not ready for C++17 of shared abseil builds yet;
         # keep one line unpinned for migrator to pick it up
-        - libabseil-static 20211102.0            # [win]
+        - libabseil-static 20211102.0          # [win]
         - libabseil-static =20211102.0=cxx11*  # [win]
         - {{ pin_subpackage('grpc-cpp', exact=True) }}
         - c-ares
