@@ -54,7 +54,7 @@ outputs:
         - ucrt  # [win]
         # the following should not be necessary, but grpc currently
         # sets zlib & abseil as non-private
-        - libabseil-static ={{ libabseil_static }}=cxx11*  # [win]
+        - libabseil-static =20211102.0=cxx11*  # [win]
         - zlib
     test:
       requires:
