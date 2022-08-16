@@ -1,7 +1,5 @@
 MACOSX_DEPLOYMENT_TARGET:
-- '11.0'
-abseil_cpp:
-- '20220623.0'
+- '10.9'
 c_ares:
 - '1'
 c_compiler:
@@ -21,7 +19,7 @@ libabseil:
 libprotobuf:
 - '3.20'
 macos_machine:
-- arm64-apple-darwin20.0.0
+- x86_64-apple-darwin13.4.0
 openssl:
 - '3'
 pin_run_as_build:
@@ -32,12 +30,13 @@ pin_run_as_build:
     max_pin: x.x
 python:
 - 3.10.* *_cpython
+- 3.7.* *_cpython
 - 3.8.* *_cpython
 - 3.9.* *_cpython
 re2:
 - 2022.06.01
 target_platform:
-- osx-arm64
+- osx-64
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
