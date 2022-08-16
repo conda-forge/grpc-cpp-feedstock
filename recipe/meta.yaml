@@ -16,7 +16,7 @@ source:
     - patches-grpcio/0004-Fix-windows-setup.patch      # [win]
 
 build:
-  number: 2
+  number: 3
 
 outputs:
   - name: grpc-cpp
