@@ -59,10 +59,6 @@ outputs:
         - zlib
       run:
         - ucrt  # [win]
-        # the following should not be necessary, but grpc currently
-        # sets zlib & abseil as non-private
-        - libabseil-static ={{ libabseil_static }}=cxx14*  # [win]
-        - zlib
     test:
       requires:
         # cmake needs compiler to be able to run package detection, see
