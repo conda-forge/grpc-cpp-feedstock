@@ -1,17 +1,17 @@
-From 27f48d32403457dfba095781d2683f975e712c7b Mon Sep 17 00:00:00 2001
+From ab7a219a7267a7f773286ba5f6e3590cb7d609a5 Mon Sep 17 00:00:00 2001
 From: Mark Harfouche <mark.harfouche@gmail.com>
 Date: Mon, 15 Aug 2022 15:24:27 -0400
 Subject: [PATCH] Link libraries privately
 
 ---
- CMakeLists.txt | 44 ++++++++++++++++++++++----------------------
- 1 file changed, 22 insertions(+), 22 deletions(-)
+ CMakeLists.txt | 36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 90a8f6a3aa..dc3dfb18bc 100644
+index 2bfbcd4c6b..cb2ab07f16 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -2379,28 +2379,28 @@ target_include_directories(grpc
+@@ -2137,26 +2137,26 @@ target_include_directories(grpc
      ${_gRPC_ZLIB_INCLUDE_DIR}
  )
  target_link_libraries(grpc
@@ -23,20 +23,15 @@ index 90a8f6a3aa..dc3dfb18bc 100644
 -  ${_gRPC_UPB_LIBRARIES}
 -  ${_gRPC_ALLTARGETS_LIBRARIES}
 -  absl::flat_hash_map
--  absl::flat_hash_set
 -  absl::inlined_vector
--  absl::any_invocable
 -  absl::bind_front
--  absl::function_ref
 -  absl::hash
--  absl::type_traits
 -  absl::statusor
--  absl::span
+-  absl::variant
 -  absl::utility
 -  gpr
 -  ${_gRPC_SSL_LIBRARIES}
 -  address_sorting
--  upb
 +  PRIVATE ${_gRPC_BASELIB_LIBRARIES}
 +  PRIVATE ${_gRPC_ZLIB_LIBRARIES}
 +  PRIVATE ${_gRPC_CARES_LIBRARIES}
@@ -45,23 +40,22 @@ index 90a8f6a3aa..dc3dfb18bc 100644
 +  PRIVATE ${_gRPC_UPB_LIBRARIES}
 +  PRIVATE ${_gRPC_ALLTARGETS_LIBRARIES}
 +  PRIVATE absl::flat_hash_map
-+  PRIVATE absl::flat_hash_set
 +  PRIVATE absl::inlined_vector
-+  PRIVATE absl::any_invocable
 +  PRIVATE absl::bind_front
-+  PRIVATE absl::function_ref
 +  PRIVATE absl::hash
-+  PRIVATE absl::type_traits
 +  PRIVATE absl::statusor
-+  PRIVATE absl::span
++  PRIVATE absl::variant
 +  PRIVATE absl::utility
 +  PRIVATE gpr
 +  PRIVATE ${_gRPC_SSL_LIBRARIES}
 +  PRIVATE address_sorting
-+  PRIVATE upb
  )
  if(_gRPC_PLATFORM_IOS OR _gRPC_PLATFORM_MAC)
-   target_link_libraries(grpc "-framework CoreFoundation")
+-  target_link_libraries(grpc "-framework CoreFoundation")
++  target_link_libraries(grpc PRIVATE "-framework CoreFoundation")
+ endif()
+ 
+ foreach(_hdr
 -- 
-2.34.1
+2.37.0.windows.1
 
