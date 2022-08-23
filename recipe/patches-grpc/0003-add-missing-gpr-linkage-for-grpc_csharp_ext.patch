@@ -1,0 +1,24 @@
+From 3ceb0e9ddade8340fb52bff8e889a2602887cd52 Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Tue, 23 Aug 2022 12:03:47 +0200
+Subject: [PATCH 3/3] add missing gpr linkage for grpc_csharp_ext
+
+---
+ CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 3c04f2f1e6..6e039f246c 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -2243,6 +2243,7 @@ target_include_directories(grpc_csharp_ext
+ target_link_libraries(grpc_csharp_ext
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+   grpc
++  gpr
+ )
+ 
+ 
+-- 
+2.37.0.windows.1
+
