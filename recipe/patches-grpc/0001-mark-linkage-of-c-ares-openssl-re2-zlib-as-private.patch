@@ -1,18 +1,18 @@
-From b8826191840204a19db33f73dba3062b3d8a3660 Mon Sep 17 00:00:00 2001
+From 1094dce43d5fb822dfd6833d0537b99ba2ca8ab4 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 23 Aug 2022 11:45:20 +0200
 Subject: [PATCH 1/3] mark linkage of c-ares/openssl/re2/zlib as private
 
 Co-Authored-By: Mark Harfouche <mark.harfouche@gmail.com>
 ---
- CMakeLists.txt | 94 +++++++++++++++++++++++++++-----------------------
- 1 file changed, 51 insertions(+), 43 deletions(-)
+ CMakeLists.txt | 96 +++++++++++++++++++++++++++-----------------------
+ 1 file changed, 51 insertions(+), 45 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index d3963b074b..b252fc72e7 100644
+index 25990a5d8a..be88fbc812 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -2306,30 +2306,34 @@ target_include_directories(grpc
+@@ -2340,31 +2340,34 @@ target_include_directories(grpc
      ${_gRPC_ZLIB_INCLUDE_DIR}
  )
  target_link_libraries(grpc
@@ -23,11 +23,11 @@ index d3963b074b..b252fc72e7 100644
 -  ${_gRPC_RE2_LIBRARIES}
 -  ${_gRPC_UPB_LIBRARIES}
 -  ${_gRPC_ALLTARGETS_LIBRARIES}
--  absl::cleanup
 -  absl::flat_hash_map
 -  absl::flat_hash_set
 -  absl::inlined_vector
 -  absl::bind_front
+-  absl::function_ref
 -  absl::hash
 -  absl::type_traits
 -  absl::statusor
@@ -37,6 +37,7 @@ index d3963b074b..b252fc72e7 100644
 -  gpr
 -  ${_gRPC_SSL_LIBRARIES}
 -  address_sorting
+-  upb
 +  # core libs
 +  PUBLIC  ${_gRPC_ALLTARGETS_LIBRARIES}
 +  PUBLIC  ${_gRPC_BASELIB_LIBRARIES}
@@ -49,11 +50,11 @@ index d3963b074b..b252fc72e7 100644
 +  PRIVATE ${_gRPC_SSL_LIBRARIES}
 +  PRIVATE ${_gRPC_ZLIB_LIBRARIES}
 +  # external dependencies that need to available at runtime
-+  PUBLIC  absl::cleanup
 +  PUBLIC  absl::flat_hash_map
 +  PUBLIC  absl::flat_hash_set
 +  PUBLIC  absl::inlined_vector
 +  PUBLIC  absl::bind_front
++  PUBLIC  absl::function_ref
 +  PUBLIC  absl::hash
 +  PUBLIC  absl::type_traits
 +  PUBLIC  absl::statusor
@@ -69,7 +70,7 @@ index d3963b074b..b252fc72e7 100644
  endif()
  
  foreach(_hdr
-@@ -2850,29 +2854,33 @@ target_include_directories(grpc_unsecure
+@@ -2907,30 +2910,33 @@ target_include_directories(grpc_unsecure
      ${_gRPC_ZLIB_INCLUDE_DIR}
  )
  target_link_libraries(grpc_unsecure
@@ -80,11 +81,11 @@ index d3963b074b..b252fc72e7 100644
 -  ${_gRPC_RE2_LIBRARIES}
 -  ${_gRPC_UPB_LIBRARIES}
 -  ${_gRPC_ALLTARGETS_LIBRARIES}
--  absl::cleanup
 -  absl::flat_hash_map
 -  absl::flat_hash_set
 -  absl::inlined_vector
 -  absl::bind_front
+-  absl::function_ref
 -  absl::hash
 -  absl::type_traits
 -  absl::statusor
@@ -93,6 +94,7 @@ index d3963b074b..b252fc72e7 100644
 -  absl::utility
 -  gpr
 -  address_sorting
+-  upb
 +  # core libs
 +  PUBLIC  ${_gRPC_ALLTARGETS_LIBRARIES}
 +  PUBLIC  ${_gRPC_BASELIB_LIBRARIES}
@@ -104,11 +106,11 @@ index d3963b074b..b252fc72e7 100644
 +  PRIVATE ${_gRPC_RE2_LIBRARIES}
 +  PRIVATE ${_gRPC_ZLIB_LIBRARIES}
 +  # external dependencies that need to available at runtime
-+  PUBLIC  absl::cleanup
 +  PUBLIC  absl::flat_hash_map
 +  PUBLIC  absl::flat_hash_set
 +  PUBLIC  absl::inlined_vector
 +  PUBLIC  absl::bind_front
++  PUBLIC  absl::function_ref
 +  PUBLIC  absl::hash
 +  PUBLIC  absl::type_traits
 +  PUBLIC  absl::statusor

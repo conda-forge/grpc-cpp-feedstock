@@ -1,18 +1,18 @@
-From 3e69cd1777ca30d51caf86c8ec833af8b3033fa8 Mon Sep 17 00:00:00 2001
+From 44932e458715d4df5a54c15a21fb2ebf47794673 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 23 Aug 2022 12:01:57 +0200
 Subject: [PATCH 2/3] mark abseil linkage as private (main packages)
 
 Co-Authored-By: Mark Harfouche <mark.harfouche@gmail.com>
 ---
- CMakeLists.txt | 77 ++++++++++++++++++++++++++------------------------
- 1 file changed, 40 insertions(+), 37 deletions(-)
+ CMakeLists.txt | 76 ++++++++++++++++++++++++++------------------------
+ 1 file changed, 40 insertions(+), 36 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index b252fc72e7..1112a97ed3 100644
+index be88fbc812..0ceb248c67 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1530,19 +1530,22 @@ target_include_directories(gpr
+@@ -1558,18 +1558,22 @@ target_include_directories(gpr
      ${_gRPC_ZLIB_INCLUDE_DIR}
  )
  target_link_libraries(gpr
@@ -28,7 +28,6 @@ index b252fc72e7..1112a97ed3 100644
 -  absl::synchronization
 -  absl::time
 -  absl::optional
--  upb
 +  # core libs
 +  PUBLIC  ${_gRPC_ALLTARGETS_LIBRARIES}
 +  # external dependencies used within grpc
@@ -48,16 +47,16 @@ index b252fc72e7..1112a97ed3 100644
  )
  if(_gRPC_PLATFORM_ANDROID)
    target_link_libraries(gpr
-@@ -2317,18 +2320,18 @@ target_link_libraries(grpc
+@@ -2351,18 +2355,18 @@ target_link_libraries(grpc
    PRIVATE ${_gRPC_RE2_LIBRARIES}
    PRIVATE ${_gRPC_SSL_LIBRARIES}
    PRIVATE ${_gRPC_ZLIB_LIBRARIES}
 -  # external dependencies that need to available at runtime
--  PUBLIC  absl::cleanup
 -  PUBLIC  absl::flat_hash_map
 -  PUBLIC  absl::flat_hash_set
 -  PUBLIC  absl::inlined_vector
 -  PUBLIC  absl::bind_front
+-  PUBLIC  absl::function_ref
 -  PUBLIC  absl::hash
 -  PUBLIC  absl::type_traits
 -  PUBLIC  absl::statusor
@@ -65,11 +64,11 @@ index b252fc72e7..1112a97ed3 100644
 -  PUBLIC  absl::variant
 -  PUBLIC  absl::utility
 +  # external dependencies used within grpc
-+  PRIVATE absl::cleanup
 +  PRIVATE absl::flat_hash_map
 +  PRIVATE absl::flat_hash_set
 +  PRIVATE absl::inlined_vector
 +  PRIVATE absl::bind_front
++  PRIVATE absl::function_ref
 +  PRIVATE absl::hash
 +  PRIVATE absl::type_traits
 +  PRIVATE absl::statusor
@@ -79,16 +78,16 @@ index b252fc72e7..1112a97ed3 100644
    # targets which belong to grpc anyway
    PUBLIC  gpr
  )
-@@ -2864,18 +2867,18 @@ target_link_libraries(grpc_unsecure
+@@ -2920,18 +2924,18 @@ target_link_libraries(grpc_unsecure
    PRIVATE ${_gRPC_CARES_LIBRARIES}
    PRIVATE ${_gRPC_RE2_LIBRARIES}
    PRIVATE ${_gRPC_ZLIB_LIBRARIES}
 -  # external dependencies that need to available at runtime
--  PUBLIC  absl::cleanup
 -  PUBLIC  absl::flat_hash_map
 -  PUBLIC  absl::flat_hash_set
 -  PUBLIC  absl::inlined_vector
 -  PUBLIC  absl::bind_front
+-  PUBLIC  absl::function_ref
 -  PUBLIC  absl::hash
 -  PUBLIC  absl::type_traits
 -  PUBLIC  absl::statusor
@@ -96,11 +95,11 @@ index b252fc72e7..1112a97ed3 100644
 -  PUBLIC  absl::variant
 -  PUBLIC  absl::utility
 +  # external dependencies used within grpc
-+  PRIVATE absl::cleanup
 +  PRIVATE absl::flat_hash_map
 +  PRIVATE absl::flat_hash_set
 +  PRIVATE absl::inlined_vector
 +  PRIVATE absl::bind_front
++  PRIVATE absl::function_ref
 +  PRIVATE absl::hash
 +  PRIVATE absl::type_traits
 +  PRIVATE absl::statusor
