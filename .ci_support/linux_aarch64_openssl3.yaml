@@ -20,10 +20,8 @@ cxx_compiler_version:
 - '11'
 docker_image:
 - quay.io/condaforge/linux-anvil-cos7-x86_64
-libabseil:
-- '20220623.0'
 libprotobuf:
-- '3.20'
+- '3.21'
 openssl:
 - '3'
 pin_run_as_build:
