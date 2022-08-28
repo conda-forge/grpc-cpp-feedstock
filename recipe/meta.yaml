@@ -9,6 +9,12 @@ source:
   sha256: e266aa0d9d9cddb876484a370b94f468248594a96ca0b6f87c21f969db2b8c5b
   patches:
     - force-protoc-executable.patch
+    # no point in marking baselibs or vendored libs (e.g. upb) as private
+    - patches-grpc/0001-mark-linkage-of-c-ares-openssl-re2-zlib-as-private.patch
+    # since grpc uses internal abseil targets and we're already building
+    # against shared abseil on unix anyway, only make private on win
+    - patches-grpc/0002-mark-abseil-linkage-as-private.patch  # [win]
+    - patches-grpc/0003-add-missing-gpr-linkage-for-grpc_csharp_ext.patch
     - patches-grpcio/0001-Monkey-patch-distutils.ccompiler.spawn-to-elide-std-.patch
     - patches-grpcio/0002-Link-against-grpc.patch
     - patches-grpcio/0003-windows-ssl-lib-names.patch  # [win]
@@ -16,7 +22,7 @@ source:
     - patches-grpcio/0001-fix-win-setup.patch          # [win]
 
 build:
-  number: 3
+  number: 4
 
 outputs:
   - name: grpc-cpp
@@ -34,17 +40,17 @@ outputs:
         - libprotobuf
         - ninja
         # We need all host deps also in build for cross-compiling
-        - libabseil 20211102.0   # [build_platform != target_platform]
+        - libabseil   # [build_platform != target_platform]
         - c-ares      # [build_platform != target_platform]
         - re2         # [build_platform != target_platform]
         - openssl     # [build_platform != target_platform]
         - zlib        # [build_platform != target_platform]
       host:
-        - libabseil 20211102.0                 # [unix]
+        - libabseil                   # [unix]
         # windows not ready for C++17 of shared abseil builds yet;
         # keep one line unpinned for migrator to pick it up
-        - libabseil-static 20211102.0          # [win]
-        - libabseil-static =20211102.0=cxx11*  # [win]
+        - libabseil-static            # [win]
+        - libabseil-static =*=cxx11*  # [win]
         - c-ares
         - libprotobuf
         - re2
@@ -52,10 +58,6 @@ outputs:
         - zlib
       run:
         - ucrt  # [win]
-        # the following should not be necessary, but grpc currently
-        # sets zlib & abseil as non-private
-        - libabseil-static =20211102.0=cxx11*  # [win]
-        - zlib
     test:
       requires:
         # cmake needs compiler to be able to run package detection, see
@@ -78,7 +80,7 @@ outputs:
         - python                                 # [build_platform != target_platform]
         - cross-python_{{ target_platform }}     # [build_platform != target_platform]
         - cython                                 # [build_platform != target_platform]
-        - libabseil 20211102.0                   # [build_platform != target_platform]
+        - libabseil                              # [build_platform != target_platform]
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
       host:
@@ -87,16 +89,17 @@ outputs:
         - setuptools
         - cython
         - six >=1.6.0
-        - libabseil 20211102.0                 # [unix]
+        - libabseil                   # [unix]
         # windows not ready for C++17 of shared abseil builds yet;
         # keep one line unpinned for migrator to pick it up
-        - libabseil-static 20211102.0          # [win]
-        - libabseil-static =20211102.0=cxx11*  # [win]
+        - libabseil-static            # [win]
+        - libabseil-static =*=cxx11*  # [win]
         - {{ pin_subpackage('grpc-cpp', exact=True) }}
         - c-ares
         - libprotobuf
         - re2
         - openssl
+        - zlib
         - pthread-stubs                               # [linux]
       run:
         - python
