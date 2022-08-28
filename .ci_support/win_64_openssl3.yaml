@@ -1,19 +1,17 @@
 c_ares:
 - '1'
 c_compiler:
-- vs2017
+- vs2019
 channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
 cxx_compiler:
-- vs2017
-libabseil:
-- '20220623.0'
+- vs2019
 libabseil_static:
 - '20220623.0'
 libprotobuf:
-- '3.20'
+- '3.21'
 openssl:
 - '3'
 pin_run_as_build:
