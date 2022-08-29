@@ -9,13 +9,6 @@ source:
   sha256: 320366665d19027cda87b2368c03939006a37e0388bfd1091c8d2a96fbc93bd8
   patches:
     - force-protoc-executable.patch
-    # no point in marking baselibs or vendored libs (e.g. upb) as private
-    - patches-grpc/0001-mark-linkage-of-c-ares-openssl-re2-zlib-as-private.patch
-    # since grpc uses internal abseil targets and we're already building
-    # against shared abseil on unix anyway, only make private on win
-    - patches-grpc/0002-mark-abseil-linkage-as-private-main-packages.patch      # [win]
-    # split off more mechanical part into separate patch for ease of rebasing
-    - patches-grpc/0003-mark-abseil-linkage-as-private-all-other-targtes.patch  # [win]
     - patches-grpcio/0001-Monkey-patch-distutils.ccompiler.spawn-to-elide-std-.patch
     - patches-grpcio/0002-Link-against-grpc.patch
     - patches-grpcio/0003-windows-ssl-lib-names.patch  # [win]
@@ -59,6 +52,13 @@ outputs:
         - zlib
       run:
         - ucrt  # [win]
+        # While zlib and openssl should in theory be marked as a private library
+        # grpc.pc (the pkgconfig file) seems to require it at link time for any
+        # package linking to grpc; similarly for building against a static abseil,
+        # which doesn't have a run-export but is needed at link-time.
+        - libabseil-static ={{ libabseil_static }}=cxx11*  # [win]
+        - openssl
+        - zlib
     test:
       requires:
         # cmake needs compiler to be able to run package detection, see
@@ -100,7 +100,6 @@ outputs:
         - libprotobuf
         - re2
         - openssl
-        - zlib
         - pthread-stubs                               # [linux]
       run:
         - python
