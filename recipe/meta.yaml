@@ -1,5 +1,13 @@
 {% set version = "1.47.1" %}
 
+{% set libraries = [
+    "address_sorting", "gpr", "grpc++", "grpc++_unsecure",
+    "grpc", "grpc_unsecure", "upb"
+] %}
+{% set binaries_plugin_langs = [
+    "cpp", "csharp", "node", "objective_c", "php", "python", "ruby"
+] %}
+
 package:
   name: grpc-split
   version: {{ version }}
@@ -72,6 +80,25 @@ outputs:
         - cd cf_test
         - cmake $CMAKE_ARGS .   # [unix and (build_platform == target_platform)]
         - cmake %CMAKE_ARGS% .  # [win]
+
+        # libraries
+        {% for each_lib in libraries %}
+        # presence of shared libs (unix)
+        - test -f $PREFIX/lib/lib{{ each_lib }}.so              # [linux]
+        - test -f $PREFIX/lib/lib{{ each_lib }}.dylib           # [osx]
+
+        # absence of static libs (unix)
+        - test ! -f $PREFIX/lib/lib{{ each_lib }}.a             # [unix]
+
+        # static libs on windows
+        - if not exist %LIBRARY_LIB%\{{ each_lib }}.lib exit 1  # [win]
+        {% endfor %}
+
+        # binaries
+        {% for each_lang in binaries_plugin_langs %}
+        - test -f $PREFIX/bin/grpc_{{ each_lang }}_plugin                    # [unix]
+        - if not exist %LIBRARY_BIN%\grpc_{{ each_lang }}_plugin.exe exit 1  # [win]
+        {% endfor %}
 
   - name: grpcio
     script: build-grpcio.sh  # [not win]
