@@ -21,12 +21,11 @@ source:
     - force-protoc-executable.patch
     # no point in marking baselibs or vendored libs (e.g. upb) as private
     - patches-grpc/0001-mark-linkage-of-c-ares-openssl-re2-zlib-as-private.patch
-    # since we're building against static abseil on windows, remove it from
-    # link surface; on unix we're building against shared anyway (so it's
-    # always in the target env due to the run-export)
-    - patches-grpc/0002-remove-abseil-linkage-main-packages.patch      # [win]
+    # since grpc uses internal abseil targets and we're already building
+    # against shared abseil on unix anyway, only make private on win
+    - patches-grpc/0002-mark-abseil-linkage-as-private-main-packages.patch      # [win]
     # split off more mechanical part into separate patch for ease of rebasing
-    - patches-grpc/0003-remove-abseil-linkage-all-other-targets.patch  # [win]
+    - patches-grpc/0003-mark-abseil-linkage-as-private-all-other-targtes.patch  # [win]
     - patches-grpc/0004-add-missing-gpr-linkage-for-grpc_csharp_ext.patch
     - patches-grpc/0005-patch-tests-to-use-passed-CXX_STANDARD.patch
     - patches-grpcio/0001-Monkey-patch-distutils.ccompiler.spawn-to-elide-std-.patch

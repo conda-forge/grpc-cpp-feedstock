@@ -1,0 +1,144 @@
+From a7b6d9ceeb7728ea02ae07124ef16d3a71f49bae Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Tue, 23 Aug 2022 12:01:57 +0200
+Subject: [PATCH 2/5] mark abseil linkage as private (main packages)
+
+Co-Authored-By: Mark Harfouche <mark.harfouche@gmail.com>
+---
+ CMakeLists.txt | 71 ++++++++++++++++++++++++++------------------------
+ 1 file changed, 37 insertions(+), 34 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 1c22d338f1..79cb398d2c 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1359,19 +1359,22 @@ target_include_directories(gpr
+     ${_gRPC_ZLIB_INCLUDE_DIR}
+ )
+ target_link_libraries(gpr
+-  ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::base
+-  absl::core_headers
+-  absl::memory
+-  absl::random_random
+-  absl::status
+-  absl::cord
+-  absl::str_format
+-  absl::strings
+-  absl::synchronization
+-  absl::time
+-  absl::optional
+-  upb
++  # core libs
++  PUBLIC  ${_gRPC_ALLTARGETS_LIBRARIES}
++  # external dependencies used within grpc
++  PRIVATE absl::base
++  PRIVATE absl::core_headers
++  PRIVATE absl::memory
++  PRIVATE absl::random_random
++  PRIVATE absl::status
++  PRIVATE absl::cord
++  PRIVATE absl::str_format
++  PRIVATE absl::strings
++  PRIVATE absl::synchronization
++  PRIVATE absl::time
++  PRIVATE absl::optional
++  # vendored libs
++  PUBLIC  upb
+ )
+ if(_gRPC_PLATFORM_ANDROID)
+   target_link_libraries(gpr
+@@ -2148,14 +2151,14 @@ target_link_libraries(grpc
+   PRIVATE ${_gRPC_RE2_LIBRARIES}
+   PRIVATE ${_gRPC_SSL_LIBRARIES}
+   PRIVATE ${_gRPC_ZLIB_LIBRARIES}
+-  # external dependencies that need to available at runtime
+-  PUBLIC  absl::flat_hash_map
+-  PUBLIC  absl::inlined_vector
+-  PUBLIC  absl::bind_front
+-  PUBLIC  absl::hash
+-  PUBLIC  absl::statusor
+-  PUBLIC  absl::variant
+-  PUBLIC  absl::utility
++  # external dependencies used within grpc
++  PRIVATE absl::flat_hash_map
++  PRIVATE absl::inlined_vector
++  PRIVATE absl::bind_front
++  PRIVATE absl::hash
++  PRIVATE absl::statusor
++  PRIVATE absl::variant
++  PRIVATE absl::utility
+   # targets which belong to grpc anyway
+   PUBLIC  gpr
+ )
+@@ -2733,14 +2736,14 @@ target_link_libraries(grpc_unsecure
+   PRIVATE ${_gRPC_CARES_LIBRARIES}
+   PRIVATE ${_gRPC_RE2_LIBRARIES}
+   PRIVATE ${_gRPC_ZLIB_LIBRARIES}
+-  # external dependencies that need to available at runtime
+-  PUBLIC  absl::flat_hash_map
+-  PUBLIC  absl::inlined_vector
+-  PUBLIC  absl::bind_front
+-  PUBLIC  absl::hash
+-  PUBLIC  absl::statusor
+-  PUBLIC  absl::variant
+-  PUBLIC  absl::utility
++  # external dependencies used within grpc
++  PRIVATE absl::flat_hash_map
++  PRIVATE absl::inlined_vector
++  PRIVATE absl::bind_front
++  PRIVATE absl::hash
++  PRIVATE absl::statusor
++  PRIVATE absl::variant
++  PRIVATE absl::utility
+   # targets which belong to grpc anyway
+   PUBLIC  gpr
+ )
+@@ -17468,7 +17471,7 @@ generate_pkgconfig(
+   "gpr"
+   "gRPC platform support library"
+   "${gRPC_CORE_VERSION}"
+-  "absl_base absl_cord absl_core_headers absl_memory absl_optional absl_random_random absl_status absl_str_format absl_strings absl_synchronization absl_time"
++  ""
+   "-lgpr"
+   ""
+   "gpr.pc")
+@@ -17478,7 +17481,7 @@ generate_pkgconfig(
+   "gRPC"
+   "high performance general RPC framework"
+   "${gRPC_CORE_VERSION}"
+-  "gpr openssl absl_base absl_bind_front absl_cord absl_core_headers absl_flat_hash_map absl_hash absl_inlined_vector absl_memory absl_optional absl_random_random absl_status absl_statusor absl_str_format absl_strings absl_synchronization absl_time absl_utility absl_variant"
++  "gpr openssl"
+   "-lgrpc -laddress_sorting -lupb"
+   ""
+   "grpc.pc")
+@@ -17488,7 +17491,7 @@ generate_pkgconfig(
+   "gRPC unsecure"
+   "high performance general RPC framework without SSL"
+   "${gRPC_CORE_VERSION}"
+-  "gpr absl_base absl_bind_front absl_cord absl_core_headers absl_flat_hash_map absl_hash absl_inlined_vector absl_memory absl_optional absl_random_random absl_status absl_statusor absl_str_format absl_strings absl_synchronization absl_time absl_utility absl_variant"
++  "gpr"
+   "-lgrpc_unsecure"
+   ""
+   "grpc_unsecure.pc")
+@@ -17498,7 +17501,7 @@ generate_pkgconfig(
+   "gRPC++"
+   "C++ wrapper for gRPC"
+   "${gRPC_CPP_VERSION}"
+-  "grpc absl_base absl_bind_front absl_cord absl_core_headers absl_flat_hash_map absl_hash absl_inlined_vector absl_memory absl_optional absl_random_random absl_status absl_statusor absl_str_format absl_strings absl_synchronization absl_time absl_utility absl_variant"
++  "grpc"
+   "-lgrpc++"
+   ""
+   "grpc++.pc")
+@@ -17508,7 +17511,7 @@ generate_pkgconfig(
+   "gRPC++ unsecure"
+   "C++ wrapper for gRPC without SSL"
+   "${gRPC_CPP_VERSION}"
+-  "grpc_unsecure absl_base absl_bind_front absl_cord absl_core_headers absl_flat_hash_map absl_hash absl_inlined_vector absl_memory absl_optional absl_random_random absl_status absl_statusor absl_str_format absl_strings absl_synchronization absl_time absl_utility absl_variant"
++  "grpc_unsecure"
+   "-lgrpc++_unsecure"
+   ""
+   "grpc++_unsecure.pc")
+-- 
+2.37.0.windows.1
+

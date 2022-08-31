@@ -1,4 +1,4 @@
-From a4f7624d5dfb3730a7687bbe586a759641300a12 Mon Sep 17 00:00:00 2001
+From d263b4c7a99e393d317a97eb7c81fbd230b7e6fe Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 23 Aug 2022 12:03:47 +0200
 Subject: [PATCH 4/5] add missing gpr linkage for grpc_csharp_ext
@@ -8,10 +8,10 @@ Subject: [PATCH 4/5] add missing gpr linkage for grpc_csharp_ext
  1 file changed, 1 insertion(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 506c3062ab..b04668a8fb 100644
+index ed94dbc80f..253397de6e 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -2223,6 +2223,7 @@ target_include_directories(grpc_csharp_ext
+@@ -2243,6 +2243,7 @@ target_include_directories(grpc_csharp_ext
  target_link_libraries(grpc_csharp_ext
    ${_gRPC_ALLTARGETS_LIBRARIES}
    grpc
