@@ -4,8 +4,9 @@
 # https://github.com/grpc/grpc/blob/v1.46.4/CMakeLists.txt#L28-L32
 {% set core_version = "24.0.0" %}
 
-{% set core_libs = ["address_sorting", "gpr", "grpc", "grpc_unsecure", "upb"] %}
-{% set cpp_libs = ["grpc++", "grpc++_unsecure"] %}
+{% set core_libs = ["gpr", "grpc", "grpc_unsecure"] %}
+{% set core_cpp_libs = ["grpc++", "grpc++_unsecure"] %}
+{% set vendored_libs = ["address_sorting", "upb"] %}
 {% set binaries_plugin_langs = [
     "cpp", "csharp", "node", "objective_c", "php", "python", "ruby"
 ] %}
@@ -84,16 +85,16 @@ outputs:
       commands:
         # this section will also run run_test.{sh,bat}
 
-        # pkg-config
+        # pkg-config (no metadata for vendored libs)
         {% for each_lib in core_libs %}
         - pkg-config --print-errors --exact-version "{{ core_version }}" {{ each_lib }}
         {% endfor %}
-        {% for each_lib in cpp_libs %}
+        {% for each_lib in core_cpp_libs %}
         - pkg-config --print-errors --exact-version "{{ version }}" {{ each_lib }}
         {% endfor %}
 
         # libraries
-        {% for each_lib in core_libs + cpp_libs %}
+        {% for each_lib in core_libs + core_cpp_libs + vendored_libs %}
         # presence of shared libs (unix)
         - test -f $PREFIX/lib/lib{{ each_lib }}.so              # [linux]
         - test -f $PREFIX/lib/lib{{ each_lib }}.dylib           # [osx]
