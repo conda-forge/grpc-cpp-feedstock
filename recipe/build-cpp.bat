@@ -9,8 +9,6 @@ set CFLAGS=
 set CXXFLAGS=
 
 mkdir build-cpp
-if errorlevel 1 exit 1
-
 cd build-cpp
 
 cmake ..  ^
@@ -26,7 +24,7 @@ cmake ..  ^
       -DgRPC_SSL_PROVIDER="package" ^
       -DgRPC_RE2_PROVIDER="package" ^
       -DgRPC_ZLIB_PROVIDER="package"
+if %ERRORLEVEL% neq 0 exit 1
 
 cmake --build . --config Release --target install
-
-if errorlevel 1 exit 1
+if %ERRORLEVEL% neq 0 exit 1
