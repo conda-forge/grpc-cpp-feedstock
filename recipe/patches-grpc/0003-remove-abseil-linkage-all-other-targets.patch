@@ -1,4 +1,4 @@
-From de92ab782306a391def7443ff9cfc4eefd4e15fb Mon Sep 17 00:00:00 2001
+From 5ced7cc8b764242de06c0d7c5438a23ab06843d2 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 23 Aug 2022 19:43:10 +0200
 Subject: [PATCH 3/5] remove abseil linkage (all other targets)
@@ -10,7 +10,7 @@ lines with `absl::` in target_link_libraries.
  1 file changed, 85 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index d6d54385f9..a9c7f3d9a2 100644
+index 2683778a7d..506c3062ab 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -2285,9 +2285,6 @@ target_include_directories(grpc_test_util

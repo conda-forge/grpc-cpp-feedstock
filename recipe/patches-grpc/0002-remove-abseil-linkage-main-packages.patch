@@ -1,15 +1,15 @@
-From 1843bb517bbf23d4530e7a2c07fa78ee98d1ef89 Mon Sep 17 00:00:00 2001
+From cbf1b84b3e3936327928908e5af593bf342399e1 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 23 Aug 2022 12:01:57 +0200
 Subject: [PATCH 2/5] remove abseil linkage (main packages)
 
 Co-Authored-By: Mark Harfouche <mark.harfouche@gmail.com>
 ---
- CMakeLists.txt | 33 ++++-----------------------------
- 1 file changed, 4 insertions(+), 29 deletions(-)
+ CMakeLists.txt | 43 +++++++++----------------------------------
+ 1 file changed, 9 insertions(+), 34 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index c28168f050..d6d54385f9 100644
+index 1c22d338f1..2683778a7d 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -1359,19 +1359,10 @@ target_include_directories(gpr
@@ -66,6 +66,51 @@ index c28168f050..d6d54385f9 100644
    # targets which belong to grpc anyway
    PUBLIC  gpr
  )
+@@ -17468,7 +17443,7 @@ generate_pkgconfig(
+   "gpr"
+   "gRPC platform support library"
+   "${gRPC_CORE_VERSION}"
+-  "absl_base absl_cord absl_core_headers absl_memory absl_optional absl_random_random absl_status absl_str_format absl_strings absl_synchronization absl_time"
++  ""
+   "-lgpr"
+   ""
+   "gpr.pc")
+@@ -17478,7 +17453,7 @@ generate_pkgconfig(
+   "gRPC"
+   "high performance general RPC framework"
+   "${gRPC_CORE_VERSION}"
+-  "gpr openssl absl_base absl_bind_front absl_cord absl_core_headers absl_flat_hash_map absl_hash absl_inlined_vector absl_memory absl_optional absl_random_random absl_status absl_statusor absl_str_format absl_strings absl_synchronization absl_time absl_utility absl_variant"
++  "gpr openssl"
+   "-lgrpc -laddress_sorting -lupb"
+   ""
+   "grpc.pc")
+@@ -17488,7 +17463,7 @@ generate_pkgconfig(
+   "gRPC unsecure"
+   "high performance general RPC framework without SSL"
+   "${gRPC_CORE_VERSION}"
+-  "gpr absl_base absl_bind_front absl_cord absl_core_headers absl_flat_hash_map absl_hash absl_inlined_vector absl_memory absl_optional absl_random_random absl_status absl_statusor absl_str_format absl_strings absl_synchronization absl_time absl_utility absl_variant"
++  "gpr"
+   "-lgrpc_unsecure"
+   ""
+   "grpc_unsecure.pc")
+@@ -17498,7 +17473,7 @@ generate_pkgconfig(
+   "gRPC++"
+   "C++ wrapper for gRPC"
+   "${gRPC_CPP_VERSION}"
+-  "grpc absl_base absl_bind_front absl_cord absl_core_headers absl_flat_hash_map absl_hash absl_inlined_vector absl_memory absl_optional absl_random_random absl_status absl_statusor absl_str_format absl_strings absl_synchronization absl_time absl_utility absl_variant"
++  "grpc"
+   "-lgrpc++"
+   ""
+   "grpc++.pc")
+@@ -17508,7 +17483,7 @@ generate_pkgconfig(
+   "gRPC++ unsecure"
+   "C++ wrapper for gRPC without SSL"
+   "${gRPC_CPP_VERSION}"
+-  "grpc_unsecure absl_base absl_bind_front absl_cord absl_core_headers absl_flat_hash_map absl_hash absl_inlined_vector absl_memory absl_optional absl_random_random absl_status absl_statusor absl_str_format absl_strings absl_synchronization absl_time absl_utility absl_variant"
++  "grpc_unsecure"
+   "-lgrpc++_unsecure"
+   ""
+   "grpc++_unsecure.pc")
 -- 
 2.37.0.windows.1
 

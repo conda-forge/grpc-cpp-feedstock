@@ -70,11 +70,6 @@ outputs:
         - zlib
       run:
         - ucrt  # [win]
-        # While zlib and openssl should in theory be marked as a private library
-        # grpc.pc (the pkgconfig file) seems to require it at link time for any
-        # package linking to grpc
-        - openssl
-        - zlib
     test:
       requires:
         # cmake needs compiler to be able to run package detection, see
