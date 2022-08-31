@@ -80,13 +80,11 @@ outputs:
         # https://discourse.cmake.org/t/questions-about-find-package-cli-msvc/6194
         - {{ compiler('c') }}
         - cmake
-        - make   # [linux]
-      files:
-        - cf_test/
+        - ninja
+      source_files:
+        - examples/cpp/helloworld/
       commands:
-        - cd cf_test
-        - cmake $CMAKE_ARGS .   # [unix and (build_platform == target_platform)]
-        - cmake %CMAKE_ARGS% .  # [win]
+        # this section will also run run_test.{sh,bat}
 
         # libraries
         {% for each_lib in libraries %}

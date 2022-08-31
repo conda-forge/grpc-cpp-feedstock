@@ -6,3 +6,20 @@ if %ERRORLEVEL% neq 0 exit 1
 
 if not exist hello.grpc.pb.h exit 1
 if not exist hello.grpc.pb.cc exit 1
+
+:: taken from cd examples/cpp/helloworld
+cd examples/cpp/helloworld
+
+mkdir build
+cd build
+
+cmake -G "Ninja" ^
+    -DCMAKE_CXX_STANDARD="11" ^
+    -DCMAKE_BUILD_TYPE=Release ^
+    -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" ^
+    -DCMAKE_MODULE_PATH="%LIBRARY_PREFIX%/lib/cmake" ^
+    ..
+if %ERRORLEVEL% neq 0 exit 1
+
+cmake --build . --config Release
+if %ERRORLEVEL% neq 0 exit 1
