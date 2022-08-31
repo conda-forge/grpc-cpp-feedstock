@@ -80,20 +80,12 @@ outputs:
         - cmake
         - ninja
         - pkg-config
+      files:
+        - test_grpc.sh
+        - test_grpc.bat
       source_files:
         - examples/cpp/helloworld/
       commands:
-        # this section will also run run_test.{sh,bat}
-
-        # pkg-config (no metadata for vendored libs)
-        # should work on windows in principle, but our openssl builds don't have a .pc file
-        {% for each_lib in core_libs %}
-        - pkg-config --print-errors --exact-version "{{ core_version }}" {{ each_lib }}  # [unix]
-        {% endfor %}
-        {% for each_lib in core_cpp_libs %}
-        - pkg-config --print-errors --exact-version "{{ version }}" {{ each_lib }}       # [unix]
-        {% endfor %}
-
         # libraries
         {% for each_lib in core_libs + core_cpp_libs + vendored_libs %}
         # presence of shared libs (unix)
@@ -112,6 +104,20 @@ outputs:
         - test -f $PREFIX/bin/grpc_{{ each_lang }}_plugin                    # [unix]
         - if not exist %LIBRARY_BIN%\grpc_{{ each_lang }}_plugin.exe exit 1  # [win]
         {% endfor %}
+
+        # pkg-config (no metadata for vendored libs)
+        # should work on windows in principle, but our openssl builds don't have a .pc file
+        {% for each_lib in core_libs %}
+        - pkg-config --print-errors --exact-version "{{ core_version }}" {{ each_lib }}  # [unix]
+        {% endfor %}
+        {% for each_lib in core_cpp_libs %}
+        - pkg-config --print-errors --exact-version "{{ version }}" {{ each_lib }}       # [unix]
+        {% endfor %}
+        
+        # final CMake test to compile examples
+        - test_grpc.sh   # [unix]
+        - test_grpc.bat  # [win]
+        
 
   - name: grpcio
     script: build-grpcio.sh   # [not win]
