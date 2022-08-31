@@ -115,8 +115,8 @@ outputs:
         {% endfor %}
         
         # final CMake test to compile examples
-        - test_grpc.sh   # [unix]
-        - test_grpc.bat  # [win]
+        - ./test_grpc.sh   # [unix]
+        - ./test_grpc.bat  # [win]
         
 
   - name: grpcio
