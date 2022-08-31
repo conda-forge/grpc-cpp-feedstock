@@ -1,4 +1,4 @@
-{% set version = "1.48.0" %}
+{% set version = "1.48.1" %}
 
 package:
   name: grpc-split
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/grpc/grpc/archive/v{{ version }}.tar.gz
-  sha256: 9b1f348b15a7637f5191e4e673194549384f2eccf01fcef7cc1515864d71b424
+  sha256: 320366665d19027cda87b2368c03939006a37e0388bfd1091c8d2a96fbc93bd8
   patches:
     - force-protoc-executable.patch
     # no point in marking baselibs or vendored libs (e.g. upb) as private
@@ -23,7 +23,7 @@ source:
     - patches-grpcio/0004-Fix-windows-setup.patch      # [win]
 
 build:
-  number: 5
+  number: 0
 
 outputs:
   - name: grpc-cpp
