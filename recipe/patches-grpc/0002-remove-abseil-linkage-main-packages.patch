@@ -1,0 +1,71 @@
+From 1843bb517bbf23d4530e7a2c07fa78ee98d1ef89 Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Tue, 23 Aug 2022 12:01:57 +0200
+Subject: [PATCH 2/4] remove abseil linkage (main packages)
+
+Co-Authored-By: Mark Harfouche <mark.harfouche@gmail.com>
+---
+ CMakeLists.txt | 33 ++++-----------------------------
+ 1 file changed, 4 insertions(+), 29 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c28168f050..d6d54385f9 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1359,19 +1359,10 @@ target_include_directories(gpr
+     ${_gRPC_ZLIB_INCLUDE_DIR}
+ )
+ target_link_libraries(gpr
+-  ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::base
+-  absl::core_headers
+-  absl::memory
+-  absl::random_random
+-  absl::status
+-  absl::cord
+-  absl::str_format
+-  absl::strings
+-  absl::synchronization
+-  absl::time
+-  absl::optional
+-  upb
++  # core libs
++  PUBLIC  ${_gRPC_ALLTARGETS_LIBRARIES}
++  # vendored libs
++  PUBLIC  upb
+ )
+ if(_gRPC_PLATFORM_ANDROID)
+   target_link_libraries(gpr
+@@ -2148,14 +2139,6 @@ target_link_libraries(grpc
+   PRIVATE ${_gRPC_RE2_LIBRARIES}
+   PRIVATE ${_gRPC_SSL_LIBRARIES}
+   PRIVATE ${_gRPC_ZLIB_LIBRARIES}
+-  # external dependencies that need to available at runtime
+-  PUBLIC  absl::flat_hash_map
+-  PUBLIC  absl::inlined_vector
+-  PUBLIC  absl::bind_front
+-  PUBLIC  absl::hash
+-  PUBLIC  absl::statusor
+-  PUBLIC  absl::variant
+-  PUBLIC  absl::utility
+   # targets which belong to grpc anyway
+   PUBLIC  gpr
+ )
+@@ -2733,14 +2716,6 @@ target_link_libraries(grpc_unsecure
+   PRIVATE ${_gRPC_CARES_LIBRARIES}
+   PRIVATE ${_gRPC_RE2_LIBRARIES}
+   PRIVATE ${_gRPC_ZLIB_LIBRARIES}
+-  # external dependencies that need to available at runtime
+-  PUBLIC  absl::flat_hash_map
+-  PUBLIC  absl::inlined_vector
+-  PUBLIC  absl::bind_front
+-  PUBLIC  absl::hash
+-  PUBLIC  absl::statusor
+-  PUBLIC  absl::variant
+-  PUBLIC  absl::utility
+   # targets which belong to grpc anyway
+   PUBLIC  gpr
+ )
+-- 
+2.37.0.windows.1
+

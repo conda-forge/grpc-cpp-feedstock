@@ -1,0 +1,362 @@
+From de92ab782306a391def7443ff9cfc4eefd4e15fb Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Tue, 23 Aug 2022 19:43:10 +0200
+Subject: [PATCH 3/4] remove abseil linkage (all other targets)
+
+This can be done pretty much mechanically by deleting
+lines with `absl::` in target_link_libraries.
+---
+ CMakeLists.txt | 85 --------------------------------------------------
+ 1 file changed, 85 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d6d54385f9..a9c7f3d9a2 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -2285,9 +2285,6 @@ target_include_directories(grpc_test_util
+ )
+ target_link_libraries(grpc_test_util
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::failure_signal_handler
+-  absl::stacktrace
+-  absl::symbolize
+   grpc
+ )
+ if(_gRPC_PLATFORM_IOS OR _gRPC_PLATFORM_MAC)
+@@ -2353,9 +2350,6 @@ target_include_directories(grpc_test_util_unsecure
+ )
+ target_link_libraries(grpc_test_util_unsecure
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::failure_signal_handler
+-  absl::stacktrace
+-  absl::symbolize
+   grpc_unsecure
+ )
+ if(_gRPC_PLATFORM_IOS OR _gRPC_PLATFORM_MAC)
+@@ -3449,7 +3443,6 @@ target_include_directories(grpc++_test_config
+ target_link_libraries(grpc++_test_config
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::flags_parse
+   gpr
+ )
+ 
+@@ -3506,7 +3499,6 @@ target_include_directories(grpc++_test_util
+ target_link_libraries(grpc++_test_util
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::flags
+   grpc++
+   grpc_test_util
+ )
+@@ -5829,8 +5821,6 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_POSIX)
+ 
+   target_link_libraries(memory_quota_stress_test
+     ${_gRPC_ALLTARGETS_LIBRARIES}
+-    absl::statusor
+-    absl::variant
+     gpr
+   )
+ 
+@@ -7120,9 +7110,6 @@ target_include_directories(activity_test
+ target_link_libraries(activity_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::flat_hash_set
+-  absl::statusor
+-  absl::variant
+   gpr
+ )
+ 
+@@ -7433,8 +7420,6 @@ target_include_directories(arena_promise_test
+ target_link_libraries(arena_promise_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::statusor
+-  absl::variant
+   gpr
+ )
+ 
+@@ -7634,7 +7619,6 @@ target_include_directories(avl_test
+ target_link_libraries(avl_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::inlined_vector
+ )
+ 
+ 
+@@ -8164,9 +8148,6 @@ target_include_directories(call_push_pull_test
+ target_link_libraries(call_push_pull_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::status
+-  absl::statusor
+-  absl::variant
+ )
+ 
+ 
+@@ -8239,7 +8220,6 @@ target_include_directories(capture_test
+ target_link_libraries(capture_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::utility
+ )
+ 
+ 
+@@ -8275,7 +8255,6 @@ target_include_directories(cel_authorization_engine_test
+ target_link_libraries(cel_authorization_engine_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::flat_hash_set
+   grpc_test_util
+ )
+ 
+@@ -8790,9 +8769,6 @@ target_include_directories(chunked_vector_test
+ target_link_libraries(chunked_vector_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::statusor
+-  absl::variant
+-  absl::utility
+   gpr
+ )
+ 
+@@ -10170,8 +10146,6 @@ target_include_directories(exec_ctx_wakeup_scheduler_test
+ target_link_libraries(exec_ctx_wakeup_scheduler_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::statusor
+-  absl::variant
+   gpr
+ )
+ 
+@@ -10485,9 +10459,6 @@ target_include_directories(for_each_test
+ target_link_libraries(for_each_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::flat_hash_set
+-  absl::statusor
+-  absl::variant
+   gpr
+ )
+ 
+@@ -10887,7 +10858,6 @@ target_include_directories(grpc_cli
+ target_link_libraries(grpc_cli
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::flags
+   grpc++
+   grpc++_test_config
+ )
+@@ -12018,8 +11988,6 @@ target_include_directories(if_test
+ target_link_libraries(if_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::statusor
+-  absl::variant
+ )
+ 
+ 
+@@ -12262,7 +12230,6 @@ target_include_directories(join_test
+ target_link_libraries(join_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::variant
+ )
+ 
+ 
+@@ -12371,8 +12338,6 @@ target_include_directories(latch_test
+ target_link_libraries(latch_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::statusor
+-  absl::variant
+   gpr
+ )
+ 
+@@ -12555,8 +12520,6 @@ target_include_directories(loop_test
+ target_link_libraries(loop_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::statusor
+-  absl::variant
+ )
+ 
+ 
+@@ -12591,7 +12554,6 @@ target_include_directories(match_test
+ target_link_libraries(match_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::variant
+ )
+ 
+ 
+@@ -12675,8 +12637,6 @@ target_include_directories(memory_quota_test
+ target_link_libraries(memory_quota_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::statusor
+-  absl::variant
+   gpr
+ )
+ 
+@@ -12978,9 +12938,6 @@ target_include_directories(observable_test
+ target_link_libraries(observable_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::flat_hash_set
+-  absl::statusor
+-  absl::variant
+   gpr
+ )
+ 
+@@ -13266,8 +13223,6 @@ target_include_directories(pipe_test
+ target_link_libraries(pipe_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::statusor
+-  absl::variant
+   gpr
+ )
+ 
+@@ -13303,7 +13258,6 @@ target_include_directories(poll_test
+ target_link_libraries(poll_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::variant
+ )
+ 
+ 
+@@ -13386,11 +13340,6 @@ target_include_directories(promise_factory_test
+ target_link_libraries(promise_factory_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::bind_front
+-  absl::status
+-  absl::optional
+-  absl::variant
+-  absl::utility
+ )
+ 
+ 
+@@ -13425,9 +13374,6 @@ target_include_directories(promise_map_test
+ target_link_libraries(promise_map_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::status
+-  absl::optional
+-  absl::variant
+ )
+ 
+ 
+@@ -13462,9 +13408,6 @@ target_include_directories(promise_test
+ target_link_libraries(promise_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::status
+-  absl::optional
+-  absl::variant
+ )
+ 
+ 
+@@ -13745,7 +13688,6 @@ target_include_directories(race_test
+ target_link_libraries(race_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::variant
+ )
+ 
+ 
+@@ -14101,8 +14043,6 @@ target_include_directories(resource_quota_test
+ target_link_libraries(resource_quota_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::statusor
+-  absl::variant
+   gpr
+ )
+ 
+@@ -14302,7 +14242,6 @@ target_include_directories(seq_test
+ target_link_libraries(seq_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::variant
+ )
+ 
+ 
+@@ -15034,17 +14973,6 @@ target_include_directories(single_set_ptr_test
+ target_link_libraries(single_set_ptr_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::base
+-  absl::core_headers
+-  absl::memory
+-  absl::random_random
+-  absl::status
+-  absl::cord
+-  absl::str_format
+-  absl::strings
+-  absl::synchronization
+-  absl::time
+-  absl::optional
+   upb
+ )
+ 
+@@ -15525,8 +15453,6 @@ target_include_directories(table_test
+ target_link_libraries(table_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::optional
+-  absl::utility
+ )
+ 
+ 
+@@ -16367,9 +16293,6 @@ target_include_directories(try_join_test
+ target_link_libraries(try_join_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::status
+-  absl::statusor
+-  absl::variant
+ )
+ 
+ 
+@@ -16439,9 +16362,6 @@ target_include_directories(try_seq_test
+ target_link_libraries(try_seq_test
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::status
+-  absl::statusor
+-  absl::variant
+ )
+ 
+ 
+@@ -16872,9 +16792,6 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+   target_link_libraries(writes_per_rpc_test
+     ${_gRPC_PROTOBUF_LIBRARIES}
+     ${_gRPC_ALLTARGETS_LIBRARIES}
+-    absl::failure_signal_handler
+-    absl::stacktrace
+-    absl::symbolize
+     grpc++
+   )
+ 
+@@ -17302,7 +17219,6 @@ target_include_directories(xds_interop_client
+ target_link_libraries(xds_interop_client
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::flags
+   grpc++_reflection
+   grpcpp_channelz
+   grpc_test_util
+@@ -17376,7 +17292,6 @@ target_include_directories(xds_interop_server
+ target_link_libraries(xds_interop_server
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::flags
+   grpc++_reflection
+   grpcpp_channelz
+   grpc_test_util
+-- 
+2.37.0.windows.1
+

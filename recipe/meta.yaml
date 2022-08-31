@@ -9,6 +9,15 @@ source:
   sha256: e266aa0d9d9cddb876484a370b94f468248594a96ca0b6f87c21f969db2b8c5b
   patches:
     - force-protoc-executable.patch
+    # no point in marking baselibs or vendored libs (e.g. upb) as private
+    - patches-grpc/0001-mark-linkage-of-c-ares-openssl-re2-zlib-as-private.patch
+    # since we're building against static abseil on windows, remove it from
+    # link surface; on unix we're building against shared anyway (so it's
+    # always in the target env due to the run-export)
+    - patches-grpc/0002-remove-abseil-linkage-main-packages.patch      # [win]
+    # split off more mechanical part into separate patch for ease of rebasing
+    - patches-grpc/0003-remove-abseil-linkage-all-other-targets.patch  # [win]
+    - patches-grpc/0004-add-missing-gpr-linkage-for-grpc_csharp_ext.patch
     - patches-grpcio/0001-Monkey-patch-distutils.ccompiler.spawn-to-elide-std-.patch
     - patches-grpcio/0002-Link-against-grpc.patch
     - patches-grpcio/0003-windows-ssl-lib-names.patch  # [win]
@@ -16,7 +25,7 @@ source:
     - patches-grpcio/0001-fix-win-setup.patch          # [win]
 
 build:
-  number: 6
+  number: 7
 
 outputs:
   - name: grpc-cpp
@@ -54,9 +63,7 @@ outputs:
         - ucrt  # [win]
         # While zlib and openssl should in theory be marked as a private library
         # grpc.pc (the pkgconfig file) seems to require it at link time for any
-        # package linking to grpc; similarly for building against a static abseil,
-        # which doesn't have a run-export but is needed at link-time.
-        - libabseil-static ={{ libabseil_static }}=cxx11*  # [win]
+        # package linking to grpc
         - openssl
         - zlib
     test:
