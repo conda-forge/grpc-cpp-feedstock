@@ -26,6 +26,7 @@ source:
     # split off more mechanical part into separate patch for ease of rebasing
     - patches-grpc/0003-remove-abseil-linkage-all-other-targets.patch  # [win]
     - patches-grpc/0004-add-missing-gpr-linkage-for-grpc_csharp_ext.patch
+    - patches-grpc/0005-patch-tests-to-use-passed-CXX_STANDARD.patch
     - patches-grpcio/0001-Monkey-patch-distutils.ccompiler.spawn-to-elide-std-.patch
     - patches-grpcio/0002-Link-against-grpc.patch
     - patches-grpcio/0003-windows-ssl-lib-names.patch  # [win]

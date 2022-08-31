@@ -1,7 +1,7 @@
 From 8d741d405be716b950717138c0444419b5b67305 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 23 Aug 2022 12:03:47 +0200
-Subject: [PATCH 4/4] add missing gpr linkage for grpc_csharp_ext
+Subject: [PATCH 4/5] add missing gpr linkage for grpc_csharp_ext
 
 ---
  CMakeLists.txt | 1 +

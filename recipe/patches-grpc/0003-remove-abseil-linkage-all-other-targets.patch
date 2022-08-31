@@ -1,7 +1,7 @@
 From de92ab782306a391def7443ff9cfc4eefd4e15fb Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 23 Aug 2022 19:43:10 +0200
-Subject: [PATCH 3/4] remove abseil linkage (all other targets)
+Subject: [PATCH 3/5] remove abseil linkage (all other targets)
 
 This can be done pretty much mechanically by deleting
 lines with `absl::` in target_link_libraries.
