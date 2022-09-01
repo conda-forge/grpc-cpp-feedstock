@@ -72,9 +72,10 @@ outputs:
         - zlib
     test:
       requires:
-        # cmake needs compiler to be able to run package detection, see
+        # protoc needs compiler; cmake also needs one to run package detection, see
         # https://discourse.cmake.org/t/questions-about-find-package-cli-msvc/6194
         - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
         - cmake
         - ninja
         - pkg-config
