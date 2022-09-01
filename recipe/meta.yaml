@@ -86,7 +86,7 @@ outputs:
         - test_grpc.sh
         - test_grpc.bat
       source_files:
-        - examples/cpp/helloworld/
+        - examples/cpp/
       commands:
         # libraries
         {% for each_lib in core_libs + core_cpp_libs + vendored_libs %}
