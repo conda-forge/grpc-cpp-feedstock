@@ -14,6 +14,9 @@ cd examples/cpp/helloworld
 mkdir build-cpp
 cd build-cpp
 
+:: CMake does not like paths with \ characters
+set LIBRARY_PREFIX="%LIBRARY_PREFIX:\=/%"
+
 cmake -G "Ninja" ^
     -DCMAKE_CXX_STANDARD="11" ^
     -DCMAKE_BUILD_TYPE=Release ^
