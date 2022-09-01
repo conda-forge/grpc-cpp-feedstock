@@ -81,6 +81,7 @@ outputs:
         - ninja
         - pkg-config
       files:
+        - hello.proto
         - test_grpc.sh
         - test_grpc.bat
       source_files:
