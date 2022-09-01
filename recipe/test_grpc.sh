@@ -1,10 +1,6 @@
 #!/bin/bash
 set -ex
 
-# debug
-pwd
-ls -l
-
 # Compile a trivial service definition to C++
 if [[ "${build_platform}" == "${target_platform}" ]]; then
   protoc -I. --plugin=protoc-gen-grpc=$PREFIX/bin/grpc_cpp_plugin --grpc_out=. hello.proto

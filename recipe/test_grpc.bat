@@ -1,8 +1,5 @@
 @echo on
 
-@rem debug
-dir
-
 @rem Compile a trivial service definition to C++
 protoc -I. --plugin=protoc-gen-grpc=%LIBRARY_PREFIX%/bin/grpc_cpp_plugin.exe --grpc_out=. hello.proto || exit /B
 if %ERRORLEVEL% neq 0 exit 1
@@ -13,8 +10,9 @@ if not exist hello.grpc.pb.cc exit 1
 :: taken from cd examples/cpp/helloworld
 cd examples/cpp/helloworld
 
-mkdir build
-cd build
+:: folder already contains a file called BUILD
+mkdir build-cpp
+cd build-cpp
 
 cmake -G "Ninja" ^
     -DCMAKE_CXX_STANDARD="11" ^
