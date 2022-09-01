@@ -28,6 +28,3 @@ if %ERRORLEVEL% neq 0 exit 1
 
 cmake --build . --config Release --target install
 if %ERRORLEVEL% neq 0 exit 1
-
-:: debug
-type %RECIPE_DIR%\recipe\meta.yaml

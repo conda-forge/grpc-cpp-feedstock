@@ -1,7 +1,10 @@
 @echo on
 
+@rem debug
+dir
+
 @rem Compile a trivial service definition to C++
-protoc -I%RECIPE_DIR% --plugin=protoc-gen-grpc=%LIBRARY_PREFIX%/bin/grpc_cpp_plugin.exe --grpc_out=. hello.proto || exit /B
+protoc -I. --plugin=protoc-gen-grpc=%LIBRARY_PREFIX%/bin/grpc_cpp_plugin.exe --grpc_out=. hello.proto || exit /B
 if %ERRORLEVEL% neq 0 exit 1
 
 if not exist hello.grpc.pb.h exit 1
