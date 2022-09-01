@@ -84,15 +84,14 @@ outputs:
       commands:
         # libraries
         {% for each_lib in core_libs + core_cpp_libs + vendored_libs %}
-        # presence of shared libs (unix)
+        # presence of shared libs
         - test -f $PREFIX/lib/lib{{ each_lib }}.so              # [linux]
         - test -f $PREFIX/lib/lib{{ each_lib }}.dylib           # [osx]
+        - if not exist %LIBRARY_BIN%\{{ each_lib }}.dll exit 1  # [win]
+        - if not exist %LIBRARY_LIB%\{{ each_lib }}.lib exit 1  # [win]
 
         # absence of static libs (unix)
         - test ! -f $PREFIX/lib/lib{{ each_lib }}.a             # [unix]
-
-        # static libs on windows
-        - if not exist %LIBRARY_LIB%\{{ each_lib }}.lib exit 1  # [win]
         {% endfor %}
 
         # binaries
@@ -131,14 +130,6 @@ outputs:
         - cython
         - {{ pin_subpackage('libgrpc', exact=True) }}
         - pthread-stubs                               # [linux]
-        # because the windows builds of libgrpc is static, we need _its_
-        # host dependencies here to be able to link correctly
-        - c-ares         # [win]
-        - libabseil      # [win]
-        - libprotobuf    # [win]
-        - openssl        # [win]
-        - re2            # [win]
-        - zlib           # [win]
       run:
         - python
         - {{ pin_subpackage('libgrpc', exact=True) }}
