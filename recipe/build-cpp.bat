@@ -13,6 +13,7 @@ cmake ..  ^
       -DCMAKE_BUILD_TYPE=Release ^
       -DCMAKE_PREFIX_PATH=%CONDA_PREFIX% ^
       -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% ^
+      -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON ^
       -DgRPC_ABSL_PROVIDER="package" ^
       -DgRPC_CARES_PROVIDER="package" ^
       -DgRPC_GFLAGS_PROVIDER="package" ^
