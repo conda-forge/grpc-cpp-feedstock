@@ -1,0 +1,79 @@
+From 09ff11366c4fad062d3271a5e5e05bb9c6d8085b Mon Sep 17 00:00:00 2001
+From: Mike Sarahan <msarahan@gmail.com>
+Date: Tue, 18 Feb 2020 13:53:05 -0600
+Subject: [PATCH 3/5] fix win setup cmds
+
+Co-Authored-By: Julien Schueller <schueller@phimeca.com>
+Co-Authored-By: Nicholas Bollweg <nick.bollweg@gmail.com>
+Co-Authored-By: Marius van Niekerk <marius.v.niekerk@gmail.com>
+---
+ setup.py                      | 11 +++++------
+ src/python/grpcio/commands.py |  2 ++
+ 2 files changed, 7 insertions(+), 6 deletions(-)
+
+diff --git a/setup.py b/setup.py
+index 2420ebd6dc..7eb2b52ca8 100644
+--- a/setup.py
++++ b/setup.py
+@@ -24,7 +24,6 @@ from distutils.unixccompiler import UnixCCompiler
+ UnixCCompiler.src_extensions.append('.S')
+ del UnixCCompiler
+ 
+-from distutils import cygwinccompiler
+ from distutils import extension as _extension
+ from distutils import util
+ import os
+@@ -203,6 +202,9 @@ ENABLE_DOCUMENTATION_BUILD = _env_bool_value(
+ 
+ 
+ def check_linker_need_libatomic():
++    if sys.platform == 'win32':
++        return False
++
+     """Test if linker on system needs libatomic."""
+     code_test = (b'#include <atomic>\n' +
+                  b'int main() { return std::atomic<int64_t>{}; }')
+@@ -255,7 +257,7 @@ def monkeypatch_spawn_using_cxx11_for_cxx_only():
+ EXTRA_ENV_COMPILE_ARGS = os.environ.get('GRPC_PYTHON_CFLAGS', None)
+ EXTRA_ENV_LINK_ARGS = os.environ.get('GRPC_PYTHON_LDFLAGS', None)
+ if EXTRA_ENV_COMPILE_ARGS is None:
+-    EXTRA_ENV_COMPILE_ARGS = ' -std=c++14'
++    EXTRA_ENV_COMPILE_ARGS = ' '
+     if 'win32' in sys.platform:
+         if sys.version_info < (3, 5):
+             EXTRA_ENV_COMPILE_ARGS += ' -D_hypot=hypot'
+@@ -267,10 +269,6 @@ if EXTRA_ENV_COMPILE_ARGS is None:
+                 EXTRA_ENV_COMPILE_ARGS += ' -D_ftime=_ftime32 -D_timeb=__timeb32 -D_ftime_s=_ftime32_s'
+             else:
+                 EXTRA_ENV_COMPILE_ARGS += ' -D_ftime=_ftime64 -D_timeb=__timeb64'
+-        else:
+-            # We need to statically link the C++ Runtime, only the C runtime is
+-            # available dynamically
+-            EXTRA_ENV_COMPILE_ARGS += ' /MT'
+     elif "linux" in sys.platform:
+         EXTRA_ENV_COMPILE_ARGS += ' -fvisibility=hidden -fno-wrapv -fno-exceptions'
+     elif "darwin" in sys.platform:
+@@ -283,6 +281,7 @@ if EXTRA_ENV_LINK_ARGS is None:
+         if check_linker_need_libatomic():
+             EXTRA_ENV_LINK_ARGS += ' -latomic'
+     elif "win32" in sys.platform and sys.version_info < (3, 5):
++        from distutils import cygwinccompiler
+         msvcr = cygwinccompiler.get_msvcr()[0]
+         EXTRA_ENV_LINK_ARGS += (
+             ' -static-libgcc -static-libstdc++ -mcrtdll={msvcr}'
+diff --git a/src/python/grpcio/commands.py b/src/python/grpcio/commands.py
+index d93b6c7039..024512624a 100644
+--- a/src/python/grpcio/commands.py
++++ b/src/python/grpcio/commands.py
+@@ -226,6 +226,8 @@ class BuildExt(build_ext.build_ext):
+             """Test if default compiler is okay with specifying c++ version
+             when invoked in C mode. GCC is okay with this, while clang is not.
+             """
++            if sys.platform == "win32":
++                return False
+             try:
+                 # TODO(lidiz) Remove the generated a.out for success tests.
+                 cc_test = subprocess.Popen(['cc', '-x', 'c', '-std=c++14', '-'],
+-- 
+2.37.0.windows.1
+
