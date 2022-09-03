@@ -11,8 +11,9 @@ fi
 # taken from cd examples/cpp/helloworld
 cd examples/cpp/helloworld
 
-mkdir build
-cd build
+# folder already contains a file called BUILD
+mkdir build-cpp
+cd build-cpp
 
 cmake -G "Ninja" \
     -DCMAKE_CXX_STANDARD=17 \
