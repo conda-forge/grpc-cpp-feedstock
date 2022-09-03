@@ -24,9 +24,9 @@ source:
     - patches-grpc/0001-mark-linkage-of-c-ares-openssl-re2-zlib-as-private.patch
     # since grpc uses internal abseil targets and we're already building
     # against shared abseil on unix anyway, only make private on win
-    - patches-grpc/0002-mark-abseil-linkage-as-private-main-packages.patch      # [win]
+    # - patches-grpc/0002-mark-abseil-linkage-as-private-main-packages.patch      # [win]
     # split off more mechanical part into separate patch for ease of rebasing
-    - patches-grpc/0003-mark-abseil-linkage-as-private-all-other-targtes.patch  # [win]
+    # - patches-grpc/0003-mark-abseil-linkage-as-private-all-other-targtes.patch  # [win]
     - patches-grpc/0004-add-missing-gpr-linkage-for-grpc_csharp_ext.patch
     - patches-grpc/0005-patch-tests-to-use-passed-CXX_STANDARD.patch
     - patches-grpcio/0001-Monkey-patch-distutils.ccompiler.spawn-to-elide-std-.patch
@@ -60,11 +60,7 @@ outputs:
         - openssl     # [build_platform != target_platform]
         - zlib        # [build_platform != target_platform]
       host:
-        - libabseil                   # [unix]
-        # windows not ready for C++17 of shared abseil builds yet;
-        # keep one line unpinned for migrator to pick it up
-        - libabseil-static            # [win]
-        - libabseil-static =*=cxx11*  # [win]
+        - libabseil
         - c-ares
         - libprotobuf
         - re2
@@ -138,11 +134,7 @@ outputs:
         - setuptools
         - cython
         - six >=1.6.0
-        - libabseil                   # [unix]
-        # windows not ready for C++17 of shared abseil builds yet;
-        # keep one line unpinned for migrator to pick it up
-        - libabseil-static            # [win]
-        - libabseil-static =*=cxx11*  # [win]
+        - libabseil
         - {{ pin_subpackage('grpc-cpp', exact=True) }}
         - c-ares
         - libprotobuf
