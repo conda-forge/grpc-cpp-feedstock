@@ -1,0 +1,34 @@
+From d244c910f67e2c48404255f4c884f796377875fd Mon Sep 17 00:00:00 2001
+From: Jonathan Helmus <jjhelmus@gmail.com>
+Date: Mon, 17 Feb 2020 15:45:06 -0600
+Subject: [PATCH 2/5] windows ssl lib names
+
+Co-Authored-By: Julien Schueller <schueller@phimeca.com>
+Co-Authored-By: Nicholas Bollweg <nick.bollweg@gmail.com>
+Co-Authored-By: Marius van Niekerk <marius.v.niekerk@gmail.com>
+---
+ setup.py | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/setup.py b/setup.py
+index 2931f139d1..e3661a9340 100644
+--- a/setup.py
++++ b/setup.py
+@@ -338,10 +338,10 @@ if "win32" in sys.platform:
+         'ws2_32',
+     )
+ if BUILD_WITH_SYSTEM_OPENSSL:
+-    EXTENSION_LIBRARIES += (
+-        'ssl',
+-        'crypto',
+-    )
++    if not "win32" in sys.platform:
++        EXTENSION_LIBRARIES += ('ssl', 'crypto',)
++    else:
++        EXTENSION_LIBRARIES += ('libssl', 'libcrypto',)
+ if BUILD_WITH_SYSTEM_ZLIB:
+     EXTENSION_LIBRARIES += ('z',)
+ if BUILD_WITH_SYSTEM_CARES:
+-- 
+2.37.0.windows.1
+

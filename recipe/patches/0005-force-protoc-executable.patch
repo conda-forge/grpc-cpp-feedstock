@@ -1,0 +1,40 @@
+From d4774f1479ca40db27c71f62a5c46892fd78e1d3 Mon Sep 17 00:00:00 2001
+From: "Uwe L. Korn" <uwe.korn@quantco.com>
+Date: Fri, 11 Sep 2020 14:20:04 +0200
+Subject: [PATCH 5/5] force protoc executable
+
+---
+ cmake/protobuf.cmake | 17 ++---------------
+ 1 file changed, 2 insertions(+), 15 deletions(-)
+
+diff --git a/cmake/protobuf.cmake b/cmake/protobuf.cmake
+index f23f65d40e..574068017a 100644
+--- a/cmake/protobuf.cmake
++++ b/cmake/protobuf.cmake
+@@ -75,21 +75,8 @@ elseif(gRPC_PROTOBUF_PROVIDER STREQUAL "package")
+       set(_gRPC_PROTOBUF_PROTOC_LIBRARIES ${PROTOBUF_PROTOC_LIBRARIES})
+       set(_gRPC_PROTOBUF_WELLKNOWN_INCLUDE_DIR ${PROTOBUF_INCLUDE_DIRS})
+     endif()
+-    if(TARGET protobuf::protoc)
+-      set(_gRPC_PROTOBUF_PROTOC protobuf::protoc)
+-      if(CMAKE_CROSSCOMPILING)
+-        find_program(_gRPC_PROTOBUF_PROTOC_EXECUTABLE protoc)
+-      else()
+-        set(_gRPC_PROTOBUF_PROTOC_EXECUTABLE $<TARGET_FILE:protobuf::protoc>)
+-      endif()
+-    else()
+-      set(_gRPC_PROTOBUF_PROTOC ${PROTOBUF_PROTOC_EXECUTABLE})
+-      if(CMAKE_CROSSCOMPILING)
+-        find_program(_gRPC_PROTOBUF_PROTOC_EXECUTABLE protoc)
+-      else()
+-        set(_gRPC_PROTOBUF_PROTOC_EXECUTABLE ${PROTOBUF_PROTOC_EXECUTABLE})
+-      endif()
+-    endif()
++    set(_gRPC_PROTOBUF_PROTOC_EXECUTABLE ${Protobuf_PROTOC_EXECUTABLE})
++    set(_gRPC_PROTOBUF_PROTOC ${Protobuf_PROTOC_EXECUTABLE})
+     set(_gRPC_FIND_PROTOBUF "if(NOT Protobuf_FOUND AND NOT PROTOBUF_FOUND)\n  find_package(Protobuf ${gRPC_PROTOBUF_PACKAGE_TYPE})\nendif()")
+   endif()
+ endif()
+-- 
+2.37.0.windows.1
+
