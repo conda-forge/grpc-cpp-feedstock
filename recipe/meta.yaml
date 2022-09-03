@@ -51,11 +51,7 @@ outputs:
         - openssl     # [build_platform != target_platform]
         - zlib        # [build_platform != target_platform]
       host:
-        - libabseil                   # [unix]
-        # windows not ready for C++17 of shared abseil builds yet;
-        # keep one line unpinned for migrator to pick it up
-        - libabseil-static            # [win]
-        - libabseil-static =*=cxx14*  # [win]
+        - libabseil
         - c-ares
         - libprotobuf
         - re2
@@ -63,11 +59,6 @@ outputs:
         - zlib
       run:
         - ucrt  # [win]
-        # While zlib and openssl should in theory be marked as a private library
-        # grpc.pc (the pkgconfig file) seems to require it at link time for any
-        # package linking to grpc; similarly for building against a static abseil,
-        # which doesn't have a run-export but is needed at link-time.
-        - libabseil-static ={{ libabseil_static }}=cxx11*  # [win]
         - openssl
         - zlib
     test:
@@ -135,11 +126,7 @@ outputs:
         - setuptools
         - cython
         - six >=1.6.0
-        - libabseil                   # [unix]
-        # windows not ready for C++17 of shared abseil builds yet;
-        # keep one line unpinned for migrator to pick it up
-        - libabseil-static            # [win]
-        - libabseil-static =*=cxx14*  # [win]
+        - libabseil
         - {{ pin_subpackage('grpc-cpp', exact=True) }}
         - c-ares
         - libprotobuf
