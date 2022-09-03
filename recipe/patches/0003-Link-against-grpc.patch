@@ -1,4 +1,4 @@
-From 868bfbf8998adcc74323b805707896f9b4877a87 Mon Sep 17 00:00:00 2001
+From 9b097e68e04f356390674324a1c34111f001c48e Mon Sep 17 00:00:00 2001
 From: Marius van Niekerk <marius.v.niekerk@gmail.com>
 Date: Mon, 13 Jun 2022 17:13:07 -0400
 Subject: [PATCH 3/6] Link against grpc
@@ -8,7 +8,7 @@ Subject: [PATCH 3/6] Link against grpc
  1 file changed, 11 insertions(+)
 
 diff --git a/setup.py b/setup.py
-index ec1b6d4137..1f567918b9 100644
+index ec1b6d4137..b6272a9d8a 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -165,6 +165,8 @@ BUILD_WITH_SYSTEM_RE2 = _env_bool_value('GRPC_PYTHON_BUILD_SYSTEM_RE2', 'False')
@@ -29,7 +29,7 @@ index ec1b6d4137..1f567918b9 100644
 +    import pathlib
 +    if "win32" in sys.platform:
 +        EXTENSION_LIBRARIES += ('libprotoc', 'libprotobuf', 'libprotobuf-lite', 'upb', 'address_sorting', )
-+        EXTENSION_LIBRARIES += tuple(lib.stem for lib in pathlib.Path(os.environ['LIBRARY_LIB']).glob('absl_*.lib'))
++        EXTENSION_LIBRARIES += ('abseil_dll', 'absl_flags', )
  
  DEFINE_MACROS = (('_WIN32_WINNT', 0x600),)
  asm_files = []
