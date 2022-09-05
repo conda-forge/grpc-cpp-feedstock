@@ -4,14 +4,11 @@ echo %CFLAGS%
 echo %CXXFLAGS%
 
 mkdir build-cpp
-if errorlevel 1 exit 1
-
 cd build-cpp
 
 cmake ..  ^
       -GNinja ^
-      -DCMAKE_CXX_STANDARD=14 ^
-      -DCMAKE_VERBOSE_MAKEFILE=ON ^
+      -DCMAKE_CXX_STANDARD=17 ^
       -DCMAKE_BUILD_TYPE=Release ^
       -DCMAKE_PREFIX_PATH=%CONDA_PREFIX% ^
       -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% ^
@@ -22,7 +19,7 @@ cmake ..  ^
       -DgRPC_SSL_PROVIDER="package" ^
       -DgRPC_RE2_PROVIDER="package" ^
       -DgRPC_ZLIB_PROVIDER="package"
+if %ERRORLEVEL% neq 0 exit 1
 
 cmake --build . --config Release --target install
-
-if errorlevel 1 exit 1
+if %ERRORLEVEL% neq 0 exit 1
