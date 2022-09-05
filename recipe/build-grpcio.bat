@@ -14,4 +14,4 @@ set "GRPC_PYTHON_CFLAGS=/DPB_FIELD_16BIT"
 del src\python\grpcio\grpc\_cython\cygrpc.cpp
 
 "%PYTHON%" -m pip install . --no-deps --ignore-installed --no-cache-dir -v
-if errorlevel 1 exit 1
+if %ERRORLEVEL% neq 0 exit 1

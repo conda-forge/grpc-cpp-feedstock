@@ -1,0 +1,27 @@
+From 381024f44edfa5cb0cd31d32af1e1f91dea207c8 Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Wed, 31 Aug 2022 18:52:58 +0200
+Subject: [PATCH 5/6] patch tests to use passed CXX_STANDARD
+
+---
+ examples/cpp/cmake/common.cmake | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/examples/cpp/cmake/common.cmake b/examples/cpp/cmake/common.cmake
+index 6650ff892a..bf5bf9679a 100644
+--- a/examples/cpp/cmake/common.cmake
++++ b/examples/cpp/cmake/common.cmake
+@@ -19,7 +19,9 @@
+ 
+ cmake_minimum_required(VERSION 3.5.1)
+ 
+-set (CMAKE_CXX_STANDARD 11)
++if (NOT DEFINED CMAKE_CXX_STANDARD)
++  set(CMAKE_CXX_STANDARD 11)
++endif()
+ 
+ if(MSVC)
+   add_definitions(-D_WIN32_WINNT=0x600)
+-- 
+2.37.0.windows.1
+
