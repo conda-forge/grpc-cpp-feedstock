@@ -106,7 +106,6 @@ outputs:
         {% endfor %}
 
         # final CMake test to compile examples
-        # partially disabled on unix until libprotobuf-feedstock#127 & 128 are merged
         - ./test_grpc.sh   # [unix]
         - ./test_grpc.bat  # [win]
 
