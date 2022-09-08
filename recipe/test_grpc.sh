@@ -17,6 +17,11 @@ cd build-cpp
 
 cmake -G "Ninja" \
     ${CMAKE_ARGS} \
+    -DProtobuf_INCLUDE_DIR=$PREFIX/include \
+    -DProtobuf_LIBRARY=$PREFIX/lib/libprotobuf.so \
+    -DProtobuf_LITE_LIBRARY=$PREFIX/lib/libprotobuf-lite.so \
+    -DProtobuf_PROTOC_LIBRARY=$PREFIX/lib/libprotoc.so \
+    -DProtobuf_PROTOC_EXECUTABLE=$PREFIX/bin/protoc \
     -DCMAKE_CXX_STANDARD=17 \
     ..
 
