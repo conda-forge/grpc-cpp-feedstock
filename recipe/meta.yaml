@@ -25,6 +25,7 @@ source:
     - patches/0004-force-protoc-executable.patch
     - patches/0005-patch-tests-to-use-passed-CXX_STANDARD.patch
     - patches/0006-switch-to-C-17-for-grpcio.patch
+    - patches/0007-fix-pkgconfig-for-abseil_dll.patch  # [win]
 
 build:
   number: 8
