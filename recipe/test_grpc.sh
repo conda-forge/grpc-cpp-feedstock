@@ -16,9 +16,8 @@ mkdir build-cpp
 cd build-cpp
 
 cmake -G "Ninja" \
+    ${CMAKE_ARGS} \
     -DCMAKE_CXX_STANDARD=17 \
-    -DCMAKE_PREFIX_PATH="$PREFIX" \
-    -DCMAKE_MODULE_PATH="$PREFIX/lib/cmake" \
     ..
 
 cmake --build .
