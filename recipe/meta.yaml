@@ -97,12 +97,11 @@ outputs:
         {% endfor %}
 
         # pkg-config (no metadata for vendored libs)
-        # should work on windows in principle, but our openssl builds don't have a .pc file
         {% for each_lib in core_libs %}
-        - pkg-config --print-errors --exact-version "{{ core_version }}" {{ each_lib }}  # [unix]
+        - pkg-config --print-errors --exact-version "{{ core_version }}" {{ each_lib }}
         {% endfor %}
         {% for each_lib in core_cpp_libs %}
-        - pkg-config --print-errors --exact-version "{{ version }}" {{ each_lib }}       # [unix]
+        - pkg-config --print-errors --exact-version "{{ version }}" {{ each_lib }}
         {% endfor %}
 
         # final CMake test to compile examples
