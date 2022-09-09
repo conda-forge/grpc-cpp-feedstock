@@ -19,7 +19,7 @@ cd build-cpp
 # use direct metadata, see conda-forge/libprotobuf#68
 cmake -G "Ninja" \
     ${CMAKE_ARGS} \
-    -DgRPC_PROTOBUF_PACKAGE_TYPE=MODULE \
+    -DgRPC_PROTOBUF_PACKAGE_TYPE:STRING="MODULE" \
     -DProtobuf_INCLUDE_DIR=$PREFIX/include \
     -DProtobuf_LIBRARY=$PREFIX/lib/libprotobuf.so \
     -DProtobuf_LITE_LIBRARY=$PREFIX/lib/libprotobuf-lite.so \
