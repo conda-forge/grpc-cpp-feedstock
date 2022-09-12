@@ -132,6 +132,7 @@ outputs:
         - cython
         - {{ pin_subpackage('libgrpc', exact=True) }}
         - pthread-stubs                               # [linux]
+        - zlib
       run:
         - python
         - {{ pin_subpackage('libgrpc', exact=True) }}
