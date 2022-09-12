@@ -1,7 +1,7 @@
-From 8603a101d576aab53aa86fe72c48895a8c9b6e9d Mon Sep 17 00:00:00 2001
+From b8ec9ed3bde92146c8c46487a255be661ed12f7e Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sat, 3 Sep 2022 19:23:15 +0200
-Subject: [PATCH 5/6] switch to C++17 for grpcio
+Subject: [PATCH 5/7] switch to C++17 for grpcio
 
 ---
  setup.py | 7 ++++---
@@ -40,6 +40,3 @@ index 776b190967..9de7a1e48a 100644
          if sys.version_info < (3, 5):
              EXTRA_ENV_COMPILE_ARGS += ' -D_hypot=hypot'
              # We use define flags here and don't directly add to DEFINE_MACROS below to
--- 
-2.38.1.windows.1
-

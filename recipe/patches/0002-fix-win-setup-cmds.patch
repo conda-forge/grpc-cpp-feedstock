@@ -1,7 +1,7 @@
-From ea69ffecf7e5af9c185ed627b091f36b8de75d41 Mon Sep 17 00:00:00 2001
+From 5b896f7580f48d878615d8b510b5296908188e8a Mon Sep 17 00:00:00 2001
 From: Mike Sarahan <msarahan@gmail.com>
 Date: Tue, 18 Feb 2020 13:53:05 -0600
-Subject: [PATCH 2/6] fix win setup cmds
+Subject: [PATCH 2/7] fix win setup cmds
 
 Co-Authored-By: Julien Schueller <schueller@phimeca.com>
 Co-Authored-By: Nicholas Bollweg <nick.bollweg@gmail.com>
@@ -66,6 +66,3 @@ index 6d8228ffa0..150bd70b6c 100644
              try:
                  # TODO(lidiz) Remove the generated a.out for success tests.
                  cc = os.environ.get('CC', 'cc')
--- 
-2.38.1.windows.1
-

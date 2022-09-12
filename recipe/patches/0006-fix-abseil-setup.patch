@@ -1,7 +1,7 @@
-From d20b687c55b6c557e7c078a3aa6cb7203d6e5053 Mon Sep 17 00:00:00 2001
+From fe2d05b2ef0e1e2f343d0aae577b1b8035e5ce6e Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 4 Sep 2022 14:34:52 +0200
-Subject: [PATCH 6/6] fix abseil setup
+Subject: [PATCH 6/7] fix abseil setup
 
 ---
  setup.py | 14 +++++++++++---
@@ -36,6 +36,3 @@ index 9de7a1e48a..1b3966f92e 100644
  
  DEFINE_MACROS = (('_WIN32_WINNT', 0x600),)
  asm_files = []
--- 
-2.38.1.windows.1
-

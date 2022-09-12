@@ -1,7 +1,7 @@
-From e0240fc049a39c26a277bee7271e52c5b8a3821f Mon Sep 17 00:00:00 2001
+From 0220beb54a83ee51882cdf98e59d896de02ceebe Mon Sep 17 00:00:00 2001
 From: Jonathan Helmus <jjhelmus@gmail.com>
 Date: Mon, 17 Feb 2020 15:45:06 -0600
-Subject: [PATCH 1/6] windows ssl lib names
+Subject: [PATCH 1/7] windows ssl lib names
 
 Co-Authored-By: Julien Schueller <schueller@phimeca.com>
 Co-Authored-By: Nicholas Bollweg <nick.bollweg@gmail.com>
@@ -29,6 +29,3 @@ index 6501b43d61..2fb22df98c 100644
  if BUILD_WITH_SYSTEM_ZLIB:
      EXTENSION_LIBRARIES += ('z',)
  if BUILD_WITH_SYSTEM_CARES:
--- 
-2.38.1.windows.1
-

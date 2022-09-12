@@ -27,6 +27,10 @@ source:
     - patches/0004-force-protoc-executable.patch
     - patches/0005-switch-to-C-17-for-grpcio.patch
     - patches/0006-fix-abseil-setup.patch
+    # mark c-ares, re2 & zlib as private, so they don't need to be found
+    # at runtime just to link to grp, see grpc/grpc#30838;
+    # not much point in marking baselibs or vendored libs (e.g. upb) as private
+    - patches/0007-mark-linkage-of-c-ares-re2-zlib-as-private.patch
 
 build:
   number: 2
@@ -61,8 +65,6 @@ outputs:
         - zlib
       run:
         - ucrt  # [win]
-        - openssl
-        - zlib
       run_constrained:
         # make sure we don't co-install with old version of previous package name
         - grpc-cpp ={{ version }}
