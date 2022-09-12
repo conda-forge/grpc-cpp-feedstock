@@ -23,12 +23,17 @@ source:
     - patches/0002-fix-win-setup-cmds.patch            # [win]
     - patches/0003-Link-against-grpc.patch
     - patches/0004-force-protoc-executable.patch
+    # see https://github.com/grpc/grpc/pull/30835
     - patches/0005-patch-tests-to-use-passed-CXX_STANDARD.patch
     - patches/0006-switch-to-C-17-for-grpcio.patch
     - patches/0007-fix-abseil-setup.patch
+    # mark c-ares, re2 & zlib as private, so they don't need to be found
+    # at runtime just to link to grp, see grpc/grpc#30838;
+    # not much point in marking baselibs or vendored libs (e.g. upb) as private
+    - patches/0008-mark-linkage-of-c-ares-re2-zlib-as-private.patch
 
 build:
-  number: 1
+  number: 2
 
 outputs:
   - name: grpc-cpp
@@ -60,8 +65,6 @@ outputs:
         - zlib
       run:
         - ucrt  # [win]
-        - openssl
-        - zlib
     test:
       requires:
         # protoc needs compiler; cmake also needs one to run package detection, see
