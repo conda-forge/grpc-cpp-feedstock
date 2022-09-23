@@ -1,0 +1,58 @@
+From 4f36f8311bf79eb0bcda189f51fb1644a7575ec0 Mon Sep 17 00:00:00 2001
+From: Isuru Fernando <isuruf@gmail.com>
+Date: Sat, 22 Oct 2022 02:21:08 -0500
+Subject: [PATCH 9/9] fix support_enabled for windows
+
+---
+ src/core/lib/gprpp/fork.cc | 12 ++++++++++++
+ src/core/lib/gprpp/fork.h  | 12 ++----------
+ 2 files changed, 14 insertions(+), 10 deletions(-)
+
+diff --git a/src/core/lib/gprpp/fork.cc b/src/core/lib/gprpp/fork.cc
+index 365c16e36b..cbe5b24369 100644
+--- a/src/core/lib/gprpp/fork.cc
++++ b/src/core/lib/gprpp/fork.cc
+@@ -175,6 +175,18 @@ bool Fork::Enabled() {
+   return support_enabled_.load(std::memory_order_relaxed);
+ }
+ 
++void Fork::IncExecCtxCount() {
++  if (GPR_UNLIKELY(support_enabled_.load(std::memory_order_relaxed))) {
++    DoIncExecCtxCount();
++  }
++}
++
++void Fork::DecExecCtxCount() {
++  if (GPR_UNLIKELY(support_enabled_.load(std::memory_order_relaxed))) {
++    DoDecExecCtxCount();
++  }
++}
++
+ // Testing Only
+ void Fork::Enable(bool enable) {
+   override_enabled_ = true;
+diff --git a/src/core/lib/gprpp/fork.h b/src/core/lib/gprpp/fork.h
+index 76df172a29..5af8290914 100644
+--- a/src/core/lib/gprpp/fork.h
++++ b/src/core/lib/gprpp/fork.h
+@@ -42,18 +42,10 @@ class GRPC_DLL Fork {
+ 
+   // Increment the count of active ExecCtxs.
+   // Will block until a pending fork is complete if one is in progress.
+-  static void IncExecCtxCount() {
+-    if (GPR_UNLIKELY(support_enabled_.load(std::memory_order_relaxed))) {
+-      DoIncExecCtxCount();
+-    }
+-  }
++  static void IncExecCtxCount();
+ 
+   // Decrement the count of active ExecCtxs
+-  static void DecExecCtxCount() {
+-    if (GPR_UNLIKELY(support_enabled_.load(std::memory_order_relaxed))) {
+-      DoDecExecCtxCount();
+-    }
+-  }
++  static void DecExecCtxCount();
+ 
+   // Provide a function that will be invoked in the child's postfork handler to
+   // reset the polling engine's internal state.
