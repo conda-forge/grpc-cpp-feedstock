@@ -1,9 +1,13 @@
+BUILD:
+- aarch64-conda_cos7-linux-gnu
 c_ares:
 - '1'
 c_compiler:
 - gcc
 c_compiler_version:
 - '11'
+cdt_arch:
+- aarch64
 cdt_name:
 - cos7
 channel_sources:
@@ -19,14 +23,12 @@ docker_image:
 libabseil:
 - '20220623.0'
 libprotobuf:
-- '3.20'
+- '3.21'
 openssl:
 - 1.1.1
 pin_run_as_build:
   python:
     min_pin: x.x
-    max_pin: x.x
-  zlib:
     max_pin: x.x
 python:
 - 3.10.* *_cpython
@@ -36,7 +38,7 @@ python:
 re2:
 - 2022.06.01
 target_platform:
-- linux-ppc64le
+- linux-aarch64
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
