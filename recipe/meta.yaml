@@ -1,4 +1,4 @@
-{% set version = "1.48.1" %}
+{% set version = "1.50.0" %}
 
 # core package & vendored libs use different version scheme than CPP libs, see
 # https://github.com/grpc/grpc/blob/v1.48.1/CMakeLists.txt#L28-L32
@@ -17,7 +17,7 @@ package:
 
 source:
   url: https://github.com/grpc/grpc/archive/v{{ version }}.tar.gz
-  sha256: 320366665d19027cda87b2368c03939006a37e0388bfd1091c8d2a96fbc93bd8
+  sha256: 76900ab068da86378395a8e125b5cc43dfae671e09ff6462ddfef18676e2165a
   patches:
     - patches/0001-windows-ssl-lib-names.patch         # [win]
     - patches/0002-fix-win-setup-cmds.patch            # [win]
@@ -28,7 +28,7 @@ source:
     - patches/0007-fix-abseil-setup.patch
 
 build:
-  number: 1
+  number: 0
 
 outputs:
   - name: grpc-cpp
