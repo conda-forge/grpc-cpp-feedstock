@@ -1,4 +1,4 @@
-From 7e719c99e27562f31868e5d0fd1c455e6519bba3 Mon Sep 17 00:00:00 2001
+From 783d95008b57ca4c1731241bf40e11c1427c3aee Mon Sep 17 00:00:00 2001
 From: Mike Sarahan <msarahan@gmail.com>
 Date: Tue, 18 Feb 2020 13:53:05 -0600
 Subject: [PATCH 2/7] fix win setup cmds
@@ -13,7 +13,7 @@ Co-Authored-By: H. Vetinari <h.vetinari@gmx.com>
  2 files changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index bea7f92e15..a46c3ae795 100644
+index 7dc5bb6723..f5aa42ffe1 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -24,7 +24,6 @@ from distutils.unixccompiler import UnixCCompiler
@@ -24,7 +24,7 @@ index bea7f92e15..a46c3ae795 100644
  from distutils import extension as _extension
  from distutils import util
  import os
-@@ -203,6 +202,9 @@ ENABLE_DOCUMENTATION_BUILD = _env_bool_value(
+@@ -202,6 +201,9 @@ ENABLE_DOCUMENTATION_BUILD = _env_bool_value(
  
  
  def check_linker_need_libatomic():
@@ -34,7 +34,7 @@ index bea7f92e15..a46c3ae795 100644
      """Test if linker on system needs libatomic."""
      code_test = (b'#include <atomic>\n' +
                   b'int main() { return std::atomic<int64_t>{}; }')
-@@ -247,10 +249,6 @@ if EXTRA_ENV_COMPILE_ARGS is None:
+@@ -246,10 +248,6 @@ if EXTRA_ENV_COMPILE_ARGS is None:
                  EXTRA_ENV_COMPILE_ARGS += ' -D_ftime=_ftime32 -D_timeb=__timeb32 -D_ftime_s=_ftime32_s'
              else:
                  EXTRA_ENV_COMPILE_ARGS += ' -D_ftime=_ftime64 -D_timeb=__timeb64'
@@ -45,7 +45,7 @@ index bea7f92e15..a46c3ae795 100644
      elif "linux" in sys.platform:
          EXTRA_ENV_COMPILE_ARGS += ' -fvisibility=hidden -fno-wrapv -fno-exceptions'
      elif "darwin" in sys.platform:
-@@ -263,6 +261,7 @@ if EXTRA_ENV_LINK_ARGS is None:
+@@ -262,6 +260,7 @@ if EXTRA_ENV_LINK_ARGS is None:
          if check_linker_need_libatomic():
              EXTRA_ENV_LINK_ARGS += ' -latomic'
      elif "win32" in sys.platform and sys.version_info < (3, 5):
@@ -67,5 +67,5 @@ index d93b6c7039..024512624a 100644
                  # TODO(lidiz) Remove the generated a.out for success tests.
                  cc_test = subprocess.Popen(['cc', '-x', 'c', '-std=c++14', '-'],
 -- 
-2.37.0.windows.1
+2.38.1.windows.1
 
