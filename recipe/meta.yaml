@@ -35,6 +35,7 @@ source:
     - patches/0008-mark-linkage-of-c-ares-re2-zlib-as-private.patch
     # oh windows...
     - patches/0009-add-GRPC_DLL-mechanism-for-missing-symbols-on-window.patch  # [win]
+    - patches/0010-fix-support_enabled-for-windows.patch  # [win]
 
 build:
   number: 2

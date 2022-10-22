@@ -1,163 +1,62 @@
-From e729e28581d741d6860bc9f989aa117737d92d98 Mon Sep 17 00:00:00 2001
-From: "H. Vetinari" <h.vetinari@gmx.com>
-Date: Mon, 12 Sep 2022 18:06:00 +0200
-Subject: [PATCH 9/9] add GRPC_DLL mechanism for missing symbols on windows
+From 58b0231490b45e7bf4fa95c9d46cd50db5d3cfee Mon Sep 17 00:00:00 2001
+From: Isuru Fernando <isuruf@gmail.com>
+Date: Sat, 22 Oct 2022 01:21:56 -0500
+Subject: [PATCH 2/3] add UPB_DLL mechanism for missing symbols on windows
 
-Co-Authored-By: Isuru Fernando <isuruf@gmail.com>
+Co-Authored-By: "H. Vetinari" <h.vetinari@gmx.com>
 ---
- CMakeLists.txt                            | 20 ++++++++++++++++++++
- include/grpc/impl/codegen/port_platform.h | 19 +++++++++++++++++++
- src/core/lib/gprpp/fork.h                 |  2 +-
- third_party/upb/upb/port_def.inc          |  9 +++++++++
- third_party/upb/upb/upb.c                 |  6 +++++-
- third_party/upb/upb/upb.h                 |  2 +-
- 6 files changed, 55 insertions(+), 3 deletions(-)
+ CMakeLists.txt                   | 4 ++++
+ third_party/upb/upb/port_def.inc | 8 ++++++++
+ third_party/upb/upb/upb.c        | 2 +-
+ third_party/upb/upb/upb.h        | 2 +-
+ 4 files changed, 14 insertions(+), 2 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 511f2e9b2c..0d90cf15fd 100644
+index 657421e..6cf7b48 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -2322,6 +2322,8 @@ if(WIN32 AND MSVC)
-   set_target_properties(grpc PROPERTIES COMPILE_PDB_NAME "grpc"
-     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
-   )
-+  # More details in include/grpc/impl/codegen/port_platform.h
-+  set_target_properties(grpc PROPERTIES DEFINE_SYMBOL "gRPC_DLL_EXPORTS")
-   if(gRPC_INSTALL)
-     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc.pdb
-       DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
-@@ -2373,6 +2375,11 @@ if(_gRPC_PLATFORM_IOS OR _gRPC_PLATFORM_MAC)
-   target_link_libraries(grpc PUBLIC "-framework CoreFoundation")
- endif()
- 
-+if(WIN32 AND MSVC AND BUILD_SHARED_LIBS)
-+  # More details in include/grpc/impl/codegen/port_platform.h
-+  target_compile_definitions(grpc INTERFACE gRPC_DLL_IMPORTS)
-+endif()
-+
- foreach(_hdr
-   include/grpc/byte_buffer.h
-   include/grpc/byte_buffer_reader.h
-@@ -2893,6 +2900,8 @@ if(WIN32 AND MSVC)
-   set_target_properties(grpc_unsecure PROPERTIES COMPILE_PDB_NAME "grpc_unsecure"
-     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
-   )
-+  # More details in include/grpc/impl/codegen/port_platform.h
-+  set_target_properties(grpc_unsecure PROPERTIES DEFINE_SYMBOL "gRPC_DLL_EXPORTS")
-   if(gRPC_INSTALL)
-     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc_unsecure.pdb
-       DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
-@@ -2943,6 +2952,11 @@ if(_gRPC_PLATFORM_IOS OR _gRPC_PLATFORM_MAC)
-   target_link_libraries(grpc_unsecure PUBLIC "-framework CoreFoundation")
- endif()
- 
-+if(WIN32 AND MSVC AND BUILD_SHARED_LIBS)
-+  # More details in include/grpc/impl/codegen/port_platform.h
-+  target_compile_definitions(grpc_unsecure INTERFACE gRPC_DLL_IMPORTS)
-+endif()
-+
- foreach(_hdr
-   include/grpc/byte_buffer.h
-   include/grpc/byte_buffer_reader.h
-@@ -4218,6 +4232,8 @@ if(WIN32 AND MSVC)
+@@ -4218,6 +4218,10 @@ if(WIN32 AND MSVC)
    set_target_properties(upb PROPERTIES COMPILE_PDB_NAME "upb"
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
-+  # More details in include/grpc/impl/codegen/port_platform.h
-+  set_target_properties(upb PROPERTIES DEFINE_SYMBOL "gRPC_DLL_EXPORTS")
++  set_target_properties(upb PROPERTIES DEFINE_SYMBOL "UPB_DLL_EXPORTS")
++  if(BUILD_SHARED_LIBS)
++    target_compile_definitions(upb INTERFACE UPB_DLL_IMPORTS)
++  endif()
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/upb.pdb
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
-@@ -4242,6 +4258,10 @@ target_link_libraries(upb
-   ${_gRPC_ALLTARGETS_LIBRARIES}
- )
- 
-+if(WIN32 AND MSVC AND BUILD_SHARED_LIBS)
-+  # More details in include/grpc/impl/codegen/port_platform.h
-+  target_compile_definitions(upb INTERFACE gRPC_DLL_IMPORTS)
-+endif()
- 
- 
- if(gRPC_INSTALL)
-diff --git a/include/grpc/impl/codegen/port_platform.h b/include/grpc/impl/codegen/port_platform.h
-index ae0e35cfb7..63baf21c6a 100644
---- a/include/grpc/impl/codegen/port_platform.h
-+++ b/include/grpc/impl/codegen/port_platform.h
-@@ -89,6 +89,25 @@
- #undef GRPC_NOMINMAX_WAS_NOT_DEFINED
- #undef NOMINMAX
- #endif /* GRPC_WIN32_LEAN_AND_MEAN_WAS_NOT_DEFINED */
-+
-+// GPRC_DLL
-+// inspired by https://github.com/abseil/abseil-cpp/blob/20220623.1/absl/base/config.h#L730-L747
-+//
-+// When building gRPC as a DLL, this macro expands to `__declspec(dllexport)`
-+// so we can annotate symbols appropriately as being exported. When used in
-+// headers consuming a DLL, this macro expands to `__declspec(dllimport)` so
-+// that consumers know the symbol is defined inside the DLL. In all other cases,
-+// the macro expands to nothing.
-+// Note: gRPC_DLL_EXPORTS is set in CMakeLists.txt when building shared grpc{,_unsecure}
-+//       gRPC_DLL_IMPORTS is set by us as part of the interface for consumers of the DLL
-+#if defined(gRPC_DLL_EXPORTS)
-+#define GRPC_DLL __declspec(dllexport)
-+#elif defined(gRPC_DLL_IMPORTS)
-+#define GRPC_DLL __declspec(dllimport)
-+#else
-+#define GRPC_DLL
-+#endif // defined(gRPC_DLL_EXPORTS)
-+
- #endif /* defined(_WIN64) || defined(WIN64) || defined(_WIN32) || \
-           defined(WIN32) */
- 
-diff --git a/src/core/lib/gprpp/fork.h b/src/core/lib/gprpp/fork.h
-index d6ef16130a..46b067c140 100644
---- a/src/core/lib/gprpp/fork.h
-+++ b/src/core/lib/gprpp/fork.h
-@@ -35,7 +35,7 @@ class ExecCtxState;
- class ThreadState;
- }  // namespace internal
- 
--class Fork {
-+class GRPC_DLL Fork {
-  public:
-   typedef void (*child_postfork_func)(void);
- 
 diff --git a/third_party/upb/upb/port_def.inc b/third_party/upb/upb/port_def.inc
-index 2b240ff6e8..dd71d745e9 100644
+index 2b240ff..5898b46 100644
 --- a/third_party/upb/upb/port_def.inc
 +++ b/third_party/upb/upb/port_def.inc
-@@ -259,3 +259,12 @@ void __asan_unpoison_memory_region(void const volatile *addr, size_t size);
+@@ -259,3 +259,11 @@ void __asan_unpoison_memory_region(void const volatile *addr, size_t size);
  #else
  #define UPB_TREAT_PROTO2_ENUMS_LIKE_PROTO3 0
  #endif
 +
-+// More details in include/grpc/impl/codegen/port_platform.h
-+#if defined(gRPC_DLL_EXPORTS)
-+#define GRPC_DLL __declspec(dllexport)
-+#elif defined(gRPC_DLL_IMPORTS)
-+#define GRPC_DLL __declspec(dllimport)
++#if defined(UPB_DLL_EXPORTS)
++#define UPB_DLL __declspec(dllexport)
++#elif defined(UPB_DLL_IMPORTS)
++#define UPB_DLL __declspec(dllimport)
 +#else
-+#define GRPC_DLL
-+#endif // defined(gRPC_DLL_EXPORTS)
++#define UPB_DLL
++#endif // defined(UPB_DLL_EXPORTS)
 diff --git a/third_party/upb/upb/upb.c b/third_party/upb/upb/upb.c
-index 55730bbe82..18c0067da6 100644
+index 55730bb..579635b 100644
 --- a/third_party/upb/upb/upb.c
 +++ b/third_party/upb/upb/upb.c
-@@ -112,7 +112,11 @@ static uintptr_t upb_cleanup_metadata(uint32_t* cleanup,
+@@ -112,7 +112,7 @@ static uintptr_t upb_cleanup_metadata(uint32_t* cleanup,
    return (uintptr_t)cleanup | has_initial_block;
  }
  
 -upb_alloc upb_alloc_global = {&upb_global_allocfunc};
-+// For some reason, this file does not include upb.h where the function
-+// declaration with the dllexport/import spec is. Need to redefine
-+// with the dllexport spec
-+
-+GRPC_DLL upb_alloc upb_alloc_global = {&upb_global_allocfunc};
++UPB_DLL upb_alloc upb_alloc_global = {&upb_global_allocfunc};
  
  /* upb_Arena ******************************************************************/
  
 diff --git a/third_party/upb/upb/upb.h b/third_party/upb/upb/upb.h
-index e074911e3b..79cc217b9e 100644
+index e074911..29e8a7b 100644
 --- a/third_party/upb/upb/upb.h
 +++ b/third_party/upb/upb/upb.h
 @@ -135,7 +135,7 @@ UPB_INLINE void upb_free(upb_alloc* alloc, void* ptr) {
@@ -165,10 +64,10 @@ index e074911e3b..79cc217b9e 100644
  /* The global allocator used by upb.  Uses the standard malloc()/free(). */
  
 -extern upb_alloc upb_alloc_global;
-+GRPC_DLL extern upb_alloc upb_alloc_global;
++UPB_DLL extern upb_alloc upb_alloc_global;
  
  /* Functions that hard-code the global malloc.
   *
 -- 
-2.38.1.windows.1
+2.37.3
 
