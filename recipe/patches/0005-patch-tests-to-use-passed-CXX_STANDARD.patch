@@ -1,4 +1,4 @@
-From 795a8dea3cba2958b01131bc9c9c68288bf7a5ce Mon Sep 17 00:00:00 2001
+From 005f793e1936dcace84d160b5a9fdf0690ec3318 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Wed, 31 Aug 2022 18:52:58 +0200
 Subject: [PATCH 5/9] patch tests to use passed CXX_STANDARD
@@ -23,5 +23,5 @@ index 3e12e2d6d4..1326a5be3a 100644
  if(MSVC)
    add_definitions(-D_WIN32_WINNT=0x600)
 -- 
-2.37.0.windows.1
+2.38.1.windows.1
 

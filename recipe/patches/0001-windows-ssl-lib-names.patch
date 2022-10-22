@@ -1,4 +1,4 @@
-From a9950ac14243a744bee3e4b1bdbe0aa527d4590e Mon Sep 17 00:00:00 2001
+From 195e6cdc2b8ea333c0b4d27aa47067a0ed9e1895 Mon Sep 17 00:00:00 2001
 From: Jonathan Helmus <jjhelmus@gmail.com>
 Date: Mon, 17 Feb 2020 15:45:06 -0600
 Subject: [PATCH 1/9] windows ssl lib names
@@ -30,5 +30,5 @@ index ec27fe478f..bea7f92e15 100644
      EXTENSION_LIBRARIES += ('z',)
  if BUILD_WITH_SYSTEM_CARES:
 -- 
-2.37.0.windows.1
+2.38.1.windows.1
 

@@ -1,4 +1,4 @@
-From 7a39b5edbe498ef9c6679fecc9507ce9e38e6e08 Mon Sep 17 00:00:00 2001
+From 6e48bb33b3e91d24c3cb81d964135c4ff7ac51fb Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 23 Aug 2022 11:45:20 +0200
 Subject: [PATCH 8/9] mark linkage of c-ares/re2/zlib as private
@@ -11,7 +11,7 @@ Co-Authored-By: Mark Harfouche <mark.harfouche@gmail.com>
  1 file changed, 52 insertions(+), 46 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index e3f90a66a5..657421e605 100644
+index 6007a558c7..511f2e9b2c 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -2343,31 +2343,34 @@ target_include_directories(grpc
@@ -138,5 +138,5 @@ index e3f90a66a5..657421e605 100644
    "grpc.pc")
  
 -- 
-2.37.0.windows.1
+2.38.1.windows.1
 

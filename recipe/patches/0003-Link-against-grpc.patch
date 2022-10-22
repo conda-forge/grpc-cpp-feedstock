@@ -1,4 +1,4 @@
-From 4c9d33286be7619a5a083a330502522d8a43a348 Mon Sep 17 00:00:00 2001
+From df320a5ed232453a255aeaf2f94ede2e527e2a70 Mon Sep 17 00:00:00 2001
 From: Marius van Niekerk <marius.v.niekerk@gmail.com>
 Date: Mon, 13 Jun 2022 17:13:07 -0400
 Subject: [PATCH 3/9] Link against grpc
@@ -43,5 +43,5 @@ index a46c3ae795..4c06e38e95 100644
          core_c_files = list(CORE_C_FILES)
          extra_objects = []
 -- 
-2.37.0.windows.1
+2.38.1.windows.1
 

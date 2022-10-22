@@ -1,20 +1,20 @@
-From 8f9b67785155c0a1c1d79200b25ab088040ddcd7 Mon Sep 17 00:00:00 2001
+From 718471bd751b0ae581bd8bc65f64eb4754b2e2c8 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Mon, 12 Sep 2022 18:06:00 +0200
 Subject: [PATCH 9/9] add GRPC_DLL mechanism for missing symbols on windows
 
 Co-Authored-By: Isuru Fernando <isuruf@gmail.com>
 ---
- CMakeLists.txt                            | 14 ++++++++++++++
+ CMakeLists.txt                            | 16 ++++++++++++++++
  include/grpc/impl/codegen/port_platform.h | 19 +++++++++++++++++++
  src/core/lib/gprpp/fork.h                 |  2 +-
  third_party/upb/upb/port_def.inc          |  9 +++++++++
  third_party/upb/upb/upb.c                 |  6 +++++-
  third_party/upb/upb/upb.h                 |  2 +-
- 6 files changed, 49 insertions(+), 3 deletions(-)
+ 6 files changed, 51 insertions(+), 3 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 657421e605..ec3aad0f7d 100644
+index 511f2e9b2c..400752d471 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -2322,6 +2322,8 @@ if(WIN32 AND MSVC)
@@ -59,6 +59,15 @@ index 657421e605..ec3aad0f7d 100644
  foreach(_hdr
    include/grpc/byte_buffer.h
    include/grpc/byte_buffer_reader.h
+@@ -4218,6 +4232,8 @@ if(WIN32 AND MSVC)
+   set_target_properties(upb PROPERTIES COMPILE_PDB_NAME "upb"
+     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+   )
++  # More details in include/grpc/impl/codegen/port_platform.h
++  set_target_properties(upb PROPERTIES DEFINE_SYMBOL "gRPC_DLL_EXPORTS")
+   if(gRPC_INSTALL)
+     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/upb.pdb
+       DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
 diff --git a/include/grpc/impl/codegen/port_platform.h b/include/grpc/impl/codegen/port_platform.h
 index ae0e35cfb7..63baf21c6a 100644
 --- a/include/grpc/impl/codegen/port_platform.h
@@ -150,5 +159,5 @@ index e074911e3b..79cc217b9e 100644
  /* Functions that hard-code the global malloc.
   *
 -- 
-2.37.0.windows.1
+2.38.1.windows.1
 

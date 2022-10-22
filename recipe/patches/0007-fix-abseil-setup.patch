@@ -1,4 +1,4 @@
-From e5a74d16a7a6ad41dbc40cee6f000fa23eeb9d55 Mon Sep 17 00:00:00 2001
+From 28baed84db40fb826c2bce249b9bc9449231268a Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 4 Sep 2022 14:34:52 +0200
 Subject: [PATCH 7/9] fix abseil setup
@@ -32,5 +32,5 @@ index 6265b7c0ae..aa80cacdb1 100644
  DEFINE_MACROS = (('_WIN32_WINNT', 0x600),)
  asm_files = []
 -- 
-2.37.0.windows.1
+2.38.1.windows.1
 

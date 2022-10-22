@@ -1,4 +1,4 @@
-From 7e719c99e27562f31868e5d0fd1c455e6519bba3 Mon Sep 17 00:00:00 2001
+From 07eae96c0ba20ee3d7add64d473d6dc2d531e17d Mon Sep 17 00:00:00 2001
 From: Mike Sarahan <msarahan@gmail.com>
 Date: Tue, 18 Feb 2020 13:53:05 -0600
 Subject: [PATCH 2/9] fix win setup cmds
@@ -67,5 +67,5 @@ index d93b6c7039..024512624a 100644
                  # TODO(lidiz) Remove the generated a.out for success tests.
                  cc_test = subprocess.Popen(['cc', '-x', 'c', '-std=c++14', '-'],
 -- 
-2.37.0.windows.1
+2.38.1.windows.1
 
