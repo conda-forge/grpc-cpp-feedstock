@@ -21,7 +21,8 @@ cmake ..  ^
       -DgRPC_PROTOBUF_PROVIDER="package" ^
       -DgRPC_SSL_PROVIDER="package" ^
       -DgRPC_RE2_PROVIDER="package" ^
-      -DgRPC_ZLIB_PROVIDER="package"
+      -DgRPC_ZLIB_PROVIDER="package" ^
+      -DCMAKE_VERBOSE_MAKEFILE=ON
 if %ERRORLEVEL% neq 0 exit 1
 
 cmake --build . --config Release --target install
