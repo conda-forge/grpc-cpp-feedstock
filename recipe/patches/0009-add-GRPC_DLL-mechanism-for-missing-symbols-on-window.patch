@@ -1,20 +1,20 @@
-From 718471bd751b0ae581bd8bc65f64eb4754b2e2c8 Mon Sep 17 00:00:00 2001
+From e729e28581d741d6860bc9f989aa117737d92d98 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Mon, 12 Sep 2022 18:06:00 +0200
 Subject: [PATCH 9/9] add GRPC_DLL mechanism for missing symbols on windows
 
 Co-Authored-By: Isuru Fernando <isuruf@gmail.com>
 ---
- CMakeLists.txt                            | 16 ++++++++++++++++
+ CMakeLists.txt                            | 20 ++++++++++++++++++++
  include/grpc/impl/codegen/port_platform.h | 19 +++++++++++++++++++
  src/core/lib/gprpp/fork.h                 |  2 +-
  third_party/upb/upb/port_def.inc          |  9 +++++++++
  third_party/upb/upb/upb.c                 |  6 +++++-
  third_party/upb/upb/upb.h                 |  2 +-
- 6 files changed, 51 insertions(+), 3 deletions(-)
+ 6 files changed, 55 insertions(+), 3 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 511f2e9b2c..400752d471 100644
+index 511f2e9b2c..0d90cf15fd 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -2322,6 +2322,8 @@ if(WIN32 AND MSVC)
@@ -68,6 +68,17 @@ index 511f2e9b2c..400752d471 100644
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/upb.pdb
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+@@ -4242,6 +4258,10 @@ target_link_libraries(upb
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+ )
+ 
++if(WIN32 AND MSVC AND BUILD_SHARED_LIBS)
++  # More details in include/grpc/impl/codegen/port_platform.h
++  target_compile_definitions(upb INTERFACE gRPC_DLL_IMPORTS)
++endif()
+ 
+ 
+ if(gRPC_INSTALL)
 diff --git a/include/grpc/impl/codegen/port_platform.h b/include/grpc/impl/codegen/port_platform.h
 index ae0e35cfb7..63baf21c6a 100644
 --- a/include/grpc/impl/codegen/port_platform.h
