@@ -1,15 +1,15 @@
-From 58b0231490b45e7bf4fa95c9d46cd50db5d3cfee Mon Sep 17 00:00:00 2001
+From a9728707f2f1b5cff21e8c1efc7dfdd1952ab643 Mon Sep 17 00:00:00 2001
 From: Isuru Fernando <isuruf@gmail.com>
 Date: Sat, 22 Oct 2022 01:21:56 -0500
 Subject: [PATCH 2/3] add UPB_DLL mechanism for missing symbols on windows
 
 Co-Authored-By: "H. Vetinari" <h.vetinari@gmx.com>
 ---
- CMakeLists.txt                   | 4 ++++
- third_party/upb/upb/port_def.inc | 8 ++++++++
- third_party/upb/upb/upb.c        | 2 +-
- third_party/upb/upb/upb.h        | 2 +-
- 4 files changed, 14 insertions(+), 2 deletions(-)
+ CMakeLists.txt                   |  4 ++++
+ third_party/upb/upb/port_def.inc | 18 ++++++++++++++++++
+ third_party/upb/upb/upb.c        |  2 +-
+ third_party/upb/upb/upb.h        |  2 +-
+ 4 files changed, 24 insertions(+), 2 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 657421e..6cf7b48 100644
@@ -27,14 +27,24 @@ index 657421e..6cf7b48 100644
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/upb.pdb
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
 diff --git a/third_party/upb/upb/port_def.inc b/third_party/upb/upb/port_def.inc
-index 2b240ff..5898b46 100644
+index 2b240ff..5899039 100644
 --- a/third_party/upb/upb/port_def.inc
 +++ b/third_party/upb/upb/port_def.inc
-@@ -259,3 +259,11 @@ void __asan_unpoison_memory_region(void const volatile *addr, size_t size);
+@@ -259,3 +259,21 @@ void __asan_unpoison_memory_region(void const volatile *addr, size_t size);
  #else
  #define UPB_TREAT_PROTO2_ENUMS_LIKE_PROTO3 0
  #endif
 +
++// UPB_DLL
++// inspired by https://github.com/abseil/abseil-cpp/blob/20220623.1/absl/base/config.h#L730-L747
++//
++// When building upb as a DLL, this macro expands to `__declspec(dllexport)`
++// so we can annotate symbols appropriately as being exported. When used in
++// headers consuming a DLL, this macro expands to `__declspec(dllimport)` so
++// that consumers know the symbol is defined inside the DLL. In all other cases,
++// the macro expands to nothing.
++// Note: UPB_DLL_EXPORTS is set in CMakeLists.txt when building shared upb
++//       UPB_DLL_IMPORTS is set by us as part of the interface for consumers of the DLL
 +#if defined(UPB_DLL_EXPORTS)
 +#define UPB_DLL __declspec(dllexport)
 +#elif defined(UPB_DLL_IMPORTS)

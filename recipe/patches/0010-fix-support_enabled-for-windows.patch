@@ -1,27 +1,18 @@
-From 7577fd25bbb7ca782f0463b96759ed013256b51b Mon Sep 17 00:00:00 2001
+From 30f3d14ac2adffd8e4fca9844207ed87cc1e60c4 Mon Sep 17 00:00:00 2001
 From: Isuru Fernando <isuruf@gmail.com>
-Date: Sat, 22 Oct 2022 01:48:36 -0500
+Date: Sat, 22 Oct 2022 02:21:08 -0500
 Subject: [PATCH 3/3] fix support_enabled for windows
 
 ---
- src/core/lib/gprpp/fork.cc | 14 ++++++++++++++
- src/core/lib/gprpp/fork.h  | 13 ++-----------
- 2 files changed, 16 insertions(+), 11 deletions(-)
+ src/core/lib/gprpp/fork.cc | 12 ++++++++++++
+ src/core/lib/gprpp/fork.h  | 12 ++----------
+ 2 files changed, 14 insertions(+), 10 deletions(-)
 
 diff --git a/src/core/lib/gprpp/fork.cc b/src/core/lib/gprpp/fork.cc
-index 31fcc77..0fc9330 100644
+index 31fcc77..2ea16e0 100644
 --- a/src/core/lib/gprpp/fork.cc
 +++ b/src/core/lib/gprpp/fork.cc
-@@ -163,6 +163,8 @@ class ThreadState {
- 
- }  // namespace internal
- 
-+static std::atomic<bool> support_enabled_;
-+
- void Fork::GlobalInit() {
-   if (!override_enabled_) {
-     support_enabled_.store(GPR_GLOBAL_CONFIG_GET(grpc_enable_fork_support),
-@@ -185,6 +187,18 @@ bool Fork::Enabled() {
+@@ -185,6 +185,18 @@ bool Fork::Enabled() {
    return support_enabled_.load(std::memory_order_relaxed);
  }
  
@@ -41,7 +32,7 @@ index 31fcc77..0fc9330 100644
  void Fork::Enable(bool enable) {
    override_enabled_ = true;
 diff --git a/src/core/lib/gprpp/fork.h b/src/core/lib/gprpp/fork.h
-index d6ef161..b6428e4 100644
+index d6ef161..f739d70 100644
 --- a/src/core/lib/gprpp/fork.h
 +++ b/src/core/lib/gprpp/fork.h
 @@ -47,18 +47,10 @@ class Fork {
@@ -65,14 +56,6 @@ index d6ef161..b6428e4 100644
  
    // Provide a function that will be invoked in the child's postfork handler to
    // reset the polling engine's internal state.
-@@ -93,7 +85,6 @@ class Fork {
- 
-   static internal::ExecCtxState* exec_ctx_state_;
-   static internal::ThreadState* thread_state_;
--  static std::atomic<bool> support_enabled_;
-   static bool override_enabled_;
-   static child_postfork_func reset_child_polling_engine_;
- };
 -- 
 2.37.3
 
