@@ -1,13 +1,17 @@
+BUILD:
+- aarch64-conda_cos7-linux-gnu
 abseil_cpp:
-- '20211102.0'
+- '20220623.0'
 c_ares:
 - '1'
 c_compiler:
 - gcc
 c_compiler_version:
 - '11'
+cdt_arch:
+- aarch64
 cdt_name:
-- cos6
+- cos7
 channel_sources:
 - conda-forge
 channel_targets:
@@ -21,14 +25,11 @@ docker_image:
 libprotobuf:
 - '3.21'
 openssl:
-- '3'
-pin_run_as_build:
-  zlib:
-    max_pin: x.x
+- 1.1.1
 re2:
 - 2022.06.01
 target_platform:
-- linux-64
+- linux-aarch64
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
