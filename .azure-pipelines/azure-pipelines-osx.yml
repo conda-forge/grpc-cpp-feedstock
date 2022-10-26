@@ -8,29 +8,17 @@ jobs:
     vmImage: macOS-11
   strategy:
     matrix:
-      osx_64_libprotobuf3.20openssl1.1.1:
-        CONFIG: osx_64_libprotobuf3.20openssl1.1.1
+      osx_64_openssl1.1.1:
+        CONFIG: osx_64_openssl1.1.1
         UPLOAD_PACKAGES: 'True'
-      osx_64_libprotobuf3.20openssl3:
-        CONFIG: osx_64_libprotobuf3.20openssl3
+      osx_64_openssl3:
+        CONFIG: osx_64_openssl3
         UPLOAD_PACKAGES: 'True'
-      osx_64_libprotobuf3.21openssl1.1.1:
-        CONFIG: osx_64_libprotobuf3.21openssl1.1.1
+      osx_arm64_openssl1.1.1:
+        CONFIG: osx_arm64_openssl1.1.1
         UPLOAD_PACKAGES: 'True'
-      osx_64_libprotobuf3.21openssl3:
-        CONFIG: osx_64_libprotobuf3.21openssl3
-        UPLOAD_PACKAGES: 'True'
-      osx_arm64_libprotobuf3.20openssl1.1.1:
-        CONFIG: osx_arm64_libprotobuf3.20openssl1.1.1
-        UPLOAD_PACKAGES: 'True'
-      osx_arm64_libprotobuf3.20openssl3:
-        CONFIG: osx_arm64_libprotobuf3.20openssl3
-        UPLOAD_PACKAGES: 'True'
-      osx_arm64_libprotobuf3.21openssl1.1.1:
-        CONFIG: osx_arm64_libprotobuf3.21openssl1.1.1
-        UPLOAD_PACKAGES: 'True'
-      osx_arm64_libprotobuf3.21openssl3:
-        CONFIG: osx_arm64_libprotobuf3.21openssl3
+      osx_arm64_openssl3:
+        CONFIG: osx_arm64_openssl3
         UPLOAD_PACKAGES: 'True'
   timeoutInMinutes: 360
 
