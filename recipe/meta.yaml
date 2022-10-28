@@ -1,8 +1,10 @@
-{% set version = "1.48.1" %}
+{% set version = "1.49.1" %}
 
 # core package & vendored libs use different version scheme than CPP libs, see
 # https://github.com/grpc/grpc/blob/v1.48.1/CMakeLists.txt#L28-L32
-{% set core_version = "26.0.0" %}
+# the difference of 22 is empirical and has held since grpc 1.40
+{% set core_major = version.split(".")[1] | int - 22 %}
+{% set core_version = core_major | string ~ ".0.0" %}
 
 {% set core_libs = ["gpr", "grpc", "grpc_unsecure"] %}
 {% set core_cpp_libs = ["grpc++", "grpc++_unsecure"] %}
@@ -17,7 +19,7 @@ package:
 
 source:
   url: https://github.com/grpc/grpc/archive/v{{ version }}.tar.gz
-  sha256: 320366665d19027cda87b2368c03939006a37e0388bfd1091c8d2a96fbc93bd8
+  sha256: 5071b630e2a14707ad060636990f1b25b0984bd168c7ea1ab95e48a3bdc0081f
   patches:
     - patches/0001-windows-ssl-lib-names.patch         # [win]
     - patches/0002-fix-win-setup-cmds.patch            # [win]
@@ -28,15 +30,15 @@ source:
     - patches/0007-fix-abseil-setup.patch
 
 build:
-  number: 2
+  number: 0
 
 outputs:
-  - name: grpc-cpp
+  - name: libgrpc
     script: build-cpp.sh  # [not win]
     script: build-cpp.bat  # [win]
     build:
       run_exports:
-        - {{ pin_subpackage('grpc-cpp', max_pin='x.x') }}
+        - {{ pin_subpackage('libgrpc', max_pin='x.x') }}
     requirements:
       build:
         - {{ compiler('c') }}
@@ -111,6 +113,21 @@ outputs:
         - ./test_grpc.sh   # [unix]
         - ./test_grpc.bat  # [win]
 
+  # for compatibility with previous behavior of "grpc-cpp"
+  - name: grpc-cpp
+    build:
+      run_exports:
+        - {{ pin_subpackage('libgrpc', max_pin='x.x') }}
+    requirements:
+      host:
+        - {{ pin_subpackage('libgrpc', exact=True) }}
+      run:
+        - {{ pin_subpackage('libgrpc', exact=True) }}
+    test:
+      commands:
+        # tested in other outputs
+        - echo "hello"
+
   - name: grpcio
     script: build-grpcio.sh  # [not win]
     script: build-grpcio.bat  # [win]
@@ -129,7 +146,7 @@ outputs:
         - cython
         - six >=1.6.0
         - libabseil
-        - {{ pin_subpackage('grpc-cpp', exact=True) }}
+        - {{ pin_subpackage('libgrpc', exact=True) }}
         - c-ares
         - libprotobuf
         - re2
@@ -139,7 +156,7 @@ outputs:
         - python
         - setuptools
         - six >=1.6.0
-        - {{ pin_subpackage('grpc-cpp', exact=True) }}
+        - {{ pin_subpackage('libgrpc', exact=True) }}
         - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.9") }}  # [osx and x86_64]
     test:
       files:

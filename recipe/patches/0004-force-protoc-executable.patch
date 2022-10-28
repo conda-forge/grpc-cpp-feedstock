@@ -1,4 +1,4 @@
-From e3bf11af71a8c374fa01ed509c0706fb47631285 Mon Sep 17 00:00:00 2001
+From 9f8f73723ba7727998225000a25c2d7e675e2ee9 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Fri, 11 Sep 2020 14:20:04 +0200
 Subject: [PATCH 4/7] force protoc executable
@@ -36,5 +36,5 @@ index f23f65d40e..574068017a 100644
    endif()
  endif()
 -- 
-2.37.0.windows.1
+2.38.1.windows.1
 
