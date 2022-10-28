@@ -25,9 +25,8 @@ source:
     - patches/0002-fix-win-setup-cmds.patch            # [win]
     - patches/0003-Link-against-grpc.patch
     - patches/0004-force-protoc-executable.patch
-    - patches/0005-patch-tests-to-use-passed-CXX_STANDARD.patch
-    - patches/0006-switch-to-C-17-for-grpcio.patch
-    - patches/0007-fix-abseil-setup.patch
+    - patches/0005-switch-to-C-17-for-grpcio.patch
+    - patches/0006-fix-abseil-setup.patch
 
 build:
   number: 0
