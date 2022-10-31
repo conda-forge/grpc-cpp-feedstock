@@ -64,6 +64,9 @@ outputs:
         - ucrt  # [win]
         - openssl
         - zlib
+      run_constrained:
+        # make sure we don't co-install with old version of previous package name
+        - grpc-cpp ={{ version }}
     test:
       requires:
         # protoc needs compiler; cmake also needs one to run package detection, see
