@@ -30,7 +30,7 @@ source:
     - patches/0007-fix-abseil-setup.patch
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - name: libgrpc
