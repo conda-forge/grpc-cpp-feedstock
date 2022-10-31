@@ -123,6 +123,7 @@ outputs:
         - {{ pin_subpackage('libgrpc', max_pin='x.x') }}
     requirements:
       host:
+        - openssl
         - {{ pin_subpackage('libgrpc', exact=True) }}
       run:
         - {{ pin_subpackage('libgrpc', exact=True) }}
