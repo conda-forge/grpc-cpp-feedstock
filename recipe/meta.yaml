@@ -114,22 +114,6 @@ outputs:
         - ./test_grpc.sh   # [unix]
         - ./test_grpc.bat  # [win]
 
-  # for compatibility with previous behavior of "grpc-cpp"
-  - name: grpc-cpp
-    build:
-      run_exports:
-        - {{ pin_subpackage('libgrpc', max_pin='x.x') }}
-    requirements:
-      host:
-        - openssl
-        - {{ pin_subpackage('libgrpc', exact=True) }}
-      run:
-        - {{ pin_subpackage('libgrpc', exact=True) }}
-    test:
-      commands:
-        # tested in other outputs
-        - echo "hello"
-
   - name: grpcio
     script: build-grpcio.sh  # [not win]
     script: build-grpcio.bat  # [win]
