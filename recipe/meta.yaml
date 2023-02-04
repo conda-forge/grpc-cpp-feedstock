@@ -146,7 +146,6 @@ outputs:
         - pip
         - setuptools
         - cython
-        - six >=1.6.0
         - libabseil
         - {{ pin_subpackage('libgrpc', exact=True) }}
         - c-ares
@@ -157,7 +156,6 @@ outputs:
       run:
         - python
         - setuptools
-        - six >=1.6.0
         - {{ pin_subpackage('libgrpc', exact=True) }}
         - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.9") }}  # [osx and x86_64]
     test:
