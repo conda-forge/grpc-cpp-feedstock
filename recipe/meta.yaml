@@ -27,7 +27,7 @@ source:
     - patches/0006-switch-to-C-17-for-grpcio.patch
 
 build:
-  number: 9
+  number: 10
 
 outputs:
   - name: grpc-cpp
