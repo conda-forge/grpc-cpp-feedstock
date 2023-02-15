@@ -25,7 +25,7 @@ libabseil:
 libprotobuf:
 - '3.21'
 openssl:
-- 1.1.1
+- '3'
 pin_run_as_build:
   python:
     min_pin: x.x
@@ -36,7 +36,7 @@ python:
 - 3.8.* *_cpython
 - 3.9.* *_cpython
 re2:
-- 2022.06.01
+- 2023.02.01
 target_platform:
 - linux-aarch64
 zip_keys:
