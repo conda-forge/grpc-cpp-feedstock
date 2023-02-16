@@ -94,7 +94,6 @@ Current release info
 
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-grpc--cpp-green.svg)](https://anaconda.org/conda-forge/grpc-cpp) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/grpc-cpp.svg)](https://anaconda.org/conda-forge/grpc-cpp) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/grpc-cpp.svg)](https://anaconda.org/conda-forge/grpc-cpp) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/grpc-cpp.svg)](https://anaconda.org/conda-forge/grpc-cpp) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-grpcio-green.svg)](https://anaconda.org/conda-forge/grpcio) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/grpcio.svg)](https://anaconda.org/conda-forge/grpcio) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/grpcio.svg)](https://anaconda.org/conda-forge/grpcio) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/grpcio.svg)](https://anaconda.org/conda-forge/grpcio) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-libgrpc-green.svg)](https://anaconda.org/conda-forge/libgrpc) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/libgrpc.svg)](https://anaconda.org/conda-forge/libgrpc) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/libgrpc.svg)](https://anaconda.org/conda-forge/libgrpc) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/libgrpc.svg)](https://anaconda.org/conda-forge/libgrpc) |
 
@@ -108,41 +107,41 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `grpc-cpp, grpcio, libgrpc` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `grpcio, libgrpc` can be installed with `conda`:
 
 ```
-conda install grpc-cpp grpcio libgrpc
-```
-
-or with `mamba`:
-
-```
-mamba install grpc-cpp grpcio libgrpc
-```
-
-It is possible to list all of the versions of `grpc-cpp` available on your platform with `conda`:
-
-```
-conda search grpc-cpp --channel conda-forge
+conda install grpcio libgrpc
 ```
 
 or with `mamba`:
 
 ```
-mamba search grpc-cpp --channel conda-forge
+mamba install grpcio libgrpc
+```
+
+It is possible to list all of the versions of `grpcio` available on your platform with `conda`:
+
+```
+conda search grpcio --channel conda-forge
+```
+
+or with `mamba`:
+
+```
+mamba search grpcio --channel conda-forge
 ```
 
 Alternatively, `mamba repoquery` may provide more information:
 
 ```
 # Search all versions available on your platform:
-mamba repoquery search grpc-cpp --channel conda-forge
+mamba repoquery search grpcio --channel conda-forge
 
-# List packages depending on `grpc-cpp`:
-mamba repoquery whoneeds grpc-cpp --channel conda-forge
+# List packages depending on `grpcio`:
+mamba repoquery whoneeds grpcio --channel conda-forge
 
-# List dependencies of `grpc-cpp`:
-mamba repoquery depends grpc-cpp --channel conda-forge
+# List dependencies of `grpcio`:
+mamba repoquery depends grpcio --channel conda-forge
 ```
 
 
