@@ -1,11 +1,11 @@
-About grpc-cpp
-==============
+About grpc-cpp-feedstock
+========================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/grpc-cpp-feedstock/blob/main/LICENSE.txt)
 
 Home: https://grpc.io/
 
 Package license: Apache-2.0
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/grpc-cpp-feedstock/blob/main/LICENSE.txt)
 
 Summary: gRPC - A high-performance, open-source universal RPC framework
 
