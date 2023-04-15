@@ -1,24 +1,29 @@
-From a54a8ccd15dd184deb47577b2e191bd95750d056 Mon Sep 17 00:00:00 2001
+From d20b687c55b6c557e7c078a3aa6cb7203d6e5053 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 4 Sep 2022 14:34:52 +0200
 Subject: [PATCH 6/6] fix abseil setup
 
 ---
- setup.py | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ setup.py | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index 9de7a1e48a..2f2d25d1ed 100644
+index 9de7a1e48a..1b3966f92e 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -341,13 +341,16 @@ if BUILD_WITH_SYSTEM_CARES:
+@@ -341,13 +341,21 @@ if BUILD_WITH_SYSTEM_CARES:
  if BUILD_WITH_SYSTEM_RE2:
      EXTENSION_LIBRARIES += ('re2',)
  if BUILD_WITH_SYSTEM_ABSL:
 -    EXTENSION_LIBRARIES += tuple(
 -        lib.stem[3:] for lib in pathlib.Path('/usr').glob('lib*/libabsl_*.so'))
 +    if "win32" in sys.platform:
-+        absl_libs = ('abseil_dll', 'absl_flags', 'absl_flags_internal',)
++        absl_libs = (
++            'abseil_dll', 'absl_flags', 'absl_flags_commandlineflag', 'absl_flags_commandlineflag_internal',
++            'absl_flags_config', 'absl_flags_internal', 'absl_flags_marshalling', 'absl_flags_parse',
++            'absl_flags_private_handle_accessor', 'absl_flags_program_name', 'absl_flags_reflection',
++            'absl_flags_usage', 'absl_flags_usage_internal',
++        )
 +    else:
 +        absl_glob = pathlib.Path(os.environ['PREFIX']).glob('lib/libabsl_*.so')
 +        absl_libs = tuple(lib.stem[3:] for lib in absl_glob)
