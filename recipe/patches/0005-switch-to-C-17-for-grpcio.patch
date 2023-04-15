@@ -1,14 +1,14 @@
-From fcd36cc0e41cb14f263f6840ba300134a3340abf Mon Sep 17 00:00:00 2001
+From 8603a101d576aab53aa86fe72c48895a8c9b6e9d Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sat, 3 Sep 2022 19:23:15 +0200
 Subject: [PATCH 5/6] switch to C++17 for grpcio
 
 ---
- setup.py | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ setup.py | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index 63847a7781..0e535e259a 100644
+index 776b190967..9de7a1e48a 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -210,7 +210,7 @@ def check_linker_need_libatomic():
@@ -29,15 +29,17 @@ index 63847a7781..0e535e259a 100644
                                  stdin=PIPE,
                                  stdout=PIPE,
                                  stderr=PIPE)
-@@ -238,7 +238,7 @@ def check_linker_need_libatomic():
+@@ -238,8 +238,9 @@ def check_linker_need_libatomic():
  EXTRA_ENV_COMPILE_ARGS = os.environ.get('GRPC_PYTHON_CFLAGS', None)
  EXTRA_ENV_LINK_ARGS = os.environ.get('GRPC_PYTHON_LDFLAGS', None)
  if EXTRA_ENV_COMPILE_ARGS is None:
 -    EXTRA_ENV_COMPILE_ARGS = ' -std=c++14'
 +    EXTRA_ENV_COMPILE_ARGS = ' -std=c++17'
      if 'win32' in sys.platform:
++        EXTRA_ENV_COMPILE_ARGS = ' /std:c++17'
          if sys.version_info < (3, 5):
              EXTRA_ENV_COMPILE_ARGS += ' -D_hypot=hypot'
+             # We use define flags here and don't directly add to DEFINE_MACROS below to
 -- 
 2.38.1.windows.1
 
