@@ -2,8 +2,8 @@
 
 # core package & vendored libs use different version scheme than CPP libs, see
 # https://github.com/grpc/grpc/blob/v1.48.1/CMakeLists.txt#L28-L32
-# the difference of 22 is empirical and has held since grpc 1.40
-{% set core_major = version.split(".")[1] | int - 22 %}
+# the difference of 23 is empirical and most recently changed with 1.54
+{% set core_major = version.split(".")[1] | int - 23 %}
 {% set core_version = core_major | string ~ ".0.0" %}
 
 {% set core_libs = ["gpr", "grpc", "grpc_unsecure"] %}
