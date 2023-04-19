@@ -80,6 +80,8 @@ outputs:
         - cmake
         - ninja
         - pkg-config
+        # only required for pkg-config test (which wants to find zlib.pc)
+        - zlib  # [win]
       files:
         - hello.proto
         - test_grpc.sh
