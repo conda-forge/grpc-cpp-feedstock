@@ -1,4 +1,4 @@
-From b285f67ff47628da6fe8a6139751343cdc59d589 Mon Sep 17 00:00:00 2001
+From f1f45c4abb00ef7556371cc9bb3fcba56eea4f69 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Fri, 11 Sep 2020 14:20:04 +0200
 Subject: [PATCH 04/10] force protoc executable
@@ -8,10 +8,10 @@ Subject: [PATCH 04/10] force protoc executable
  1 file changed, 2 insertions(+), 15 deletions(-)
 
 diff --git a/cmake/protobuf.cmake b/cmake/protobuf.cmake
-index aff1d36526..0d295b5886 100644
+index 80181c6218..96213e7523 100644
 --- a/cmake/protobuf.cmake
 +++ b/cmake/protobuf.cmake
-@@ -75,21 +75,8 @@ elseif(gRPC_PROTOBUF_PROVIDER STREQUAL "package")
+@@ -71,21 +71,8 @@ elseif(gRPC_PROTOBUF_PROVIDER STREQUAL "package")
        set(_gRPC_PROTOBUF_PROTOC_LIBRARIES ${PROTOBUF_PROTOC_LIBRARIES})
        set(_gRPC_PROTOBUF_WELLKNOWN_INCLUDE_DIR ${PROTOBUF_INCLUDE_DIRS})
      endif()
@@ -32,6 +32,6 @@ index aff1d36526..0d295b5886 100644
 -    endif()
 +    set(_gRPC_PROTOBUF_PROTOC_EXECUTABLE ${Protobuf_PROTOC_EXECUTABLE})
 +    set(_gRPC_PROTOBUF_PROTOC ${Protobuf_PROTOC_EXECUTABLE})
-     set(_gRPC_FIND_PROTOBUF "if(NOT Protobuf_FOUND AND NOT PROTOBUF_FOUND)\n  find_package(Protobuf ${gRPC_PROTOBUF_PACKAGE_TYPE})\nendif()")
+     set(_gRPC_FIND_PROTOBUF "find_dependency(Protobuf CONFIG)")
    endif()
  endif()

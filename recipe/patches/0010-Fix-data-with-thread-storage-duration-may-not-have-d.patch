@@ -1,4 +1,4 @@
-From b1fa0893557019266c18fbe44c398c6af26d9e05 Mon Sep 17 00:00:00 2001
+From 3a56d02efb3359ef40a1fc982341fd2aec095b91 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Mon, 8 May 2023 11:31:09 +1100
 Subject: [PATCH 10/10] Fix `data with thread storage duration may not have dll

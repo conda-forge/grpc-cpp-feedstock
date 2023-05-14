@@ -1,4 +1,4 @@
-From 464a0a73852fd1a6538a9cafb6ced77d4f52a396 Mon Sep 17 00:00:00 2001
+From e16c8fc88094116516f0f21ec19e4d8f94e81f36 Mon Sep 17 00:00:00 2001
 From: Isuru Fernando <isuruf@gmail.com>
 Date: Sat, 22 Oct 2022 01:21:56 -0500
 Subject: [PATCH 08/10] add {GPR,GRPC,GRPCXX,UBP}_DLL mechanism for missing
@@ -16,16 +16,16 @@ Co-Authored-By: "H. Vetinari" <h.vetinari@gmx.com>
  src/core/lib/config/core_configuration.h      |  2 +-
  src/core/lib/gprpp/fork.h                     |  2 +-
  src/core/lib/iomgr/exec_ctx.h                 |  4 +--
- third_party/upb/upb/arena.c                   |  2 +-
- third_party/upb/upb/arena.h                   |  2 +-
- third_party/upb/upb/port_def.inc              | 27 ++++++++++++++
+ third_party/upb/upb/mem/alloc.c               |  2 +-
+ third_party/upb/upb/mem/alloc.h               |  2 +-
+ third_party/upb/upb/port/def.inc              | 27 ++++++++++++++
  13 files changed, 106 insertions(+), 12 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 6e05c89b7f..4cdac8a29f 100644
+index cf73078ad4..069a827d5d 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1625,6 +1625,11 @@ if(WIN32 AND MSVC)
+@@ -1470,6 +1470,11 @@ if(WIN32 AND MSVC)
    set_target_properties(gpr PROPERTIES COMPILE_PDB_NAME "gpr"
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
@@ -37,7 +37,7 @@ index 6e05c89b7f..4cdac8a29f 100644
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/gpr.pdb
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
-@@ -2490,6 +2495,11 @@ if(WIN32 AND MSVC)
+@@ -2337,6 +2342,11 @@ if(WIN32 AND MSVC)
    set_target_properties(grpc PROPERTIES COMPILE_PDB_NAME "grpc"
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
@@ -49,7 +49,7 @@ index 6e05c89b7f..4cdac8a29f 100644
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc.pdb
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
-@@ -3126,6 +3136,11 @@ if(WIN32 AND MSVC)
+@@ -2975,6 +2985,11 @@ if(WIN32 AND MSVC)
    set_target_properties(grpc_unsecure PROPERTIES COMPILE_PDB_NAME "grpc_unsecure"
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
@@ -61,7 +61,7 @@ index 6e05c89b7f..4cdac8a29f 100644
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc_unsecure.pdb
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
-@@ -3428,6 +3443,11 @@ if(WIN32 AND MSVC)
+@@ -3277,6 +3292,11 @@ if(WIN32 AND MSVC)
    set_target_properties(grpc++ PROPERTIES COMPILE_PDB_NAME "grpc++"
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
@@ -73,7 +73,7 @@ index 6e05c89b7f..4cdac8a29f 100644
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc++.pdb
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
-@@ -4132,6 +4152,11 @@ if(WIN32 AND MSVC)
+@@ -3981,6 +4001,11 @@ if(WIN32 AND MSVC)
    set_target_properties(grpc++_unsecure PROPERTIES COMPILE_PDB_NAME "grpc++_unsecure"
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
@@ -85,7 +85,7 @@ index 6e05c89b7f..4cdac8a29f 100644
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc++_unsecure.pdb
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
-@@ -4952,6 +4977,12 @@ if(WIN32 AND MSVC)
+@@ -4825,6 +4850,12 @@ if(WIN32 AND MSVC)
    set_target_properties(upb PROPERTIES COMPILE_PDB_NAME "upb"
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
@@ -159,46 +159,46 @@ index 95436ab8fb..a068f9b0af 100644
    /// Construct an OK instance.
    Status() : code_(StatusCode::OK) {
 diff --git a/src/core/ext/upb-generated/src/proto/grpc/gcp/altscontext.upb.h b/src/core/ext/upb-generated/src/proto/grpc/gcp/altscontext.upb.h
-index e4b6e44010..824c81fa0b 100644
+index 28c2185afd..68b940b360 100644
 --- a/src/core/ext/upb-generated/src/proto/grpc/gcp/altscontext.upb.h
 +++ b/src/core/ext/upb-generated/src/proto/grpc/gcp/altscontext.upb.h
-@@ -24,7 +24,7 @@ struct grpc_gcp_AltsContext;
- struct grpc_gcp_AltsContext_PeerAttributesEntry;
+@@ -27,7 +27,7 @@ extern "C" {
+ 
  typedef struct grpc_gcp_AltsContext grpc_gcp_AltsContext;
  typedef struct grpc_gcp_AltsContext_PeerAttributesEntry grpc_gcp_AltsContext_PeerAttributesEntry;
--extern const upb_MiniTable grpc_gcp_AltsContext_msginit;
-+extern const GRPC_DLL upb_MiniTable grpc_gcp_AltsContext_msginit;
- extern const upb_MiniTable grpc_gcp_AltsContext_PeerAttributesEntry_msginit;
+-extern const upb_MiniTable grpc_gcp_AltsContext_msg_init;
++extern const GRPC_DLL upb_MiniTable grpc_gcp_AltsContext_msg_init;
+ extern const upb_MiniTable grpc_gcp_AltsContext_PeerAttributesEntry_msg_init;
  struct grpc_gcp_RpcProtocolVersions;
- extern const upb_MiniTable grpc_gcp_RpcProtocolVersions_msginit;
+ extern const upb_MiniTable grpc_gcp_RpcProtocolVersions_msg_init;
 diff --git a/src/core/ext/upb-generated/src/proto/grpc/health/v1/health.upb.h b/src/core/ext/upb-generated/src/proto/grpc/health/v1/health.upb.h
-index 74f2df4458..3cd0939e38 100644
+index 9217ea2312..e8a4b2b0c5 100644
 --- a/src/core/ext/upb-generated/src/proto/grpc/health/v1/health.upb.h
 +++ b/src/core/ext/upb-generated/src/proto/grpc/health/v1/health.upb.h
-@@ -24,8 +24,8 @@ struct grpc_health_v1_HealthCheckRequest;
- struct grpc_health_v1_HealthCheckResponse;
+@@ -27,8 +27,8 @@ extern "C" {
+ 
  typedef struct grpc_health_v1_HealthCheckRequest grpc_health_v1_HealthCheckRequest;
  typedef struct grpc_health_v1_HealthCheckResponse grpc_health_v1_HealthCheckResponse;
--extern const upb_MiniTable grpc_health_v1_HealthCheckRequest_msginit;
--extern const upb_MiniTable grpc_health_v1_HealthCheckResponse_msginit;
-+extern const GRPC_DLL upb_MiniTable grpc_health_v1_HealthCheckRequest_msginit;
-+extern const GRPC_DLL upb_MiniTable grpc_health_v1_HealthCheckResponse_msginit;
+-extern const upb_MiniTable grpc_health_v1_HealthCheckRequest_msg_init;
+-extern const upb_MiniTable grpc_health_v1_HealthCheckResponse_msg_init;
++extern const GRPC_DLL upb_MiniTable grpc_health_v1_HealthCheckRequest_msg_init;
++extern const GRPC_DLL upb_MiniTable grpc_health_v1_HealthCheckResponse_msg_init;
  
  typedef enum {
    grpc_health_v1_HealthCheckResponse_UNKNOWN = 0,
 diff --git a/src/core/ext/upb-generated/xds/data/orca/v3/orca_load_report.upb.h b/src/core/ext/upb-generated/xds/data/orca/v3/orca_load_report.upb.h
-index fcca0b4871..0a7bb16ab6 100644
+index 52d88f10c6..deaeeef848 100644
 --- a/src/core/ext/upb-generated/xds/data/orca/v3/orca_load_report.upb.h
 +++ b/src/core/ext/upb-generated/xds/data/orca/v3/orca_load_report.upb.h
-@@ -28,7 +28,7 @@ typedef struct xds_data_orca_v3_OrcaLoadReport xds_data_orca_v3_OrcaLoadReport;
+@@ -29,7 +29,7 @@ typedef struct xds_data_orca_v3_OrcaLoadReport xds_data_orca_v3_OrcaLoadReport;
  typedef struct xds_data_orca_v3_OrcaLoadReport_RequestCostEntry xds_data_orca_v3_OrcaLoadReport_RequestCostEntry;
  typedef struct xds_data_orca_v3_OrcaLoadReport_UtilizationEntry xds_data_orca_v3_OrcaLoadReport_UtilizationEntry;
  typedef struct xds_data_orca_v3_OrcaLoadReport_NamedMetricsEntry xds_data_orca_v3_OrcaLoadReport_NamedMetricsEntry;
--extern const upb_MiniTable xds_data_orca_v3_OrcaLoadReport_msginit;
-+extern const GRPC_DLL upb_MiniTable xds_data_orca_v3_OrcaLoadReport_msginit;
- extern const upb_MiniTable xds_data_orca_v3_OrcaLoadReport_RequestCostEntry_msginit;
- extern const upb_MiniTable xds_data_orca_v3_OrcaLoadReport_UtilizationEntry_msginit;
- extern const upb_MiniTable xds_data_orca_v3_OrcaLoadReport_NamedMetricsEntry_msginit;
+-extern const upb_MiniTable xds_data_orca_v3_OrcaLoadReport_msg_init;
++extern const GRPC_DLL upb_MiniTable xds_data_orca_v3_OrcaLoadReport_msg_init;
+ extern const upb_MiniTable xds_data_orca_v3_OrcaLoadReport_RequestCostEntry_msg_init;
+ extern const upb_MiniTable xds_data_orca_v3_OrcaLoadReport_UtilizationEntry_msg_init;
+ extern const upb_MiniTable xds_data_orca_v3_OrcaLoadReport_NamedMetricsEntry_msg_init;
 diff --git a/src/core/lib/config/config_vars.h b/src/core/lib/config/config_vars.h
 index e3ce74fad1..341fbe31d2 100644
 --- a/src/core/lib/config/config_vars.h
@@ -260,39 +260,36 @@ index 230af79699..8fee807c36 100644
   public:
    /// Default Constructor
    ApplicationCallbackExecCtx() { Set(this, flags_); }
-diff --git a/third_party/upb/upb/arena.c b/third_party/upb/upb/arena.c
-index 3c872698cd..fd3106cb50 100644
---- a/third_party/upb/upb/arena.c
-+++ b/third_party/upb/upb/arena.c
-@@ -61,7 +61,7 @@ static uintptr_t upb_cleanup_metadata(uint32_t* cleanup,
-   return (uintptr_t)cleanup | has_initial_block;
+diff --git a/third_party/upb/upb/mem/alloc.c b/third_party/upb/upb/mem/alloc.c
+index 23650655ce..a6be47b279 100644
+--- a/third_party/upb/upb/mem/alloc.c
++++ b/third_party/upb/upb/mem/alloc.c
+@@ -44,4 +44,4 @@ static void* upb_global_allocfunc(upb_alloc* alloc, void* ptr, size_t oldsize,
+   }
  }
  
 -upb_alloc upb_alloc_global = {&upb_global_allocfunc};
 +UPB_DLL upb_alloc upb_alloc_global = {&upb_global_allocfunc};
+diff --git a/third_party/upb/upb/mem/alloc.h b/third_party/upb/upb/mem/alloc.h
+index df7a65ecca..d42124c64c 100644
+--- a/third_party/upb/upb/mem/alloc.h
++++ b/third_party/upb/upb/mem/alloc.h
+@@ -72,7 +72,7 @@ UPB_INLINE void upb_free(upb_alloc* alloc, void* ptr) {
  
- /* upb_Arena ******************************************************************/
- 
-diff --git a/third_party/upb/upb/arena.h b/third_party/upb/upb/arena.h
-index 0c4fd1b83c..c0b3051675 100644
---- a/third_party/upb/upb/arena.h
-+++ b/third_party/upb/upb/arena.h
-@@ -78,7 +78,7 @@ UPB_INLINE void upb_free(upb_alloc* alloc, void* ptr) {
- 
- /* The global allocator used by upb.  Uses the standard malloc()/free(). */
+ // The global allocator used by upb. Uses the standard malloc()/free().
  
 -extern upb_alloc upb_alloc_global;
 +extern UPB_DLL upb_alloc upb_alloc_global;
  
  /* Functions that hard-code the global malloc.
   *
-diff --git a/third_party/upb/upb/port_def.inc b/third_party/upb/upb/port_def.inc
-index 92e4bf2477..9a90e5e7a6 100644
---- a/third_party/upb/upb/port_def.inc
-+++ b/third_party/upb/upb/port_def.inc
-@@ -260,3 +260,30 @@ void __asan_unpoison_memory_region(void const volatile *addr, size_t size);
+diff --git a/third_party/upb/upb/port/def.inc b/third_party/upb/upb/port/def.inc
+index c1cf36f287..d8ee2e3ffe 100644
+--- a/third_party/upb/upb/port/def.inc
++++ b/third_party/upb/upb/port/def.inc
+@@ -327,3 +327,30 @@ void __asan_unpoison_memory_region(void const volatile *addr, size_t size);
  #else
- #define UPB_TREAT_PROTO2_ENUMS_LIKE_PROTO3 0
+ #define UPB_DESC(sym) google_protobuf_##sym
  #endif
 +
 +// UPB_DLL
