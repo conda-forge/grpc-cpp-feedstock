@@ -1,7 +1,2 @@
-c_compiler_version:    # [linux]
-- '11'                 # [linux]
-cxx_compiler_version:  # [linux]
-- '11'                 # [linux]
-
 libprotobuf:
   - "4.23"
