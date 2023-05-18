@@ -11,7 +11,7 @@ cxx_compiler:
 libabseil:
 - '20230125'
 libprotobuf:
-- '3.21'
+- '4.23'
 openssl:
 - '3'
 pin_run_as_build:
