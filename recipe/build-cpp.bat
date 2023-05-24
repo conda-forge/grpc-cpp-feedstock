@@ -8,10 +8,14 @@ cd build-cpp
 
 cmake ..  ^
       -GNinja ^
+      -DBUILD_SHARED_LIBS=ON ^
       -DCMAKE_CXX_STANDARD=17 ^
       -DCMAKE_BUILD_TYPE=Release ^
       -DCMAKE_PREFIX_PATH=%CONDA_PREFIX% ^
       -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% ^
+      -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON ^
+      -DProtobuf_PROTOC_EXECUTABLE=%LIBRARY_BIN%\protoc.exe ^
+      -DgRPC_MSVC_STATIC_RUNTIME=OFF ^
       -DgRPC_ABSL_PROVIDER="package" ^
       -DgRPC_CARES_PROVIDER="package" ^
       -DgRPC_GFLAGS_PROVIDER="package" ^

@@ -1,0 +1,320 @@
+From e16c8fc88094116516f0f21ec19e4d8f94e81f36 Mon Sep 17 00:00:00 2001
+From: Isuru Fernando <isuruf@gmail.com>
+Date: Sat, 22 Oct 2022 01:21:56 -0500
+Subject: [PATCH 08/10] add {GPR,GRPC,GRPCXX,UBP}_DLL mechanism for missing
+ symbols on windows
+
+Co-Authored-By: "H. Vetinari" <h.vetinari@gmx.com>
+---
+ CMakeLists.txt                                | 31 ++++++++++++++++
+ include/grpc/support/port_platform.h          | 36 +++++++++++++++++++
+ include/grpcpp/impl/status.h                  |  2 +-
+ .../src/proto/grpc/gcp/altscontext.upb.h      |  2 +-
+ .../src/proto/grpc/health/v1/health.upb.h     |  4 +--
+ .../xds/data/orca/v3/orca_load_report.upb.h   |  2 +-
+ src/core/lib/config/config_vars.h             |  2 +-
+ src/core/lib/config/core_configuration.h      |  2 +-
+ src/core/lib/gprpp/fork.h                     |  2 +-
+ src/core/lib/iomgr/exec_ctx.h                 |  4 +--
+ third_party/upb/upb/mem/alloc.c               |  2 +-
+ third_party/upb/upb/mem/alloc.h               |  2 +-
+ third_party/upb/upb/port/def.inc              | 27 ++++++++++++++
+ 13 files changed, 106 insertions(+), 12 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index cf73078ad4..069a827d5d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1470,6 +1470,11 @@ if(WIN32 AND MSVC)
+   set_target_properties(gpr PROPERTIES COMPILE_PDB_NAME "gpr"
+     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+   )
++  # More details in include/grpc/support/port_platform.h
++  set_target_properties(gpr PROPERTIES DEFINE_SYMBOL "GPR_DLL_EXPORTS")
++  if(BUILD_SHARED_LIBS)
++    target_compile_definitions(gpr INTERFACE GPR_DLL_IMPORTS)
++  endif()
+   if(gRPC_INSTALL)
+     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/gpr.pdb
+       DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+@@ -2337,6 +2342,11 @@ if(WIN32 AND MSVC)
+   set_target_properties(grpc PROPERTIES COMPILE_PDB_NAME "grpc"
+     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+   )
++  # More details in include/grpc/support/port_platform.h
++  set_target_properties(grpc PROPERTIES DEFINE_SYMBOL "gRPC_DLL_EXPORTS")
++  if(BUILD_SHARED_LIBS)
++    target_compile_definitions(grpc INTERFACE gRPC_DLL_IMPORTS)
++  endif()
+   if(gRPC_INSTALL)
+     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc.pdb
+       DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+@@ -2975,6 +2985,11 @@ if(WIN32 AND MSVC)
+   set_target_properties(grpc_unsecure PROPERTIES COMPILE_PDB_NAME "grpc_unsecure"
+     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+   )
++  # More details in include/grpc/support/port_platform.h
++  set_target_properties(grpc_unsecure PROPERTIES DEFINE_SYMBOL "gRPC_DLL_EXPORTS")
++  if(BUILD_SHARED_LIBS)
++    target_compile_definitions(grpc_unsecure INTERFACE gRPC_DLL_IMPORTS)
++  endif()
+   if(gRPC_INSTALL)
+     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc_unsecure.pdb
+       DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+@@ -3277,6 +3292,11 @@ if(WIN32 AND MSVC)
+   set_target_properties(grpc++ PROPERTIES COMPILE_PDB_NAME "grpc++"
+     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+   )
++  # More details in include/grpc/support/port_platform.h
++  set_target_properties(grpc++ PROPERTIES DEFINE_SYMBOL "gRPCXX_DLL_EXPORTS")
++  if(BUILD_SHARED_LIBS)
++    target_compile_definitions(grpc++ INTERFACE gRPCXX_DLL_IMPORTS)
++  endif()
+   if(gRPC_INSTALL)
+     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc++.pdb
+       DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+@@ -3981,6 +4001,11 @@ if(WIN32 AND MSVC)
+   set_target_properties(grpc++_unsecure PROPERTIES COMPILE_PDB_NAME "grpc++_unsecure"
+     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+   )
++  # More details in include/grpc/support/port_platform.h
++  set_target_properties(grpc++_unsecure PROPERTIES DEFINE_SYMBOL "gRPCXX_DLL_EXPORTS")
++  if(BUILD_SHARED_LIBS)
++    target_compile_definitions(grpc++_unsecure INTERFACE gRPCXX_DLL_IMPORTS)
++  endif()
+   if(gRPC_INSTALL)
+     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc++_unsecure.pdb
+       DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+@@ -4825,6 +4850,12 @@ if(WIN32 AND MSVC)
+   set_target_properties(upb PROPERTIES COMPILE_PDB_NAME "upb"
+     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+   )
++  # More details in third_party/upb/upb/port_def.inc;
++  # needs to be separate from gRPC_DLL_{IM,EX}PORTS
++  set_target_properties(upb PROPERTIES DEFINE_SYMBOL "UPB_DLL_EXPORTS")
++  if(BUILD_SHARED_LIBS)
++    target_compile_definitions(upb INTERFACE UPB_DLL_IMPORTS)
++  endif()
+   if(gRPC_INSTALL)
+     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/upb.pdb
+       DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+diff --git a/include/grpc/support/port_platform.h b/include/grpc/support/port_platform.h
+index 1e99dc628e..c2cdb31a96 100644
+--- a/include/grpc/support/port_platform.h
++++ b/include/grpc/support/port_platform.h
+@@ -53,6 +53,42 @@
+ #define WIN32_LEAN_AND_MEAN
+ #endif /* WIN32_LEAN_AND_MEAN */
+ 
++// GPRC_DLL
++// inspired by https://github.com/abseil/abseil-cpp/blob/20220623.1/absl/base/config.h#L730-L747
++//
++// When building gRPC as a DLL, this macro expands to `__declspec(dllexport)`
++// so we can annotate symbols appropriately as being exported. When used in
++// headers consuming a DLL, this macro expands to `__declspec(dllimport)` so
++// that consumers know the symbol is defined inside the DLL. In all other cases,
++// the macro expands to nothing.
++// Note: gRPC_DLL_EXPORTS is set in CMakeLists.txt when building shared grpc{,_unsecure}
++//       gRPC_DLL_IMPORTS is set by us as part of the interface for consumers of the DLL
++#if defined(gRPC_DLL_EXPORTS)
++#define GRPC_DLL __declspec(dllexport)
++#elif defined(gRPC_DLL_IMPORTS)
++#define GRPC_DLL __declspec(dllimport)
++#else
++#define GRPC_DLL
++#endif // defined(gRPC_DLL_EXPORTS)
++
++// same for gRPC++
++#if defined(gRPCXX_DLL_EXPORTS)
++#define GRPCXX_DLL __declspec(dllexport)
++#elif defined(gRPCXX_DLL_IMPORTS)
++#define GRPCXX_DLL __declspec(dllimport)
++#else
++#define GRPCXX_DLL
++#endif // defined(GRPCXX_DLL_EXPORTS)
++
++// same for GPR
++#if defined(GPR_DLL_EXPORTS)
++#define GPR_DLL __declspec(dllexport)
++#elif defined(GPR_DLL_IMPORTS)
++#define GPR_DLL __declspec(dllimport)
++#else
++#define GPR_DLL
++#endif // defined(GPR_DLL_EXPORTS)
++
+ #ifndef NOMINMAX
+ #define GRPC_NOMINMX_WAS_NOT_DEFINED
+ #define NOMINMAX
+diff --git a/include/grpcpp/impl/status.h b/include/grpcpp/impl/status.h
+index 95436ab8fb..a068f9b0af 100644
+--- a/include/grpcpp/impl/status.h
++++ b/include/grpcpp/impl/status.h
+@@ -32,7 +32,7 @@ namespace grpc {
+ /// Did it work? If it didn't, why?
+ ///
+ /// See \a grpc::StatusCode for details on the available code and their meaning.
+-class GRPC_MUST_USE_RESULT_WHEN_USE_STRICT_WARNING Status {
++class GRPC_MUST_USE_RESULT_WHEN_USE_STRICT_WARNING GRPCXX_DLL Status {
+  public:
+   /// Construct an OK instance.
+   Status() : code_(StatusCode::OK) {
+diff --git a/src/core/ext/upb-generated/src/proto/grpc/gcp/altscontext.upb.h b/src/core/ext/upb-generated/src/proto/grpc/gcp/altscontext.upb.h
+index 28c2185afd..68b940b360 100644
+--- a/src/core/ext/upb-generated/src/proto/grpc/gcp/altscontext.upb.h
++++ b/src/core/ext/upb-generated/src/proto/grpc/gcp/altscontext.upb.h
+@@ -27,7 +27,7 @@ extern "C" {
+ 
+ typedef struct grpc_gcp_AltsContext grpc_gcp_AltsContext;
+ typedef struct grpc_gcp_AltsContext_PeerAttributesEntry grpc_gcp_AltsContext_PeerAttributesEntry;
+-extern const upb_MiniTable grpc_gcp_AltsContext_msg_init;
++extern const GRPC_DLL upb_MiniTable grpc_gcp_AltsContext_msg_init;
+ extern const upb_MiniTable grpc_gcp_AltsContext_PeerAttributesEntry_msg_init;
+ struct grpc_gcp_RpcProtocolVersions;
+ extern const upb_MiniTable grpc_gcp_RpcProtocolVersions_msg_init;
+diff --git a/src/core/ext/upb-generated/src/proto/grpc/health/v1/health.upb.h b/src/core/ext/upb-generated/src/proto/grpc/health/v1/health.upb.h
+index 9217ea2312..e8a4b2b0c5 100644
+--- a/src/core/ext/upb-generated/src/proto/grpc/health/v1/health.upb.h
++++ b/src/core/ext/upb-generated/src/proto/grpc/health/v1/health.upb.h
+@@ -27,8 +27,8 @@ extern "C" {
+ 
+ typedef struct grpc_health_v1_HealthCheckRequest grpc_health_v1_HealthCheckRequest;
+ typedef struct grpc_health_v1_HealthCheckResponse grpc_health_v1_HealthCheckResponse;
+-extern const upb_MiniTable grpc_health_v1_HealthCheckRequest_msg_init;
+-extern const upb_MiniTable grpc_health_v1_HealthCheckResponse_msg_init;
++extern const GRPC_DLL upb_MiniTable grpc_health_v1_HealthCheckRequest_msg_init;
++extern const GRPC_DLL upb_MiniTable grpc_health_v1_HealthCheckResponse_msg_init;
+ 
+ typedef enum {
+   grpc_health_v1_HealthCheckResponse_UNKNOWN = 0,
+diff --git a/src/core/ext/upb-generated/xds/data/orca/v3/orca_load_report.upb.h b/src/core/ext/upb-generated/xds/data/orca/v3/orca_load_report.upb.h
+index 52d88f10c6..deaeeef848 100644
+--- a/src/core/ext/upb-generated/xds/data/orca/v3/orca_load_report.upb.h
++++ b/src/core/ext/upb-generated/xds/data/orca/v3/orca_load_report.upb.h
+@@ -29,7 +29,7 @@ typedef struct xds_data_orca_v3_OrcaLoadReport xds_data_orca_v3_OrcaLoadReport;
+ typedef struct xds_data_orca_v3_OrcaLoadReport_RequestCostEntry xds_data_orca_v3_OrcaLoadReport_RequestCostEntry;
+ typedef struct xds_data_orca_v3_OrcaLoadReport_UtilizationEntry xds_data_orca_v3_OrcaLoadReport_UtilizationEntry;
+ typedef struct xds_data_orca_v3_OrcaLoadReport_NamedMetricsEntry xds_data_orca_v3_OrcaLoadReport_NamedMetricsEntry;
+-extern const upb_MiniTable xds_data_orca_v3_OrcaLoadReport_msg_init;
++extern const GRPC_DLL upb_MiniTable xds_data_orca_v3_OrcaLoadReport_msg_init;
+ extern const upb_MiniTable xds_data_orca_v3_OrcaLoadReport_RequestCostEntry_msg_init;
+ extern const upb_MiniTable xds_data_orca_v3_OrcaLoadReport_UtilizationEntry_msg_init;
+ extern const upb_MiniTable xds_data_orca_v3_OrcaLoadReport_NamedMetricsEntry_msg_init;
+diff --git a/src/core/lib/config/config_vars.h b/src/core/lib/config/config_vars.h
+index e3ce74fad1..341fbe31d2 100644
+--- a/src/core/lib/config/config_vars.h
++++ b/src/core/lib/config/config_vars.h
+@@ -31,7 +31,7 @@
+ 
+ namespace grpc_core {
+ 
+-class ConfigVars {
++class GPR_DLL ConfigVars {
+  public:
+   struct Overrides {
+     absl::optional<int32_t> client_channel_backup_poll_interval_ms;
+diff --git a/src/core/lib/config/core_configuration.h b/src/core/lib/config/core_configuration.h
+index a32ee768c7..04a2326261 100644
+--- a/src/core/lib/config/core_configuration.h
++++ b/src/core/lib/config/core_configuration.h
+@@ -36,7 +36,7 @@ namespace grpc_core {
+ 
+ // Global singleton that stores library configuration - factories, etc...
+ // that plugins might choose to extend.
+-class CoreConfiguration {
++class GRPC_DLL CoreConfiguration {
+  public:
+   CoreConfiguration(const CoreConfiguration&) = delete;
+   CoreConfiguration& operator=(const CoreConfiguration&) = delete;
+diff --git a/src/core/lib/gprpp/fork.h b/src/core/lib/gprpp/fork.h
+index 70065010ac..76df172a29 100644
+--- a/src/core/lib/gprpp/fork.h
++++ b/src/core/lib/gprpp/fork.h
+@@ -31,7 +31,7 @@
+ 
+ namespace grpc_core {
+ 
+-class Fork {
++class GRPC_DLL Fork {
+  public:
+   typedef void (*child_postfork_func)(void);
+ 
+diff --git a/src/core/lib/iomgr/exec_ctx.h b/src/core/lib/iomgr/exec_ctx.h
+index 230af79699..8fee807c36 100644
+--- a/src/core/lib/iomgr/exec_ctx.h
++++ b/src/core/lib/iomgr/exec_ctx.h
+@@ -94,7 +94,7 @@ class Combiner;
+ ///               since that implies a core re-entry outside of application
+ ///               callbacks.
+ ///
+-class ExecCtx {
++class GRPC_DLL ExecCtx {
+  public:
+   /// Default Constructor
+ 
+@@ -262,7 +262,7 @@ class ExecCtx {
+ ///
+ ///
+ 
+-class ApplicationCallbackExecCtx {
++class GRPC_DLL ApplicationCallbackExecCtx {
+  public:
+   /// Default Constructor
+   ApplicationCallbackExecCtx() { Set(this, flags_); }
+diff --git a/third_party/upb/upb/mem/alloc.c b/third_party/upb/upb/mem/alloc.c
+index 23650655ce..a6be47b279 100644
+--- a/third_party/upb/upb/mem/alloc.c
++++ b/third_party/upb/upb/mem/alloc.c
+@@ -44,4 +44,4 @@ static void* upb_global_allocfunc(upb_alloc* alloc, void* ptr, size_t oldsize,
+   }
+ }
+ 
+-upb_alloc upb_alloc_global = {&upb_global_allocfunc};
++UPB_DLL upb_alloc upb_alloc_global = {&upb_global_allocfunc};
+diff --git a/third_party/upb/upb/mem/alloc.h b/third_party/upb/upb/mem/alloc.h
+index df7a65ecca..d42124c64c 100644
+--- a/third_party/upb/upb/mem/alloc.h
++++ b/third_party/upb/upb/mem/alloc.h
+@@ -72,7 +72,7 @@ UPB_INLINE void upb_free(upb_alloc* alloc, void* ptr) {
+ 
+ // The global allocator used by upb. Uses the standard malloc()/free().
+ 
+-extern upb_alloc upb_alloc_global;
++extern UPB_DLL upb_alloc upb_alloc_global;
+ 
+ /* Functions that hard-code the global malloc.
+  *
+diff --git a/third_party/upb/upb/port/def.inc b/third_party/upb/upb/port/def.inc
+index c1cf36f287..d8ee2e3ffe 100644
+--- a/third_party/upb/upb/port/def.inc
++++ b/third_party/upb/upb/port/def.inc
+@@ -327,3 +327,30 @@ void __asan_unpoison_memory_region(void const volatile *addr, size_t size);
+ #else
+ #define UPB_DESC(sym) google_protobuf_##sym
+ #endif
++
++// UPB_DLL
++// inspired by https://github.com/abseil/abseil-cpp/blob/20220623.1/absl/base/config.h#L730-L747
++//
++// When building upb as a DLL, this macro expands to `__declspec(dllexport)`
++// so we can annotate symbols appropriately as being exported. When used in
++// headers consuming a DLL, this macro expands to `__declspec(dllimport)` so
++// that consumers know the symbol is defined inside the DLL. In all other cases,
++// the macro expands to nothing.
++// Note: UPB_DLL_EXPORTS is set in CMakeLists.txt when building shared upb
++//       UPB_DLL_IMPORTS is set by us as part of the interface for consumers of the DLL
++#if defined(UPB_DLL_EXPORTS)
++#define UPB_DLL __declspec(dllexport)
++#elif defined(UPB_DLL_IMPORTS)
++#define UPB_DLL __declspec(dllimport)
++#else
++#define UPB_DLL
++#endif // defined(UPB_DLL_EXPORTS)
++
++// same for gRPC
++#if defined(gRPC_DLL_EXPORTS)
++#define GRPC_DLL __declspec(dllexport)
++#elif defined(gRPC_DLL_IMPORTS)
++#define GRPC_DLL __declspec(dllimport)
++#else
++#define GRPC_DLL
++#endif // defined(gRPC_DLL_EXPORTS)

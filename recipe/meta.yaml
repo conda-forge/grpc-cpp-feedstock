@@ -1,4 +1,4 @@
-{% set version = "1.54.2" %}
+{% set version = "1.55.0" %}
 
 # core package & vendored libs use different version scheme than CPP libs, see
 # https://github.com/grpc/grpc/blob/v1.48.1/CMakeLists.txt#L28-L32
@@ -18,8 +18,8 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/grpc/grpc/archive/v{{ version }}.tar.gz
-  sha256: 3c305f0ca5f98919bc104448f59177e7b936acd5c69c144bf4a548cad723e1e4
+  url: https://github.com/grpc/grpc/archive/v{{ version.replace(".pre", "-pre") }}.tar.gz
+  sha256: 9cf1a69a921534ac0b760dcbefb900f3c2f735f56070bf0536506913bb5bfd74
   patches:
     - patches/0001-windows-ssl-lib-names.patch         # [win]
     - patches/0002-fix-win-setup-cmds.patch            # [win]
@@ -27,9 +27,17 @@ source:
     - patches/0004-force-protoc-executable.patch
     - patches/0005-switch-to-C-17-for-grpcio.patch
     - patches/0006-fix-abseil-setup.patch
+    # mark c-ares, re2 & zlib as private, so they don't need to be found
+    # at runtime just to link to grp, see grpc/grpc#30838;
+    # not much point in marking baselibs or vendored libs (e.g. upb) as private
+    - patches/0007-mark-linkage-of-c-ares-re2-zlib-as-private.patch
+    # oh windows...
+    - patches/0008-add-GPR-GRPC-GRPCXX-UBP-_DLL-mechanism-for-missing-s.patch  # [win]
+    - patches/0009-fix-support_enabled-for-windows.patch                       # [win]
+    - patches/0010-Fix-data-with-thread-storage-duration-may-not-have-d.patch  # [win]
 
 build:
-  number: 2
+  number: 0
 
 outputs:
   - name: libgrpc
@@ -61,8 +69,6 @@ outputs:
         - zlib
       run:
         - ucrt  # [win]
-        - openssl
-        - zlib
       run_constrained:
         # make sure we don't co-install with old version of previous package name
         - grpc-cpp ={{ version }}
@@ -75,6 +81,8 @@ outputs:
         - cmake
         - ninja
         - pkg-config
+        # only required for pkg-config test (which wants to find zlib.pc)
+        - zlib  # [win]
       files:
         - hello.proto
         - test_grpc.sh
@@ -84,15 +92,14 @@ outputs:
       commands:
         # libraries
         {% for each_lib in core_libs + core_cpp_libs + vendored_libs %}
-        # presence of shared libs (unix)
+        # presence of shared libs
         - test -f $PREFIX/lib/lib{{ each_lib }}.so              # [linux]
         - test -f $PREFIX/lib/lib{{ each_lib }}.dylib           # [osx]
+        - if not exist %LIBRARY_BIN%\{{ each_lib }}.dll exit 1  # [win]
+        - if not exist %LIBRARY_LIB%\{{ each_lib }}.lib exit 1  # [win]
 
         # absence of static libs (unix)
         - test ! -f $PREFIX/lib/lib{{ each_lib }}.a             # [unix]
-
-        # static libs on windows
-        - if not exist %LIBRARY_LIB%\{{ each_lib }}.lib exit 1  # [win]
         {% endfor %}
 
         # binaries
@@ -110,7 +117,6 @@ outputs:
         {% endfor %}
 
         # final CMake test to compile examples
-        # partially disabled on unix until libprotobuf-feedstock#127 & 128 are merged
         - ./test_grpc.sh   # [unix]
         - ./test_grpc.bat  # [win]
 
@@ -131,14 +137,7 @@ outputs:
         - cython
         - {{ pin_subpackage('libgrpc', exact=True) }}
         - pthread-stubs                               # [linux]
-        # because the windows builds of libgrpc is static, we need _its_
-        # host dependencies here to be able to link correctly
-        - c-ares         # [win]
-        - libabseil      # [win]
-        - libprotobuf    # [win]
-        - openssl        # [win]
-        - re2            # [win]
-        - zlib           # [win]
+        - zlib
       run:
         - python
         - {{ pin_subpackage('libgrpc', exact=True) }}

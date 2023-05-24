@@ -1,17 +1,17 @@
-From 8603a101d576aab53aa86fe72c48895a8c9b6e9d Mon Sep 17 00:00:00 2001
+From 21fe72b1d0ce0536b1612ad994b345e764a27fec Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sat, 3 Sep 2022 19:23:15 +0200
-Subject: [PATCH 5/6] switch to C++17 for grpcio
+Subject: [PATCH 05/10] switch to C++17 for grpcio
 
 ---
  setup.py | 7 ++++---
  1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index 776b190967..9de7a1e48a 100644
+index 2ba46090f7..adf826df34 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -210,7 +210,7 @@ def check_linker_need_libatomic():
+@@ -211,7 +211,7 @@ def check_linker_need_libatomic():
      code_test = (b'#include <atomic>\n' +
                   b'int main() { return std::atomic<int64_t>{}; }')
      cxx = shlex.split(os.environ.get('CXX', 'c++'))
@@ -20,7 +20,7 @@ index 776b190967..9de7a1e48a 100644
                                  stdin=PIPE,
                                  stdout=PIPE,
                                  stderr=PIPE)
-@@ -220,7 +220,7 @@ def check_linker_need_libatomic():
+@@ -221,7 +221,7 @@ def check_linker_need_libatomic():
      # Double-check to see if -latomic actually can solve the problem.
      # https://github.com/grpc/grpc/issues/22491
      cpp_test = subprocess.Popen(cxx +
@@ -29,7 +29,7 @@ index 776b190967..9de7a1e48a 100644
                                  stdin=PIPE,
                                  stdout=PIPE,
                                  stderr=PIPE)
-@@ -238,8 +238,9 @@ def check_linker_need_libatomic():
+@@ -239,8 +239,9 @@ def check_linker_need_libatomic():
  EXTRA_ENV_COMPILE_ARGS = os.environ.get('GRPC_PYTHON_CFLAGS', None)
  EXTRA_ENV_LINK_ARGS = os.environ.get('GRPC_PYTHON_LDFLAGS', None)
  if EXTRA_ENV_COMPILE_ARGS is None:
@@ -40,6 +40,3 @@ index 776b190967..9de7a1e48a 100644
          if sys.version_info < (3, 5):
              EXTRA_ENV_COMPILE_ARGS += ' -D_hypot=hypot'
              # We use define flags here and don't directly add to DEFINE_MACROS below to
--- 
-2.38.1.windows.1
-

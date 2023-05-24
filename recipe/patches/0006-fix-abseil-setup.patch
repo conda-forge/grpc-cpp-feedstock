@@ -1,17 +1,17 @@
-From d20b687c55b6c557e7c078a3aa6cb7203d6e5053 Mon Sep 17 00:00:00 2001
+From 4a28dd3764314482a05d5b57103f8b74cf4ab06c Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 4 Sep 2022 14:34:52 +0200
-Subject: [PATCH 6/6] fix abseil setup
+Subject: [PATCH 06/10] fix abseil setup
 
 ---
  setup.py | 14 +++++++++++---
  1 file changed, 11 insertions(+), 3 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index 9de7a1e48a..1b3966f92e 100644
+index adf826df34..dc8c6216f6 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -341,13 +341,21 @@ if BUILD_WITH_SYSTEM_CARES:
+@@ -343,13 +343,21 @@ if BUILD_WITH_SYSTEM_CARES:
  if BUILD_WITH_SYSTEM_RE2:
      EXTENSION_LIBRARIES += ('re2',)
  if BUILD_WITH_SYSTEM_ABSL:
@@ -36,6 +36,3 @@ index 9de7a1e48a..1b3966f92e 100644
  
  DEFINE_MACROS = (('_WIN32_WINNT', 0x600),)
  asm_files = []
--- 
-2.38.1.windows.1
-
