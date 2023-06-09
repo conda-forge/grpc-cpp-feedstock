@@ -35,9 +35,13 @@ source:
     - patches/0008-add-GPR-GRPC-GRPCXX-UBP-_DLL-mechanism-for-missing-s.patch  # [win]
     - patches/0009-fix-support_enabled-for-windows.patch                       # [win]
     - patches/0010-Fix-data-with-thread-storage-duration-may-not-have-d.patch  # [win]
+    - patches/0011-put-some-grpc-experimental-classes-needed-by-arrow-i.patch  # [win]
+    - patches/0012-link-grpc-_unsecure-to-grpc.patch                           # [win]
+    # unbreak CMake integration
+    - patches/0013-don-t-use-find_dependency-for-protobuf.patch
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - name: libgrpc

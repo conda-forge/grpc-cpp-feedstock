@@ -1,7 +1,7 @@
 From e16c8fc88094116516f0f21ec19e4d8f94e81f36 Mon Sep 17 00:00:00 2001
 From: Isuru Fernando <isuruf@gmail.com>
 Date: Sat, 22 Oct 2022 01:21:56 -0500
-Subject: [PATCH 08/10] add {GPR,GRPC,GRPCXX,UBP}_DLL mechanism for missing
+Subject: [PATCH 08/13] add {GPR,GRPC,GRPCXX,UBP}_DLL mechanism for missing
  symbols on windows
 
 Co-Authored-By: "H. Vetinari" <h.vetinari@gmx.com>
