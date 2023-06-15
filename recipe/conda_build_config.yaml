@@ -1,2 +1,9 @@
+# grpc requires C11 aligned_alloc as of 1.56; we cannot inject our own
+# stdlib for C like we do for libcxx, so we need to bump also the target
+MACOSX_DEPLOYMENT_TARGET:  # [osx and x86_64]
+  - "10.13"                # [osx and x86_64]
+MACOSX_SDK_VERSION:        # [osx and x86_64]
+  - "10.13"                # [osx and x86_64]
+
 libprotobuf:
   - "4.23"
