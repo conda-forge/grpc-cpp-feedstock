@@ -1,0 +1,22 @@
+From 0ad84f5a4cd29f576d9ebf8d83bd45776ec63342 Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Fri, 9 Jun 2023 20:11:22 +1100
+Subject: [PATCH 12/13] link grpc++_unsecure to grpc++
+
+which is where CertificateProviderInterface etc. live
+---
+ CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 069a827d5d..2f32039c2b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -4033,6 +4033,7 @@ target_link_libraries(grpc++_unsecure
+   ${_gRPC_ZLIB_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+   grpc_unsecure
++  grpc++
+ )
+ 
+ foreach(_hdr

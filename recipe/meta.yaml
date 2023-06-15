@@ -35,9 +35,13 @@ source:
     - patches/0008-add-GPR-GRPC-GRPCXX-UBP-_DLL-mechanism-for-missing-s.patch  # [win]
     - patches/0009-fix-support_enabled-for-windows.patch                       # [win]
     - patches/0010-Fix-data-with-thread-storage-duration-may-not-have-d.patch  # [win]
+    - patches/0011-put-some-grpc-experimental-classes-needed-by-arrow-i.patch  # [win]
+    - patches/0012-link-grpc-_unsecure-to-grpc.patch                           # [win]
+    # unbreak CMake integration
+    - patches/0013-don-t-use-find_dependency-for-protobuf.patch
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - name: libgrpc
@@ -84,6 +88,7 @@ outputs:
         # only required for pkg-config test (which wants to find zlib.pc)
         - zlib  # [win]
       files:
+        - cmake_test/
         - hello.proto
         - test_grpc.sh
         - test_grpc.bat
@@ -116,9 +121,15 @@ outputs:
         - pkg-config --print-errors --exact-version "{{ version }}" {{ each_lib }}
         {% endfor %}
 
-        # final CMake test to compile examples
+        # CMake test: compile upstream example
         - ./test_grpc.sh   # [unix]
         - ./test_grpc.bat  # [win]
+
+        # test availability of symbol needed by arrow (esp. on windows)
+        - cd cmake_test
+        - cmake -GNinja -DCMAKE_CXX_STANDARD=17 $CMAKE_ARGS .   # [unix]
+        - cmake -GNinja -DCMAKE_CXX_STANDARD=17 %CMAKE_ARGS% .  # [win]
+        - cmake --build .
 
   - name: grpcio
     script: build-grpcio.sh  # [not win]
