@@ -1,4 +1,4 @@
-From 3a56d02efb3359ef40a1fc982341fd2aec095b91 Mon Sep 17 00:00:00 2001
+From 7933c84ff62a1dd4b9bb51b89d9f1c41a9299c40 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Mon, 8 May 2023 11:31:09 +1100
 Subject: [PATCH 10/13] Fix `data with thread storage duration may not have dll
@@ -35,7 +35,7 @@ index 65cd319d20..0f9762d4e1 100644
  bool ExecCtx::Flush() {
    bool did_something = false;
 diff --git a/src/core/lib/iomgr/exec_ctx.h b/src/core/lib/iomgr/exec_ctx.h
-index 8fee807c36..8346750f6c 100644
+index 72c21c5f27..9c4f4e03f0 100644
 --- a/src/core/lib/iomgr/exec_ctx.h
 +++ b/src/core/lib/iomgr/exec_ctx.h
 @@ -186,7 +186,7 @@ class GRPC_DLL ExecCtx {
@@ -105,4 +105,4 @@ index 8fee807c36..8346750f6c 100644
 +  static ApplicationCallbackExecCtx*& callback_exec_ctx();
  };
  
- }  // namespace grpc_core
+ template <typename F>

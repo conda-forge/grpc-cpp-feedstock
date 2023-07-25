@@ -1,22 +1,23 @@
-From 4a28dd3764314482a05d5b57103f8b74cf4ab06c Mon Sep 17 00:00:00 2001
+From e565c478a802dfd5e6bc4e9659614416d5a0e70b Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 4 Sep 2022 14:34:52 +0200
 Subject: [PATCH 06/13] fix abseil setup
 
 ---
- setup.py | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ setup.py | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index adf826df34..dc8c6216f6 100644
+index ef17896b56..1403f7b3b8 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -343,13 +343,21 @@ if BUILD_WITH_SYSTEM_CARES:
+@@ -383,14 +383,21 @@ if BUILD_WITH_SYSTEM_CARES:
  if BUILD_WITH_SYSTEM_RE2:
-     EXTENSION_LIBRARIES += ('re2',)
+     EXTENSION_LIBRARIES += ("re2",)
  if BUILD_WITH_SYSTEM_ABSL:
 -    EXTENSION_LIBRARIES += tuple(
--        lib.stem[3:] for lib in pathlib.Path('/usr').glob('lib*/libabsl_*.so'))
+-        lib.stem[3:] for lib in pathlib.Path("/usr").glob("lib*/libabsl_*.so")
+-    )
 +    if "win32" in sys.platform:
 +        absl_libs = (
 +            'abseil_dll', 'absl_flags', 'absl_flags_commandlineflag', 'absl_flags_commandlineflag_internal',
@@ -34,5 +35,5 @@ index adf826df34..dc8c6216f6 100644
          EXTENSION_LIBRARIES += ('libprotoc', 'libprotobuf', 'libprotobuf-lite', 'upb', 'address_sorting', )
 -        EXTENSION_LIBRARIES += tuple(lib.stem for lib in pathlib.Path(os.environ['LIBRARY_LIB']).glob('absl_*.lib'))
  
- DEFINE_MACROS = (('_WIN32_WINNT', 0x600),)
+ DEFINE_MACROS = (("_WIN32_WINNT", 0x600),)
  asm_files = []
