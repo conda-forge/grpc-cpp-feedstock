@@ -1,4 +1,4 @@
-{% set version = "1.56.2" %}
+{% set version = "1.57.0" %}
 
 # core package & vendored libs use different version scheme than CPP libs, see
 # https://github.com/grpc/grpc/blob/v1.48.1/CMakeLists.txt#L28-L32
@@ -19,7 +19,7 @@ package:
 
 source:
   url: https://github.com/grpc/grpc/archive/v{{ version.replace(".pre", "-pre") }}.tar.gz
-  sha256: 931f07db9d48cff6a6007c1033ba6d691fe655bea2765444bc1ad974dfc840aa
+  sha256: 8393767af531b2d0549a4c26cf8ba1f665b16c16fb6c9238a7755e45444881dd
   patches:
     - patches/0001-windows-ssl-lib-names.patch         # [win]
     - patches/0002-fix-win-setup-cmds.patch            # [win]
@@ -139,14 +139,14 @@ outputs:
       build:
         - python                                 # [build_platform != target_platform]
         - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-        - cython                                 # [build_platform != target_platform]
+        - cython <3                              # [build_platform != target_platform]
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
       host:
         - python
         - pip
         - setuptools
-        - cython
+        - cython <3
         - {{ pin_subpackage('libgrpc', exact=True) }}
         - pthread-stubs                               # [linux]
         - zlib

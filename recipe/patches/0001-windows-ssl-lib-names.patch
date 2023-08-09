@@ -1,4 +1,4 @@
-From 59ed62d5a90cc65599854f52f92918222e23ff8c Mon Sep 17 00:00:00 2001
+From 66a5eeb35da6b7b13fb66e69eb7ac9a9a02f2ecd Mon Sep 17 00:00:00 2001
 From: Jonathan Helmus <jjhelmus@gmail.com>
 Date: Mon, 17 Feb 2020 15:45:06 -0600
 Subject: [PATCH 01/13] windows ssl lib names
@@ -11,21 +11,21 @@ Co-Authored-By: Marius van Niekerk <marius.v.niekerk@gmail.com>
  1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index c654d7d1c2..4c88c792cf 100644
+index 1948a4160b..820cc41d0e 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -330,10 +330,10 @@ if "win32" in sys.platform:
-         'ws2_32',
+@@ -370,10 +370,10 @@ if "win32" in sys.platform:
+         "ws2_32",
      )
  if BUILD_WITH_SYSTEM_OPENSSL:
 -    EXTENSION_LIBRARIES += (
--        'ssl',
--        'crypto',
+-        "ssl",
+-        "crypto",
 -    )
 +    if not "win32" in sys.platform:
 +        EXTENSION_LIBRARIES += ('ssl', 'crypto',)
 +    else:
 +        EXTENSION_LIBRARIES += ('libssl', 'libcrypto',)
  if BUILD_WITH_SYSTEM_ZLIB:
-     EXTENSION_LIBRARIES += ('z',)
+     EXTENSION_LIBRARIES += ("z",)
  if BUILD_WITH_SYSTEM_CARES:

@@ -1,4 +1,4 @@
-From 7ec86cc8780ad9b769c1b90ec0b85985e7ef3530 Mon Sep 17 00:00:00 2001
+From e09806f3cf436544fb739215a5ba6c6c6139261b Mon Sep 17 00:00:00 2001
 From: Marius van Niekerk <marius.v.niekerk@gmail.com>
 Date: Mon, 13 Jun 2022 17:13:07 -0400
 Subject: [PATCH 03/13] Link against grpc
@@ -8,32 +8,32 @@ Subject: [PATCH 03/13] Link against grpc
  1 file changed, 10 insertions(+)
 
 diff --git a/setup.py b/setup.py
-index e2e4fd3451..2ba46090f7 100644
+index c1a669eb93..aea3531a3a 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -171,6 +171,8 @@ BUILD_WITH_SYSTEM_ABSL = os.environ.get('GRPC_PYTHON_BUILD_SYSTEM_ABSL', False)
- BUILD_WITH_STATIC_LIBSTDCXX = _env_bool_value(
-     'GRPC_PYTHON_BUILD_WITH_STATIC_LIBSTDCXX', 'False')
+@@ -181,6 +181,8 @@ BUILD_WITH_STATIC_LIBSTDCXX = _env_bool_value(
+     "GRPC_PYTHON_BUILD_WITH_STATIC_LIBSTDCXX", "False"
+ )
  
 +BUILD_WITH_SYSTEM_GRPC_CORE = _env_bool_value('GRPC_PYTHON_BUILD_SYSTEM_GRPC_CORE', 'False')
 +
  # For local development use only: This skips building gRPC Core and its
  # dependencies, including protobuf and boringssl. This allows "incremental"
  # compilation by first building gRPC Core using make, then building only the
-@@ -342,6 +344,11 @@ if BUILD_WITH_SYSTEM_RE2:
- if BUILD_WITH_SYSTEM_ABSL:
+@@ -383,6 +385,11 @@ if BUILD_WITH_SYSTEM_ABSL:
      EXTENSION_LIBRARIES += tuple(
-         lib.stem[3:] for lib in pathlib.Path('/usr').glob('lib*/libabsl_*.so'))
+         lib.stem[3:] for lib in pathlib.Path("/usr").glob("lib*/libabsl_*.so")
+     )
 +if BUILD_WITH_SYSTEM_GRPC_CORE:
 +    EXTENSION_LIBRARIES += ('gpr', 'grpc', )
 +    if "win32" in sys.platform:
 +        EXTENSION_LIBRARIES += ('libprotoc', 'libprotobuf', 'libprotobuf-lite', 'upb', 'address_sorting', )
 +        EXTENSION_LIBRARIES += tuple(lib.stem for lib in pathlib.Path(os.environ['LIBRARY_LIB']).glob('absl_*.lib'))
  
- DEFINE_MACROS = (('_WIN32_WINNT', 0x600),)
+ DEFINE_MACROS = (("_WIN32_WINNT", 0x600),)
  asm_files = []
-@@ -450,6 +457,9 @@ def cython_extensions_and_necessity():
-             prefix + 'libgpr.a', prefix + 'libgrpc.a'
+@@ -515,6 +522,9 @@ def cython_extensions_and_necessity():
+             prefix + "libgrpc.a",
          ]
          core_c_files = []
 +    elif BUILD_WITH_SYSTEM_GRPC_CORE:

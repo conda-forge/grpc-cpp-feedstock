@@ -1,4 +1,4 @@
-From 22f6844709000b6a4a37312bd130cb23b7d3cdd3 Mon Sep 17 00:00:00 2001
+From b1737d3d0dab5437e5e69ff5f06006b6a750b9fd Mon Sep 17 00:00:00 2001
 From: Isuru Fernando <isuruf@gmail.com>
 Date: Sat, 22 Oct 2022 02:21:08 -0500
 Subject: [PATCH 09/13] fix support_enabled for windows
@@ -9,10 +9,10 @@ Subject: [PATCH 09/13] fix support_enabled for windows
  2 files changed, 14 insertions(+), 10 deletions(-)
 
 diff --git a/src/core/lib/gprpp/fork.cc b/src/core/lib/gprpp/fork.cc
-index 365c16e36b..cbe5b24369 100644
+index 0372f8f148..43750c7c00 100644
 --- a/src/core/lib/gprpp/fork.cc
 +++ b/src/core/lib/gprpp/fork.cc
-@@ -175,6 +175,18 @@ bool Fork::Enabled() {
+@@ -177,6 +177,18 @@ bool Fork::Enabled() {
    return support_enabled_.load(std::memory_order_relaxed);
  }
  
@@ -32,7 +32,7 @@ index 365c16e36b..cbe5b24369 100644
  void Fork::Enable(bool enable) {
    override_enabled_ = true;
 diff --git a/src/core/lib/gprpp/fork.h b/src/core/lib/gprpp/fork.h
-index 76df172a29..5af8290914 100644
+index 9ba8130504..214ef28307 100644
 --- a/src/core/lib/gprpp/fork.h
 +++ b/src/core/lib/gprpp/fork.h
 @@ -42,18 +42,10 @@ class GRPC_DLL Fork {

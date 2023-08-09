@@ -1,4 +1,4 @@
-From e16c8fc88094116516f0f21ec19e4d8f94e81f36 Mon Sep 17 00:00:00 2001
+From 38b92376b5ef5453c058e2bbb54aa623f8254fc4 Mon Sep 17 00:00:00 2001
 From: Isuru Fernando <isuruf@gmail.com>
 Date: Sat, 22 Oct 2022 01:21:56 -0500
 Subject: [PATCH 08/13] add {GPR,GRPC,GRPCXX,UBP}_DLL mechanism for missing
@@ -22,10 +22,10 @@ Co-Authored-By: "H. Vetinari" <h.vetinari@gmx.com>
  13 files changed, 106 insertions(+), 12 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index cf73078ad4..069a827d5d 100644
+index f5fb749ac9..531718fd4d 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1470,6 +1470,11 @@ if(WIN32 AND MSVC)
+@@ -1576,6 +1576,11 @@ if(WIN32 AND MSVC)
    set_target_properties(gpr PROPERTIES COMPILE_PDB_NAME "gpr"
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
@@ -37,7 +37,7 @@ index cf73078ad4..069a827d5d 100644
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/gpr.pdb
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
-@@ -2337,6 +2342,11 @@ if(WIN32 AND MSVC)
+@@ -2458,6 +2463,11 @@ if(WIN32 AND MSVC)
    set_target_properties(grpc PROPERTIES COMPILE_PDB_NAME "grpc"
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
@@ -49,7 +49,7 @@ index cf73078ad4..069a827d5d 100644
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc.pdb
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
-@@ -2975,6 +2985,11 @@ if(WIN32 AND MSVC)
+@@ -3107,6 +3117,11 @@ if(WIN32 AND MSVC)
    set_target_properties(grpc_unsecure PROPERTIES COMPILE_PDB_NAME "grpc_unsecure"
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
@@ -61,7 +61,7 @@ index cf73078ad4..069a827d5d 100644
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc_unsecure.pdb
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
-@@ -3277,6 +3292,11 @@ if(WIN32 AND MSVC)
+@@ -3412,6 +3427,11 @@ if(WIN32 AND MSVC)
    set_target_properties(grpc++ PROPERTIES COMPILE_PDB_NAME "grpc++"
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
@@ -73,7 +73,7 @@ index cf73078ad4..069a827d5d 100644
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc++.pdb
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
-@@ -3981,6 +4001,11 @@ if(WIN32 AND MSVC)
+@@ -4117,6 +4137,11 @@ if(WIN32 AND MSVC)
    set_target_properties(grpc++_unsecure PROPERTIES COMPILE_PDB_NAME "grpc++_unsecure"
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
@@ -85,7 +85,7 @@ index cf73078ad4..069a827d5d 100644
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc++_unsecure.pdb
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
-@@ -4825,6 +4850,12 @@ if(WIN32 AND MSVC)
+@@ -4975,6 +5000,12 @@ if(WIN32 AND MSVC)
    set_target_properties(upb PROPERTIES COMPILE_PDB_NAME "upb"
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
@@ -99,7 +99,7 @@ index cf73078ad4..069a827d5d 100644
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/upb.pdb
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
 diff --git a/include/grpc/support/port_platform.h b/include/grpc/support/port_platform.h
-index 1e99dc628e..c2cdb31a96 100644
+index bb055465e5..42f54badb0 100644
 --- a/include/grpc/support/port_platform.h
 +++ b/include/grpc/support/port_platform.h
 @@ -53,6 +53,42 @@
@@ -187,7 +187,7 @@ index 9217ea2312..e8a4b2b0c5 100644
  typedef enum {
    grpc_health_v1_HealthCheckResponse_UNKNOWN = 0,
 diff --git a/src/core/ext/upb-generated/xds/data/orca/v3/orca_load_report.upb.h b/src/core/ext/upb-generated/xds/data/orca/v3/orca_load_report.upb.h
-index 52d88f10c6..deaeeef848 100644
+index 163152c592..3fb692e896 100644
 --- a/src/core/ext/upb-generated/xds/data/orca/v3/orca_load_report.upb.h
 +++ b/src/core/ext/upb-generated/xds/data/orca/v3/orca_load_report.upb.h
 @@ -29,7 +29,7 @@ typedef struct xds_data_orca_v3_OrcaLoadReport xds_data_orca_v3_OrcaLoadReport;
@@ -200,7 +200,7 @@ index 52d88f10c6..deaeeef848 100644
  extern const upb_MiniTable xds_data_orca_v3_OrcaLoadReport_UtilizationEntry_msg_init;
  extern const upb_MiniTable xds_data_orca_v3_OrcaLoadReport_NamedMetricsEntry_msg_init;
 diff --git a/src/core/lib/config/config_vars.h b/src/core/lib/config/config_vars.h
-index e3ce74fad1..341fbe31d2 100644
+index d465ad3204..0ca8ad9f53 100644
 --- a/src/core/lib/config/config_vars.h
 +++ b/src/core/lib/config/config_vars.h
 @@ -31,7 +31,7 @@
@@ -226,7 +226,7 @@ index a32ee768c7..04a2326261 100644
    CoreConfiguration(const CoreConfiguration&) = delete;
    CoreConfiguration& operator=(const CoreConfiguration&) = delete;
 diff --git a/src/core/lib/gprpp/fork.h b/src/core/lib/gprpp/fork.h
-index 70065010ac..76df172a29 100644
+index 9700d38fb7..9ba8130504 100644
 --- a/src/core/lib/gprpp/fork.h
 +++ b/src/core/lib/gprpp/fork.h
 @@ -31,7 +31,7 @@
@@ -239,7 +239,7 @@ index 70065010ac..76df172a29 100644
    typedef void (*child_postfork_func)(void);
  
 diff --git a/src/core/lib/iomgr/exec_ctx.h b/src/core/lib/iomgr/exec_ctx.h
-index 230af79699..8fee807c36 100644
+index 20d9ebe04e..72c21c5f27 100644
 --- a/src/core/lib/iomgr/exec_ctx.h
 +++ b/src/core/lib/iomgr/exec_ctx.h
 @@ -94,7 +94,7 @@ class Combiner;
