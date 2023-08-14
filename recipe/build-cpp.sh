@@ -56,6 +56,8 @@ fi
 mkdir -p build-cpp
 pushd build-cpp
 
+export CMAKE_ARGS=${CMAKE_ARGS//=Release/=Debug}
+
 cmake ${CMAKE_ARGS} ..  \
       -GNinja \
       -DBUILD_SHARED_LIBS=ON \
