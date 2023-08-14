@@ -16,6 +16,7 @@ cmake ..  ^
       -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON ^
       -DProtobuf_PROTOC_EXECUTABLE=%LIBRARY_BIN%\protoc.exe ^
       -DgRPC_MSVC_STATIC_RUNTIME=OFF ^
+      -DgRPC_BUILD_TESTS=ON ^
       -DgRPC_ABSL_PROVIDER="package" ^
       -DgRPC_CARES_PROVIDER="package" ^
       -DgRPC_GFLAGS_PROVIDER="package" ^
@@ -25,5 +26,11 @@ cmake ..  ^
       -DgRPC_ZLIB_PROVIDER="package"
 if %ERRORLEVEL% neq 0 exit 1
 
-cmake --build . --config Release --target install
+cmake --build .
+if %ERRORLEVEL% neq 0 exit 1
+
+ctest --progress --output-on-failure
+if %ERRORLEVEL% neq 0 exit 1
+
+cmake --install .
 if %ERRORLEVEL% neq 0 exit 1

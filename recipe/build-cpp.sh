@@ -63,6 +63,7 @@ cmake ${CMAKE_ARGS} ..  \
       -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
       -DCMAKE_PREFIX_PATH=$PREFIX \
       -DCMAKE_INSTALL_PREFIX=$PREFIX \
+      -DgRPC_BUILD_TESTS=ON \
       -DgRPC_CARES_PROVIDER="package" \
       -DgRPC_GFLAGS_PROVIDER="package" \
       -DgRPC_PROTOBUF_PROVIDER="package" \
@@ -73,5 +74,11 @@ cmake ${CMAKE_ARGS} ..  \
       -DgRPC_RE2_PROVIDER="package" \
       -DProtobuf_PROTOC_EXECUTABLE=$BUILD_PREFIX/bin/protoc
 
-ninja install
+cmake --build .
+
+if [[ "$CONDA_BUILD_CROSS_COMPILATION" != 1 ]]; then
+    ctest --progress --output-on-failure
+fi
+
+cmake --install .
 popd
