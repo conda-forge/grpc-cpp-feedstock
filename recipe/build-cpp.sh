@@ -59,7 +59,7 @@ pushd build-cpp
 cmake ${CMAKE_ARGS} ..  \
       -GNinja \
       -DBUILD_SHARED_LIBS=ON \
-      -DCMAKE_BUILD_TYPE=Release \
+      -DCMAKE_BUILD_TYPE=Debug \
       -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
       -DCMAKE_PREFIX_PATH=$PREFIX \
       -DCMAKE_INSTALL_PREFIX=$PREFIX \
