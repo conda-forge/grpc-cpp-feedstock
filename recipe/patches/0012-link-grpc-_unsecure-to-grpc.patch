@@ -1,7 +1,7 @@
-From c08728f11c50f0cfeeec27357231c19806162846 Mon Sep 17 00:00:00 2001
+From 4175e0583ca228d0fa1b3bbb2a75a2d399cfc3c4 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Fri, 9 Jun 2023 20:11:22 +1100
-Subject: [PATCH 12/13] link grpc++_unsecure to grpc++
+Subject: [PATCH 12/15] link grpc++_unsecure to grpc++
 
 which is where CertificateProviderInterface etc. live
 ---
@@ -9,7 +9,7 @@ which is where CertificateProviderInterface etc. live
  1 file changed, 1 insertion(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 531718fd4d..1550f38ae7 100644
+index b43e3b9a69..836fb1daa7 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -4169,6 +4169,7 @@ target_link_libraries(grpc++_unsecure

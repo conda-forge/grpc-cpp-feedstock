@@ -1,7 +1,7 @@
-From e09806f3cf436544fb739215a5ba6c6c6139261b Mon Sep 17 00:00:00 2001
+From 2fccd9b300634cb6844dd9c91ac45c2466b26069 Mon Sep 17 00:00:00 2001
 From: Marius van Niekerk <marius.v.niekerk@gmail.com>
 Date: Mon, 13 Jun 2022 17:13:07 -0400
-Subject: [PATCH 03/13] Link against grpc
+Subject: [PATCH 03/15] Link against grpc
 
 ---
  setup.py | 10 ++++++++++

@@ -1,7 +1,7 @@
-From 38b92376b5ef5453c058e2bbb54aa623f8254fc4 Mon Sep 17 00:00:00 2001
+From e172eb17c4a3b2d156c50a78575e2df5b5443832 Mon Sep 17 00:00:00 2001
 From: Isuru Fernando <isuruf@gmail.com>
 Date: Sat, 22 Oct 2022 01:21:56 -0500
-Subject: [PATCH 08/13] add {GPR,GRPC,GRPCXX,UBP}_DLL mechanism for missing
+Subject: [PATCH 08/15] add {GPR,GRPC,GRPCXX,UBP}_DLL mechanism for missing
  symbols on windows
 
 Co-Authored-By: "H. Vetinari" <h.vetinari@gmx.com>
@@ -22,7 +22,7 @@ Co-Authored-By: "H. Vetinari" <h.vetinari@gmx.com>
  13 files changed, 106 insertions(+), 12 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index f5fb749ac9..531718fd4d 100644
+index e5e4ea62a9..b43e3b9a69 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -1576,6 +1576,11 @@ if(WIN32 AND MSVC)
