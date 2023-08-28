@@ -161,10 +161,14 @@ outputs:
         - {{ pin_subpackage('libgrpc', exact=True) }}
         - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.9") }}  # [osx and x86_64]
     test:
+      source_files:
+        - examples/
       files:
         - grpcio_distribtest.py
+        - test_grpcio_helloworld.py
       requires:
         - pip
+        - grpcio-tools
       imports:
         - grpc
         - grpc._cython
@@ -179,6 +183,18 @@ outputs:
       commands:
         - python -m pip check
         - python grpcio_distribtest.py
+        # test actual RPC pattern (client & server); other tests did not catch
+        # https://github.com/conda-forge/grpc-cpp-feedstock/issues/281
+        - cd examples/python/helloworld
+        # generate helloworld, see https://grpc.io/docs/languages/python/quickstart/#generate-grpc-code
+        - python -m grpc_tools.protoc -I../../protos --python_out=. --pyi_out=. --grpc_python_out=. ../../protos/helloworld.proto
+        # copy test defined in feedstock to where it needs to run
+        - cp ../../../test_grpcio_helloworld.py .
+        # start server (already present in upstream example folder)
+        - nohup python greeter_server.py &  # [unix]
+        - pythonw greeter_server.py         # [win]
+        # run client
+        - python test_grpcio_helloworld.py
 
 about:
   home: https://grpc.io/
