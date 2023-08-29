@@ -184,10 +184,6 @@ outputs:
         - python -m grpc_tools.protoc -I../../protos --python_out=. --pyi_out=. --grpc_python_out=. ../../protos/helloworld.proto
         # copy test defined in feedstock to where it needs to run
         - cp ../../../test_grpcio_helloworld.py .
-        # start server (already present in upstream example folder)
-        - nohup python greeter_server.py &  # [unix]
-        - pythonw greeter_server.py         # [win]
-        # run client
         - python test_grpcio_helloworld.py
 
 about:
