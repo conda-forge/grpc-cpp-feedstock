@@ -169,6 +169,7 @@ outputs:
       requires:
         - pip
         # - grpcio-tools
+        - protobuf
       imports:
         - grpc
         - grpc._cython
