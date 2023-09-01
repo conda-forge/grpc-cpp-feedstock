@@ -9,7 +9,7 @@ channel_targets:
 cxx_compiler:
 - vs2019
 libabseil:
-- '20230125'
+- '20230802'
 libprotobuf:
 - '3.21'
 openssl:
