@@ -87,7 +87,7 @@ outputs:
         - ninja
         - pkg-config
         # only required for pkg-config test (which wants to find zlib.pc)
-        - zlib  # [win]
+        - zlib
       files:
         - cmake_test/
         - hello.proto
@@ -162,7 +162,8 @@ outputs:
         - test_grpcio_helloworld.py
       requires:
         - pip
-        - grpcio-tools
+        # - grpcio-tools
+        - protobuf
       imports:
         - grpc
         - grpc._cython
