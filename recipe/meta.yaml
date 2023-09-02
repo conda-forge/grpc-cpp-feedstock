@@ -163,7 +163,8 @@ outputs:
       requires:
         - pip
         # - grpcio-tools
-        - protobuf
+        - protobuf 4.23
+        - openssl 3
       imports:
         - grpc
         - grpc._cython
