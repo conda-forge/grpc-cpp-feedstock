@@ -91,7 +91,7 @@ outputs:
         - ninja
         - pkg-config
         # only required for pkg-config test (which wants to find zlib.pc)
-        - zlib  # [win]
+        - zlib
       files:
         - cmake_test/
         - hello.proto
