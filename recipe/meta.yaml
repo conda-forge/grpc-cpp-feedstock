@@ -50,6 +50,10 @@ outputs:
     build:
       run_exports:
         - {{ pin_subpackage('libgrpc', max_pin='x.x') }}
+        # grpc requires C11 aligned_alloc as of 1.56;
+        # ensure that all dependent packages reflect that to
+        # avoid the solver getting stuck in no-man's-land.
+        - __osx >={{ MACOSX_DEPLOYMENT_TARGET }}  # [osx and x86_64]
     requirements:
       build:
         - {{ compiler('c') }}
@@ -87,7 +91,7 @@ outputs:
         - ninja
         - pkg-config
         # only required for pkg-config test (which wants to find zlib.pc)
-        - zlib  # [win]
+        - zlib
       files:
         - cmake_test/
         - hello.proto
@@ -155,10 +159,14 @@ outputs:
         - {{ pin_subpackage('libgrpc', exact=True) }}
         - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.9") }}  # [osx and x86_64]
     test:
+      source_files:
+        - examples/
       files:
         - grpcio_distribtest.py
+        - test_grpcio_helloworld.py
       requires:
         - pip
+        - protobuf
       imports:
         - grpc
         - grpc._cython
@@ -173,6 +181,12 @@ outputs:
       commands:
         - python -m pip check
         - python grpcio_distribtest.py
+        # test actual RPC pattern (client & server); other tests did not catch
+        # https://github.com/conda-forge/grpc-cpp-feedstock/issues/281
+        - cd examples/python/helloworld
+        # copy test defined in feedstock to where it needs to run
+        - cp ../../../test_grpcio_helloworld.py .
+        - python test_grpcio_helloworld.py
 
 about:
   home: https://grpc.io/
