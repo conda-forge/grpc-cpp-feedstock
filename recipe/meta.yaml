@@ -50,6 +50,10 @@ outputs:
     build:
       run_exports:
         - {{ pin_subpackage('libgrpc', max_pin='x.x') }}
+        # grpc requires C11 aligned_alloc as of 1.56;
+        # ensure that all dependent packages reflect that to
+        # avoid the solver getting stuck in no-man's-land.
+        - __osx >={{ MACOSX_DEPLOYMENT_TARGET }}  # [osx and x86_64]
     requirements:
       build:
         - {{ compiler('c') }}
