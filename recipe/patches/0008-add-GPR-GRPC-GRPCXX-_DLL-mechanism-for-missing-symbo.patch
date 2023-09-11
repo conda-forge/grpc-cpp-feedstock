@@ -1,0 +1,202 @@
+From e4ccb94a41284af5b11bbaab29a886fb698a5711 Mon Sep 17 00:00:00 2001
+From: Isuru Fernando <isuruf@gmail.com>
+Date: Sat, 22 Oct 2022 01:21:56 -0500
+Subject: [PATCH 08/13] add {GPR,GRPC,GRPCXX}_DLL mechanism for missing symbols
+ on windows
+
+Co-Authored-By: "H. Vetinari" <h.vetinari@gmx.com>
+---
+ CMakeLists.txt                           | 25 ++++++++++++++++
+ include/grpc/support/port_platform.h     | 36 ++++++++++++++++++++++++
+ include/grpcpp/impl/status.h             |  2 +-
+ src/core/lib/config/config_vars.h        |  2 +-
+ src/core/lib/config/core_configuration.h |  2 +-
+ src/core/lib/gprpp/fork.h                |  2 +-
+ src/core/lib/iomgr/exec_ctx.h            |  4 +--
+ 7 files changed, 67 insertions(+), 6 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index a2aa40bd52..5bd1db7778 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1590,6 +1590,11 @@ if(WIN32 AND MSVC)
+   set_target_properties(gpr PROPERTIES COMPILE_PDB_NAME "gpr"
+     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+   )
++  # More details in include/grpc/support/port_platform.h
++  set_target_properties(gpr PROPERTIES DEFINE_SYMBOL "GPR_DLL_EXPORTS")
++  if(BUILD_SHARED_LIBS)
++    target_compile_definitions(gpr INTERFACE GPR_DLL_IMPORTS)
++  endif()
+   if(gRPC_INSTALL)
+     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/gpr.pdb
+       DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+@@ -2476,6 +2481,11 @@ if(WIN32 AND MSVC)
+   set_target_properties(grpc PROPERTIES COMPILE_PDB_NAME "grpc"
+     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+   )
++  # More details in include/grpc/support/port_platform.h
++  set_target_properties(grpc PROPERTIES DEFINE_SYMBOL "gRPC_DLL_EXPORTS")
++  if(BUILD_SHARED_LIBS)
++    target_compile_definitions(grpc INTERFACE gRPC_DLL_IMPORTS)
++  endif()
+   if(gRPC_INSTALL)
+     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc.pdb
+       DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+@@ -3128,6 +3138,11 @@ if(WIN32 AND MSVC)
+   set_target_properties(grpc_unsecure PROPERTIES COMPILE_PDB_NAME "grpc_unsecure"
+     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+   )
++  # More details in include/grpc/support/port_platform.h
++  set_target_properties(grpc_unsecure PROPERTIES DEFINE_SYMBOL "gRPC_DLL_EXPORTS")
++  if(BUILD_SHARED_LIBS)
++    target_compile_definitions(grpc_unsecure INTERFACE gRPC_DLL_IMPORTS)
++  endif()
+   if(gRPC_INSTALL)
+     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc_unsecure.pdb
+       DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+@@ -3821,6 +3836,11 @@ if(WIN32 AND MSVC)
+   set_target_properties(grpc++ PROPERTIES COMPILE_PDB_NAME "grpc++"
+     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+   )
++  # More details in include/grpc/support/port_platform.h
++  set_target_properties(grpc++ PROPERTIES DEFINE_SYMBOL "gRPCXX_DLL_EXPORTS")
++  if(BUILD_SHARED_LIBS)
++    target_compile_definitions(grpc++ INTERFACE gRPCXX_DLL_IMPORTS)
++  endif()
+   if(gRPC_INSTALL)
+     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc++.pdb
+       DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+@@ -4499,6 +4519,11 @@ if(WIN32 AND MSVC)
+   set_target_properties(grpc++_unsecure PROPERTIES COMPILE_PDB_NAME "grpc++_unsecure"
+     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+   )
++  # More details in include/grpc/support/port_platform.h
++  set_target_properties(grpc++_unsecure PROPERTIES DEFINE_SYMBOL "gRPCXX_DLL_EXPORTS")
++  if(BUILD_SHARED_LIBS)
++    target_compile_definitions(grpc++_unsecure INTERFACE gRPCXX_DLL_IMPORTS)
++  endif()
+   if(gRPC_INSTALL)
+     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc++_unsecure.pdb
+       DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+diff --git a/include/grpc/support/port_platform.h b/include/grpc/support/port_platform.h
+index bb055465e5..42f54badb0 100644
+--- a/include/grpc/support/port_platform.h
++++ b/include/grpc/support/port_platform.h
+@@ -53,6 +53,42 @@
+ #define WIN32_LEAN_AND_MEAN
+ #endif /* WIN32_LEAN_AND_MEAN */
+ 
++// GPRC_DLL
++// inspired by https://github.com/abseil/abseil-cpp/blob/20220623.1/absl/base/config.h#L730-L747
++//
++// When building gRPC as a DLL, this macro expands to `__declspec(dllexport)`
++// so we can annotate symbols appropriately as being exported. When used in
++// headers consuming a DLL, this macro expands to `__declspec(dllimport)` so
++// that consumers know the symbol is defined inside the DLL. In all other cases,
++// the macro expands to nothing.
++// Note: gRPC_DLL_EXPORTS is set in CMakeLists.txt when building shared grpc{,_unsecure}
++//       gRPC_DLL_IMPORTS is set by us as part of the interface for consumers of the DLL
++#if defined(gRPC_DLL_EXPORTS)
++#define GRPC_DLL __declspec(dllexport)
++#elif defined(gRPC_DLL_IMPORTS)
++#define GRPC_DLL __declspec(dllimport)
++#else
++#define GRPC_DLL
++#endif // defined(gRPC_DLL_EXPORTS)
++
++// same for gRPC++
++#if defined(gRPCXX_DLL_EXPORTS)
++#define GRPCXX_DLL __declspec(dllexport)
++#elif defined(gRPCXX_DLL_IMPORTS)
++#define GRPCXX_DLL __declspec(dllimport)
++#else
++#define GRPCXX_DLL
++#endif // defined(GRPCXX_DLL_EXPORTS)
++
++// same for GPR
++#if defined(GPR_DLL_EXPORTS)
++#define GPR_DLL __declspec(dllexport)
++#elif defined(GPR_DLL_IMPORTS)
++#define GPR_DLL __declspec(dllimport)
++#else
++#define GPR_DLL
++#endif // defined(GPR_DLL_EXPORTS)
++
+ #ifndef NOMINMAX
+ #define GRPC_NOMINMX_WAS_NOT_DEFINED
+ #define NOMINMAX
+diff --git a/include/grpcpp/impl/status.h b/include/grpcpp/impl/status.h
+index 95436ab8fb..a068f9b0af 100644
+--- a/include/grpcpp/impl/status.h
++++ b/include/grpcpp/impl/status.h
+@@ -32,7 +32,7 @@ namespace grpc {
+ /// Did it work? If it didn't, why?
+ ///
+ /// See \a grpc::StatusCode for details on the available code and their meaning.
+-class GRPC_MUST_USE_RESULT_WHEN_USE_STRICT_WARNING Status {
++class GRPC_MUST_USE_RESULT_WHEN_USE_STRICT_WARNING GRPCXX_DLL Status {
+  public:
+   /// Construct an OK instance.
+   Status() : code_(StatusCode::OK) {
+diff --git a/src/core/lib/config/config_vars.h b/src/core/lib/config/config_vars.h
+index d465ad3204..0ca8ad9f53 100644
+--- a/src/core/lib/config/config_vars.h
++++ b/src/core/lib/config/config_vars.h
+@@ -31,7 +31,7 @@
+ 
+ namespace grpc_core {
+ 
+-class ConfigVars {
++class GPR_DLL ConfigVars {
+  public:
+   struct Overrides {
+     absl::optional<int32_t> client_channel_backup_poll_interval_ms;
+diff --git a/src/core/lib/config/core_configuration.h b/src/core/lib/config/core_configuration.h
+index a32ee768c7..04a2326261 100644
+--- a/src/core/lib/config/core_configuration.h
++++ b/src/core/lib/config/core_configuration.h
+@@ -36,7 +36,7 @@ namespace grpc_core {
+ 
+ // Global singleton that stores library configuration - factories, etc...
+ // that plugins might choose to extend.
+-class CoreConfiguration {
++class GRPC_DLL CoreConfiguration {
+  public:
+   CoreConfiguration(const CoreConfiguration&) = delete;
+   CoreConfiguration& operator=(const CoreConfiguration&) = delete;
+diff --git a/src/core/lib/gprpp/fork.h b/src/core/lib/gprpp/fork.h
+index 9700d38fb7..9ba8130504 100644
+--- a/src/core/lib/gprpp/fork.h
++++ b/src/core/lib/gprpp/fork.h
+@@ -31,7 +31,7 @@
+ 
+ namespace grpc_core {
+ 
+-class Fork {
++class GRPC_DLL Fork {
+  public:
+   typedef void (*child_postfork_func)(void);
+ 
+diff --git a/src/core/lib/iomgr/exec_ctx.h b/src/core/lib/iomgr/exec_ctx.h
+index 20d9ebe04e..72c21c5f27 100644
+--- a/src/core/lib/iomgr/exec_ctx.h
++++ b/src/core/lib/iomgr/exec_ctx.h
+@@ -94,7 +94,7 @@ class Combiner;
+ ///               since that implies a core re-entry outside of application
+ ///               callbacks.
+ ///
+-class ExecCtx {
++class GRPC_DLL ExecCtx {
+  public:
+   /// Default Constructor
+ 
+@@ -262,7 +262,7 @@ class ExecCtx {
+ ///
+ ///
+ 
+-class ApplicationCallbackExecCtx {
++class GRPC_DLL ApplicationCallbackExecCtx {
+  public:
+   /// Default Constructor
+   ApplicationCallbackExecCtx() { Set(this, flags_); }

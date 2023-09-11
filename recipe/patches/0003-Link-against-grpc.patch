@@ -1,4 +1,4 @@
-From e09806f3cf436544fb739215a5ba6c6c6139261b Mon Sep 17 00:00:00 2001
+From e6a2c35ad6e1f9250c2b1ab499bf0daefdf230c4 Mon Sep 17 00:00:00 2001
 From: Marius van Niekerk <marius.v.niekerk@gmail.com>
 Date: Mon, 13 Jun 2022 17:13:07 -0400
 Subject: [PATCH 03/13] Link against grpc
@@ -8,7 +8,7 @@ Subject: [PATCH 03/13] Link against grpc
  1 file changed, 10 insertions(+)
 
 diff --git a/setup.py b/setup.py
-index c1a669eb93..aea3531a3a 100644
+index ee37723743..b023a1227e 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -181,6 +181,8 @@ BUILD_WITH_STATIC_LIBSTDCXX = _env_bool_value(
@@ -32,7 +32,7 @@ index c1a669eb93..aea3531a3a 100644
  
  DEFINE_MACROS = (("_WIN32_WINNT", 0x600),)
  asm_files = []
-@@ -515,6 +522,9 @@ def cython_extensions_and_necessity():
+@@ -508,6 +515,9 @@ def cython_extensions_and_necessity():
              prefix + "libgrpc.a",
          ]
          core_c_files = []

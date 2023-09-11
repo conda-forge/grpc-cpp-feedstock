@@ -1,4 +1,4 @@
-From d13281f271ae22a0b09588a3a22787380dae13fb Mon Sep 17 00:00:00 2001
+From d25a9639ebfc6792e827abfa7e95686956a7502b Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Fri, 9 Jun 2023 22:16:09 +1100
 Subject: [PATCH 13/13] don't use find_dependency for protobuf
