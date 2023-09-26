@@ -1,7 +1,7 @@
 From 82e44a11be852e9cb92a68809f97be7d435734cc Mon Sep 17 00:00:00 2001
 From: jrandolf <101637635+jrandolf@users.noreply.github.com>
 Date: Mon, 21 Aug 2023 23:42:32 +0200
-Subject: [PATCH 14/15] [OpenSSL] Support for OpenSSL 3 (#31256)
+Subject: [PATCH 14/16] [OpenSSL] Support for OpenSSL 3 (#31256)
 
 Update from gtcooke94:
 This PR adds support to build gRPC and it's tests with OpenSSL3. There were some

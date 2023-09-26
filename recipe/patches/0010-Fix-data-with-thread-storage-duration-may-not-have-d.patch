@@ -1,7 +1,7 @@
 From b3c1ee107d7770170f8e6b3ea48759eef0361c9f Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Mon, 8 May 2023 11:31:09 +1100
-Subject: [PATCH 10/15] Fix `data with thread storage duration may not have dll
+Subject: [PATCH 10/16] Fix `data with thread storage duration may not have dll
  interface`
 
 Windows needs a workaround.
