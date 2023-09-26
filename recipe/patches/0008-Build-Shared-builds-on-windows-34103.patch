@@ -1,0 +1,884 @@
+From 8f1950aa57815f89fcce2eff45bbdab2b3c7546c Mon Sep 17 00:00:00 2001
+From: h-vetinari <h.vetinari@gmx.com>
+Date: Wed, 13 Sep 2023 03:12:36 +1100
+Subject: [PATCH 8/9] [Build] Shared builds on windows (#34103)
+
+Towards https://github.com/grpc/grpc/issues/33032,
+
+Reopen after botched force-push in #33175 that then got "merged" and
+cannot be reopened anymore.
+
+More context in that PR.
+
+---------
+
+Co-authored-by: Isuru Fernando <isuruf@gmail.com>
+Co-authored-by: David Chamberlin <david.chamberlin@ln.email.gs.com>
+---
+ CMakeLists.txt                                | 100 +++++++++++++++++-
+ include/grpc/event_engine/event_engine.h      |   4 +-
+ include/grpc/support/port_platform.h          |  57 +++++++++-
+ include/grpcpp/impl/status.h                  |   2 +-
+ .../security/tls_certificate_provider.h       |   9 +-
+ src/core/lib/config/config_vars.h             |   2 +-
+ src/core/lib/config/core_configuration.h      |   2 +-
+ src/core/lib/gprpp/fork.h                     |   2 +-
+ src/core/lib/iomgr/exec_ctx.cc                |  12 +++
+ src/core/lib/iomgr/exec_ctx.h                 |  39 +++++--
+ src/core/lib/slice/slice_refcount.h           |   2 +-
+ templates/CMakeLists.txt.template             |  87 ++++++++++++++-
+ tools/codegen/core/gen_config_vars.py         |   2 +-
+ 13 files changed, 294 insertions(+), 26 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index a2aa40bd52..f7ffebb33e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -421,8 +421,29 @@ endif()
+ 
+ if(WIN32)
+   set(_gRPC_ALLTARGETS_LIBRARIES ${_gRPC_ALLTARGETS_LIBRARIES} ws2_32 crypt32)
++  set(_gRPC_STATIC_WIN32 STATIC)
+ endif()
+ 
++if(BUILD_SHARED_LIBS AND WIN32)
++
++# Currently for shared lib on Windows (i.e. a DLL) certain bits of source code
++# are generated from protobuf definitions by upbc. This source code does not include
++# annotations needed to export these functions from gprc.lib so we have to
++# re-include a small subset of these.
++#
++# This is not an ideal situation because these functions will be unavailable
++# to clients of grpc and the libraries that need this (e.g. grpc++) will
++# include redundant duplicate code. Hence, the duplication is only activated
++# for DLL builds - and should be completely removed when source files are
++# generated with the necessary __declspec annotations.
++set(gRPC_UPB_GEN_DUPL_SRC
++  src/core/ext/upb-generated/src/proto/grpc/gcp/altscontext.upb.c
++  src/core/ext/upb-generated/src/proto/grpc/health/v1/health.upb.c
++  src/core/ext/upb-generated/src/proto/grpc/gcp/transport_security_common.upb.c
++)
++
++endif() # BUILD_SHARED_LIBS AND WIN32
++
+ # Create directory for proto source files
+ set(_gRPC_PROTO_SRCS_DIR ${CMAKE_BINARY_DIR}/protos)
+ file(MAKE_DIRECTORY ${_gRPC_PROTO_SRCS_DIR})
+@@ -1477,6 +1498,7 @@ if(gRPC_BUILD_TESTS)
+ endif()
+ 
+ 
++
+ add_library(address_sorting
+   third_party/address_sorting/address_sorting.c
+   third_party/address_sorting/address_sorting_posix.c
+@@ -1530,6 +1552,7 @@ if(gRPC_INSTALL)
+ endif()
+ 
+ 
++
+ add_library(gpr
+   src/core/lib/config/config_vars.cc
+   src/core/lib/config/config_vars_non_generated.cc
+@@ -1590,6 +1613,10 @@ if(WIN32 AND MSVC)
+   set_target_properties(gpr PROPERTIES COMPILE_PDB_NAME "gpr"
+     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+   )
++  set_target_properties(gpr PROPERTIES DEFINE_SYMBOL "GPR_DLL_EXPORTS")
++  if(BUILD_SHARED_LIBS)
++    target_compile_definitions(gpr INTERFACE GPR_DLL_IMPORTS)
++  endif()
+   if(gRPC_INSTALL)
+     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/gpr.pdb
+       DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+@@ -1688,6 +1715,7 @@ if(gRPC_INSTALL)
+ endif()
+ 
+ 
++
+ add_library(grpc
+   src/core/ext/filters/backend_metrics/backend_metric_filter.cc
+   src/core/ext/filters/census/grpc_context.cc
+@@ -2476,6 +2504,10 @@ if(WIN32 AND MSVC)
+   set_target_properties(grpc PROPERTIES COMPILE_PDB_NAME "grpc"
+     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+   )
++  set_target_properties(grpc PROPERTIES DEFINE_SYMBOL "GRPC_DLL_EXPORTS")
++  if(BUILD_SHARED_LIBS)
++    target_compile_definitions(grpc INTERFACE GRPC_DLL_IMPORTS)
++  endif()
+   if(gRPC_INSTALL)
+     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc.pdb
+       DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+@@ -2619,6 +2651,7 @@ endif()
+ 
+ if(gRPC_BUILD_TESTS)
+ 
++
+ add_library(grpc_test_util
+   test/core/event_engine/test_init.cc
+   test/core/util/build.cc
+@@ -2678,6 +2711,7 @@ endif()
+ endif()
+ if(gRPC_BUILD_TESTS)
+ 
++
+ add_library(grpc_test_util_unsecure
+   test/core/event_engine/test_init.cc
+   test/core/util/build.cc
+@@ -2735,6 +2769,7 @@ endif()
+ 
+ endif()
+ 
++
+ add_library(grpc_unsecure
+   src/core/ext/filters/backend_metrics/backend_metric_filter.cc
+   src/core/ext/filters/census/grpc_context.cc
+@@ -3128,6 +3163,10 @@ if(WIN32 AND MSVC)
+   set_target_properties(grpc_unsecure PROPERTIES COMPILE_PDB_NAME "grpc_unsecure"
+     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+   )
++  set_target_properties(grpc_unsecure PROPERTIES DEFINE_SYMBOL "GRPC_DLL_EXPORTS")
++  if(BUILD_SHARED_LIBS)
++    target_compile_definitions(grpc_unsecure INTERFACE GRPC_DLL_IMPORTS)
++  endif()
+   if(gRPC_INSTALL)
+     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc_unsecure.pdb
+       DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+@@ -3269,6 +3308,7 @@ endif()
+ 
+ if(gRPC_BUILD_TESTS)
+ 
++
+ add_library(gtest
+   third_party/googletest/googlemock/src/gmock-cardinalities.cc
+   third_party/googletest/googlemock/src/gmock-internal-utils.cc
+@@ -3335,7 +3375,8 @@ target_link_libraries(gtest
+ 
+ endif()
+ 
+-add_library(upb
++
++add_library(upb ${_gRPC_STATIC_WIN32}
+   third_party/upb/upb/base/status.c
+   third_party/upb/upb/collections/array.c
+   third_party/upb/upb/collections/map.c
+@@ -3407,7 +3448,8 @@ if(gRPC_INSTALL)
+ endif()
+ 
+ 
+-add_library(upb_collections_lib
++
++add_library(upb_collections_lib ${_gRPC_STATIC_WIN32}
+   third_party/upb/upb/base/status.c
+   third_party/upb/upb/collections/array.c
+   third_party/upb/upb/collections/map.c
+@@ -3469,7 +3511,8 @@ if(gRPC_INSTALL)
+ endif()
+ 
+ 
+-add_library(upb_json_lib
++
++add_library(upb_json_lib ${_gRPC_STATIC_WIN32}
+   src/core/ext/upb-generated/google/protobuf/descriptor.upb.c
+   third_party/upb/upb/json/decode.c
+   third_party/upb/upb/json/encode.c
+@@ -3541,7 +3584,8 @@ if(gRPC_INSTALL)
+ endif()
+ 
+ 
+-add_library(upb_textformat_lib
++
++add_library(upb_textformat_lib ${_gRPC_STATIC_WIN32}
+   src/core/ext/upb-generated/google/protobuf/descriptor.upb.c
+   third_party/upb/upb/message/accessors.c
+   third_party/upb/upb/reflection/def_builder.c
+@@ -3612,6 +3656,7 @@ if(gRPC_INSTALL)
+ endif()
+ 
+ 
++
+ add_library(utf8_range_lib
+   third_party/utf8_range/naive.c
+   third_party/utf8_range/range2-neon.c
+@@ -3667,6 +3712,7 @@ endif()
+ if(gRPC_BUILD_TESTS)
+ 
+ if(gRPC_BUILD_CODEGEN)
++
+ add_library(benchmark_helpers
+   ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/testing/echo.pb.cc
+   ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/testing/echo.grpc.pb.cc
+@@ -3742,6 +3788,7 @@ endif()
+ 
+ endif()
+ 
++
+ add_library(grpc++
+   src/core/ext/transport/binder/client/binder_connector.cc
+   src/core/ext/transport/binder/client/channel_create.cc
+@@ -3808,6 +3855,7 @@ add_library(grpc++
+   src/cpp/util/status.cc
+   src/cpp/util/string_ref.cc
+   src/cpp/util/time_cc.cc
++  ${gRPC_UPB_GEN_DUPL_SRC}
+ )
+ 
+ target_compile_features(grpc++ PUBLIC cxx_std_14)
+@@ -3821,6 +3869,10 @@ if(WIN32 AND MSVC)
+   set_target_properties(grpc++ PROPERTIES COMPILE_PDB_NAME "grpc++"
+     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+   )
++  set_target_properties(grpc++ PROPERTIES DEFINE_SYMBOL "GRPCXX_DLL_EXPORTS")
++  if(BUILD_SHARED_LIBS)
++    target_compile_definitions(grpc++ INTERFACE GRPCXX_DLL_IMPORTS)
++  endif()
+   if(gRPC_INSTALL)
+     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc++.pdb
+       DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+@@ -4072,9 +4124,11 @@ if(gRPC_INSTALL)
+ endif()
+ 
+ 
++
+ add_library(grpc++_alts
+   src/cpp/common/alts_context.cc
+   src/cpp/common/alts_util.cc
++  ${gRPC_UPB_GEN_DUPL_SRC}
+ )
+ 
+ target_compile_features(grpc++_alts PUBLIC cxx_std_14)
+@@ -4136,6 +4190,7 @@ if(gRPC_INSTALL)
+ endif()
+ 
+ 
++
+ add_library(grpc++_error_details
+   src/cpp/util/error_details.cc
+ )
+@@ -4200,6 +4255,7 @@ endif()
+ 
+ 
+ if(gRPC_BUILD_CODEGEN)
++
+ add_library(grpc++_reflection
+   ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/reflection/v1alpha/reflection.pb.cc
+   ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/reflection/v1alpha/reflection.grpc.pb.cc
+@@ -4272,6 +4328,7 @@ endif()
+ endif()
+ if(gRPC_BUILD_TESTS)
+ 
++
+ add_library(grpc++_test
+   src/cpp/client/channel_test_peer.cc
+ )
+@@ -4337,6 +4394,7 @@ endforeach()
+ endif()
+ if(gRPC_BUILD_TESTS)
+ 
++
+ add_library(grpc++_test_config
+   test/cpp/util/test_config_cc.cc
+ )
+@@ -4383,6 +4441,7 @@ target_link_libraries(grpc++_test_config
+ endif()
+ if(gRPC_BUILD_TESTS)
+ 
++
+ add_library(grpc++_test_util
+   src/core/lib/gpr/subprocess_posix.cc
+   src/core/lib/gpr/subprocess_windows.cc
+@@ -4448,6 +4507,30 @@ target_link_libraries(grpc++_test_util
+ 
+ endif()
+ 
++
++# for DLL build just compile a dummy grpc++_unsecure
++# This is a temporary situation until some code restructuring
++# obviates the need to exclude this library
++if(BUILD_SHARED_LIBS AND MSVC)
++add_library(grpc++_unsecure
++  src/cpp/common/version_cc.cc
++)
++target_include_directories(grpc++_unsecure
++  PUBLIC $<INSTALL_INTERFACE:${gRPC_INSTALL_INCLUDEDIR}> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
++  PRIVATE
++    ${CMAKE_CURRENT_SOURCE_DIR}
++)
++
++foreach(_hdr
++  include/grpcpp/grpcpp.h
++)
++  string(REPLACE "include/" "" _path ${_hdr})
++  get_filename_component(_path ${_path} PATH)
++  install(FILES ${_hdr}
++    DESTINATION "${gRPC_INSTALL_INCLUDEDIR}/${_path}"
++  )
++endforeach()
++else()
+ add_library(grpc++_unsecure
+   src/cpp/client/channel_cc.cc
+   src/cpp/client/client_callback.cc
+@@ -4486,6 +4569,7 @@ add_library(grpc++_unsecure
+   src/cpp/util/status.cc
+   src/cpp/util/string_ref.cc
+   src/cpp/util/time_cc.cc
++  ${gRPC_UPB_GEN_DUPL_SRC}
+ )
+ 
+ target_compile_features(grpc++_unsecure PUBLIC cxx_std_14)
+@@ -4499,6 +4583,10 @@ if(WIN32 AND MSVC)
+   set_target_properties(grpc++_unsecure PROPERTIES COMPILE_PDB_NAME "grpc++_unsecure"
+     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+   )
++  set_target_properties(grpc++_unsecure PROPERTIES DEFINE_SYMBOL "GRPCXX_DLL_EXPORTS")
++  if(BUILD_SHARED_LIBS)
++    target_compile_definitions(grpc++_unsecure INTERFACE GRPCXX_DLL_IMPORTS)
++  endif()
+   if(gRPC_INSTALL)
+     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc++_unsecure.pdb
+       DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+@@ -4734,6 +4822,7 @@ foreach(_hdr
+     DESTINATION "${gRPC_INSTALL_INCLUDEDIR}/${_path}"
+   )
+ endforeach()
++endif() # BUILD_SHARED_LIBS AND MSVC
+ 
+ 
+ if(gRPC_INSTALL)
+@@ -4746,6 +4835,7 @@ if(gRPC_INSTALL)
+ endif()
+ 
+ 
++
+ add_library(grpc_authorization_provider
+   src/core/ext/upb-generated/google/protobuf/any.upb.c
+   src/core/ext/upb-generated/google/protobuf/descriptor.upb.c
+@@ -5149,6 +5239,7 @@ if(gRPC_INSTALL)
+ endif()
+ 
+ 
++
+ add_library(grpc_plugin_support
+   src/compiler/cpp_generator.cc
+   src/compiler/csharp_generator.cc
+@@ -5223,6 +5314,7 @@ endif()
+ # grpcpp_channelz doesn't build with protobuf-lite
+ # See https://github.com/grpc/grpc/issues/19473
+ if(gRPC_BUILD_CODEGEN AND NOT gRPC_USE_PROTO_LITE)
++
+ add_library(grpcpp_channelz
+   ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/channelz/channelz.pb.cc
+   ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/channelz/channelz.grpc.pb.cc
+diff --git a/include/grpc/event_engine/event_engine.h b/include/grpc/event_engine/event_engine.h
+index 4b671d2d3f..69d7927493 100644
+--- a/include/grpc/event_engine/event_engine.h
++++ b/include/grpc/event_engine/event_engine.h
+@@ -122,7 +122,7 @@ class EventEngine : public std::enable_shared_from_this<EventEngine> {
+   /// \a Cancel method.
+   struct TaskHandle {
+     intptr_t keys[2];
+-    static const TaskHandle kInvalid;
++    static const GRPC_DLL TaskHandle kInvalid;
+     friend bool operator==(const TaskHandle& lhs, const TaskHandle& rhs);
+     friend bool operator!=(const TaskHandle& lhs, const TaskHandle& rhs);
+   };
+@@ -131,7 +131,7 @@ class EventEngine : public std::enable_shared_from_this<EventEngine> {
+   /// Returned by \a Connect, and can be passed to \a CancelConnect.
+   struct ConnectionHandle {
+     intptr_t keys[2];
+-    static const ConnectionHandle kInvalid;
++    static const GRPC_DLL ConnectionHandle kInvalid;
+     friend bool operator==(const ConnectionHandle& lhs,
+                            const ConnectionHandle& rhs);
+     friend bool operator!=(const ConnectionHandle& lhs,
+diff --git a/include/grpc/support/port_platform.h b/include/grpc/support/port_platform.h
+index bb055465e5..f8a0ecb02d 100644
+--- a/include/grpc/support/port_platform.h
++++ b/include/grpc/support/port_platform.h
+@@ -53,6 +53,57 @@
+ #define WIN32_LEAN_AND_MEAN
+ #endif /* WIN32_LEAN_AND_MEAN */
+ 
++// GPRC_DLL
++// inspired by
++// https://github.com/abseil/abseil-cpp/blob/20220623.1/absl/base/config.h#L730-L747
++//
++// When building gRPC as a DLL, this macro expands to `__declspec(dllexport)`
++// so we can annotate symbols appropriately as being exported. When used in
++// headers consuming a DLL, this macro expands to `__declspec(dllimport)` so
++// that consumers know the symbol is defined inside the DLL. In all other cases,
++// the macro expands to nothing.
++//
++// Warning: shared library support for Windows (i.e. producing DLL plus import
++//   library instead of a static library) is experimental. Some symbols that can
++//   be linked using the static library may not be available when using the
++//   dynamically linked library.
++//
++// Note: GRPC_DLL_EXPORTS is set in CMakeLists.txt when building shared
++// grpc{,_unsecure}
++//       GRPC_DLL_IMPORTS is set by us as part of the interface for consumers of
++//       the DLL
++#if !defined(GRPC_DLL)
++#if defined(GRPC_DLL_EXPORTS)
++#define GRPC_DLL __declspec(dllexport)
++#elif defined(GRPC_DLL_IMPORTS)
++#define GRPC_DLL __declspec(dllimport)
++#else
++#define GRPC_DLL
++#endif  // defined(GRPC_DLL_EXPORTS)
++#endif
++
++// same for gRPC++
++#if !defined(GRPCXX_DLL)
++#if defined(GRPCXX_DLL_EXPORTS)
++#define GRPCXX_DLL __declspec(dllexport)
++#elif defined(GRPCXX_DLL_IMPORTS)
++#define GRPCXX_DLL __declspec(dllimport)
++#else
++#define GRPCXX_DLL
++#endif  // defined(GRPCXX_DLL_EXPORTS)
++#endif
++
++// same for GPR
++#if !defined(GPR_DLL)
++#if defined(GPR_DLL_EXPORTS)
++#define GPR_DLL __declspec(dllexport)
++#elif defined(GPR_DLL_IMPORTS)
++#define GPR_DLL __declspec(dllimport)
++#else
++#define GPR_DLL
++#endif  // defined(GPR_DLL_EXPORTS)
++#endif
++
+ #ifndef NOMINMAX
+ #define GRPC_NOMINMX_WAS_NOT_DEFINED
+ #define NOMINMAX
+@@ -68,7 +119,6 @@
+ #error \
+     "Please compile grpc with _WIN32_WINNT of at least 0x600 (aka Windows Vista)"
+ #endif /* _WIN32_WINNT < 0x0600 */
+-#endif /* defined(_WIN32_WINNT) */
+ 
+ #ifdef GRPC_WIN32_LEAN_AND_MEAN_WAS_NOT_DEFINED
+ #undef GRPC_WIN32_LEAN_AND_MEAN_WAS_NOT_DEFINED
+@@ -81,6 +131,11 @@
+ #endif /* GRPC_WIN32_LEAN_AND_MEAN_WAS_NOT_DEFINED */
+ #endif /* defined(_WIN64) || defined(WIN64) || defined(_WIN32) || \
+           defined(WIN32) */
++#else
++#define GRPC_DLL
++#define GRPCXX_DLL
++#define GPR_DLL
++#endif /* defined(_WIN32_WINNT) */
+ 
+ /* Override this file with one for your platform if you need to redefine
+    things.  */
+diff --git a/include/grpcpp/impl/status.h b/include/grpcpp/impl/status.h
+index 95436ab8fb..a068f9b0af 100644
+--- a/include/grpcpp/impl/status.h
++++ b/include/grpcpp/impl/status.h
+@@ -32,7 +32,7 @@ namespace grpc {
+ /// Did it work? If it didn't, why?
+ ///
+ /// See \a grpc::StatusCode for details on the available code and their meaning.
+-class GRPC_MUST_USE_RESULT_WHEN_USE_STRICT_WARNING Status {
++class GRPC_MUST_USE_RESULT_WHEN_USE_STRICT_WARNING GRPCXX_DLL Status {
+  public:
+   /// Construct an OK instance.
+   Status() : code_(StatusCode::OK) {
+diff --git a/include/grpcpp/security/tls_certificate_provider.h b/include/grpcpp/security/tls_certificate_provider.h
+index ce9df5aa9c..d784292992 100644
+--- a/include/grpcpp/security/tls_certificate_provider.h
++++ b/include/grpcpp/security/tls_certificate_provider.h
+@@ -32,7 +32,7 @@ namespace experimental {
+ // Interface for a class that handles the process to fetch credential data.
+ // Implementations should be a wrapper class of an internal provider
+ // implementation.
+-class CertificateProviderInterface {
++class GRPCXX_DLL CertificateProviderInterface {
+  public:
+   virtual ~CertificateProviderInterface() = default;
+   virtual grpc_tls_certificate_provider* c_provider() = 0;
+@@ -41,7 +41,7 @@ class CertificateProviderInterface {
+ // A struct that stores the credential data presented to the peer in handshake
+ // to show local identity. The private_key and certificate_chain should always
+ // match.
+-struct IdentityKeyCertPair {
++struct GRPCXX_DLL IdentityKeyCertPair {
+   std::string private_key;
+   std::string certificate_chain;
+ };
+@@ -49,7 +49,8 @@ struct IdentityKeyCertPair {
+ // A basic CertificateProviderInterface implementation that will load credential
+ // data from static string during initialization. This provider will always
+ // return the same cert data for all cert names, and reloading is not supported.
+-class StaticDataCertificateProvider : public CertificateProviderInterface {
++class GRPCXX_DLL StaticDataCertificateProvider
++    : public CertificateProviderInterface {
+  public:
+   StaticDataCertificateProvider(
+       const std::string& root_certificate,
+@@ -84,7 +85,7 @@ class StaticDataCertificateProvider : public CertificateProviderInterface {
+ //   then renaming the new directory to the original name of the old directory.
+ //   2)  using a symlink for the directory. When need to change, put new
+ //   credential data in a new directory, and change symlink.
+-class FileWatcherCertificateProvider final
++class GRPCXX_DLL FileWatcherCertificateProvider final
+     : public CertificateProviderInterface {
+  public:
+   // Constructor to get credential updates from root and identity file paths.
+diff --git a/src/core/lib/config/config_vars.h b/src/core/lib/config/config_vars.h
+index d465ad3204..0ca8ad9f53 100644
+--- a/src/core/lib/config/config_vars.h
++++ b/src/core/lib/config/config_vars.h
+@@ -31,7 +31,7 @@
+ 
+ namespace grpc_core {
+ 
+-class ConfigVars {
++class GPR_DLL ConfigVars {
+  public:
+   struct Overrides {
+     absl::optional<int32_t> client_channel_backup_poll_interval_ms;
+diff --git a/src/core/lib/config/core_configuration.h b/src/core/lib/config/core_configuration.h
+index a32ee768c7..04a2326261 100644
+--- a/src/core/lib/config/core_configuration.h
++++ b/src/core/lib/config/core_configuration.h
+@@ -36,7 +36,7 @@ namespace grpc_core {
+ 
+ // Global singleton that stores library configuration - factories, etc...
+ // that plugins might choose to extend.
+-class CoreConfiguration {
++class GRPC_DLL CoreConfiguration {
+  public:
+   CoreConfiguration(const CoreConfiguration&) = delete;
+   CoreConfiguration& operator=(const CoreConfiguration&) = delete;
+diff --git a/src/core/lib/gprpp/fork.h b/src/core/lib/gprpp/fork.h
+index 9700d38fb7..b12c94602b 100644
+--- a/src/core/lib/gprpp/fork.h
++++ b/src/core/lib/gprpp/fork.h
+@@ -31,7 +31,7 @@
+ 
+ namespace grpc_core {
+ 
+-class Fork {
++class GPR_DLL Fork {
+  public:
+   typedef void (*child_postfork_func)(void);
+ 
+diff --git a/src/core/lib/iomgr/exec_ctx.cc b/src/core/lib/iomgr/exec_ctx.cc
+index 65cd319d20..4b77738d9e 100644
+--- a/src/core/lib/iomgr/exec_ctx.cc
++++ b/src/core/lib/iomgr/exec_ctx.cc
+@@ -56,9 +56,21 @@ static void exec_ctx_sched(grpc_closure* closure) {
+ 
+ namespace grpc_core {
+ 
++#if !defined(_WIN32) || !defined(_DLL)
+ thread_local ExecCtx* ExecCtx::exec_ctx_;
+ thread_local ApplicationCallbackExecCtx*
+     ApplicationCallbackExecCtx::callback_exec_ctx_;
++#else   // _WIN32
++ExecCtx*& ExecCtx::exec_ctx() {
++  static thread_local ExecCtx* exec_ctx;
++  return exec_ctx;
++}
++
++ApplicationCallbackExecCtx*& ApplicationCallbackExecCtx::callback_exec_ctx() {
++  static thread_local ApplicationCallbackExecCtx* callback_exec_ctx;
++  return callback_exec_ctx;
++}
++#endif  // _WIN32
+ 
+ bool ExecCtx::Flush() {
+   bool did_something = false;
+diff --git a/src/core/lib/iomgr/exec_ctx.h b/src/core/lib/iomgr/exec_ctx.h
+index 20d9ebe04e..3e3227cb2c 100644
+--- a/src/core/lib/iomgr/exec_ctx.h
++++ b/src/core/lib/iomgr/exec_ctx.h
+@@ -36,6 +36,14 @@
+ #include "src/core/lib/gprpp/time.h"
+ #include "src/core/lib/iomgr/closure.h"
+ 
++#if !defined(_WIN32) || !defined(_DLL)
++#define EXEC_CTX exec_ctx_
++#define CALLBACK_EXEC_CTX callback_exec_ctx_
++#else
++#define EXEC_CTX exec_ctx()
++#define CALLBACK_EXEC_CTX callback_exec_ctx()
++#endif
++
+ /// A combiner represents a list of work to be executed later.
+ /// Forward declared here to avoid a circular dependency with combiner.h.
+ typedef struct grpc_combiner grpc_combiner;
+@@ -94,7 +102,7 @@ class Combiner;
+ ///               since that implies a core re-entry outside of application
+ ///               callbacks.
+ ///
+-class ExecCtx {
++class GRPC_DLL ExecCtx {
+  public:
+   /// Default Constructor
+ 
+@@ -186,7 +194,7 @@ class ExecCtx {
+   void TestOnlySetNow(Timestamp now) { time_cache_.TestOnlySetNow(now); }
+ 
+   /// Gets pointer to current exec_ctx.
+-  static ExecCtx* Get() { return exec_ctx_; }
++  static ExecCtx* Get() { return EXEC_CTX; }
+ 
+   static void Run(const DebugLocation& location, grpc_closure* closure,
+                   grpc_error_handle error);
+@@ -201,8 +209,8 @@ class ExecCtx {
+   static void operator delete(void* /* p */) { abort(); }
+ 
+  private:
+-  /// Set exec_ctx_ to exec_ctx.
+-  static void Set(ExecCtx* exec_ctx) { exec_ctx_ = exec_ctx; }
++  /// Set EXEC_CTX to ctx.
++  static void Set(ExecCtx* ctx) { EXEC_CTX = ctx; }
+ 
+   grpc_closure_list closure_list_ = GRPC_CLOSURE_LIST_INIT;
+   CombinerData combiner_data_ = {nullptr, nullptr};
+@@ -211,7 +219,13 @@ class ExecCtx {
+   unsigned starting_cpu_ = std::numeric_limits<unsigned>::max();
+ 
+   ScopedTimeCache time_cache_;
++
++#if !defined(_WIN32) || !defined(_DLL)
+   static thread_local ExecCtx* exec_ctx_;
++#else
++  // cannot be thread_local data member (e.g. exec_ctx_) on windows
++  static ExecCtx*& exec_ctx();
++#endif
+   ExecCtx* last_exec_ctx_ = Get();
+ };
+ 
+@@ -262,7 +276,7 @@ class ExecCtx {
+ ///
+ ///
+ 
+-class ApplicationCallbackExecCtx {
++class GRPC_DLL ApplicationCallbackExecCtx {
+  public:
+   /// Default Constructor
+   ApplicationCallbackExecCtx() { Set(this, flags_); }
+@@ -282,7 +296,7 @@ class ApplicationCallbackExecCtx {
+         }
+         (*f->functor_run)(f, f->internal_success);
+       }
+-      callback_exec_ctx_ = nullptr;
++      CALLBACK_EXEC_CTX = nullptr;
+       if (!(GRPC_APP_CALLBACK_EXEC_CTX_FLAG_IS_INTERNAL_THREAD & flags_)) {
+         Fork::DecExecCtxCount();
+       }
+@@ -294,14 +308,14 @@ class ApplicationCallbackExecCtx {
+ 
+   uintptr_t Flags() { return flags_; }
+ 
+-  static ApplicationCallbackExecCtx* Get() { return callback_exec_ctx_; }
++  static ApplicationCallbackExecCtx* Get() { return CALLBACK_EXEC_CTX; }
+ 
+   static void Set(ApplicationCallbackExecCtx* exec_ctx, uintptr_t flags) {
+     if (Get() == nullptr) {
+       if (!(GRPC_APP_CALLBACK_EXEC_CTX_FLAG_IS_INTERNAL_THREAD & flags)) {
+         Fork::IncExecCtxCount();
+       }
+-      callback_exec_ctx_ = exec_ctx;
++      CALLBACK_EXEC_CTX = exec_ctx;
+     }
+   }
+ 
+@@ -326,7 +340,13 @@ class ApplicationCallbackExecCtx {
+   uintptr_t flags_{0u};
+   grpc_completion_queue_functor* head_{nullptr};
+   grpc_completion_queue_functor* tail_{nullptr};
++
++#if !defined(_WIN32) || !defined(_DLL)
+   static thread_local ApplicationCallbackExecCtx* callback_exec_ctx_;
++#else
++  // cannot be thread_local data member (e.g. callback_exec_ctx_) on windows
++  static ApplicationCallbackExecCtx*& callback_exec_ctx();
++#endif
+ };
+ 
+ template <typename F>
+@@ -340,6 +360,9 @@ void EnsureRunInExecCtx(F f) {
+   }
+ }
+ 
++#undef EXEC_CTX
++#undef CALLBACK_EXEC_CTX
++
+ }  // namespace grpc_core
+ 
+ #endif  // GRPC_SRC_CORE_LIB_IOMGR_EXEC_CTX_H
+diff --git a/src/core/lib/slice/slice_refcount.h b/src/core/lib/slice/slice_refcount.h
+index 50fdb6efd9..fb39f0cbe3 100644
+--- a/src/core/lib/slice/slice_refcount.h
++++ b/src/core/lib/slice/slice_refcount.h
+@@ -27,7 +27,7 @@
+ #include "src/core/lib/debug/trace.h"
+ #include "src/core/lib/gprpp/debug_location.h"
+ 
+-extern grpc_core::DebugOnlyTraceFlag grpc_slice_refcount_trace;
++extern GRPC_DLL grpc_core::DebugOnlyTraceFlag grpc_slice_refcount_trace;
+ 
+ // grpc_slice_refcount : A reference count for grpc_slice.
+ struct grpc_slice_refcount {
+diff --git a/templates/CMakeLists.txt.template b/templates/CMakeLists.txt.template
+index f274da5442..7364766125 100644
+--- a/templates/CMakeLists.txt.template
++++ b/templates/CMakeLists.txt.template
+@@ -150,6 +150,20 @@
+       private_libs.append("-l" + lib_name)
+     return private_libs
+ 
++  def lib_type_for_lib(lib_name):
++    """Returns STATIC/SHARED to force a static or shared lib build depending on the library."""
++    # grpc_csharp_ext is loaded by C# runtime and it
++    # only makes sense as a shared lib.
++    if lib_name in ['grpc_csharp_ext']:
++      return ' SHARED'
++
++    # upb always compiles as a static library on Windows
++    elif lib_name in ['upb','upb_collections_lib','upb_json_lib','upb_textformat_lib']:
++      return ' ${_gRPC_STATIC_WIN32}'
++
++    else:
++      return ''
++
+   def get_deps(target_dict):
+     # TODO(jtattermusch): remove special cases based on target names
+     deps = []
+@@ -235,6 +249,13 @@
+ 
+       return '\n'.join(lines)
+     return _func
++
++  def add_dll_annotation_macros(lib, prefix):
++    return """set_target_properties(%s PROPERTIES DEFINE_SYMBOL "%s_DLL_EXPORTS")
++    if(BUILD_SHARED_LIBS)
++      target_compile_definitions(%s INTERFACE %s_DLL_IMPORTS)
++    endif()""" % (lib, prefix, lib, prefix)
++
+   %>
+   <%
+   # These files are added to a set so that they are not duplicated if multiple
+@@ -486,8 +507,29 @@
+ 
+   if(WIN32)
+     set(_gRPC_ALLTARGETS_LIBRARIES <%text>${_gRPC_ALLTARGETS_LIBRARIES}</%text> ws2_32 crypt32)
++    set(_gRPC_STATIC_WIN32 STATIC)
+   endif()
+ 
++  if(BUILD_SHARED_LIBS AND WIN32)
++
++  # Currently for shared lib on Windows (i.e. a DLL) certain bits of source code
++  # are generated from protobuf definitions by upbc. This source code does not include
++  # annotations needed to export these functions from gprc.lib so we have to
++  # re-include a small subset of these.
++  #
++  # This is not an ideal situation because these functions will be unavailable
++  # to clients of grpc and the libraries that need this (e.g. grpc++) will
++  # include redundant duplicate code. Hence, the duplication is only activated
++  # for DLL builds - and should be completely removed when source files are
++  # generated with the necessary __declspec annotations.
++  set(gRPC_UPB_GEN_DUPL_SRC
++    src/core/ext/upb-generated/src/proto/grpc/gcp/altscontext.upb.c
++    src/core/ext/upb-generated/src/proto/grpc/health/v1/health.upb.c
++    src/core/ext/upb-generated/src/proto/grpc/gcp/transport_security_common.upb.c
++  )
++
++  endif() # BUILD_SHARED_LIBS AND WIN32
++
+   # Create directory for proto source files
+   set(_gRPC_PROTO_SRCS_DIR <%text>${CMAKE_BINARY_DIR}/protos</%text>)
+   file(MAKE_DIRECTORY <%text>${_gRPC_PROTO_SRCS_DIR}</%text>)
+@@ -727,7 +769,33 @@
+   if(gRPC_BUILD_CODEGEN)
+   % endif
+   % endif
+-  add_library(${lib.name}
++
++  % if lib.name == 'grpc++_unsecure':
++  # for DLL build just compile a dummy grpc++_unsecure
++  # This is a temporary situation until some code restructuring
++  # obviates the need to exclude this library
++  if(BUILD_SHARED_LIBS AND MSVC)
++  add_library(grpc++_unsecure
++    src/cpp/common/version_cc.cc
++  )
++  target_include_directories(grpc++_unsecure
++    PUBLIC <%text>$<INSTALL_INTERFACE:${gRPC_INSTALL_INCLUDEDIR}> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include></%text>
++    PRIVATE
++      <%text>${CMAKE_CURRENT_SOURCE_DIR}</%text>
++  )
++
++  foreach(_hdr
++    include/grpcpp/grpcpp.h
++  )
++    string(REPLACE "include/" "" _path <%text>${_hdr})</%text>
++    get_filename_component(_path <%text>${_path}</%text> PATH)
++    install(FILES <%text>${_hdr}</%text>
++      DESTINATION <%text>"${gRPC_INSTALL_INCLUDEDIR}/${_path}"</%text>
++    )
++  endforeach()
++  else()
++  % endif
++  add_library(${lib.name}${lib_type_for_lib(lib.name)}
+   % for src in lib.src:
+   % if not proto_re.match(src):
+     ${src}
+@@ -741,6 +809,9 @@
+     % endif
+   % endif
+   % endfor
++  % if lib.name in ['grpc++_alts', 'grpc++_unsecure', 'grpc++']:
++    ${'${gRPC_UPB_GEN_DUPL_SRC}'}
++  % endif
+   )
+ 
+   target_compile_features(${lib.name} PUBLIC cxx_std_14)
+@@ -759,6 +830,17 @@
+     set_target_properties(${lib.name} PROPERTIES COMPILE_PDB_NAME "${lib.name}"
+       COMPILE_PDB_OUTPUT_DIRECTORY <%text>"${CMAKE_BINARY_DIR}</%text>"
+     )
++    % if lib.name == 'gpr':
++    ${add_dll_annotation_macros(lib.name, 'GPR')}
++    % elif lib.name == 'grpc':
++    ${add_dll_annotation_macros(lib.name, 'GRPC')}
++    % elif lib.name == 'grpc_unsecure':
++    ${add_dll_annotation_macros(lib.name, 'GRPC')}
++    % elif lib.name == 'grpc++':
++    ${add_dll_annotation_macros(lib.name, 'GRPCXX')}
++    % elif lib.name == 'grpc++_unsecure':
++    ${add_dll_annotation_macros(lib.name, 'GRPCXX')}
++    % endif
+     if(gRPC_INSTALL)
+       install(FILES <%text>${CMAKE_CURRENT_BINARY_DIR}/</%text>${lib.name}.pdb
+         DESTINATION <%text>${gRPC_INSTALL_LIBDIR}</%text> OPTIONAL
+@@ -827,6 +909,9 @@
+   % if any(proto_re.match(src) for src in lib.src):
+   endif()
+   % endif
++  % if lib.name == 'grpc++_unsecure':
++  endif() # BUILD_SHARED_LIBS AND MSVC
++  % endif
+   </%def>
+ 
+   <%def name="cc_binary(tgt)">
+diff --git a/tools/codegen/core/gen_config_vars.py b/tools/codegen/core/gen_config_vars.py
+index 62fa5e3ec1..4739c3351d 100755
+--- a/tools/codegen/core/gen_config_vars.py
++++ b/tools/codegen/core/gen_config_vars.py
+@@ -325,7 +325,7 @@ with open("src/core/lib/config/config_vars.h", "w") as H:
+     print(file=H)
+     print("namespace grpc_core {", file=H)
+     print(file=H)
+-    print("class ConfigVars {", file=H)
++    print("class GPR_DLL ConfigVars {", file=H)
+     print(" public:", file=H)
+     print("  struct Overrides {", file=H)
+     for attr in attrs_in_packing_order:
