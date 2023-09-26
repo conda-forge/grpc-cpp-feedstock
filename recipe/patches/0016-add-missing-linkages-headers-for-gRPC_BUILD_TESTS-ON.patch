@@ -1,0 +1,55 @@
+From 73c75429199107ba932eae9fa53939f8b2f7b2b5 Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Tue, 26 Sep 2023 18:25:54 +1100
+Subject: [PATCH 16/16] add missing linkages & headers for gRPC_BUILD_TESTS=ON
+
+---
+ CMakeLists.txt                           | 2 ++
+ src/core/lib/slice/slice_refcount.h      | 1 +
+ test/core/end2end/end2end_test_suites.cc | 1 +
+ 3 files changed, 4 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 836fb1daa7..cc1cf4a54d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -6328,6 +6328,7 @@ target_include_directories(authorization_matchers_test
+ target_link_libraries(authorization_matchers_test
+   ${_gRPC_BASELIB_LIBRARIES}
+   ${_gRPC_PROTOBUF_LIBRARIES}
++  ${_gRPC_RE2_LIBRARIES}
+   ${_gRPC_ZLIB_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+   grpc_test_util
+@@ -13061,6 +13062,7 @@ target_include_directories(grpc_authorization_engine_test
+ target_link_libraries(grpc_authorization_engine_test
+   ${_gRPC_BASELIB_LIBRARIES}
+   ${_gRPC_PROTOBUF_LIBRARIES}
++  ${_gRPC_RE2_LIBRARIES}
+   ${_gRPC_ZLIB_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+   grpc_test_util
+diff --git a/src/core/lib/slice/slice_refcount.h b/src/core/lib/slice/slice_refcount.h
+index 50fdb6efd9..2995e19e05 100644
+--- a/src/core/lib/slice/slice_refcount.h
++++ b/src/core/lib/slice/slice_refcount.h
+@@ -21,6 +21,7 @@
+ #include <stddef.h>
+ 
+ #include <atomic>
++#include <cinttypes>
+ 
+ #include <grpc/support/log.h>
+ 
+diff --git a/test/core/end2end/end2end_test_suites.cc b/test/core/end2end/end2end_test_suites.cc
+index 4a7c133f85..44feba4bb2 100644
+--- a/test/core/end2end/end2end_test_suites.cc
++++ b/test/core/end2end/end2end_test_suites.cc
+@@ -17,6 +17,7 @@
+ 
+ #include <algorithm>
+ #include <atomic>
++#include <cinttypes>
+ #include <functional>
+ #include <initializer_list>
+ #include <map>
