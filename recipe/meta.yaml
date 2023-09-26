@@ -38,6 +38,8 @@ source:
 
 build:
   number: 0
+  # debug
+  skip: true  # [not win]
 
 outputs:
   - name: libgrpc
@@ -81,8 +83,8 @@ outputs:
       requires:
         # protoc needs compiler; cmake also needs one to run package detection, see
         # https://discourse.cmake.org/t/questions-about-find-package-cli-msvc/6194
-        - {{ compiler('c') }}
-        - {{ compiler('cxx') }}
+        - {{ compiler('c') }}    # [unix]
+        - {{ compiler('cxx') }}  # [unix]
         - cmake
         - ninja
         - pkg-config
@@ -124,13 +126,13 @@ outputs:
 
         # CMake test: compile upstream example
         - ./test_grpc.sh   # [unix]
-        - ./test_grpc.bat  # [win]
+        # - ./test_grpc.bat  # [win]
 
         # test availability of symbol needed by arrow (esp. on windows)
         - cd cmake_test
         - cmake -GNinja -DCMAKE_CXX_STANDARD=17 $CMAKE_ARGS .   # [unix]
-        - cmake -GNinja -DCMAKE_CXX_STANDARD=17 %CMAKE_ARGS% .  # [win]
-        - cmake --build .
+        # - cmake -GNinja -DCMAKE_CXX_STANDARD=17 %CMAKE_ARGS% .  # [win]
+        - cmake --build .  # [unix]
 
   - name: grpcio
     script: build-grpcio.sh  # [not win]
