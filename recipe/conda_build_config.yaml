@@ -1,0 +1,3 @@
+# manual pins because we're linking migrations
+libprotobuf:
+  - 4.24.3
