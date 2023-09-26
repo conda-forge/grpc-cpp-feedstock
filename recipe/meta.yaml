@@ -43,7 +43,7 @@ source:
       - patches/0014-OpenSSL-Support-for-OpenSSL-3-31256.patch
       - patches/0015-Testing-Disable-failing-OpenSSL-Test-34131.patch
       # get gRPC_BUILD_TESTS=ON to build
-      - patches/0016-add-missing-linkages-headers-for-gRPC_BUILD_TESTS-ON.patch
+      - patches/0016-add-missing-linkages-for-gRPC_BUILD_TESTS-ON.patch
   - git_url: https://github.com/google/benchmark.git
     git_rev: 015d1a091af6937488242b70121858bce8fd40e9
     folder: third_party/benchmark

@@ -1,0 +1,29 @@
+From 9907ce614467ed9c6ae2d09e83aa33b1b912f405 Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Tue, 26 Sep 2023 18:25:54 +1100
+Subject: [PATCH 16/16] add missing linkages for gRPC_BUILD_TESTS=ON
+
+---
+ CMakeLists.txt | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 836fb1daa7..cc1cf4a54d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -6328,6 +6328,7 @@ target_include_directories(authorization_matchers_test
+ target_link_libraries(authorization_matchers_test
+   ${_gRPC_BASELIB_LIBRARIES}
+   ${_gRPC_PROTOBUF_LIBRARIES}
++  ${_gRPC_RE2_LIBRARIES}
+   ${_gRPC_ZLIB_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+   grpc_test_util
+@@ -13061,6 +13062,7 @@ target_include_directories(grpc_authorization_engine_test
+ target_link_libraries(grpc_authorization_engine_test
+   ${_gRPC_BASELIB_LIBRARIES}
+   ${_gRPC_PROTOBUF_LIBRARIES}
++  ${_gRPC_RE2_LIBRARIES}
+   ${_gRPC_ZLIB_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+   grpc_test_util
