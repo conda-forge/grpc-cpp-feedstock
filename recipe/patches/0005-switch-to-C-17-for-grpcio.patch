@@ -1,7 +1,7 @@
-From b08788ca5826ba798036ca60d2d67b154066e1bb Mon Sep 17 00:00:00 2001
+From afcdb1b2b2274b77c9d6b879318dcd36788b0b80 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sat, 3 Sep 2022 19:23:15 +0200
-Subject: [PATCH 05/13] switch to C++17 for grpcio
+Subject: [PATCH 5/9] switch to C++17 for grpcio
 
 ---
  setup.py | 7 ++++---

@@ -1,7 +1,7 @@
-From e444a06a9ebc61bcb807b75855c684c8149ec059 Mon Sep 17 00:00:00 2001
+From 1f06c4e8d0954c7399b88a9125f6d8f0bc871201 Mon Sep 17 00:00:00 2001
 From: Jonathan Helmus <jjhelmus@gmail.com>
 Date: Mon, 17 Feb 2020 15:45:06 -0600
-Subject: [PATCH 01/13] windows ssl lib names
+Subject: [PATCH 1/9] windows ssl lib names
 
 Co-Authored-By: Julien Schueller <schueller@phimeca.com>
 Co-Authored-By: Nicholas Bollweg <nick.bollweg@gmail.com>
