@@ -48,7 +48,13 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == 1 ]]; then
 
     popd
   )
-elif [[ "${target_platform}" == osx-* ]]; then
+  # don't build tests in cross-compilation; cannot run them anyway
+  export CMAKE_ARGS="${CMAKE_ARGS} -DgRPC_BUILD_TESTS=OFF"
+else
+  export CMAKE_ARGS="${CMAKE_ARGS} -DgRPC_BUILD_TESTS=ON"
+fi
+
+if [[ "${target_platform}" == osx-* ]]; then
   # See https://conda-forge.org/docs/maintainer/knowledge_base.html#newer-c-features-with-old-sdk
   CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY"
 fi
@@ -63,7 +69,6 @@ cmake ${CMAKE_ARGS} ..  \
       -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
       -DCMAKE_PREFIX_PATH=$PREFIX \
       -DCMAKE_INSTALL_PREFIX=$PREFIX \
-      -DgRPC_BUILD_TESTS=ON \
       -DgRPC_CARES_PROVIDER="package" \
       -DgRPC_GFLAGS_PROVIDER="package" \
       -DgRPC_PROTOBUF_PROVIDER="package" \
