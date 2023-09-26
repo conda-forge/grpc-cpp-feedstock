@@ -1,14 +1,14 @@
-From 9907ce614467ed9c6ae2d09e83aa33b1b912f405 Mon Sep 17 00:00:00 2001
+From 4a3273d0cfa431fe23c39062910b2049e0b737e1 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 26 Sep 2023 18:25:54 +1100
 Subject: [PATCH 16/16] add missing linkages for gRPC_BUILD_TESTS=ON
 
 ---
- CMakeLists.txt | 2 ++
- 1 file changed, 2 insertions(+)
+ CMakeLists.txt | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 836fb1daa7..cc1cf4a54d 100644
+index 836fb1daa7..f32fab9626 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -6328,6 +6328,7 @@ target_include_directories(authorization_matchers_test
@@ -27,3 +27,11 @@ index 836fb1daa7..cc1cf4a54d 100644
    ${_gRPC_ZLIB_LIBRARIES}
    ${_gRPC_ALLTARGETS_LIBRARIES}
    grpc_test_util
+@@ -14890,6 +14892,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+ 
+   target_link_libraries(httpcli_test
+     ${_gRPC_BASELIB_LIBRARIES}
++    ${_gRPC_CARES_LIBRARIES}
+     ${_gRPC_PROTOBUF_LIBRARIES}
+     ${_gRPC_ZLIB_LIBRARIES}
+     ${_gRPC_ALLTARGETS_LIBRARIES}
