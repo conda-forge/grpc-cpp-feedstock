@@ -1,14 +1,14 @@
-From 31541323a967728321a8a35731f0e923b9e78dc0 Mon Sep 17 00:00:00 2001
+From 2779912da9758059f41012f13468ca44932d70bd Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 26 Sep 2023 18:25:54 +1100
 Subject: [PATCH 16/16] add missing linkages for gRPC_BUILD_TESTS=ON
 
 ---
- CMakeLists.txt | 5 +++++
- 1 file changed, 5 insertions(+)
+ CMakeLists.txt | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 836fb1daa7..031d682bd7 100644
+index 836fb1daa7..443ea381c6 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -6328,6 +6328,7 @@ target_include_directories(authorization_matchers_test
@@ -46,6 +46,14 @@ index 836fb1daa7..031d682bd7 100644
 @@ -19789,6 +19793,7 @@ target_include_directories(resolve_address_using_ares_resolver_test
  
  target_link_libraries(resolve_address_using_ares_resolver_test
+   ${_gRPC_BASELIB_LIBRARIES}
++  ${_gRPC_CARES_LIBRARIES}
+   ${_gRPC_PROTOBUF_LIBRARIES}
+   ${_gRPC_ZLIB_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+@@ -19892,6 +19897,7 @@ target_include_directories(resolve_address_using_native_resolver_test
+ 
+ target_link_libraries(resolve_address_using_native_resolver_test
    ${_gRPC_BASELIB_LIBRARIES}
 +  ${_gRPC_CARES_LIBRARIES}
    ${_gRPC_PROTOBUF_LIBRARIES}
