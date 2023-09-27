@@ -1,14 +1,14 @@
-From da29cc8b67cb163f06bed840abecfec00cedc950 Mon Sep 17 00:00:00 2001
+From b12bad2249b7305a92b1feb12f966b81ab9f0464 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 26 Sep 2023 18:25:54 +1100
 Subject: [PATCH 16/16] add missing linkages for gRPC_BUILD_TESTS=ON
 
 ---
- CMakeLists.txt | 7 +++++++
- 1 file changed, 7 insertions(+)
+ CMakeLists.txt | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 836fb1daa7..e17c22eb18 100644
+index 836fb1daa7..f6b966ee93 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -6328,6 +6328,7 @@ target_include_directories(authorization_matchers_test
@@ -59,7 +59,15 @@ index 836fb1daa7..e17c22eb18 100644
    ${_gRPC_PROTOBUF_LIBRARIES}
    ${_gRPC_ZLIB_LIBRARIES}
    ${_gRPC_ALLTARGETS_LIBRARIES}
-@@ -28418,6 +28424,7 @@ target_include_directories(xds_credentials_test
+@@ -28147,6 +28153,7 @@ target_include_directories(xds_common_types_test
+ target_link_libraries(xds_common_types_test
+   ${_gRPC_BASELIB_LIBRARIES}
+   ${_gRPC_PROTOBUF_LIBRARIES}
++  ${_gRPC_RE2_LIBRARIES}
+   ${_gRPC_ZLIB_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+   grpc++
+@@ -28418,6 +28425,7 @@ target_include_directories(xds_credentials_test
  target_link_libraries(xds_credentials_test
    ${_gRPC_BASELIB_LIBRARIES}
    ${_gRPC_PROTOBUF_LIBRARIES}
