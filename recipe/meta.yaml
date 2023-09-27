@@ -1,4 +1,4 @@
-{% set version = "1.57.0" %}
+{% set version = "1.58.1" %}
 
 # core package & vendored libs use different version scheme than CPP libs, see
 # https://github.com/grpc/grpc/blob/v1.48.1/CMakeLists.txt#L28-L32
@@ -8,7 +8,7 @@
 
 {% set core_libs = ["gpr", "grpc", "grpc_unsecure"] %}
 {% set core_cpp_libs = ["grpc++", "grpc++_unsecure"] %}
-{% set vendored_libs = ["address_sorting", "upb"] %}
+{% set vendored_libs = ["address_sorting"] %}
 {% set binaries_plugin_langs = [
     "cpp", "csharp", "node", "objective_c", "php", "python", "ruby"
 ] %}
@@ -19,7 +19,7 @@ package:
 
 source:
   url: https://github.com/grpc/grpc/archive/v{{ version.replace(".pre", "-pre") }}.tar.gz
-  sha256: 8393767af531b2d0549a4c26cf8ba1f665b16c16fb6c9238a7755e45444881dd
+  sha256: 860bf758a1437a03318bf09db8e87cb8149a2f578954110ce8549e147f868b62
   patches:
     - patches/0001-windows-ssl-lib-names.patch         # [win]
     - patches/0002-fix-win-setup-cmds.patch            # [win]
@@ -31,17 +31,13 @@ source:
     # at runtime just to link to grp, see grpc/grpc#30838;
     # not much point in marking baselibs or vendored libs (e.g. upb) as private
     - patches/0007-mark-linkage-of-c-ares-re2-zlib-as-private.patch
-    # oh windows...
-    - patches/0008-add-GPR-GRPC-GRPCXX-UBP-_DLL-mechanism-for-missing-s.patch  # [win]
-    - patches/0009-fix-support_enabled-for-windows.patch                       # [win]
-    - patches/0010-Fix-data-with-thread-storage-duration-may-not-have-d.patch  # [win]
-    - patches/0011-put-some-grpc-experimental-classes-needed-by-arrow-i.patch  # [win]
-    - patches/0012-link-grpc-_unsecure-to-grpc.patch                           # [win]
+    # backport https://github.com/grpc/grpc/pull/34103; can be dropped for v>1.58
+    - patches/0008-Build-Shared-builds-on-windows-34103.patch                  # [win]
     # unbreak CMake integration
-    - patches/0013-don-t-use-find_dependency-for-protobuf.patch
+    - patches/0009-don-t-use-find_dependency-for-protobuf.patch
 
 build:
-  number: 1
+  number: 0
 
 outputs:
   - name: libgrpc
