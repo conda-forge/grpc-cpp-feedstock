@@ -41,6 +41,8 @@ source:
       # backport https://github.com/protocolbuffers/protobuf/commit/0309d86d3175cb3fb82d37150e6eff90b11bed77
       # due to https://developercommunity.visualstudio.com/t/NAN-is-no-longer-compile-time-constant-i/10688907
       - patches/0012-Fixed-NAN-INFINITY-definitions-to-work-on-Windows-11.patch
+      # get gRPC_BUILD_TESTS=ON to build
+      - patches/0013-add-missing-linkages-for-gRPC_BUILD_TESTS-ON.patch
 
   - folder: third_party/benchmark
     git_url: https://github.com/google/benchmark.git

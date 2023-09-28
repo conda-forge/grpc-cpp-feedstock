@@ -1,7 +1,7 @@
 From f36df3f109b0b490669c1e553009a00a0b52c092 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Thu, 29 Feb 2024 20:31:21 +1100
-Subject: [PATCH 09/12] for main targets, set *_DLL_EXPORTS when building and
+Subject: [PATCH 09/13] for main targets, set *_DLL_EXPORTS when building and
  *_DLL_IMPORTS in interface
 
 ---
