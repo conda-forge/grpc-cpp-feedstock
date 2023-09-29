@@ -1,7 +1,7 @@
-From b2169fc42fe09654dc2c06fd46d4e2869d391353 Mon Sep 17 00:00:00 2001
+From f7dc32ad90c8ecfdab093a38db55123610a07570 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Fri, 9 Jun 2023 22:16:09 +1100
-Subject: [PATCH 9/9] don't use find_dependency for protobuf
+Subject: [PATCH 09/10] don't use find_dependency for protobuf
 
 ---
  cmake/protobuf.cmake | 2 +-

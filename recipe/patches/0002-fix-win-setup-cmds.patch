@@ -1,7 +1,7 @@
-From a7a8cb6163318b558229fc04a51f2e18307d9e16 Mon Sep 17 00:00:00 2001
+From a12ec38d2ef7eece1ef15929be8845b0bd0d5f9a Mon Sep 17 00:00:00 2001
 From: Mike Sarahan <msarahan@gmail.com>
 Date: Tue, 18 Feb 2020 13:53:05 -0600
-Subject: [PATCH 2/9] fix win setup cmds
+Subject: [PATCH 02/10] fix win setup cmds
 
 Co-Authored-By: Julien Schueller <schueller@phimeca.com>
 Co-Authored-By: Nicholas Bollweg <nick.bollweg@gmail.com>

@@ -1,7 +1,7 @@
-From 8f1950aa57815f89fcce2eff45bbdab2b3c7546c Mon Sep 17 00:00:00 2001
+From 9b6cdcda6af8fb47370a6deb58946712baaab4bf Mon Sep 17 00:00:00 2001
 From: h-vetinari <h.vetinari@gmx.com>
 Date: Wed, 13 Sep 2023 03:12:36 +1100
-Subject: [PATCH 8/9] [Build] Shared builds on windows (#34103)
+Subject: [PATCH 08/10] [Build] Shared builds on windows (#34103)
 
 Towards https://github.com/grpc/grpc/issues/33032,
 

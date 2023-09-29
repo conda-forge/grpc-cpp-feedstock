@@ -18,26 +18,36 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/grpc/grpc/archive/v{{ version.replace(".pre", "-pre") }}.tar.gz
-  sha256: 860bf758a1437a03318bf09db8e87cb8149a2f578954110ce8549e147f868b62
-  patches:
-    - patches/0001-windows-ssl-lib-names.patch         # [win]
-    - patches/0002-fix-win-setup-cmds.patch            # [win]
-    - patches/0003-Link-against-grpc.patch
-    - patches/0004-force-protoc-executable.patch
-    - patches/0005-switch-to-C-17-for-grpcio.patch
-    - patches/0006-fix-abseil-setup.patch
-    # mark c-ares, re2 & zlib as private, so they don't need to be found
-    # at runtime just to link to grp, see grpc/grpc#30838;
-    # not much point in marking baselibs or vendored libs (e.g. upb) as private
-    - patches/0007-mark-linkage-of-c-ares-re2-zlib-as-private.patch
-    # backport https://github.com/grpc/grpc/pull/34103; can be dropped for v>1.58
-    - patches/0008-Build-Shared-builds-on-windows-34103.patch                  # [win]
-    # unbreak CMake integration
-    - patches/0009-don-t-use-find_dependency-for-protobuf.patch
+  - url: https://github.com/grpc/grpc/archive/v{{ version.replace(".pre", "-pre") }}.tar.gz
+    sha256: 860bf758a1437a03318bf09db8e87cb8149a2f578954110ce8549e147f868b62
+    patches:
+      - patches/0001-windows-ssl-lib-names.patch         # [win]
+      - patches/0002-fix-win-setup-cmds.patch            # [win]
+      - patches/0003-Link-against-grpc.patch
+      - patches/0004-force-protoc-executable.patch
+      - patches/0005-switch-to-C-17-for-grpcio.patch
+      - patches/0006-fix-abseil-setup.patch
+      # mark c-ares, re2 & zlib as private, so they don't need to be found
+      # at runtime just to link to grp, see grpc/grpc#30838;
+      # not much point in marking baselibs or vendored libs (e.g. upb) as private
+      - patches/0007-mark-linkage-of-c-ares-re2-zlib-as-private.patch
+      # backport https://github.com/grpc/grpc/pull/34103; can be dropped for v>1.58
+      - patches/0008-Build-Shared-builds-on-windows-34103.patch                  # [win]
+      # unbreak CMake integration
+      - patches/0009-don-t-use-find_dependency-for-protobuf.patch
+      # get gRPC_BUILD_TESTS=ON to build
+      - patches/0010-add-missing-linkages-for-gRPC_BUILD_TESTS-ON.patch
+  - git_url: https://github.com/google/benchmark.git
+    git_rev: 015d1a091af6937488242b70121858bce8fd40e9
+    folder: third_party/benchmark
+  - git_url: https://github.com/google/googletest.git
+    git_rev: 0e402173c97aea7a00749e825b194bfede4f2e45
+    folder: third_party/googletest
 
 build:
   number: 0
+  # debug
+  skip: true  # [not ((linux or osx) and x86_64)]
 
 outputs:
   - name: libgrpc
@@ -54,6 +64,8 @@ outputs:
       build:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
+        # for building the tests
+        - sysroot_linux-64 2.17  # [linux64]
         - cmake >=3.5.1
         # `protoc` is also used for building
         - libprotobuf
