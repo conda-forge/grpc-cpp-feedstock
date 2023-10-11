@@ -31,10 +31,6 @@ source:
     # at runtime just to link to grp, see grpc/grpc#30838;
     # not much point in marking baselibs or vendored libs (e.g. upb) as private
     - patches/0007-mark-linkage-of-c-ares-re2-zlib-as-private.patch
-    # backport https://github.com/grpc/grpc/pull/34103; can be dropped for v>1.58
-    - patches/0008-Build-Shared-builds-on-windows-34103.patch                  # [win]
-    # unbreak CMake integration
-    - patches/0009-don-t-use-find_dependency-for-protobuf.patch
 
 build:
   number: 0
