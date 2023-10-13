@@ -34,7 +34,7 @@ python:
 - 3.9.* *_73_pypy
 - 3.9.* *_cpython
 re2:
-- 2023.03.02
+- 2023.06.02
 target_platform:
 - linux-ppc64le
 zip_keys:
