@@ -41,7 +41,7 @@ source:
     - patches/0013-don-t-use-find_dependency-for-protobuf.patch
 
 build:
-  number: 2
+  number: 3
 
 outputs:
   - name: libgrpc
