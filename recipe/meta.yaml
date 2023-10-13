@@ -203,6 +203,7 @@ about:
 
 extra:
   recipe-maintainers:
+    - JohanMabille
     - pitrou
     - xhochy
     - wesm
