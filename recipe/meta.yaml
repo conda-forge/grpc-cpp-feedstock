@@ -209,4 +209,5 @@ extra:
     - h-vetinari
     - mariusvniekerk
     - jjerphan
+    - JohanMabille
   feedstock-name: grpc-cpp
