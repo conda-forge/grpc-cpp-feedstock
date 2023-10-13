@@ -17,7 +17,7 @@ cxx_compiler_version:
 libabseil:
 - '20230802'
 libprotobuf:
-- 4.24.3
+- 4.24.4
 macos_machine:
 - x86_64-apple-darwin13.4.0
 openssl:
@@ -33,6 +33,13 @@ python:
 - 3.8.* *_cpython
 - 3.9.* *_73_pypy
 - 3.9.* *_cpython
+python_impl:
+- cpython
+- cpython
+- cpython
+- cpython
+- pypy
+- cpython
 re2:
 - 2023.06.02
 target_platform:
@@ -40,5 +47,7 @@ target_platform:
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
+- - python
+  - python_impl
 zlib:
 - '1.2'

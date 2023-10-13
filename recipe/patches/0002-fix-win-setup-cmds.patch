@@ -1,30 +1,22 @@
-From a7a8cb6163318b558229fc04a51f2e18307d9e16 Mon Sep 17 00:00:00 2001
+From 16e076fe81475855a4d60c71b8063a3cab5718fd Mon Sep 17 00:00:00 2001
 From: Mike Sarahan <msarahan@gmail.com>
 Date: Tue, 18 Feb 2020 13:53:05 -0600
-Subject: [PATCH 2/9] fix win setup cmds
+Subject: [PATCH 2/8] fix win setup cmds
 
 Co-Authored-By: Julien Schueller <schueller@phimeca.com>
 Co-Authored-By: Nicholas Bollweg <nick.bollweg@gmail.com>
 Co-Authored-By: Marius van Niekerk <marius.v.niekerk@gmail.com>
 Co-Authored-By: H. Vetinari <h.vetinari@gmx.com>
 ---
- setup.py                      | 9 ++++-----
+ setup.py                      | 7 +++----
  src/python/grpcio/commands.py | 2 ++
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index 6ad13552ba..ee37723743 100644
+index 5892a3288f..6a9c0f25a5 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -24,7 +24,6 @@ from distutils.unixccompiler import UnixCCompiler
- UnixCCompiler.src_extensions.append(".S")
- del UnixCCompiler
- 
--from distutils import cygwinccompiler
- from distutils import extension as _extension
- from distutils import util
- import os
-@@ -217,6 +216,9 @@ ENABLE_DOCUMENTATION_BUILD = _env_bool_value(
+@@ -216,6 +216,9 @@ ENABLE_DOCUMENTATION_BUILD = _env_bool_value(
  
  
  def check_linker_need_libatomic():
@@ -34,7 +26,7 @@ index 6ad13552ba..ee37723743 100644
      """Test if linker on system needs libatomic."""
      code_test = (
          b"#include <atomic>\n"
-@@ -271,10 +273,6 @@ if EXTRA_ENV_COMPILE_ARGS is None:
+@@ -270,10 +273,6 @@ if EXTRA_ENV_COMPILE_ARGS is None:
                  EXTRA_ENV_COMPILE_ARGS += (
                      " -D_ftime=_ftime64 -D_timeb=__timeb64"
                  )
@@ -45,16 +37,8 @@ index 6ad13552ba..ee37723743 100644
      elif "linux" in sys.platform:
          EXTRA_ENV_COMPILE_ARGS += (
              " -fvisibility=hidden -fno-wrapv -fno-exceptions"
-@@ -292,6 +290,7 @@ if EXTRA_ENV_LINK_ARGS is None:
-         if check_linker_need_libatomic():
-             EXTRA_ENV_LINK_ARGS += " -latomic"
-     elif "win32" in sys.platform and sys.version_info < (3, 5):
-+        from distutils import cygwinccompiler
-         msvcr = cygwinccompiler.get_msvcr()[0]
-         EXTRA_ENV_LINK_ARGS += (
-             " -static-libgcc -static-libstdc++ -mcrtdll={msvcr}"
 diff --git a/src/python/grpcio/commands.py b/src/python/grpcio/commands.py
-index 3739097a74..262d24abdb 100644
+index 338dbd7d26..0dccff169c 100644
 --- a/src/python/grpcio/commands.py
 +++ b/src/python/grpcio/commands.py
 @@ -252,6 +252,8 @@ class BuildExt(build_ext.build_ext):

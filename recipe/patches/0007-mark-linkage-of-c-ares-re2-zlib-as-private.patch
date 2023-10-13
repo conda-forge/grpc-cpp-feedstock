@@ -1,20 +1,20 @@
-From 5308ac4733e1f81dde22b8401b78725196c4ba89 Mon Sep 17 00:00:00 2001
+From 58485e3ebfb41edaa6ee8db1d90c99462ac893f9 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 23 Aug 2022 11:45:20 +0200
-Subject: [PATCH 7/9] mark linkage of c-ares/re2/zlib as private
+Subject: [PATCH 7/8] mark linkage of c-ares/re2/zlib as private
 
 See also: https://github.com/grpc/grpc/issues/30838
 
 Co-Authored-By: Mark Harfouche <mark.harfouche@gmail.com>
 ---
- CMakeLists.txt | 94 ++++++++++++++++++++++++++++----------------------
- 1 file changed, 52 insertions(+), 42 deletions(-)
+ CMakeLists.txt | 102 +++++++++++++++++++++++++++----------------------
+ 1 file changed, 56 insertions(+), 46 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index caee7ae00a..a2aa40bd52 100644
+index 14501a181d..f9ae4d9861 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -2497,30 +2497,35 @@ target_include_directories(grpc
+@@ -2540,32 +2540,37 @@ target_include_directories(grpc
      ${_gRPC_ZLIB_INCLUDE_DIR}
  )
  target_link_libraries(grpc
@@ -32,6 +32,8 @@ index caee7ae00a..a2aa40bd52 100644
 -  absl::function_ref
 -  absl::hash
 -  absl::type_traits
+-  absl::random_bit_gen_ref
+-  absl::random_distributions
 -  absl::statusor
 -  absl::span
 -  absl::utility
@@ -60,6 +62,8 @@ index caee7ae00a..a2aa40bd52 100644
 +  PUBLIC  absl::function_ref
 +  PUBLIC  absl::hash
 +  PUBLIC  absl::type_traits
++  PUBLIC  absl::random_bit_gen_ref
++  PUBLIC  absl::random_distributions
 +  PUBLIC  absl::statusor
 +  PUBLIC  absl::span
 +  PUBLIC  absl::utility
@@ -72,7 +76,7 @@ index caee7ae00a..a2aa40bd52 100644
  endif()
  
  foreach(_hdr
-@@ -3144,28 +3149,33 @@ target_include_directories(grpc_unsecure
+@@ -3202,30 +3207,35 @@ target_include_directories(grpc_unsecure
      ${_gRPC_ZLIB_INCLUDE_DIR}
  )
  target_link_libraries(grpc_unsecure
@@ -89,6 +93,8 @@ index caee7ae00a..a2aa40bd52 100644
 -  absl::function_ref
 -  absl::hash
 -  absl::type_traits
+-  absl::random_bit_gen_ref
+-  absl::random_distributions
 -  absl::statusor
 -  absl::span
 -  absl::utility
@@ -114,6 +120,8 @@ index caee7ae00a..a2aa40bd52 100644
 +  PUBLIC  absl::function_ref
 +  PUBLIC  absl::hash
 +  PUBLIC  absl::type_traits
++  PUBLIC  absl::random_bit_gen_ref
++  PUBLIC  absl::random_distributions
 +  PUBLIC  absl::statusor
 +  PUBLIC  absl::span
 +  PUBLIC  absl::utility

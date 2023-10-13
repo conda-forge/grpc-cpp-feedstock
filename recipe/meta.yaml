@@ -1,4 +1,4 @@
-{% set version = "1.58.1" %}
+{% set version = "1.59.1" %}
 
 # core package & vendored libs use different version scheme than CPP libs, see
 # https://github.com/grpc/grpc/blob/v1.48.1/CMakeLists.txt#L28-L32
@@ -19,7 +19,7 @@ package:
 
 source:
   url: https://github.com/grpc/grpc/archive/v{{ version.replace(".pre", "-pre") }}.tar.gz
-  sha256: 860bf758a1437a03318bf09db8e87cb8149a2f578954110ce8549e147f868b62
+  sha256: 916f88a34f06b56432611aaa8c55befee96d0a7b7d7457733b9deeacbc016f99
   patches:
     - patches/0001-windows-ssl-lib-names.patch         # [win]
     - patches/0002-fix-win-setup-cmds.patch            # [win]
@@ -31,13 +31,10 @@ source:
     # at runtime just to link to grp, see grpc/grpc#30838;
     # not much point in marking baselibs or vendored libs (e.g. upb) as private
     - patches/0007-mark-linkage-of-c-ares-re2-zlib-as-private.patch
-    # backport https://github.com/grpc/grpc/pull/34103; can be dropped for v>1.58
-    - patches/0008-Build-Shared-builds-on-windows-34103.patch                  # [win]
-    # unbreak CMake integration
-    - patches/0009-don-t-use-find_dependency-for-protobuf.patch
+    - patches/0008-link-grpc-_unsecure-to-grpc.patch
 
 build:
-  number: 2
+  number: 0
 
 outputs:
   - name: libgrpc
@@ -177,12 +174,15 @@ outputs:
       commands:
         - python -m pip check
         - python grpcio_distribtest.py
+        # the following test is flaky on pypy
+        {% if not (aarch64 or ppc64le) or python_impl == "cpython" %}
         # test actual RPC pattern (client & server); other tests did not catch
         # https://github.com/conda-forge/grpc-cpp-feedstock/issues/281
         - cd examples/python/helloworld
         # copy test defined in feedstock to where it needs to run
         - cp ../../../test_grpcio_helloworld.py .
         - python test_grpcio_helloworld.py
+        {% endif %}
 
 about:
   home: https://grpc.io/
