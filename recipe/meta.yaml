@@ -164,7 +164,7 @@ outputs:
       requires:
         - pip
         - protobuf
-        - pyarrow
+        - pyarrow  # [python_impl != "pypy"]
       imports:
         - grpc
         - grpc._cython
@@ -185,9 +185,9 @@ outputs:
         # copy test defined in feedstock to where it needs to run
         - cp ../../../test_grpcio_helloworld.py .
         - python test_grpcio_helloworld.py
-        # run test for regression encountered with pyarrow
+        # run test for regression encountered with pyarrow (not available for pypy)
         - cd ../../../arrowflight_test
-        - python test_arrowflight.py
+        - python test_arrowflight.py    # [python_impl != "pypy"]
 
 about:
   home: https://grpc.io/
