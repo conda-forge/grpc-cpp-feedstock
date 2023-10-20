@@ -162,11 +162,13 @@ outputs:
       source_files:
         - examples/
       files:
+        - arrowflight_test/
         - grpcio_distribtest.py
         - test_grpcio_helloworld.py
       requires:
         - pip
         - protobuf
+        - pyarrow
       imports:
         - grpc
         - grpc._cython
@@ -187,6 +189,9 @@ outputs:
         # copy test defined in feedstock to where it needs to run
         - cp ../../../test_grpcio_helloworld.py .
         - python test_grpcio_helloworld.py
+        # run test for regression encountered with pyarrow
+        - cd ../../../arrowflight_test
+        - python test_arrowflight.py
 
 about:
   home: https://grpc.io/
