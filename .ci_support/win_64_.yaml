@@ -25,9 +25,19 @@ python:
 - 3.8.* *_cpython
 - 3.9.* *_73_pypy
 - 3.9.* *_cpython
+python_impl:
+- cpython
+- cpython
+- cpython
+- cpython
+- pypy
+- cpython
 re2:
 - 2023.06.02
 target_platform:
 - win-64
+zip_keys:
+- - python
+  - python_impl
 zlib:
 - '1.2'
