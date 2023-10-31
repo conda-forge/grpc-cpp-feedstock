@@ -1,4 +1,4 @@
-{% set version = "1.58.1" %}
+{% set version = "1.58.2" %}
 
 # core package & vendored libs use different version scheme than CPP libs, see
 # https://github.com/grpc/grpc/blob/v1.48.1/CMakeLists.txt#L28-L32
@@ -19,7 +19,7 @@ package:
 
 source:
   url: https://github.com/grpc/grpc/archive/v{{ version.replace(".pre", "-pre") }}.tar.gz
-  sha256: 860bf758a1437a03318bf09db8e87cb8149a2f578954110ce8549e147f868b62
+  sha256: 13f5cc7b8613e34f5fa5a49963e09efe079060c17dc7bed32af5a669891189ee
   patches:
     - patches/0001-windows-ssl-lib-names.patch         # [win]
     - patches/0002-fix-win-setup-cmds.patch            # [win]
@@ -37,7 +37,7 @@ source:
     - patches/0009-don-t-use-find_dependency-for-protobuf.patch
 
 build:
-  number: 2
+  number: 0
 
 outputs:
   - name: libgrpc
