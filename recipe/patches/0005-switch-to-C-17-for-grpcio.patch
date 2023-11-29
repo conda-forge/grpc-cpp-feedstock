@@ -1,4 +1,4 @@
-From 9d0de2aff22c0c4642bcb3214048c1ae704f1936 Mon Sep 17 00:00:00 2001
+From cdaa8fd5da08bd41b04115aed481b13183d51df8 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sat, 3 Sep 2022 19:23:15 +0200
 Subject: [PATCH 5/8] switch to C++17 for grpcio
@@ -8,10 +8,10 @@ Subject: [PATCH 5/8] switch to C++17 for grpcio
  1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index e65479ab4b..d0f80e4924 100644
+index de07e6d..897dae7 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -228,7 +228,7 @@ def check_linker_need_libatomic():
+@@ -226,7 +226,7 @@ def check_linker_need_libatomic():
      )
      cxx = shlex.split(os.environ.get("CXX", "c++"))
      cpp_test = subprocess.Popen(
@@ -20,7 +20,7 @@ index e65479ab4b..d0f80e4924 100644
          stdin=PIPE,
          stdout=PIPE,
          stderr=PIPE,
-@@ -239,7 +239,7 @@ def check_linker_need_libatomic():
+@@ -237,7 +237,7 @@ def check_linker_need_libatomic():
      # Double-check to see if -latomic actually can solve the problem.
      # https://github.com/grpc/grpc/issues/22491
      cpp_test = subprocess.Popen(
@@ -29,7 +29,7 @@ index e65479ab4b..d0f80e4924 100644
          stdin=PIPE,
          stdout=PIPE,
          stderr=PIPE,
-@@ -258,8 +258,9 @@ def check_linker_need_libatomic():
+@@ -256,8 +256,9 @@ def check_linker_need_libatomic():
  EXTRA_ENV_COMPILE_ARGS = os.environ.get("GRPC_PYTHON_CFLAGS", None)
  EXTRA_ENV_LINK_ARGS = os.environ.get("GRPC_PYTHON_LDFLAGS", None)
  if EXTRA_ENV_COMPILE_ARGS is None:

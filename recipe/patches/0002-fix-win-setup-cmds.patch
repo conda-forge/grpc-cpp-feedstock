@@ -1,4 +1,4 @@
-From 16e076fe81475855a4d60c71b8063a3cab5718fd Mon Sep 17 00:00:00 2001
+From 847ac86cbc8ccfb3cd86abc42385c1ca4dfd8583 Mon Sep 17 00:00:00 2001
 From: Mike Sarahan <msarahan@gmail.com>
 Date: Tue, 18 Feb 2020 13:53:05 -0600
 Subject: [PATCH 2/8] fix win setup cmds
@@ -13,10 +13,10 @@ Co-Authored-By: H. Vetinari <h.vetinari@gmx.com>
  2 files changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index 5892a3288f..6a9c0f25a5 100644
+index 82de367..47e1f25 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -216,6 +216,9 @@ ENABLE_DOCUMENTATION_BUILD = _env_bool_value(
+@@ -214,6 +214,9 @@ ENABLE_DOCUMENTATION_BUILD = _env_bool_value(
  
  
  def check_linker_need_libatomic():
@@ -26,7 +26,7 @@ index 5892a3288f..6a9c0f25a5 100644
      """Test if linker on system needs libatomic."""
      code_test = (
          b"#include <atomic>\n"
-@@ -270,10 +273,6 @@ if EXTRA_ENV_COMPILE_ARGS is None:
+@@ -268,10 +271,6 @@ if EXTRA_ENV_COMPILE_ARGS is None:
                  EXTRA_ENV_COMPILE_ARGS += (
                      " -D_ftime=_ftime64 -D_timeb=__timeb64"
                  )
@@ -38,7 +38,7 @@ index 5892a3288f..6a9c0f25a5 100644
          EXTRA_ENV_COMPILE_ARGS += (
              " -fvisibility=hidden -fno-wrapv -fno-exceptions"
 diff --git a/src/python/grpcio/commands.py b/src/python/grpcio/commands.py
-index 338dbd7d26..0dccff169c 100644
+index 98324c9..484aef0 100644
 --- a/src/python/grpcio/commands.py
 +++ b/src/python/grpcio/commands.py
 @@ -252,6 +252,8 @@ class BuildExt(build_ext.build_ext):
