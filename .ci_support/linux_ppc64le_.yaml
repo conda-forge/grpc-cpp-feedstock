@@ -19,7 +19,7 @@ docker_image:
 libabseil:
 - '20230802'
 libprotobuf:
-- 4.24.4
+- 4.25.1
 openssl:
 - '3'
 pin_run_as_build:
