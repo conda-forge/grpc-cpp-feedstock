@@ -1,4 +1,4 @@
-From 847ac86cbc8ccfb3cd86abc42385c1ca4dfd8583 Mon Sep 17 00:00:00 2001
+From f2f2abe99522e965f5fdaa62e36364dd6c8a25af Mon Sep 17 00:00:00 2001
 From: Mike Sarahan <msarahan@gmail.com>
 Date: Tue, 18 Feb 2020 13:53:05 -0600
 Subject: [PATCH 2/8] fix win setup cmds
@@ -13,7 +13,7 @@ Co-Authored-By: H. Vetinari <h.vetinari@gmx.com>
  2 files changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index 82de367..47e1f25 100644
+index 82de367535..47e1f25d7f 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -214,6 +214,9 @@ ENABLE_DOCUMENTATION_BUILD = _env_bool_value(
@@ -38,7 +38,7 @@ index 82de367..47e1f25 100644
          EXTRA_ENV_COMPILE_ARGS += (
              " -fvisibility=hidden -fno-wrapv -fno-exceptions"
 diff --git a/src/python/grpcio/commands.py b/src/python/grpcio/commands.py
-index 98324c9..484aef0 100644
+index 98324c955f..484aef0d8b 100644
 --- a/src/python/grpcio/commands.py
 +++ b/src/python/grpcio/commands.py
 @@ -252,6 +252,8 @@ class BuildExt(build_ext.build_ext):
