@@ -1,4 +1,4 @@
-From 353846c7bb16e9025add1355dbc000ca9dd37ff6 Mon Sep 17 00:00:00 2001
+From c682aa327cf8d712d808f626810a983ee6e91f27 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 6 Feb 2024 16:09:08 +0100
 Subject: [PATCH 9/9] fix missing DLL-exports in vendored upb

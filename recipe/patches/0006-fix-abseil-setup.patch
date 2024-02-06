@@ -1,4 +1,4 @@
-From 1ea59934bb0ab3d0d69335111ffcef973b0aaaa0 Mon Sep 17 00:00:00 2001
+From 8be3abdd868062ae90d406b24702e83d2133741b Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 4 Sep 2022 14:34:52 +0200
 Subject: [PATCH 6/9] fix abseil setup
@@ -8,10 +8,10 @@ Subject: [PATCH 6/9] fix abseil setup
  1 file changed, 11 insertions(+), 4 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index 897dae7454..cc904daa2d 100644
+index c0b391ea2c..e5eb8f6e69 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -379,14 +379,21 @@ if BUILD_WITH_SYSTEM_CARES:
+@@ -379,15 +379,22 @@ if BUILD_WITH_SYSTEM_CARES:
  if BUILD_WITH_SYSTEM_RE2:
      EXTENSION_LIBRARIES += ("re2",)
  if BUILD_WITH_SYSTEM_ABSL:
@@ -32,7 +32,8 @@ index 897dae7454..cc904daa2d 100644
  if BUILD_WITH_SYSTEM_GRPC_CORE:
      EXTENSION_LIBRARIES += ('gpr', 'grpc', )
      if "win32" in sys.platform:
-         EXTENSION_LIBRARIES += ('libprotoc', 'libprotobuf', 'libprotobuf-lite', 'upb', 'address_sorting', )
+         EXTENSION_LIBRARIES += ('libprotoc', 'libprotobuf', 'libprotobuf-lite', 'address_sorting',)
+         EXTENSION_LIBRARIES += tuple(f'upb_{x}_lib' for x in ["base", "json", "mem", "message", "textformat"])
 -        EXTENSION_LIBRARIES += tuple(lib.stem for lib in pathlib.Path(os.environ['LIBRARY_LIB']).glob('absl_*.lib'))
  
  DEFINE_MACROS = (("_WIN32_WINNT", 0x600),)

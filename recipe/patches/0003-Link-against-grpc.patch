@@ -1,14 +1,15 @@
-From 07f283a268331b65d3dfe500f7bb0f34f8990d97 Mon Sep 17 00:00:00 2001
+From 37d821318ff24ab430eab9ace37d249207bed0f0 Mon Sep 17 00:00:00 2001
 From: Marius van Niekerk <marius.v.niekerk@gmail.com>
 Date: Mon, 13 Jun 2022 17:13:07 -0400
 Subject: [PATCH 3/9] Link against grpc
 
+Co-Authored-By: H. Vetinari <h.vetinari@gmx.com>
 ---
- setup.py | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ setup.py | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/setup.py b/setup.py
-index 47e1f25d7f..de07e6d180 100644
+index 47e1f25d7f..00dfd3419a 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -179,6 +179,8 @@ BUILD_WITH_STATIC_LIBSTDCXX = _env_bool_value(
@@ -20,19 +21,20 @@ index 47e1f25d7f..de07e6d180 100644
  # For local development use only: This skips building gRPC Core and its
  # dependencies, including protobuf and boringssl. This allows "incremental"
  # compilation by first building gRPC Core using make, then building only the
-@@ -379,6 +381,11 @@ if BUILD_WITH_SYSTEM_ABSL:
+@@ -379,6 +381,12 @@ if BUILD_WITH_SYSTEM_ABSL:
      EXTENSION_LIBRARIES += tuple(
          lib.stem[3:] for lib in pathlib.Path("/usr").glob("lib*/libabsl_*.so")
      )
 +if BUILD_WITH_SYSTEM_GRPC_CORE:
 +    EXTENSION_LIBRARIES += ('gpr', 'grpc', )
 +    if "win32" in sys.platform:
-+        EXTENSION_LIBRARIES += ('libprotoc', 'libprotobuf', 'libprotobuf-lite', 'upb', 'address_sorting', )
++        EXTENSION_LIBRARIES += ('libprotoc', 'libprotobuf', 'libprotobuf-lite', 'address_sorting',)
++        EXTENSION_LIBRARIES += tuple(f'upb_{x}_lib' for x in ["base", "json", "mem", "message", "textformat"])
 +        EXTENSION_LIBRARIES += tuple(lib.stem for lib in pathlib.Path(os.environ['LIBRARY_LIB']).glob('absl_*.lib'))
  
  DEFINE_MACROS = (("_WIN32_WINNT", 0x600),)
  asm_files = []
-@@ -504,6 +511,9 @@ def cython_extensions_and_necessity():
+@@ -504,6 +512,9 @@ def cython_extensions_and_necessity():
              prefix + "libgrpc.a",
          ]
          core_c_files = []
