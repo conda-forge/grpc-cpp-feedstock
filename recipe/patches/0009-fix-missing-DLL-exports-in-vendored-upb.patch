@@ -1,0 +1,128 @@
+From 353846c7bb16e9025add1355dbc000ca9dd37ff6 Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Tue, 6 Feb 2024 16:09:08 +0100
+Subject: [PATCH 9/9] fix missing DLL-exports in vendored upb
+
+---
+ CMakeLists.txt                                | 12 +++++++++
+ third_party/upb/upb/mem/alloc.c               |  2 +-
+ third_party/upb/upb/mem/alloc.h               |  2 +-
+ .../upb/upb/mini_table/internal/message.c     |  2 +-
+ .../upb/upb/mini_table/internal/message.h     |  2 +-
+ third_party/upb/upb/port/def.inc              | 27 +++++++++++++++++++
+ 6 files changed, 43 insertions(+), 4 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index edcba6c5b9..fd02e1262d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -3630,6 +3630,12 @@ if(WIN32 AND MSVC)
+       DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+     )
+   endif()
++  # More details in third_party/upb/upb/port_def.inc;
++  # needs to be separate from gRPC_DLL_{IM,EX}PORTS
++  set_target_properties(upb_mem_lib PROPERTIES DEFINE_SYMBOL "UPB_DLL_EXPORTS")
++  if(BUILD_SHARED_LIBS)
++    target_compile_definitions(upb_mem_lib INTERFACE UPB_DLL_IMPORTS)
++  endif()
+ endif()
+ 
+ target_include_directories(upb_mem_lib
+@@ -3689,6 +3695,12 @@ if(WIN32 AND MSVC)
+       DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+     )
+   endif()
++  # More details in third_party/upb/upb/port_def.inc;
++  # needs to be separate from gRPC_DLL_{IM,EX}PORTS
++  set_target_properties(upb_message_lib PROPERTIES DEFINE_SYMBOL "UPB_DLL_EXPORTS")
++  if(BUILD_SHARED_LIBS)
++    target_compile_definitions(upb_message_lib INTERFACE UPB_DLL_IMPORTS)
++  endif()
+ endif()
+ 
+ target_include_directories(upb_message_lib
+diff --git a/third_party/upb/upb/mem/alloc.c b/third_party/upb/upb/mem/alloc.c
+index d103f98f30..397be37907 100644
+--- a/third_party/upb/upb/mem/alloc.c
++++ b/third_party/upb/upb/mem/alloc.c
+@@ -24,4 +24,4 @@ static void* upb_global_allocfunc(upb_alloc* alloc, void* ptr, size_t oldsize,
+   }
+ }
+ 
+-upb_alloc upb_alloc_global = {&upb_global_allocfunc};
++UPB_DLL upb_alloc upb_alloc_global = {&upb_global_allocfunc};
+diff --git a/third_party/upb/upb/mem/alloc.h b/third_party/upb/upb/mem/alloc.h
+index 441731d2d8..5e743dedf3 100644
+--- a/third_party/upb/upb/mem/alloc.h
++++ b/third_party/upb/upb/mem/alloc.h
+@@ -52,7 +52,7 @@ UPB_INLINE void upb_free(upb_alloc* alloc, void* ptr) {
+ 
+ // The global allocator used by upb. Uses the standard malloc()/free().
+ 
+-extern upb_alloc upb_alloc_global;
++UPB_DLL extern upb_alloc upb_alloc_global;
+ 
+ /* Functions that hard-code the global malloc.
+  *
+diff --git a/third_party/upb/upb/mini_table/internal/message.c b/third_party/upb/upb/mini_table/internal/message.c
+index b25edacca7..05da188fc7 100644
+--- a/third_party/upb/upb/mini_table/internal/message.c
++++ b/third_party/upb/upb/mini_table/internal/message.c
+@@ -7,7 +7,7 @@
+ 
+ #include "upb/mini_table/internal/message.h"
+ 
+-const struct upb_MiniTable _kUpb_MiniTable_Empty = {
++UPB_DLL const struct upb_MiniTable _kUpb_MiniTable_Empty = {
+     .subs = NULL,
+     .fields = NULL,
+     .size = 0,
+diff --git a/third_party/upb/upb/mini_table/internal/message.h b/third_party/upb/upb/mini_table/internal/message.h
+index 3457ea2cd6..8fa3325911 100644
+--- a/third_party/upb/upb/mini_table/internal/message.h
++++ b/third_party/upb/upb/mini_table/internal/message.h
+@@ -65,7 +65,7 @@ extern "C" {
+ #endif
+ 
+ // A MiniTable for an empty message, used for unlinked sub-messages.
+-extern const struct upb_MiniTable _kUpb_MiniTable_Empty;
++UPB_DLL extern const struct upb_MiniTable _kUpb_MiniTable_Empty;
+ 
+ // Computes a bitmask in which the |l->required_count| lowest bits are set,
+ // except that we skip the lowest bit (because upb never uses hasbit 0).
+diff --git a/third_party/upb/upb/port/def.inc b/third_party/upb/upb/port/def.inc
+index f320821384..3f4d7e3cec 100644
+--- a/third_party/upb/upb/port/def.inc
++++ b/third_party/upb/upb/port/def.inc
+@@ -326,3 +326,30 @@ void __asan_unpoison_memory_region(void const volatile *addr, size_t size);
+ #else
+ #define UPB_DESC(sym) google_protobuf_##sym
+ #endif
++
++// UPB_DLL
++// inspired by https://github.com/abseil/abseil-cpp/blob/20220623.1/absl/base/config.h#L730-L747
++//
++// When building upb as a DLL, this macro expands to `__declspec(dllexport)`
++// so we can annotate symbols appropriately as being exported. When used in
++// headers consuming a DLL, this macro expands to `__declspec(dllimport)` so
++// that consumers know the symbol is defined inside the DLL. In all other cases,
++// the macro expands to nothing.
++// Note: UPB_DLL_EXPORTS is set in CMakeLists.txt when building shared upb
++//       UPB_DLL_IMPORTS is set by us as part of the interface for consumers of the DLL
++#if defined(UPB_DLL_EXPORTS)
++#define UPB_DLL __declspec(dllexport)
++#elif defined(UPB_DLL_IMPORTS)
++#define UPB_DLL __declspec(dllimport)
++#else
++#define UPB_DLL
++#endif // defined(UPB_DLL_EXPORTS)
++
++// same for gRPC
++#if defined(gRPC_DLL_EXPORTS)
++#define GRPC_DLL __declspec(dllexport)
++#elif defined(gRPC_DLL_IMPORTS)
++#define GRPC_DLL __declspec(dllimport)
++#else
++#define GRPC_DLL
++#endif // defined(gRPC_DLL_EXPORTS)

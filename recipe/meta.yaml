@@ -32,6 +32,8 @@ source:
     # not much point in marking baselibs or vendored libs (e.g. upb) as private
     - patches/0007-mark-linkage-of-c-ares-re2-zlib-as-private.patch
     - patches/0008-link-grpc-_unsecure-to-grpc.patch
+    # see https://github.com/grpc/grpc/issues/35794
+    - patches/0009-fix-missing-DLL-exports-in-vendored-upb.patch
 
 build:
   number: 0
