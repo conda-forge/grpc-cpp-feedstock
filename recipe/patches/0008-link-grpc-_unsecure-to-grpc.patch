@@ -1,7 +1,7 @@
 From 033140dd995c4d980202f22714179ec04ca40efa Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Fri, 9 Jun 2023 20:11:22 +1100
-Subject: [PATCH 8/9] link grpc++_unsecure to grpc++
+Subject: [PATCH 08/10] link grpc++_unsecure to grpc++
 
 which is where FileWatcherCertificateProvider etc. live
 ---
