@@ -1,4 +1,4 @@
-From 8be3abdd868062ae90d406b24702e83d2133741b Mon Sep 17 00:00:00 2001
+From 0198c55457f2e5897c828627b6c3bd2e49d67f44 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 4 Sep 2022 14:34:52 +0200
 Subject: [PATCH 06/10] fix abseil setup
@@ -8,7 +8,7 @@ Subject: [PATCH 06/10] fix abseil setup
  1 file changed, 11 insertions(+), 4 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index c0b391ea2c..e5eb8f6e69 100644
+index c0b391ea2c..e898b58f54 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -379,15 +379,22 @@ if BUILD_WITH_SYSTEM_CARES:
@@ -20,7 +20,7 @@ index c0b391ea2c..e5eb8f6e69 100644
 -    )
 +    if "win32" in sys.platform:
 +        absl_libs = (
-+            'abseil_dll', 'absl_flags', 'absl_flags_commandlineflag', 'absl_flags_commandlineflag_internal',
++            'abseil_dll', 'absl_log_flags', 'absl_flags_commandlineflag', 'absl_flags_commandlineflag_internal',
 +            'absl_flags_config', 'absl_flags_internal', 'absl_flags_marshalling', 'absl_flags_parse',
 +            'absl_flags_private_handle_accessor', 'absl_flags_program_name', 'absl_flags_reflection',
 +            'absl_flags_usage', 'absl_flags_usage_internal',
