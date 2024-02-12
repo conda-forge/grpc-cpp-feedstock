@@ -1,14 +1,14 @@
-From 0678a537aa148e7a57862f2c9a34ae517fa82942 Mon Sep 17 00:00:00 2001
+From 7dc6e237f967482c1521615bd1474ce766f59a14 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Fri, 11 Sep 2020 14:20:04 +0200
-Subject: [PATCH 4/8] force protoc executable
+Subject: [PATCH 04/10] force protoc executable
 
 ---
  cmake/protobuf.cmake | 17 ++---------------
  1 file changed, 2 insertions(+), 15 deletions(-)
 
 diff --git a/cmake/protobuf.cmake b/cmake/protobuf.cmake
-index fab2eb0..fd3f326 100644
+index fab2eb00e9..fd3f326247 100644
 --- a/cmake/protobuf.cmake
 +++ b/cmake/protobuf.cmake
 @@ -71,21 +71,8 @@ elseif(gRPC_PROTOBUF_PROVIDER STREQUAL "package")

@@ -1,17 +1,17 @@
-From f2c13fd336ef497b40792540cf94fd6043c36b35 Mon Sep 17 00:00:00 2001
+From 0198c55457f2e5897c828627b6c3bd2e49d67f44 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 4 Sep 2022 14:34:52 +0200
-Subject: [PATCH 6/8] fix abseil setup
+Subject: [PATCH 06/10] fix abseil setup
 
 ---
  setup.py | 15 +++++++++++----
  1 file changed, 11 insertions(+), 4 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index 897dae7..cc904da 100644
+index c0b391ea2c..e898b58f54 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -379,14 +379,21 @@ if BUILD_WITH_SYSTEM_CARES:
+@@ -379,15 +379,22 @@ if BUILD_WITH_SYSTEM_CARES:
  if BUILD_WITH_SYSTEM_RE2:
      EXTENSION_LIBRARIES += ("re2",)
  if BUILD_WITH_SYSTEM_ABSL:
@@ -20,7 +20,7 @@ index 897dae7..cc904da 100644
 -    )
 +    if "win32" in sys.platform:
 +        absl_libs = (
-+            'abseil_dll', 'absl_flags', 'absl_flags_commandlineflag', 'absl_flags_commandlineflag_internal',
++            'abseil_dll', 'absl_log_flags', 'absl_flags_commandlineflag', 'absl_flags_commandlineflag_internal',
 +            'absl_flags_config', 'absl_flags_internal', 'absl_flags_marshalling', 'absl_flags_parse',
 +            'absl_flags_private_handle_accessor', 'absl_flags_program_name', 'absl_flags_reflection',
 +            'absl_flags_usage', 'absl_flags_usage_internal',
@@ -32,7 +32,8 @@ index 897dae7..cc904da 100644
  if BUILD_WITH_SYSTEM_GRPC_CORE:
      EXTENSION_LIBRARIES += ('gpr', 'grpc', )
      if "win32" in sys.platform:
-         EXTENSION_LIBRARIES += ('libprotoc', 'libprotobuf', 'libprotobuf-lite', 'upb', 'address_sorting', )
+         EXTENSION_LIBRARIES += ('libprotoc', 'libprotobuf', 'libprotobuf-lite', 'address_sorting',)
+         EXTENSION_LIBRARIES += tuple(f'upb_{x}_lib' for x in ["base", "json", "mem", "message", "textformat"])
 -        EXTENSION_LIBRARIES += tuple(lib.stem for lib in pathlib.Path(os.environ['LIBRARY_LIB']).glob('absl_*.lib'))
  
  DEFINE_MACROS = (("_WIN32_WINNT", 0x600),)
