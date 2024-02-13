@@ -34,8 +34,6 @@ source:
     - patches/0008-link-grpc-_unsecure-to-grpc.patch
     # see https://github.com/grpc/grpc/issues/35794
     - patches/0009-fix-missing-DLL-exports-in-vendored-upb.patch
-    # partial backport of https://github.com/grpc/grpc/pull/35590
-    - patches/0010-Clean-up-Fix-Abseil-usage-35590.patch
 
 build:
   number: 0

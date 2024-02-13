@@ -1,7 +1,7 @@
-From 19e73bc9d64b16b94ce7ad6af6234eabf6085ada Mon Sep 17 00:00:00 2001
+From db5ae869e3012d9b7b6cf58b87ebaffa390932d0 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 6 Feb 2024 16:09:08 +0100
-Subject: [PATCH 09/10] fix missing DLL-exports in vendored upb
+Subject: [PATCH 9/9] fix missing DLL-exports in vendored upb
 
 ---
  CMakeLists.txt                                | 12 +++++++++
@@ -13,7 +13,7 @@ Subject: [PATCH 09/10] fix missing DLL-exports in vendored upb
  6 files changed, 43 insertions(+), 4 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index edcba6c5b9..fd02e1262d 100644
+index 9d119cc4e1..3cebf4ba4d 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -3630,6 +3630,12 @@ if(WIN32 AND MSVC)
