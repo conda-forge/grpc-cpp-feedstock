@@ -122,9 +122,7 @@ outputs:
         {% endfor %}
 
         # CMake test: compile upstream example
-        - ./test_grpc.sh   # [osx]
-        # TODO: currently broken on linux
-        # - ./test_grpc.sh   # [unix]
+        - ./test_grpc.sh   # [unix]
         - ./test_grpc.bat  # [win]
 
         # test availability of symbol needed by arrow (esp. on windows)
