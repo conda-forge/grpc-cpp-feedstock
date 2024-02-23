@@ -49,6 +49,9 @@ outputs:
         - __osx >={{ MACOSX_DEPLOYMENT_TARGET }}  # [osx and x86_64]
     requirements:
       build:
+        - python                                 # [build_platform != target_platform]
+        - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+        - cython                                 # [build_platform != target_platform]
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
         - cmake >=3.5.1
