@@ -15,6 +15,9 @@ cd examples/cpp/helloworld
 mkdir build-cpp
 cd build-cpp
 
+# abseil's ABI is sensitive to this symbol
+CPPFLAGS="-DNDEBUG"
+
 cmake -G "Ninja" \
     -DCMAKE_CXX_STANDARD=17 \
     -DCMAKE_PREFIX_PATH="$PREFIX" \
