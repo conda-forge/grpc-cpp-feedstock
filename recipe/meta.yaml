@@ -65,6 +65,8 @@ outputs:
         - zlib        # [build_platform != target_platform]
       host:
         - libabseil
+        # debug: use unpatched abseil
+        - libabseil =*=*_0
         - c-ares
         - libprotobuf
         - re2
@@ -87,6 +89,8 @@ outputs:
         - pkg-config
         # only required for pkg-config test (which wants to find zlib.pc)
         - zlib
+        # debug: use unpatched abseil
+        - libabseil =*=*_0
       files:
         - cmake_test/
         - hello.proto
@@ -162,6 +166,8 @@ outputs:
       requires:
         - pip
         - protobuf
+        # debug: use unpatched abseil
+        - libabseil =*=*_0
       imports:
         - grpc
         - grpc._cython
