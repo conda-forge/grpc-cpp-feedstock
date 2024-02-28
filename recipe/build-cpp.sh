@@ -4,17 +4,22 @@ set -ex
 export CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_CXX_STANDARD=17"
 
 if [[ "$CONDA_BUILD_CROSS_COMPILATION" == 1 ]]; then
+  # use a separate scope here, so that changes to the compiler
+  # configuration in this branch don't leak out to the main build
   (
     mkdir -p build-host
     pushd build-host
 
+    # overwrite default compiler configuration to compile for architecture of
+    # build agent, since that's where we'll need to execute grpc_cpp_plugin
     export CC=$CC_FOR_BUILD
     export CXX=$CXX_FOR_BUILD
     export LDFLAGS=${LDFLAGS//$PREFIX/$BUILD_PREFIX}
     export PKG_CONFIG_PATH=${PKG_CONFIG_PATH//$PREFIX/$BUILD_PREFIX}
     export CMAKE_ARGS=${CMAKE_ARGS//$PREFIX/$BUILD_PREFIX}
 
-    # Unset them as we're ok with builds that are either slow or non-portable
+    # Unset them as we're ok with a build-confined version of
+    # grpc_cpp_plugin that's either slow or non-portable
     unset CFLAGS
     unset CXXFLAGS
 
@@ -55,6 +60,10 @@ fi
 
 mkdir -p build-cpp
 pushd build-cpp
+
+# sanity-check that encapsulation above worked
+echo CC="${CC}"
+echo CFLAGS="${CFLAGS}"
 
 cmake -GNinja \
       ${CMAKE_ARGS} \
