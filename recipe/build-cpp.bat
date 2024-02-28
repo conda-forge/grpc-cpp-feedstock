@@ -16,7 +16,6 @@ cmake -GNinja ^
       -DgRPC_MSVC_STATIC_RUNTIME=OFF ^
       -DgRPC_ABSL_PROVIDER="package" ^
       -DgRPC_CARES_PROVIDER="package" ^
-      -DgRPC_GFLAGS_PROVIDER="package" ^
       -DgRPC_PROTOBUF_PROVIDER="package" ^
       -DgRPC_SSL_PROVIDER="package" ^
       -DgRPC_RE2_PROVIDER="package" ^
