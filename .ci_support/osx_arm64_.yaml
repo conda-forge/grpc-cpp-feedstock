@@ -39,7 +39,7 @@ python_impl:
 - cpython
 - cpython
 re2:
-- 2023.06.02
+- 2023.09.01
 target_platform:
 - osx-arm64
 zip_keys:
