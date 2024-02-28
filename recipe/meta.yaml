@@ -53,16 +53,17 @@ outputs:
       build:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
-        - cmake >=3.5.1
-        # `protoc` is also used for building
-        - libprotobuf
+        - cmake
         - ninja
-        # We need all host deps also in build for cross-compiling
-        - libabseil   # [build_platform != target_platform]
-        - c-ares      # [build_platform != target_platform]
-        - re2         # [build_platform != target_platform]
-        - openssl     # [build_platform != target_platform]
-        - zlib        # [build_platform != target_platform]
+        # During cross-compilation, we need to build the grpc_cpp_plugin for the
+        # architecture of the build agent (where it will be executed afterwards),
+        # thus we need the respective host dependencies also in the build env.
+        - c-ares        # [build_platform != target_platform]
+        - libabseil     # [build_platform != target_platform]
+        - libprotobuf   # [build_platform != target_platform]
+        - openssl       # [build_platform != target_platform]
+        - re2           # [build_platform != target_platform]
+        - zlib          # [build_platform != target_platform]
       host:
         - libabseil
         - c-ares

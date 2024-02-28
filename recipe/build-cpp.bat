@@ -13,7 +13,6 @@ cmake -GNinja ^
       -DCMAKE_PREFIX_PATH=%CONDA_PREFIX% ^
       -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% ^
       -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=ON ^
-      -DProtobuf_PROTOC_EXECUTABLE=%LIBRARY_BIN%\protoc.exe ^
       -DgRPC_MSVC_STATIC_RUNTIME=OFF ^
       -DgRPC_ABSL_PROVIDER="package" ^
       -DgRPC_CARES_PROVIDER="package" ^
@@ -22,6 +21,7 @@ cmake -GNinja ^
       -DgRPC_SSL_PROVIDER="package" ^
       -DgRPC_RE2_PROVIDER="package" ^
       -DgRPC_ZLIB_PROVIDER="package" ^
+      -DProtobuf_PROTOC_EXECUTABLE=%LIBRARY_BIN%\protoc.exe ^
       ..
 if %ERRORLEVEL% neq 0 exit 1
 
