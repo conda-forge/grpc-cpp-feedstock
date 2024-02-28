@@ -1,4 +1,4 @@
-From 990eda453f1a79a9ccbd7d32077fa92ac8dd6855 Mon Sep 17 00:00:00 2001
+From 9a2caaa38543ff7f7c470b37e54a3c3b468c4a1e Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 4 Sep 2022 14:34:52 +0200
 Subject: [PATCH 6/9] fix abseil setup
@@ -8,10 +8,10 @@ Subject: [PATCH 6/9] fix abseil setup
  1 file changed, 11 insertions(+), 4 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index c0b391ea2c..e898b58f54 100644
+index 7ba0ca029e..7c933c2223 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -379,15 +379,22 @@ if BUILD_WITH_SYSTEM_CARES:
+@@ -363,15 +363,22 @@ if BUILD_WITH_SYSTEM_CARES:
  if BUILD_WITH_SYSTEM_RE2:
      EXTENSION_LIBRARIES += ("re2",)
  if BUILD_WITH_SYSTEM_ABSL:

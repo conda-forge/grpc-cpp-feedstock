@@ -1,4 +1,4 @@
-From db5ae869e3012d9b7b6cf58b87ebaffa390932d0 Mon Sep 17 00:00:00 2001
+From 305518fc654de78eb4b8224bfb6142c056263ffb Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 6 Feb 2024 16:09:08 +0100
 Subject: [PATCH 9/9] fix missing DLL-exports in vendored upb
@@ -13,10 +13,10 @@ Subject: [PATCH 9/9] fix missing DLL-exports in vendored upb
  6 files changed, 43 insertions(+), 4 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 9d119cc4e1..3cebf4ba4d 100644
+index 6136bbaa10..e4394061d3 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -3630,6 +3630,12 @@ if(WIN32 AND MSVC)
+@@ -3689,6 +3689,12 @@ if(WIN32 AND MSVC)
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
      )
    endif()
@@ -29,7 +29,7 @@ index 9d119cc4e1..3cebf4ba4d 100644
  endif()
  
  target_include_directories(upb_mem_lib
-@@ -3689,6 +3695,12 @@ if(WIN32 AND MSVC)
+@@ -3748,6 +3754,12 @@ if(WIN32 AND MSVC)
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
      )
    endif()

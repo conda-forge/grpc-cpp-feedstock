@@ -21,8 +21,8 @@ source:
   url: https://github.com/grpc/grpc/archive/v{{ version.replace(".pre", "-pre") }}.tar.gz
   sha256: f40bde4ce2f31760f65dc49a2f50876f59077026494e67dccf23992548b1b04f
   patches:
-    - patches/0001-windows-ssl-lib-names.patch         # [win]
-    - patches/0002-fix-win-setup-cmds.patch            # [win]
+    - patches/0001-windows-ssl-lib-names.patch
+    - patches/0002-fix-win-setup-cmds.patch
     - patches/0003-Link-against-grpc.patch
     - patches/0004-force-protoc-executable.patch
     - patches/0005-switch-to-C-17-for-grpcio.patch
