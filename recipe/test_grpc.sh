@@ -16,7 +16,7 @@ mkdir build-cpp
 cd build-cpp
 
 # abseil's ABI is sensitive to this symbol
-CPPFLAGS="-DNDEBUG"
+CXXFLAGS="${CXXFLAGS} -DNDEBUG"
 
 cmake -G "Ninja" \
     -DCMAKE_CXX_STANDARD=17 \
