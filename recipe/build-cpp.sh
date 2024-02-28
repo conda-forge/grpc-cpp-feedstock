@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -ex
 
 export CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_CXX_STANDARD=17"
@@ -19,8 +18,8 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == 1 ]]; then
     unset CFLAGS
     unset CXXFLAGS
 
-    cmake ${CMAKE_ARGS} ..  \
-          -GNinja \
+    cmake -GNinja \
+          ${CMAKE_ARGS} \
           -DBUILD_SHARED_LIBS=OFF \
           -DCMAKE_BUILD_TYPE=Release \
           -DCMAKE_PREFIX_PATH=$BUILD_PREFIX \
@@ -42,7 +41,8 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == 1 ]]; then
           -DgRPC_BUILD_GRPC_OBJECTIVE_C_PLUGIN=OFF \
           -DgRPC_BUILD_GRPC_PHP_PLUGIN=OFF \
           -DgRPC_BUILD_GRPC_PYTHON_PLUGIN=OFF \
-          -DgRPC_BUILD_GRPC_RUBY_PLUGIN=OFF
+          -DgRPC_BUILD_GRPC_RUBY_PLUGIN=OFF \
+          ..
     ninja grpc_cpp_plugin
     cp grpc_cpp_plugin $BUILD_PREFIX/bin/grpc_cpp_plugin
 
@@ -56,8 +56,8 @@ fi
 mkdir -p build-cpp
 pushd build-cpp
 
-cmake ${CMAKE_ARGS} ..  \
-      -GNinja \
+cmake -GNinja \
+      ${CMAKE_ARGS} \
       -DBUILD_SHARED_LIBS=ON \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
@@ -71,7 +71,8 @@ cmake ${CMAKE_ARGS} ..  \
       -DgRPC_ZLIB_PROVIDER="package" \
       -DgRPC_ABSL_PROVIDER="package" \
       -DgRPC_RE2_PROVIDER="package" \
-      -DProtobuf_PROTOC_EXECUTABLE=$BUILD_PREFIX/bin/protoc
+      -DProtobuf_PROTOC_EXECUTABLE=$BUILD_PREFIX/bin/protoc \
+      ..
 
 ninja install
 popd
