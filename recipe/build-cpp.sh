@@ -29,7 +29,6 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == 1 ]]; then
           -DCMAKE_BUILD_TYPE=Release \
           -DCMAKE_PREFIX_PATH=$BUILD_PREFIX \
           -DCMAKE_INSTALL_PREFIX=$BUILD_PREFIX \
-          -DCMAKE_POLICY_DEFAULT_CMP0074=NEW \
           -DgRPC_CARES_PROVIDER="package" \
           -DgRPC_PROTOBUF_PROVIDER="package" \
           -DgRPC_SSL_PROVIDER="package" \
@@ -77,7 +76,6 @@ cmake -GNinja \
       -DCMAKE_CXX_FLAGS="$CXXFLAGS" \
       -DCMAKE_PREFIX_PATH=$PREFIX \
       -DCMAKE_INSTALL_PREFIX=$PREFIX \
-      -DCMAKE_POLICY_DEFAULT_CMP0074=NEW \
       -DgRPC_CARES_PROVIDER="package" \
       -DgRPC_PROTOBUF_PROVIDER="package" \
       -DgRPC_SSL_PROVIDER="package" \
