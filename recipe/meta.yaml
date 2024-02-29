@@ -36,7 +36,7 @@ source:
     - patches/0009-fix-missing-DLL-exports-in-vendored-upb.patch
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - name: libgrpc
