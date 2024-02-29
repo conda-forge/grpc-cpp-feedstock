@@ -1,4 +1,4 @@
-From a7e619e76b1c2aafb30d4c29fe7ce0670b396f31 Mon Sep 17 00:00:00 2001
+From c627a532deba9fa62c6406473807339eeb12b3df Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 23 Aug 2022 11:45:20 +0200
 Subject: [PATCH 7/9] mark linkage of c-ares/re2/zlib as private

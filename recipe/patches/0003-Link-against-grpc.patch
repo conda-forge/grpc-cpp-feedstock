@@ -1,4 +1,4 @@
-From 489094faf898b1add9c636131ae66e82c6751ef4 Mon Sep 17 00:00:00 2001
+From 5957c91f83b93c550266761cedfbcd747bf9dc18 Mon Sep 17 00:00:00 2001
 From: Marius van Niekerk <marius.v.niekerk@gmail.com>
 Date: Mon, 13 Jun 2022 17:13:07 -0400
 Subject: [PATCH 3/9] Link against grpc
@@ -9,7 +9,7 @@ Co-Authored-By: H. Vetinari <h.vetinari@gmx.com>
  1 file changed, 11 insertions(+)
 
 diff --git a/setup.py b/setup.py
-index dfe4c9caa7..0b719cc86d 100644
+index dfe4c9caa7..d410af9006 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -179,6 +179,8 @@ BUILD_WITH_STATIC_LIBSTDCXX = _env_bool_value(
@@ -28,7 +28,7 @@ index dfe4c9caa7..0b719cc86d 100644
 +if BUILD_WITH_SYSTEM_GRPC_CORE:
 +    EXTENSION_LIBRARIES += ('gpr', 'grpc', )
 +    if "win32" in sys.platform:
-+        EXTENSION_LIBRARIES += ('libprotoc', 'libprotobuf', 'libprotobuf-lite', 'address_sorting',)
++        EXTENSION_LIBRARIES += ('libprotoc', 'libprotobuf', 'address_sorting',)
 +        EXTENSION_LIBRARIES += tuple(f'upb_{x}_lib' for x in ["base", "json", "mem", "message", "textformat"])
 +        EXTENSION_LIBRARIES += tuple(lib.stem for lib in pathlib.Path(os.environ['LIBRARY_LIB']).glob('absl_*.lib'))
  
