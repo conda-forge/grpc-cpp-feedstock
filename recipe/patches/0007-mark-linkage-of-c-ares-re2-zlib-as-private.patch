@@ -1,20 +1,20 @@
-From a15b67f029b793e6ea54e1aafe19c4ac54124e8c Mon Sep 17 00:00:00 2001
+From c627a532deba9fa62c6406473807339eeb12b3df Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 23 Aug 2022 11:45:20 +0200
-Subject: [PATCH 7/9] mark linkage of c-ares/re2/zlib as private
+Subject: [PATCH 07/10] mark linkage of c-ares/re2/zlib as private
 
 See also: https://github.com/grpc/grpc/issues/30838
 
 Co-Authored-By: Mark Harfouche <mark.harfouche@gmail.com>
 ---
- CMakeLists.txt | 102 +++++++++++++++++++++++++++----------------------
- 1 file changed, 56 insertions(+), 46 deletions(-)
+ CMakeLists.txt | 106 +++++++++++++++++++++++++++----------------------
+ 1 file changed, 58 insertions(+), 48 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index fcec080905..da1e3a1474 100644
+index c5123edadf..a63a81a755 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -2585,32 +2585,37 @@ target_include_directories(grpc
+@@ -2617,33 +2617,38 @@ target_include_directories(grpc
      ${_gRPC_ZLIB_INCLUDE_DIR}
  )
  target_link_libraries(grpc
@@ -24,6 +24,7 @@ index fcec080905..da1e3a1474 100644
 -  ${_gRPC_RE2_LIBRARIES}
 -  ${_gRPC_ZLIB_LIBRARIES}
 -  absl::algorithm_container
+-  absl::config
 -  absl::cleanup
 -  absl::flat_hash_map
 -  absl::flat_hash_set
@@ -54,6 +55,7 @@ index fcec080905..da1e3a1474 100644
 +  # external dependencies that need to available at runtime
 +  PUBLIC  ${_gRPC_SSL_LIBRARIES}
 +  PUBLIC  absl::algorithm_container
++  PUBLIC  absl::config
 +  PUBLIC  absl::cleanup
 +  PUBLIC  absl::flat_hash_map
 +  PUBLIC  absl::flat_hash_set
@@ -76,7 +78,7 @@ index fcec080905..da1e3a1474 100644
  endif()
  
  foreach(_hdr
-@@ -3266,30 +3271,35 @@ target_include_directories(grpc_unsecure
+@@ -3323,31 +3328,36 @@ target_include_directories(grpc_unsecure
      ${_gRPC_ZLIB_INCLUDE_DIR}
  )
  target_link_libraries(grpc_unsecure
@@ -85,6 +87,7 @@ index fcec080905..da1e3a1474 100644
 -  utf8_range_lib
 -  ${_gRPC_ZLIB_LIBRARIES}
 -  absl::algorithm_container
+-  absl::config
 -  absl::cleanup
 -  absl::flat_hash_map
 -  absl::flat_hash_set
@@ -112,6 +115,7 @@ index fcec080905..da1e3a1474 100644
 +  PRIVATE ${_gRPC_ZLIB_LIBRARIES}
 +  # external dependencies that need to available at runtime
 +  PUBLIC  absl::algorithm_container
++  PUBLIC  absl::config
 +  PUBLIC  absl::cleanup
 +  PUBLIC  absl::flat_hash_map
 +  PUBLIC  absl::flat_hash_set

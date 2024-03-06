@@ -1,4 +1,4 @@
-{% set version = "1.61.1" %}
+{% set version = "1.62.0" %}
 
 # core package & vendored libs use different version scheme than CPP libs, see
 # https://github.com/grpc/grpc/blob/v1.48.1/CMakeLists.txt#L28-L32
@@ -19,10 +19,10 @@ package:
 
 source:
   url: https://github.com/grpc/grpc/archive/v{{ version.replace(".pre", "-pre") }}.tar.gz
-  sha256: 6dadc0420ad2d4b8ac49f516830f72feae3764bf83decc8d7c3a871eca1a0843
+  sha256: f40bde4ce2f31760f65dc49a2f50876f59077026494e67dccf23992548b1b04f
   patches:
-    - patches/0001-windows-ssl-lib-names.patch         # [win]
-    - patches/0002-fix-win-setup-cmds.patch            # [win]
+    - patches/0001-windows-ssl-lib-names.patch
+    - patches/0002-fix-win-setup-cmds.patch
     - patches/0003-Link-against-grpc.patch
     - patches/0004-force-protoc-executable.patch
     - patches/0005-switch-to-C-17-for-grpcio.patch
@@ -34,9 +34,11 @@ source:
     - patches/0008-link-grpc-_unsecure-to-grpc.patch
     # see https://github.com/grpc/grpc/issues/35794
     - patches/0009-fix-missing-DLL-exports-in-vendored-upb.patch
+    # fix symbol visibility regression on windows
+    - patches/0010-for-main-targets-set-_DLL_EXPORTS-when-building-and-.patch
 
 build:
-  number: 1
+  number: 0
 
 outputs:
   - name: libgrpc

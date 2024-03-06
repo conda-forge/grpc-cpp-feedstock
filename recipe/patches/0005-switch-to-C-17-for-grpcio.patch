@@ -1,17 +1,17 @@
-From b1a1503ac5730c13f1783d29b0951c82a2dea0d6 Mon Sep 17 00:00:00 2001
+From 80df2ca96a075552360b17ad4bc007be26f89d50 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sat, 3 Sep 2022 19:23:15 +0200
-Subject: [PATCH 5/9] switch to C++17 for grpcio
+Subject: [PATCH 05/10] switch to C++17 for grpcio
 
 ---
- setup.py | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ setup.py | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index 00dfd3419a..c0b391ea2c 100644
+index d410af9006..62084b7800 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -226,7 +226,7 @@ def check_linker_need_libatomic():
+@@ -220,7 +220,7 @@ def check_linker_need_libatomic():
      )
      cxx = shlex.split(os.environ.get("CXX", "c++"))
      cpp_test = subprocess.Popen(
@@ -20,7 +20,7 @@ index 00dfd3419a..c0b391ea2c 100644
          stdin=PIPE,
          stdout=PIPE,
          stderr=PIPE,
-@@ -237,7 +237,7 @@ def check_linker_need_libatomic():
+@@ -231,7 +231,7 @@ def check_linker_need_libatomic():
      # Double-check to see if -latomic actually can solve the problem.
      # https://github.com/grpc/grpc/issues/22491
      cpp_test = subprocess.Popen(
@@ -29,14 +29,23 @@ index 00dfd3419a..c0b391ea2c 100644
          stdin=PIPE,
          stdout=PIPE,
          stderr=PIPE,
-@@ -256,8 +256,9 @@ def check_linker_need_libatomic():
- EXTRA_ENV_COMPILE_ARGS = os.environ.get("GRPC_PYTHON_CFLAGS", None)
- EXTRA_ENV_LINK_ARGS = os.environ.get("GRPC_PYTHON_LDFLAGS", None)
- if EXTRA_ENV_COMPILE_ARGS is None:
--    EXTRA_ENV_COMPILE_ARGS = " -std=c++14"
-+    EXTRA_ENV_COMPILE_ARGS = ' -std=c++17'
+@@ -253,16 +253,16 @@ if EXTRA_ENV_COMPILE_ARGS is None:
+     EXTRA_ENV_COMPILE_ARGS = ""
      if "win32" in sys.platform:
-+        EXTRA_ENV_COMPILE_ARGS = ' /std:c++17'
-         if sys.version_info < (3, 5):
-             EXTRA_ENV_COMPILE_ARGS += " -D_hypot=hypot"
-             # We use define flags here and don't directly add to DEFINE_MACROS below to
+         # MSVC by defaults uses C++14 so C11 needs to be specified.
+-        EXTRA_ENV_COMPILE_ARGS += " /std:c11"
++        EXTRA_ENV_COMPILE_ARGS += " /std:c11 /std:c++17"
+     elif "linux" in sys.platform:
+         # GCC by defaults uses C17 so only C++14 needs to be specified.
+-        EXTRA_ENV_COMPILE_ARGS += " -std=c++14"
++        EXTRA_ENV_COMPILE_ARGS += " -std=c++17"
+         EXTRA_ENV_COMPILE_ARGS += (
+             " -fvisibility=hidden -fno-wrapv -fno-exceptions"
+         )
+     elif "darwin" in sys.platform:
+         # AppleClang by defaults uses C17 so only C++14 needs to be specified.
+-        EXTRA_ENV_COMPILE_ARGS += " -std=c++14"
++        EXTRA_ENV_COMPILE_ARGS += " -std=c++17"
+         EXTRA_ENV_COMPILE_ARGS += (
+             " -stdlib=libc++ -fvisibility=hidden -fno-wrapv -fno-exceptions"
+             " -DHAVE_UNISTD_H"
