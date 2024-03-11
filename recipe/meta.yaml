@@ -1,4 +1,4 @@
-{% set version = "1.61.1" %}
+{% set version = "1.61.2" %}
 
 # core package & vendored libs use different version scheme than CPP libs, see
 # https://github.com/grpc/grpc/blob/v1.48.1/CMakeLists.txt#L28-L32
@@ -19,7 +19,7 @@ package:
 
 source:
   url: https://github.com/grpc/grpc/archive/v{{ version.replace(".pre", "-pre") }}.tar.gz
-  sha256: 6dadc0420ad2d4b8ac49f516830f72feae3764bf83decc8d7c3a871eca1a0843
+  sha256: 86f8773434c4b8a4b64c67c91a19a90991f0da0ba054bbeb299dc1bc95fad1e9
   patches:
     - patches/0001-windows-ssl-lib-names.patch         # [win]
     - patches/0002-fix-win-setup-cmds.patch            # [win]
@@ -36,7 +36,7 @@ source:
     - patches/0009-fix-missing-DLL-exports-in-vendored-upb.patch
 
 build:
-  number: 1
+  number: 0
 
 outputs:
   - name: libgrpc
