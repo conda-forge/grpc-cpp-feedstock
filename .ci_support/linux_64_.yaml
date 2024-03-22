@@ -41,7 +41,7 @@ python_impl:
 - pypy
 - cpython
 re2:
-- 2023.06.02
+- 2023.09.01
 target_platform:
 - linux-64
 zip_keys:
