@@ -1,4 +1,4 @@
-From c627a532deba9fa62c6406473807339eeb12b3df Mon Sep 17 00:00:00 2001
+From 43a9d5e589c9bc24c546490d3d9fd583c37545cb Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 23 Aug 2022 11:45:20 +0200
 Subject: [PATCH 07/10] mark linkage of c-ares/re2/zlib as private
@@ -7,14 +7,14 @@ See also: https://github.com/grpc/grpc/issues/30838
 
 Co-Authored-By: Mark Harfouche <mark.harfouche@gmail.com>
 ---
- CMakeLists.txt | 106 +++++++++++++++++++++++++++----------------------
- 1 file changed, 58 insertions(+), 48 deletions(-)
+ CMakeLists.txt | 110 +++++++++++++++++++++++++++----------------------
+ 1 file changed, 60 insertions(+), 50 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index c5123edadf..a63a81a755 100644
+index 53bcbe1..20bb66c 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -2617,33 +2617,38 @@ target_include_directories(grpc
+@@ -2659,34 +2659,39 @@ target_include_directories(grpc
      ${_gRPC_ZLIB_INCLUDE_DIR}
  )
  target_link_libraries(grpc
@@ -25,6 +25,7 @@ index c5123edadf..a63a81a755 100644
 -  ${_gRPC_ZLIB_LIBRARIES}
 -  absl::algorithm_container
 -  absl::config
+-  absl::no_destructor
 -  absl::cleanup
 -  absl::flat_hash_map
 -  absl::flat_hash_set
@@ -43,7 +44,7 @@ index c5123edadf..a63a81a755 100644
 -  ${_gRPC_SSL_LIBRARIES}
 -  ${_gRPC_ADDRESS_SORTING_LIBRARIES}
 +  # core libs
-+  PUBLIC  ${_gRPC_ALLTARGETS_LIBRARIES}
++  PUBLIC ${_gRPC_ALLTARGETS_LIBRARIES}
 +  # vendored libs
 +  PUBLIC  ${_gRPC_ADDRESS_SORTING_LIBRARIES}
 +  PUBLIC  upb_json_lib
@@ -56,6 +57,7 @@ index c5123edadf..a63a81a755 100644
 +  PUBLIC  ${_gRPC_SSL_LIBRARIES}
 +  PUBLIC  absl::algorithm_container
 +  PUBLIC  absl::config
++  PUBLIC  absl::no_destructor
 +  PUBLIC  absl::cleanup
 +  PUBLIC  absl::flat_hash_map
 +  PUBLIC  absl::flat_hash_set
@@ -78,16 +80,17 @@ index c5123edadf..a63a81a755 100644
  endif()
  
  foreach(_hdr
-@@ -3323,31 +3328,36 @@ target_include_directories(grpc_unsecure
+@@ -3362,32 +3367,37 @@ target_include_directories(grpc_unsecure
      ${_gRPC_ZLIB_INCLUDE_DIR}
  )
  target_link_libraries(grpc_unsecure
 -  ${_gRPC_ALLTARGETS_LIBRARIES}
--  upb_message_lib
 -  utf8_range_lib
+-  upb_message_lib
 -  ${_gRPC_ZLIB_LIBRARIES}
 -  absl::algorithm_container
 -  absl::config
+-  absl::no_destructor
 -  absl::cleanup
 -  absl::flat_hash_map
 -  absl::flat_hash_set
@@ -116,6 +119,7 @@ index c5123edadf..a63a81a755 100644
 +  # external dependencies that need to available at runtime
 +  PUBLIC  absl::algorithm_container
 +  PUBLIC  absl::config
++  PUBLIC  absl::no_destructor
 +  PUBLIC  absl::cleanup
 +  PUBLIC  absl::flat_hash_map
 +  PUBLIC  absl::flat_hash_set

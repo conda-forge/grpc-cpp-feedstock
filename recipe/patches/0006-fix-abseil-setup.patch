@@ -1,22 +1,23 @@
-From 3cd2e79d2963d5b351a3c2e1a0291eac59db9e87 Mon Sep 17 00:00:00 2001
+From 1e11f20fbc25db6ad488182552f3e3e821f382a3 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 4 Sep 2022 14:34:52 +0200
 Subject: [PATCH 06/10] fix abseil setup
 
 ---
- setup.py | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ setup.py | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index 62084b7800..aa70b88cf9 100644
+index 91ddc85..2ffc9fa 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -363,15 +363,22 @@ if BUILD_WITH_SYSTEM_CARES:
+@@ -361,16 +361,22 @@ if BUILD_WITH_SYSTEM_CARES:
  if BUILD_WITH_SYSTEM_RE2:
      EXTENSION_LIBRARIES += ("re2",)
  if BUILD_WITH_SYSTEM_ABSL:
 -    EXTENSION_LIBRARIES += tuple(
--        lib.stem[3:] for lib in pathlib.Path("/usr").glob("lib*/libabsl_*.so")
+-        lib.stem[3:]
+-        for lib in sorted(pathlib.Path("/usr").glob("lib*/libabsl_*.so"))
 -    )
 +    if "win32" in sys.platform:
 +        absl_libs = (

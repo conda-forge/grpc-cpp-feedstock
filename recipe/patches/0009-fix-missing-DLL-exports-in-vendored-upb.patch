@@ -1,4 +1,4 @@
-From f06e5ce0a8e548dc47248de2d84a48e6bb1f08c3 Mon Sep 17 00:00:00 2001
+From 93c44707442a4a6eb7938d9485240a3ef8abf239 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 6 Feb 2024 16:09:08 +0100
 Subject: [PATCH 09/10] fix missing DLL-exports in vendored upb
@@ -8,15 +8,14 @@ Subject: [PATCH 09/10] fix missing DLL-exports in vendored upb
  third_party/upb/upb/mem/alloc.c               |  2 +-
  third_party/upb/upb/mem/alloc.h               |  2 +-
  .../upb/upb/mini_table/internal/message.c     |  2 +-
- .../upb/upb/mini_table/internal/message.h     |  2 +-
  third_party/upb/upb/port/def.inc              | 27 +++++++++++++++++++
- 6 files changed, 43 insertions(+), 4 deletions(-)
+ 5 files changed, 42 insertions(+), 3 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 6136bbaa10..e4394061d3 100644
+index d68bbcf..3be7d11 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -3689,6 +3689,12 @@ if(WIN32 AND MSVC)
+@@ -3725,6 +3725,12 @@ if(WIN32 AND MSVC)
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
      )
    endif()
@@ -29,7 +28,7 @@ index 6136bbaa10..e4394061d3 100644
  endif()
  
  target_include_directories(upb_mem_lib
-@@ -3748,6 +3754,12 @@ if(WIN32 AND MSVC)
+@@ -3787,6 +3793,12 @@ if(WIN32 AND MSVC)
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
      )
    endif()
@@ -43,7 +42,7 @@ index 6136bbaa10..e4394061d3 100644
  
  target_include_directories(upb_message_lib
 diff --git a/third_party/upb/upb/mem/alloc.c b/third_party/upb/upb/mem/alloc.c
-index d103f98f30..397be37907 100644
+index d103f98..397be37 100644
 --- a/third_party/upb/upb/mem/alloc.c
 +++ b/third_party/upb/upb/mem/alloc.c
 @@ -24,4 +24,4 @@ static void* upb_global_allocfunc(upb_alloc* alloc, void* ptr, size_t oldsize,
@@ -53,7 +52,7 @@ index d103f98f30..397be37907 100644
 -upb_alloc upb_alloc_global = {&upb_global_allocfunc};
 +UPB_DLL upb_alloc upb_alloc_global = {&upb_global_allocfunc};
 diff --git a/third_party/upb/upb/mem/alloc.h b/third_party/upb/upb/mem/alloc.h
-index 441731d2d8..5e743dedf3 100644
+index 441731d..5e743de 100644
 --- a/third_party/upb/upb/mem/alloc.h
 +++ b/third_party/upb/upb/mem/alloc.h
 @@ -52,7 +52,7 @@ UPB_INLINE void upb_free(upb_alloc* alloc, void* ptr) {
@@ -66,38 +65,25 @@ index 441731d2d8..5e743dedf3 100644
  /* Functions that hard-code the global malloc.
   *
 diff --git a/third_party/upb/upb/mini_table/internal/message.c b/third_party/upb/upb/mini_table/internal/message.c
-index b25edacca7..05da188fc7 100644
+index f278b36..5a29c1a 100644
 --- a/third_party/upb/upb/mini_table/internal/message.c
 +++ b/third_party/upb/upb/mini_table/internal/message.c
-@@ -7,7 +7,7 @@
- 
- #include "upb/mini_table/internal/message.h"
- 
--const struct upb_MiniTable _kUpb_MiniTable_Empty = {
-+UPB_DLL const struct upb_MiniTable _kUpb_MiniTable_Empty = {
-     .subs = NULL,
-     .fields = NULL,
-     .size = 0,
-diff --git a/third_party/upb/upb/mini_table/internal/message.h b/third_party/upb/upb/mini_table/internal/message.h
-index 3457ea2cd6..8fa3325911 100644
---- a/third_party/upb/upb/mini_table/internal/message.h
-+++ b/third_party/upb/upb/mini_table/internal/message.h
-@@ -65,7 +65,7 @@ extern "C" {
- #endif
+@@ -15,7 +15,7 @@
+ #include "upb/port/def.inc"
  
  // A MiniTable for an empty message, used for unlinked sub-messages.
--extern const struct upb_MiniTable _kUpb_MiniTable_Empty;
-+UPB_DLL extern const struct upb_MiniTable _kUpb_MiniTable_Empty;
- 
- // Computes a bitmask in which the |l->required_count| lowest bits are set,
- // except that we skip the lowest bit (because upb never uses hasbit 0).
+-const struct upb_MiniTable UPB_PRIVATE(_kUpb_MiniTable_Empty) = {
++UPB_DLL const struct upb_MiniTable UPB_PRIVATE(_kUpb_MiniTable_Empty) = {
+     .UPB_PRIVATE(subs) = NULL,
+     .UPB_PRIVATE(fields) = NULL,
+     .UPB_PRIVATE(size) = sizeof(struct upb_Message),
 diff --git a/third_party/upb/upb/port/def.inc b/third_party/upb/upb/port/def.inc
-index f320821384..3f4d7e3cec 100644
+index 5d07592..db04208 100644
 --- a/third_party/upb/upb/port/def.inc
 +++ b/third_party/upb/upb/port/def.inc
-@@ -326,3 +326,30 @@ void __asan_unpoison_memory_region(void const volatile *addr, size_t size);
- #else
+@@ -344,3 +344,30 @@ void __asan_unpoison_memory_region(void const volatile *addr, size_t size);
  #define UPB_DESC(sym) google_protobuf_##sym
+ #define UPB_DESC_MINITABLE(sym) &google__protobuf__##sym##_msg_init
  #endif
 +
 +// UPB_DLL
