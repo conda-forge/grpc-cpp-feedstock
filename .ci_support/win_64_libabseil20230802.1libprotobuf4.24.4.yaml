@@ -9,7 +9,7 @@ channel_targets:
 cxx_compiler:
 - vs2019
 libabseil:
-- '20240116'
+- '20230802.1'
 libprotobuf:
 - 4.24.4
 openssl:
@@ -37,6 +37,8 @@ re2:
 target_platform:
 - win-64
 zip_keys:
+- - libprotobuf
+  - libabseil
 - - python
   - python_impl
 zlib:

@@ -17,9 +17,9 @@ cxx_compiler_version:
 docker_image:
 - quay.io/condaforge/linux-anvil-cos7-x86_64
 libabseil:
-- '20240116'
+- '20230802.1'
 libprotobuf:
-- 4.25.3
+- 4.24.4
 openssl:
 - '3'
 pin_run_as_build:
@@ -47,6 +47,8 @@ target_platform:
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
+- - libprotobuf
+  - libabseil
 - - python
   - python_impl
 zlib:

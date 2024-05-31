@@ -1,15 +1,11 @@
-BUILD:
-- aarch64-conda_cos7-linux-gnu
 c_ares:
 - '1'
 c_compiler:
 - gcc
 c_compiler_version:
 - '12'
-cdt_arch:
-- aarch64
 cdt_name:
-- cos7
+- cos6
 channel_sources:
 - conda-forge
 channel_targets:
@@ -47,10 +43,12 @@ python_impl:
 re2:
 - 2023.09.01
 target_platform:
-- linux-aarch64
+- linux-64
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
+- - libprotobuf
+  - libabseil
 - - python
   - python_impl
 zlib:

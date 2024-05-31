@@ -1,9 +1,13 @@
+BUILD:
+- aarch64-conda_cos7-linux-gnu
 c_ares:
 - '1'
 c_compiler:
 - gcc
 c_compiler_version:
 - '12'
+cdt_arch:
+- aarch64
 cdt_name:
 - cos7
 channel_sources:
@@ -17,7 +21,7 @@ cxx_compiler_version:
 docker_image:
 - quay.io/condaforge/linux-anvil-cos7-x86_64
 libabseil:
-- '20240116'
+- '20230802.1'
 libprotobuf:
 - 4.24.4
 openssl:
@@ -43,10 +47,12 @@ python_impl:
 re2:
 - 2023.09.01
 target_platform:
-- linux-ppc64le
+- linux-aarch64
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
+- - libprotobuf
+  - libabseil
 - - python
   - python_impl
 zlib:
