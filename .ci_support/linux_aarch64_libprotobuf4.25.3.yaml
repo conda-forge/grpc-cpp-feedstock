@@ -1,13 +1,13 @@
+BUILD:
+- aarch64-conda_cos7-linux-gnu
 c_ares:
 - '1'
 c_compiler:
 - gcc
 c_compiler_version:
 - '12'
-c_stdlib:
-- sysroot
-c_stdlib_version:
-- '2.17'
+cdt_arch:
+- aarch64
 cdt_name:
 - cos7
 channel_sources:
@@ -47,12 +47,10 @@ python_impl:
 re2:
 - 2023.09.01
 target_platform:
-- linux-ppc64le
+- linux-aarch64
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
-- - c_stdlib_version
-  - cdt_name
 - - python
   - python_impl
 zlib:
