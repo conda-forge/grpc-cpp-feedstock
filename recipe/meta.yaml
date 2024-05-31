@@ -38,7 +38,7 @@ source:
     - patches/0010-for-main-targets-set-_DLL_EXPORTS-when-building-and-.patch
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - name: libgrpc
