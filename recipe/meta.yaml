@@ -37,7 +37,7 @@ source:
     # fix symbol visibility regression on windows
     - patches/0010-for-main-targets-set-_DLL_EXPORTS-when-building-and-.patch
     # suggested fix for https://github.com/grpc/grpc/issues/36654
-    - patches/0011-fix-missing-symbols-on-macOS.patch
+    # - patches/0011-fix-missing-symbols-on-macOS.patch
 
 build:
   number: 0
