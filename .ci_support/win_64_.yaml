@@ -42,4 +42,4 @@ zip_keys:
 - - python
   - python_impl
 zlib:
-- '1.2'
+- '1'
