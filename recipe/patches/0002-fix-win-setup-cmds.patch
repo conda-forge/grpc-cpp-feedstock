@@ -1,7 +1,7 @@
 From ef1656b4c28aea56b64ddcbebc4d9b08f591b8d7 Mon Sep 17 00:00:00 2001
 From: Mike Sarahan <msarahan@gmail.com>
 Date: Tue, 18 Feb 2020 13:53:05 -0600
-Subject: [PATCH 02/10] fix win setup cmds
+Subject: [PATCH 2/7] fix win setup cmds
 
 Co-Authored-By: Julien Schueller <schueller@phimeca.com>
 Co-Authored-By: Nicholas Bollweg <nick.bollweg@gmail.com>
@@ -17,8 +17,8 @@ index 07df8358d0..dfe4c9caa7 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -208,6 +208,9 @@ ENABLE_DOCUMENTATION_BUILD = _env_bool_value(
- 
- 
+
+
  def check_linker_need_libatomic():
 +    if sys.platform == 'win32':
 +        return False

@@ -26,16 +26,9 @@ source:
     - patches/0003-Link-against-grpc.patch
     - patches/0004-force-protoc-executable.patch
     - patches/0005-switch-to-C-17-for-grpcio.patch
-    - patches/0006-fix-abseil-setup.patch
-    # mark c-ares, re2 & zlib as private, so they don't need to be found
-    # at runtime just to link to grp, see grpc/grpc#30838;
-    # not much point in marking baselibs or vendored libs (e.g. upb) as private
-    - patches/0007-mark-linkage-of-c-ares-re2-zlib-as-private.patch
-    - patches/0008-link-grpc-_unsecure-to-grpc.patch
-    # see https://github.com/grpc/grpc/issues/35794
-    - patches/0009-fix-missing-DLL-exports-in-vendored-upb.patch
+    - patches/0006-link-grpc-_unsecure-to-grpc.patch
     # fix symbol visibility regression on windows
-    - patches/0010-for-main-targets-set-_DLL_EXPORTS-when-building-and-.patch
+    - patches/0007-for-main-targets-set-_DLL_EXPORTS-when-building-and-.patch
 
 build:
   number: 0
