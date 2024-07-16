@@ -36,6 +36,8 @@ source:
     - patches/0009-fix-missing-DLL-exports-in-vendored-upb.patch
     # fix symbol visibility regression on windows
     - patches/0010-for-main-targets-set-_DLL_EXPORTS-when-building-and-.patch
+    # work-around for https://github.com/grpc/grpc/issues/36654
+    - patches/0011-set-Wl-undefined-dynamic_lookup-for-upb_-json-textfo.patch
 
 build:
   number: 0

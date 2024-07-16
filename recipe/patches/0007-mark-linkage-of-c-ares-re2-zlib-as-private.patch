@@ -1,7 +1,7 @@
 From c3326313bbfb3a9c4c7519bfa461c80b85680f49 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 23 Aug 2022 11:45:20 +0200
-Subject: [PATCH 07/10] mark linkage of c-ares/re2/zlib as private
+Subject: [PATCH 07/11] mark linkage of c-ares/re2/zlib as private
 
 See also: https://github.com/grpc/grpc/issues/30838
 
