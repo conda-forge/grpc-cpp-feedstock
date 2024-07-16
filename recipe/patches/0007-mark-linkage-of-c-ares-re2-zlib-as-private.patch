@@ -1,4 +1,4 @@
-From 43a9d5e589c9bc24c546490d3d9fd583c37545cb Mon Sep 17 00:00:00 2001
+From c3326313bbfb3a9c4c7519bfa461c80b85680f49 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 23 Aug 2022 11:45:20 +0200
 Subject: [PATCH 07/10] mark linkage of c-ares/re2/zlib as private
@@ -11,7 +11,7 @@ Co-Authored-By: Mark Harfouche <mark.harfouche@gmail.com>
  1 file changed, 60 insertions(+), 50 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 53bcbe1..20bb66c 100644
+index f95d1e9b9b..788b929ae5 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -2659,34 +2659,39 @@ target_include_directories(grpc
@@ -44,7 +44,7 @@ index 53bcbe1..20bb66c 100644
 -  ${_gRPC_SSL_LIBRARIES}
 -  ${_gRPC_ADDRESS_SORTING_LIBRARIES}
 +  # core libs
-+  PUBLIC ${_gRPC_ALLTARGETS_LIBRARIES}
++  PUBLIC  ${_gRPC_ALLTARGETS_LIBRARIES}
 +  # vendored libs
 +  PUBLIC  ${_gRPC_ADDRESS_SORTING_LIBRARIES}
 +  PUBLIC  upb_json_lib

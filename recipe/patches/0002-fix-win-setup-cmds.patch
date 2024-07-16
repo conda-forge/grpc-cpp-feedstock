@@ -1,4 +1,4 @@
-From 214646080bc7d85d08938ea912d84ba7023d8ac4 Mon Sep 17 00:00:00 2001
+From cf9afdccb2ac3e78526a21a66ae26571666652d8 Mon Sep 17 00:00:00 2001
 From: Mike Sarahan <msarahan@gmail.com>
 Date: Tue, 18 Feb 2020 13:53:05 -0600
 Subject: [PATCH 02/10] fix win setup cmds
@@ -13,7 +13,7 @@ Co-Authored-By: H. Vetinari <h.vetinari@gmx.com>
  2 files changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index 6655ebf..b8ab5e7 100644
+index 6655ebf69f..b8ab5e7bcc 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -206,6 +206,9 @@ ENABLE_DOCUMENTATION_BUILD = _env_bool_value(
@@ -37,7 +37,7 @@ index 6655ebf..b8ab5e7 100644
          # GCC by defaults uses C17 so only C++14 needs to be specified.
          EXTRA_ENV_COMPILE_ARGS += " -std=c++14"
 diff --git a/src/python/grpcio/commands.py b/src/python/grpcio/commands.py
-index 0ceb054..3abee65 100644
+index 0ceb0546a9..3abee65bc3 100644
 --- a/src/python/grpcio/commands.py
 +++ b/src/python/grpcio/commands.py
 @@ -252,6 +252,8 @@ class BuildExt(build_ext.build_ext):
