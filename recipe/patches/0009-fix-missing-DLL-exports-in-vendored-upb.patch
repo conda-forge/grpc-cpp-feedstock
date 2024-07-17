@@ -1,22 +1,20 @@
-From 1086f8d78b86b4e072b8b64837fcda3d3e2872c9 Mon Sep 17 00:00:00 2001
+From 7c202982435c952029a678c857f830d2794fdf91 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 6 Feb 2024 16:09:08 +0100
 Subject: [PATCH 09/11] fix missing DLL-exports in vendored upb
 
 ---
  CMakeLists.txt                                | 12 +++++++
- third_party/upb/upb/mem/alloc.c               |  2 +-
  third_party/upb/upb/mem/alloc.h               |  2 +-
- .../upb/upb/mini_table/internal/message.c     |  2 +-
  .../upb/upb/mini_table/internal/message.h     |  3 +-
  third_party/upb/upb/port/def.inc              | 35 +++++++++++++++++++
- 6 files changed, 52 insertions(+), 4 deletions(-)
+ 4 files changed, 50 insertions(+), 2 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 840a7d971e..b70ca98e28 100644
+index 8e65d84e30..3d40eae992 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -3725,6 +3725,12 @@ if(WIN32 AND MSVC)
+@@ -3729,6 +3729,12 @@ if(WIN32 AND MSVC)
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
      )
    endif()
@@ -29,7 +27,7 @@ index 840a7d971e..b70ca98e28 100644
  endif()
  
  target_include_directories(upb_mem_lib
-@@ -3787,6 +3793,12 @@ if(WIN32 AND MSVC)
+@@ -3791,6 +3797,12 @@ if(WIN32 AND MSVC)
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
      )
    endif()
@@ -42,16 +40,6 @@ index 840a7d971e..b70ca98e28 100644
  endif()
  
  target_include_directories(upb_message_lib
-diff --git a/third_party/upb/upb/mem/alloc.c b/third_party/upb/upb/mem/alloc.c
-index d103f98f30..6800e06a17 100644
---- a/third_party/upb/upb/mem/alloc.c
-+++ b/third_party/upb/upb/mem/alloc.c
-@@ -24,4 +24,4 @@ static void* upb_global_allocfunc(upb_alloc* alloc, void* ptr, size_t oldsize,
-   }
- }
- 
--upb_alloc upb_alloc_global = {&upb_global_allocfunc};
-+UPB_MEM_DLL upb_alloc upb_alloc_global = {&upb_global_allocfunc};
 diff --git a/third_party/upb/upb/mem/alloc.h b/third_party/upb/upb/mem/alloc.h
 index 441731d2d8..db048ceeff 100644
 --- a/third_party/upb/upb/mem/alloc.h
@@ -65,19 +53,6 @@ index 441731d2d8..db048ceeff 100644
  
  /* Functions that hard-code the global malloc.
   *
-diff --git a/third_party/upb/upb/mini_table/internal/message.c b/third_party/upb/upb/mini_table/internal/message.c
-index f278b36577..d27b06b6bb 100644
---- a/third_party/upb/upb/mini_table/internal/message.c
-+++ b/third_party/upb/upb/mini_table/internal/message.c
-@@ -15,7 +15,7 @@
- #include "upb/port/def.inc"
- 
- // A MiniTable for an empty message, used for unlinked sub-messages.
--const struct upb_MiniTable UPB_PRIVATE(_kUpb_MiniTable_Empty) = {
-+UPB_MSG_DLL const struct upb_MiniTable UPB_PRIVATE(_kUpb_MiniTable_Empty) = {
-     .UPB_PRIVATE(subs) = NULL,
-     .UPB_PRIVATE(fields) = NULL,
-     .UPB_PRIVATE(size) = sizeof(struct upb_Message),
 diff --git a/third_party/upb/upb/mini_table/internal/message.h b/third_party/upb/upb/mini_table/internal/message.h
 index 95244233c9..edefc76595 100644
 --- a/third_party/upb/upb/mini_table/internal/message.h
