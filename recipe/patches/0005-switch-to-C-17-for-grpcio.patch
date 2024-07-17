@@ -1,17 +1,17 @@
-From 80df2ca96a075552360b17ad4bc007be26f89d50 Mon Sep 17 00:00:00 2001
+From acac7c62f37125cdd9d740c1ee91a2aeaae3f3a5 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sat, 3 Sep 2022 19:23:15 +0200
-Subject: [PATCH 05/10] switch to C++17 for grpcio
+Subject: [PATCH 05/11] switch to C++17 for grpcio
 
 ---
  setup.py | 10 +++++-----
  1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index d410af9006..62084b7800 100644
+index da713f0f1e..91ddc85aa0 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -220,7 +220,7 @@ def check_linker_need_libatomic():
+@@ -218,7 +218,7 @@ def check_linker_need_libatomic():
      )
      cxx = shlex.split(os.environ.get("CXX", "c++"))
      cpp_test = subprocess.Popen(
@@ -20,7 +20,7 @@ index d410af9006..62084b7800 100644
          stdin=PIPE,
          stdout=PIPE,
          stderr=PIPE,
-@@ -231,7 +231,7 @@ def check_linker_need_libatomic():
+@@ -229,7 +229,7 @@ def check_linker_need_libatomic():
      # Double-check to see if -latomic actually can solve the problem.
      # https://github.com/grpc/grpc/issues/22491
      cpp_test = subprocess.Popen(
@@ -29,7 +29,7 @@ index d410af9006..62084b7800 100644
          stdin=PIPE,
          stdout=PIPE,
          stderr=PIPE,
-@@ -253,16 +253,16 @@ if EXTRA_ENV_COMPILE_ARGS is None:
+@@ -251,16 +251,16 @@ if EXTRA_ENV_COMPILE_ARGS is None:
      EXTRA_ENV_COMPILE_ARGS = ""
      if "win32" in sys.platform:
          # MSVC by defaults uses C++14 so C11 needs to be specified.
