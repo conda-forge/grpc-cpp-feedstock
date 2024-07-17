@@ -35,13 +35,13 @@ source:
     # at runtime just to link to grp, see grpc/grpc#30838;
     # not much point in marking baselibs or vendored libs (e.g. upb) as private
     - patches/0007-mark-linkage-of-c-ares-re2-zlib-as-private.patch
-    - patches/0008-link-grpc-_unsecure-to-grpc.patch
     # see https://github.com/grpc/grpc/issues/35794
-    - patches/0009-fix-missing-DLL-exports-in-vendored-upb.patch
+    - patches/0008-fix-missing-DLL-exports-in-vendored-upb.patch
     # fix symbol visibility regression on windows
-    - patches/0010-for-main-targets-set-_DLL_EXPORTS-when-building-and-.patch
+    - patches/0009-for-main-targets-set-_DLL_EXPORTS-when-building-and-.patch
     # work-around for https://github.com/grpc/grpc/issues/36654
-    - patches/0011-set-Wl-undefined-dynamic_lookup-for-upb_-json-textfo.patch
+    - patches/0010-set-Wl-undefined-dynamic_lookup-for-upb_-json-textfo.patch
+    - patches/0011-add-missing-GRPC_DLL-macro.patch
 
 build:
   number: 0
