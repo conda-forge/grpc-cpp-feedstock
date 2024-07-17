@@ -1,4 +1,4 @@
-From 8822526226cffcbffdb93b4e1bd2928d55558bd0 Mon Sep 17 00:00:00 2001
+From 1eca4ff781c33b565389981f366ab3e735a4982d Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Fri, 9 Jun 2023 20:11:22 +1100
 Subject: [PATCH 08/11] link grpc++_unsecure to grpc++
@@ -9,10 +9,10 @@ which is where FileWatcherCertificateProvider etc. live
  1 file changed, 1 insertion(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 788b929ae5..840a7d971e 100644
+index b17aa72cb9..8e65d84e30 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -4896,6 +4896,7 @@ target_link_libraries(grpc++_unsecure
+@@ -4900,6 +4900,7 @@ target_link_libraries(grpc++_unsecure
    ${_gRPC_ALLTARGETS_LIBRARIES}
    grpc_unsecure
    ${_gRPC_PROTOBUF_LIBRARIES}
