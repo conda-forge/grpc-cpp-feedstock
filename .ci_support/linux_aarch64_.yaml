@@ -1,5 +1,7 @@
 BUILD:
 - aarch64-conda_cos7-linux-gnu
+bootstrap:
+- 'yes'
 c_ares:
 - '1'
 c_compiler:

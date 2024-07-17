@@ -1,2 +1,6 @@
+# if bootstrapping, don't build grpcio to break cycle; see meta.yaml
+bootstrap:
+  - yes
+
 libprotobuf:
   - 5.26.1
