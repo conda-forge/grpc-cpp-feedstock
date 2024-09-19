@@ -23,7 +23,7 @@ cxx_compiler_version:
 libabseil:
 - '20240116'
 libprotobuf:
-- 5.27.2
+- 5.26.1
 macos_machine:
 - arm64-apple-darwin20.0.0
 openssl:
