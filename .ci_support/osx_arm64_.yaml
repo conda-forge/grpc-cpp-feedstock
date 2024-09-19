@@ -9,7 +9,7 @@ c_ares:
 c_compiler:
 - clang
 c_compiler_version:
-- '16'
+- '17'
 c_stdlib:
 - macosx_deployment_target
 c_stdlib_version:
@@ -21,7 +21,7 @@ channel_targets:
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-- '16'
+- '17'
 libabseil:
 - '20240116'
 libprotobuf:
@@ -30,22 +30,6 @@ macos_machine:
 - arm64-apple-darwin20.0.0
 openssl:
 - '3'
-pin_run_as_build:
-  python:
-    min_pin: x.x
-    max_pin: x.x
-python:
-- 3.10.* *_cpython
-- 3.11.* *_cpython
-- 3.12.* *_cpython
-- 3.8.* *_cpython
-- 3.9.* *_cpython
-python_impl:
-- cpython
-- cpython
-- cpython
-- cpython
-- cpython
 re2:
 - 2023.09.01
 target_platform:
@@ -53,7 +37,5 @@ target_platform:
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
-- - python
-  - python_impl
 zlib:
 - '1'
