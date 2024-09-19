@@ -1,5 +1,3 @@
-bootstrap:
-- 'yes'
 c_ares:
 - '1'
 c_compiler:

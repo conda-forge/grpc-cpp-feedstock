@@ -13,10 +13,6 @@
     "cpp", "csharp", "node", "objective_c", "php", "python", "ruby"
 ] %}
 
-{% if bootstrap is undefined %}
-{% set bootstrap = "no" %}
-{% endif %}
-
 package:
   name: grpc-split
   version: {{ version }}
@@ -136,9 +132,6 @@ outputs:
         - cmake -GNinja -DCMAKE_CXX_STANDARD=17 %CMAKE_ARGS% .  # [win]
         - cmake --build .
 
-  {% if bootstrap == "no" %}
-  # to properly test, we need protobuf; but protobuf nowadays needs bazel
-  # and bazel needs libgrpc. Disable grpcio builds to bootstrap.
   - name: grpcio
     script: build-grpcio.sh  # [not win]
     script: build-grpcio.bat  # [win]
@@ -193,7 +186,6 @@ outputs:
         - cp ../../../test_grpcio_helloworld.py .
         - python test_grpcio_helloworld.py
         {% endif %}
-  {% endif %}
 
 about:
   home: https://grpc.io/
