@@ -162,7 +162,7 @@ outputs:
         - test_grpcio_helloworld.py
       requires:
         - pip
-        - protobuf
+        - grpcio-tools
       imports:
         - grpc
         - grpc._cython
@@ -182,6 +182,8 @@ outputs:
         # test actual RPC pattern (client & server); other tests did not catch
         # https://github.com/conda-forge/grpc-cpp-feedstock/issues/281
         - cd examples/python/helloworld
+        # generate helloworld, see https://grpc.io/docs/languages/python/quickstart/#generate-grpc-code
+        - python -m grpc_tools.protoc -I../../protos --python_out=. --pyi_out=. --grpc_python_out=. ../../protos/helloworld.proto
         # copy test defined in feedstock to where it needs to run
         - cp ../../../test_grpcio_helloworld.py .
         - python test_grpcio_helloworld.py
