@@ -38,6 +38,9 @@ source:
       # work-around for https://github.com/grpc/grpc/issues/36654
       - patches/0010-set-Wl-undefined-dynamic_lookup-for-upb_-json-textfo.patch
       - patches/0011-add-missing-GRPC_DLL-macro.patch
+  - url: https://pypi.io/packages/source/g/grpcio-tools/grpcio_tools-{{ version }}.tar.gz
+    sha256: 7c3a47ad0070bc907c7818caf55aa1948e9282d24e27afd21015872a25594bc7
+    folder: grpcio_tools
 
 build:
   number: 0
@@ -188,6 +191,31 @@ outputs:
         - cp ../../../test_grpcio_helloworld.py .
         - python test_grpcio_helloworld.py
         {% endif %}
+
+  - name: grpcio-tools
+    build:
+      script:
+        - cd grpcio_tools
+        - python -m pip install . -vv
+    requirements:
+      build:
+        - python                                 # [build_platform != target_platform]
+        - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+        - {{ stdlib('c') }}
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+      host:
+        - grpcio ={{ version }}=*_{{ PKG_BUILDNUM }}
+        - python
+        - pip
+        - setuptools
+      run:
+        - grpcio ={{ version }}=*_{{ PKG_BUILDNUM }}
+        - python
+        - protobuf
+    test:
+      imports:
+        - grpc_tools
 
 about:
   home: https://grpc.io/
