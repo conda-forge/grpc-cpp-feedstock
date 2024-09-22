@@ -18,26 +18,26 @@ package:
   version: {{ version }}
 
 source:
-  url: https://github.com/grpc/grpc/archive/v{{ version.replace(".pre", "-pre") }}.tar.gz
-  sha256: bdab9cb52e3ee703d6c09d15716bcc10a150b2e9e414182e5b375d32050dba84
-  patches:
-    - patches/0001-windows-ssl-lib-names.patch
-    - patches/0002-fix-win-setup-cmds.patch
-    - patches/0003-Link-against-grpc.patch
-    - patches/0004-force-protoc-executable.patch
-    - patches/0005-switch-to-C-17-for-grpcio.patch
-    - patches/0006-fix-abseil-setup.patch
-    # mark c-ares, re2 & zlib as private, so they don't need to be found
-    # at runtime just to link to grp, see grpc/grpc#30838;
-    # not much point in marking baselibs or vendored libs (e.g. upb) as private
-    - patches/0007-mark-linkage-of-c-ares-re2-zlib-as-private.patch
-    # see https://github.com/grpc/grpc/issues/35794
-    - patches/0008-fix-missing-DLL-exports-in-vendored-upb.patch
-    # fix symbol visibility regression on windows
-    - patches/0009-for-main-targets-set-_DLL_EXPORTS-when-building-and-.patch
-    # work-around for https://github.com/grpc/grpc/issues/36654
-    - patches/0010-set-Wl-undefined-dynamic_lookup-for-upb_-json-textfo.patch
-    - patches/0011-add-missing-GRPC_DLL-macro.patch
+  - url: https://github.com/grpc/grpc/archive/v{{ version.replace(".pre", "-pre") }}.tar.gz
+    sha256: bdab9cb52e3ee703d6c09d15716bcc10a150b2e9e414182e5b375d32050dba84
+    patches:
+      - patches/0001-windows-ssl-lib-names.patch
+      - patches/0002-fix-win-setup-cmds.patch
+      - patches/0003-Link-against-grpc.patch
+      - patches/0004-force-protoc-executable.patch
+      - patches/0005-switch-to-C-17-for-grpcio.patch
+      - patches/0006-fix-abseil-setup.patch
+      # mark c-ares, re2 & zlib as private, so they don't need to be found
+      # at runtime just to link to grp, see grpc/grpc#30838;
+      # not much point in marking baselibs or vendored libs (e.g. upb) as private
+      - patches/0007-mark-linkage-of-c-ares-re2-zlib-as-private.patch
+      # see https://github.com/grpc/grpc/issues/35794
+      - patches/0008-fix-missing-DLL-exports-in-vendored-upb.patch
+      # fix symbol visibility regression on windows
+      - patches/0009-for-main-targets-set-_DLL_EXPORTS-when-building-and-.patch
+      # work-around for https://github.com/grpc/grpc/issues/36654
+      - patches/0010-set-Wl-undefined-dynamic_lookup-for-upb_-json-textfo.patch
+      - patches/0011-add-missing-GRPC_DLL-macro.patch
 
 build:
   number: 0
