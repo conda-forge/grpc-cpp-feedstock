@@ -95,6 +95,7 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-grpcio-green.svg)](https://anaconda.org/conda-forge/grpcio) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/grpcio.svg)](https://anaconda.org/conda-forge/grpcio) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/grpcio.svg)](https://anaconda.org/conda-forge/grpcio) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/grpcio.svg)](https://anaconda.org/conda-forge/grpcio) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-grpcio--tools-green.svg)](https://anaconda.org/conda-forge/grpcio-tools) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/grpcio-tools.svg)](https://anaconda.org/conda-forge/grpcio-tools) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/grpcio-tools.svg)](https://anaconda.org/conda-forge/grpcio-tools) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/grpcio-tools.svg)](https://anaconda.org/conda-forge/grpcio-tools) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-libgrpc-green.svg)](https://anaconda.org/conda-forge/libgrpc) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/libgrpc.svg)](https://anaconda.org/conda-forge/libgrpc) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/libgrpc.svg)](https://anaconda.org/conda-forge/libgrpc) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/libgrpc.svg)](https://anaconda.org/conda-forge/libgrpc) |
 
 Installing grpc-cpp
@@ -107,16 +108,16 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `grpcio, libgrpc` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `grpcio, grpcio-tools, libgrpc` can be installed with `conda`:
 
 ```
-conda install grpcio libgrpc
+conda install grpcio grpcio-tools libgrpc
 ```
 
 or with `mamba`:
 
 ```
-mamba install grpcio libgrpc
+mamba install grpcio grpcio-tools libgrpc
 ```
 
 It is possible to list all of the versions of `grpcio` available on your platform with `conda`:
