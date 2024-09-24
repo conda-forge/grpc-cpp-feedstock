@@ -184,8 +184,7 @@ outputs:
       commands:
         - python -m pip check
         - python grpcio_distribtest.py
-        # the following test is flaky on pypy
-        {% if not (aarch64 or ppc64le) or python_impl == "cpython" %}
+        {% if build_platform == target_platform %}
         # test actual RPC pattern (client & server); other tests did not catch
         # https://github.com/conda-forge/grpc-cpp-feedstock/issues/281
         - cd examples/python/helloworld
