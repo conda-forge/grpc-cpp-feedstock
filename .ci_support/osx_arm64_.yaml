@@ -1,21 +1,27 @@
 MACOSX_DEPLOYMENT_TARGET:
 - '11.0'
+MACOSX_SDK_VERSION:
+- '11.0'
 c_ares:
 - '1'
 c_compiler:
 - clang
 c_compiler_version:
-- '16'
+- '17'
 channel_sources:
+- conda-forge
+- conda-forge
+- conda-forge
+- conda-forge/label/python_rc,conda-forge
 - conda-forge
 channel_targets:
 - conda-forge main
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-- '16'
+- '17'
 libabseil:
-- '20230802'
+- '20240116'
 libprotobuf:
 - 4.25.1
 macos_machine:
@@ -30,7 +36,7 @@ python:
 - 3.10.* *_cpython
 - 3.11.* *_cpython
 - 3.12.* *_cpython
-- 3.8.* *_cpython
+- 3.13.* *_cp313
 - 3.9.* *_cpython
 python_impl:
 - cpython
@@ -39,7 +45,7 @@ python_impl:
 - cpython
 - cpython
 re2:
-- 2023.06.02
+- 2023.09.01
 target_platform:
 - osx-arm64
 zip_keys:
@@ -47,5 +53,6 @@ zip_keys:
   - cxx_compiler_version
 - - python
   - python_impl
+  - channel_sources
 zlib:
-- '1.2'
+- '1'
