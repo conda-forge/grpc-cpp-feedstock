@@ -15,6 +15,11 @@ cd examples/cpp/helloworld
 mkdir build-cpp
 cd build-cpp
 
+# abseil's ABI is sensitive to this symbol, and for some reason, grpc
+# doesn't pick it up from the CPPFLAGS in our compiler activation; see
+# https://github.com/abseil/abseil-cpp/issues/1624
+CXXFLAGS="${CXXFLAGS} -DNDEBUG"
+
 cmake -G "Ninja" \
     -DCMAKE_CXX_STANDARD=17 \
     -DCMAKE_PREFIX_PATH="$PREFIX" \

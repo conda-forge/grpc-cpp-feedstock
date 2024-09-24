@@ -2,14 +2,12 @@ MACOSX_DEPLOYMENT_TARGET:
 - '11.0'
 MACOSX_SDK_VERSION:
 - '11.0'
-bootstrap:
-- 'yes'
 c_ares:
 - '1'
 c_compiler:
 - clang
 c_compiler_version:
-- '16'
+- '17'
 c_stdlib:
 - macosx_deployment_target
 c_stdlib_version:
@@ -21,11 +19,11 @@ channel_targets:
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-- '16'
+- '17'
 libabseil:
-- '20240116'
+- '20240722'
 libprotobuf:
-- 5.27.2
+- 5.27.5
 macos_machine:
 - arm64-apple-darwin20.0.0
 openssl:
@@ -38,10 +36,8 @@ python:
 - 3.10.* *_cpython
 - 3.11.* *_cpython
 - 3.12.* *_cpython
-- 3.8.* *_cpython
 - 3.9.* *_cpython
 python_impl:
-- cpython
 - cpython
 - cpython
 - cpython

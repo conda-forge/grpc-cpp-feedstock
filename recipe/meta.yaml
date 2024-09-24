@@ -1,4 +1,4 @@
-{% set version = "1.64.2" %}
+{% set version = "1.65.5" %}
 
 # core package & vendored libs use different version scheme than CPP libs, see
 # https://github.com/grpc/grpc/blob/v1.48.1/CMakeLists.txt#L28-L32
@@ -13,35 +13,34 @@
     "cpp", "csharp", "node", "objective_c", "php", "python", "ruby"
 ] %}
 
-{% if bootstrap is undefined %}
-{% set bootstrap = "no" %}
-{% endif %}
-
 package:
   name: grpc-split
   version: {{ version }}
 
 source:
-  url: https://github.com/grpc/grpc/archive/v{{ version.replace(".pre", "-pre") }}.tar.gz
-  sha256: c682fc39baefc6e804d735e6b48141157b7213602cc66dbe0bf375b904d8b5f9
-  patches:
-    - patches/0001-windows-ssl-lib-names.patch
-    - patches/0002-fix-win-setup-cmds.patch
-    - patches/0003-Link-against-grpc.patch
-    - patches/0004-force-protoc-executable.patch
-    - patches/0005-switch-to-C-17-for-grpcio.patch
-    - patches/0006-fix-abseil-setup.patch
-    # mark c-ares, re2 & zlib as private, so they don't need to be found
-    # at runtime just to link to grp, see grpc/grpc#30838;
-    # not much point in marking baselibs or vendored libs (e.g. upb) as private
-    - patches/0007-mark-linkage-of-c-ares-re2-zlib-as-private.patch
-    - patches/0008-link-grpc-_unsecure-to-grpc.patch
-    # see https://github.com/grpc/grpc/issues/35794
-    - patches/0009-fix-missing-DLL-exports-in-vendored-upb.patch
-    # fix symbol visibility regression on windows
-    - patches/0010-for-main-targets-set-_DLL_EXPORTS-when-building-and-.patch
-    # work-around for https://github.com/grpc/grpc/issues/36654
-    - patches/0011-set-Wl-undefined-dynamic_lookup-for-upb_-json-textfo.patch
+  - url: https://github.com/grpc/grpc/archive/v{{ version.replace(".pre", "-pre") }}.tar.gz
+    sha256: bdab9cb52e3ee703d6c09d15716bcc10a150b2e9e414182e5b375d32050dba84
+    patches:
+      - patches/0001-windows-ssl-lib-names.patch
+      - patches/0002-fix-win-setup-cmds.patch
+      - patches/0003-Link-against-grpc.patch
+      - patches/0004-force-protoc-executable.patch
+      - patches/0005-switch-to-C-17-for-grpcio.patch
+      - patches/0006-fix-abseil-setup.patch
+      # mark c-ares, re2 & zlib as private, so they don't need to be found
+      # at runtime just to link to grp, see grpc/grpc#30838;
+      # not much point in marking baselibs or vendored libs (e.g. upb) as private
+      - patches/0007-mark-linkage-of-c-ares-re2-zlib-as-private.patch
+      # see https://github.com/grpc/grpc/issues/35794
+      - patches/0008-fix-missing-DLL-exports-in-vendored-upb.patch
+      # fix symbol visibility regression on windows
+      - patches/0009-for-main-targets-set-_DLL_EXPORTS-when-building-and-.patch
+      # work-around for https://github.com/grpc/grpc/issues/36654
+      - patches/0010-set-Wl-undefined-dynamic_lookup-for-upb_-json-textfo.patch
+      - patches/0011-add-missing-GRPC_DLL-macro.patch
+  - url: https://pypi.io/packages/source/g/grpcio-tools/grpcio_tools-{{ version }}.tar.gz
+    sha256: 7c3a47ad0070bc907c7818caf55aa1948e9282d24e27afd21015872a25594bc7
+    folder: grpcio_tools
 
 build:
   number: 0
@@ -98,7 +97,10 @@ outputs:
         - test_grpc.sh
         - test_grpc.bat
       source_files:
-        - examples/
+        - examples/cpp/helloworld/
+        # the example needs these other files to compile:
+        - examples/cpp/cmake/
+        - examples/protos/helloworld.proto
       commands:
         # libraries
         {% for each_lib in core_libs + core_cpp_libs + vendored_libs %}
@@ -136,9 +138,6 @@ outputs:
         - cmake -GNinja -DCMAKE_CXX_STANDARD=17 %CMAKE_ARGS% .  # [win]
         - cmake --build .
 
-  {% if bootstrap == "no" %}
-  # to properly test, we need protobuf; but protobuf nowadays needs bazel
-  # and bazel needs libgrpc. Disable grpcio builds to bootstrap.
   - name: grpcio
     script: build-grpcio.sh  # [not win]
     script: build-grpcio.bat  # [win]
@@ -163,13 +162,14 @@ outputs:
         - {{ pin_subpackage('libgrpc', exact=True) }}
     test:
       source_files:
-        - examples/
+        - examples/python/helloworld/
+        - examples/protos/helloworld.proto
       files:
         - grpcio_distribtest.py
         - test_grpcio_helloworld.py
       requires:
         - pip
-        - protobuf
+        - grpcio-tools
       imports:
         - grpc
         - grpc._cython
@@ -184,16 +184,41 @@ outputs:
       commands:
         - python -m pip check
         - python grpcio_distribtest.py
-        # the following test is flaky on pypy
-        {% if not (aarch64 or ppc64le) or python_impl == "cpython" %}
+        {% if build_platform == target_platform %}
         # test actual RPC pattern (client & server); other tests did not catch
         # https://github.com/conda-forge/grpc-cpp-feedstock/issues/281
         - cd examples/python/helloworld
+        # generate helloworld, see https://grpc.io/docs/languages/python/quickstart/#generate-grpc-code
+        - python -m grpc_tools.protoc -I../../protos --python_out=. --pyi_out=. --grpc_python_out=. ../../protos/helloworld.proto
         # copy test defined in feedstock to where it needs to run
         - cp ../../../test_grpcio_helloworld.py .
         - python test_grpcio_helloworld.py
         {% endif %}
-  {% endif %}
+
+  - name: grpcio-tools
+    build:
+      script:
+        - cd grpcio_tools
+        - python -m pip install . -vv
+    requirements:
+      build:
+        - python                                 # [build_platform != target_platform]
+        - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+        - {{ stdlib('c') }}
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+      host:
+        - grpcio ={{ version }}=*_{{ PKG_BUILDNUM }}
+        - python
+        - pip
+        - setuptools
+      run:
+        - grpcio ={{ version }}=*_{{ PKG_BUILDNUM }}
+        - python
+        - protobuf
+    test:
+      imports:
+        - grpc_tools
 
 about:
   home: https://grpc.io/
