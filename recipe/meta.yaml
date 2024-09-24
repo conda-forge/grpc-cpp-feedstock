@@ -97,7 +97,10 @@ outputs:
         - test_grpc.sh
         - test_grpc.bat
       source_files:
-        - examples/
+        - examples/cpp/helloworld/
+        # the example needs these other files to compile:
+        - examples/cpp/cmake/
+        - examples/protos/helloworld.proto
       commands:
         # libraries
         {% for each_lib in core_libs + core_cpp_libs + vendored_libs %}
@@ -159,7 +162,8 @@ outputs:
         - {{ pin_subpackage('libgrpc', exact=True) }}
     test:
       source_files:
-        - examples/
+        - examples/python/helloworld/
+        - examples/protos/helloworld.proto
       files:
         - grpcio_distribtest.py
         - test_grpcio_helloworld.py
