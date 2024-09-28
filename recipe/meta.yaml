@@ -1,4 +1,4 @@
-{% set version = "1.65.5" %}
+{% set version = "1.66.2" %}
 
 # core package & vendored libs use different version scheme than CPP libs, see
 # https://github.com/grpc/grpc/blob/v1.48.1/CMakeLists.txt#L28-L32
@@ -19,7 +19,7 @@ package:
 
 source:
   - url: https://github.com/grpc/grpc/archive/v{{ version.replace(".pre", "-pre") }}.tar.gz
-    sha256: bdab9cb52e3ee703d6c09d15716bcc10a150b2e9e414182e5b375d32050dba84
+    sha256: 1343e2d0c4cbd36cbfbbe4c7305a5529a7a044212c57b9dbfd929a6ceda285f4
     patches:
       - patches/0001-windows-ssl-lib-names.patch
       - patches/0002-fix-win-setup-cmds.patch
@@ -39,7 +39,7 @@ source:
       - patches/0010-set-Wl-undefined-dynamic_lookup-for-upb_-json-textfo.patch
       - patches/0011-add-missing-GRPC_DLL-macro.patch
   - url: https://pypi.io/packages/source/g/grpcio-tools/grpcio_tools-{{ version }}.tar.gz
-    sha256: 7c3a47ad0070bc907c7818caf55aa1948e9282d24e27afd21015872a25594bc7
+    sha256: 4a36e07913d26ba5ccfd2685ba63ca97f26b08c249d2cc9e74dda37efa49d7e4
     folder: grpcio_tools
 
 build:
