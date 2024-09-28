@@ -37,11 +37,6 @@ python:
 - 3.11.* *_cpython
 - 3.12.* *_cpython
 - 3.9.* *_cpython
-python_impl:
-- cpython
-- cpython
-- cpython
-- cpython
 re2:
 - 2023.09.01
 target_platform:
@@ -49,7 +44,5 @@ target_platform:
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
-- - python
-  - python_impl
 zlib:
 - '1'
