@@ -199,10 +199,13 @@ outputs:
     build:
       script:
         - cd grpcio_tools
+        - export GRPC_PYTHON_BUILD_WITH_CYTHON=true  # [unix]
+        - set GRPC_PYTHON_BUILD_WITH_CYTHON=true     # [win]
         - python -m pip install . -vv
     requirements:
       build:
         - python                                 # [build_platform != target_platform]
+        - cython                                 # [build_platform != target_platform]
         - cross-python_{{ target_platform }}     # [build_platform != target_platform]
         - {{ stdlib('c') }}
         - {{ compiler('c') }}
@@ -210,13 +213,19 @@ outputs:
       host:
         - grpcio ={{ version }}=*_{{ PKG_BUILDNUM }}
         - python
+        - cython
         - pip
         - setuptools
       run:
         - grpcio ={{ version }}=*_{{ PKG_BUILDNUM }}
         - python
         - protobuf
+        - setuptools
     test:
+      requires:
+        - pip
+      commands:
+        - pip check
       imports:
         - grpc_tools
 
