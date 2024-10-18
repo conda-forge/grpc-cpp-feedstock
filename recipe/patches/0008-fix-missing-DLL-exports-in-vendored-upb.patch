@@ -1,4 +1,4 @@
-From 29f8c5b64706a815e27cfad901bfedf2076cbe9a Mon Sep 17 00:00:00 2001
+From 55da995a6b0627be214bee600cc85e77aed8d9db Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 6 Feb 2024 16:09:08 +0100
 Subject: [PATCH 08/11] fix missing DLL-exports in vendored upb
@@ -11,10 +11,10 @@ Subject: [PATCH 08/11] fix missing DLL-exports in vendored upb
  4 files changed, 50 insertions(+), 2 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 0b308c6606..f4fd75552f 100644
+index 33b48e5..57a3ef3 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -3745,6 +3745,12 @@ if(WIN32 AND MSVC)
+@@ -3756,6 +3756,12 @@ if(WIN32 AND MSVC)
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
      )
    endif()
@@ -27,7 +27,7 @@ index 0b308c6606..f4fd75552f 100644
  endif()
  
  target_include_directories(upb_mem_lib
-@@ -3807,6 +3813,12 @@ if(WIN32 AND MSVC)
+@@ -3821,6 +3827,12 @@ if(WIN32 AND MSVC)
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
      )
    endif()
@@ -41,7 +41,7 @@ index 0b308c6606..f4fd75552f 100644
  
  target_include_directories(upb_message_lib
 diff --git a/third_party/upb/upb/mem/alloc.h b/third_party/upb/upb/mem/alloc.h
-index 441731d2d8..db048ceeff 100644
+index 441731d..db048ce 100644
 --- a/third_party/upb/upb/mem/alloc.h
 +++ b/third_party/upb/upb/mem/alloc.h
 @@ -52,7 +52,7 @@ UPB_INLINE void upb_free(upb_alloc* alloc, void* ptr) {
@@ -54,10 +54,10 @@ index 441731d2d8..db048ceeff 100644
  /* Functions that hard-code the global malloc.
   *
 diff --git a/third_party/upb/upb/mini_table/internal/message.h b/third_party/upb/upb/mini_table/internal/message.h
-index 95244233c9..edefc76595 100644
+index e044c0e..fd026c1 100644
 --- a/third_party/upb/upb/mini_table/internal/message.h
 +++ b/third_party/upb/upb/mini_table/internal/message.h
-@@ -69,8 +69,9 @@ struct upb_MiniTable {
+@@ -75,8 +75,9 @@ struct upb_MiniTable {
  extern "C" {
  #endif
  
@@ -69,12 +69,12 @@ index 95244233c9..edefc76595 100644
    return &UPB_PRIVATE(_kUpb_MiniTable_Empty);
  }
 diff --git a/third_party/upb/upb/port/def.inc b/third_party/upb/upb/port/def.inc
-index 5d07592b07..04af9249f5 100644
+index 7d23d5c..53d8a67 100644
 --- a/third_party/upb/upb/port/def.inc
 +++ b/third_party/upb/upb/port/def.inc
-@@ -344,3 +344,38 @@ void __asan_unpoison_memory_region(void const volatile *addr, size_t size);
- #define UPB_DESC(sym) google_protobuf_##sym
- #define UPB_DESC_MINITABLE(sym) &google__protobuf__##sym##_msg_init
+@@ -350,3 +350,38 @@ void __asan_unpoison_memory_region(void const volatile *addr, size_t size);
+ error UPB_TRACING_ENABLED Tracing should be disabled in production builds
+ #endif
  #endif
 +
 +// UPB_{MEM,MSG}_DLL
