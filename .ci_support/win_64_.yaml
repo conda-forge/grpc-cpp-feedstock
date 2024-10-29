@@ -27,7 +27,7 @@ python:
 - 3.13.* *_cp313
 - 3.9.* *_cpython
 re2:
-- 2023.09.01
+- 2024.07.02
 target_platform:
 - win-64
 zlib:
