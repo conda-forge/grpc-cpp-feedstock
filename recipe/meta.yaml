@@ -38,7 +38,7 @@ source:
       # work-around for https://github.com/grpc/grpc/issues/36654
       - patches/0010-set-Wl-undefined-dynamic_lookup-for-upb_-json-textfo.patch
       - patches/0011-add-missing-GRPC_DLL-macro.patch
-  - url: https://pypi.io/packages/source/g/grpcio-tools/grpcio_tools-{{ version }}.tar.gz
+  - url: https://pypi.org/packages/source/g/grpcio-tools/grpcio_tools-{{ version }}.tar.gz
     sha256: 737804ec2225dd4cc27e633b4ca0e963b0795161bf678285fab6586e917fd867
     folder: grpcio_tools
 
