@@ -1,4 +1,4 @@
-From d50b1f409ef46b3d522f6077019e8a9e7aa7620c Mon Sep 17 00:00:00 2001
+From d2f79ce305c7f2ea4798e022519e50b9d5301c7b Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 26 Sep 2023 18:25:54 +1100
 Subject: [PATCH 13/14] add missing linkages for gRPC_BUILD_TESTS=ON
@@ -8,10 +8,10 @@ Subject: [PATCH 13/14] add missing linkages for gRPC_BUILD_TESTS=ON
  1 file changed, 9 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 5c8c48de7b..c00f815a07 100644
+index 6fb7d1f808..bcff341987 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -7379,6 +7379,7 @@ target_include_directories(authorization_matchers_test
+@@ -7776,6 +7776,7 @@ target_include_directories(authorization_matchers_test
  )
  
  target_link_libraries(authorization_matchers_test
@@ -19,7 +19,7 @@ index 5c8c48de7b..c00f815a07 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    grpc_test_util
-@@ -15843,6 +15844,7 @@ target_include_directories(grpc_authorization_engine_test
+@@ -15840,6 +15841,7 @@ target_include_directories(grpc_authorization_engine_test
  )
  
  target_link_libraries(grpc_authorization_engine_test
@@ -27,7 +27,7 @@ index 5c8c48de7b..c00f815a07 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    grpc_test_util
-@@ -17966,6 +17968,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+@@ -17963,6 +17965,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
    )
  
    target_link_libraries(httpcli_test
@@ -35,7 +35,7 @@ index 5c8c48de7b..c00f815a07 100644
      ${_gRPC_ALLTARGETS_LIBRARIES}
      gtest
      grpc++_test_util
-@@ -19917,6 +19920,7 @@ target_include_directories(matchers_test
+@@ -19965,6 +19968,7 @@ target_include_directories(matchers_test
  )
  
  target_link_libraries(matchers_test
@@ -43,7 +43,7 @@ index 5c8c48de7b..c00f815a07 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    grpc_test_util
-@@ -24283,6 +24287,7 @@ target_include_directories(resolve_address_using_ares_resolver_test
+@@ -24431,6 +24435,7 @@ target_include_directories(resolve_address_using_ares_resolver_test
  )
  
  target_link_libraries(resolve_address_using_ares_resolver_test
@@ -51,7 +51,7 @@ index 5c8c48de7b..c00f815a07 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    grpc_test_util
-@@ -24389,6 +24394,7 @@ target_include_directories(resolve_address_using_native_resolver_test
+@@ -24537,6 +24542,7 @@ target_include_directories(resolve_address_using_native_resolver_test
  )
  
  target_link_libraries(resolve_address_using_native_resolver_test
@@ -59,7 +59,7 @@ index 5c8c48de7b..c00f815a07 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    grpc_test_util
-@@ -34579,6 +34585,7 @@ target_include_directories(xds_common_types_test
+@@ -35527,6 +35533,7 @@ target_include_directories(xds_common_types_test
  )
  
  target_link_libraries(xds_common_types_test
@@ -67,7 +67,7 @@ index 5c8c48de7b..c00f815a07 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    grpc++
-@@ -34867,6 +34874,7 @@ target_include_directories(xds_credentials_test
+@@ -35815,6 +35822,7 @@ target_include_directories(xds_credentials_test
  )
  
  target_link_libraries(xds_credentials_test
@@ -75,7 +75,7 @@ index 5c8c48de7b..c00f815a07 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    grpc_test_util
-@@ -36243,6 +36251,7 @@ target_include_directories(xds_listener_resource_type_test
+@@ -38566,6 +38574,7 @@ target_include_directories(xds_listener_resource_type_test
  )
  
  target_link_libraries(xds_listener_resource_type_test

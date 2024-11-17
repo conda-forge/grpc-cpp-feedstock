@@ -1,4 +1,4 @@
-From 9f2311f8a88fcacae537b3adf8a7115331cbe09b Mon Sep 17 00:00:00 2001
+From a46df6574963a46e437b64e946422fcf5dab71c8 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Wed, 17 Jul 2024 22:12:06 +1100
 Subject: [PATCH 11/14] add missing GRPC_DLL macro
