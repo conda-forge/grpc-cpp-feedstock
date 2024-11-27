@@ -2,9 +2,9 @@
 
 # core package & vendored libs use different version scheme than CPP libs, see
 # https://github.com/grpc/grpc/blob/v1.48.1/CMakeLists.txt#L28-L32
-# the difference of 23 is empirical and most recently changed with 1.54
-{% set core_major = version.split(".")[1] | int - 23 %}
-{% set core_version = core_major | string ~ ".0.0" %}
+# the difference of 24 is empirical and most recently changed with 1.68 (before: 1.54)
+{% set core_major = version.split(".")[1] | int - 24 %}
+{% set core_version = core_major | string ~ ".1.0" %}
 
 {% set core_libs = ["gpr", "grpc", "grpc_unsecure"] %}
 {% set core_cpp_libs = ["grpc++", "grpc++_unsecure"] %}
@@ -41,6 +41,7 @@ source:
       # backport https://github.com/protocolbuffers/protobuf/commit/0309d86d3175cb3fb82d37150e6eff90b11bed77
       # due to https://developercommunity.visualstudio.com/t/NAN-is-no-longer-compile-time-constant-i/10688907
       - patches/0012-Fixed-NAN-INFINITY-definitions-to-work-on-Windows-11.patch
+      - patches/0013-Build-protobufs-for-tests-only-if-gRPC_BUILD_TESTS.patch
   - url: https://pypi.org/packages/source/g/grpcio-tools/grpcio_tools-{{ version }}.tar.gz
     sha256: 737804ec2225dd4cc27e633b4ca0e963b0795161bf678285fab6586e917fd867
     folder: grpcio_tools
