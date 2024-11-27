@@ -1,7 +1,7 @@
-From 0f3c3d9b807a405a2ab9fdc35ed49fd80ced01f0 Mon Sep 17 00:00:00 2001
+From 55674dab464b79c7e6ef56a6a710b47140de982f Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 6 Feb 2024 16:09:08 +0100
-Subject: [PATCH 08/11] fix missing DLL-exports in vendored upb
+Subject: [PATCH 08/13] fix missing DLL-exports in vendored upb
 
 ---
  CMakeLists.txt                                | 12 +++++++
@@ -11,7 +11,7 @@ Subject: [PATCH 08/11] fix missing DLL-exports in vendored upb
  4 files changed, 50 insertions(+), 2 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 25362b9a6d..8bf7505c0c 100644
+index 25362b9..8bf7505 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -4167,6 +4167,12 @@ if(WIN32 AND MSVC)
@@ -41,7 +41,7 @@ index 25362b9a6d..8bf7505c0c 100644
  
  target_include_directories(upb_message_lib
 diff --git a/third_party/upb/upb/mem/alloc.h b/third_party/upb/upb/mem/alloc.h
-index 441731d2d8..db048ceeff 100644
+index 441731d..db048ce 100644
 --- a/third_party/upb/upb/mem/alloc.h
 +++ b/third_party/upb/upb/mem/alloc.h
 @@ -52,7 +52,7 @@ UPB_INLINE void upb_free(upb_alloc* alloc, void* ptr) {
@@ -54,7 +54,7 @@ index 441731d2d8..db048ceeff 100644
  /* Functions that hard-code the global malloc.
   *
 diff --git a/third_party/upb/upb/mini_table/internal/message.h b/third_party/upb/upb/mini_table/internal/message.h
-index fd88e57442..9a5ff34c4f 100644
+index fd88e57..9a5ff34 100644
 --- a/third_party/upb/upb/mini_table/internal/message.h
 +++ b/third_party/upb/upb/mini_table/internal/message.h
 @@ -88,8 +88,9 @@ UPB_INLINE const struct upb_MiniTable* UPB_PRIVATE(
@@ -69,7 +69,7 @@ index fd88e57442..9a5ff34c4f 100644
    return &UPB_PRIVATE(_kUpb_MiniTable_Empty);
  }
 diff --git a/third_party/upb/upb/port/def.inc b/third_party/upb/upb/port/def.inc
-index 6aa1835f40..4168377d7d 100644
+index 6aa1835..4168377 100644
 --- a/third_party/upb/upb/port/def.inc
 +++ b/third_party/upb/upb/port/def.inc
 @@ -421,3 +421,38 @@ void __asan_unpoison_memory_region(void const volatile *addr, size_t size);

@@ -1,14 +1,14 @@
-From 3f529e1e546a995cb29a9e1df27a9d76a134cc3f Mon Sep 17 00:00:00 2001
+From c7275632d4649b3a405ba486095c1af503f759fa Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 4 Sep 2022 14:34:52 +0200
-Subject: [PATCH 06/11] fix abseil setup
+Subject: [PATCH 06/13] fix abseil setup
 
 ---
  setup.py | 16 +++++++++++-----
  1 file changed, 11 insertions(+), 5 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index 17040bd25d..9d7134df8f 100644
+index 17040bd..9d7134d 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -364,16 +364,22 @@ if BUILD_WITH_SYSTEM_CARES:
