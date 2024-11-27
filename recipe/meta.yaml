@@ -2,9 +2,9 @@
 
 # core package & vendored libs use different version scheme than CPP libs, see
 # https://github.com/grpc/grpc/blob/v1.48.1/CMakeLists.txt#L28-L32
-# the difference of 23 is empirical and most recently changed with 1.54
-{% set core_major = version.split(".")[1] | int - 23 %}
-{% set core_version = core_major | string ~ ".0.0" %}
+# the difference of 24 is empirical and most recently changed with 1.68 (before: 1.54)
+{% set core_major = version.split(".")[1] | int - 24 %}
+{% set core_version = core_major | string ~ ".1.0" %}
 
 {% set core_libs = ["gpr", "grpc", "grpc_unsecure"] %}
 {% set core_cpp_libs = ["grpc++", "grpc++_unsecure"] %}
@@ -45,6 +45,7 @@ source:
       - patches/0013-add-missing-linkages-for-gRPC_BUILD_TESTS-ON.patch
       # tests don't get executed without enable_testing
       - patches/0014-add-enable_testing-so-tests-get-run.patch
+      - patches/0015-Build-protobufs-for-tests-only-if-gRPC_BUILD_TESTS.patch
 
   - url: https://github.com/google/benchmark/archive/344117638c8ff7e239044fd0fa7085839fc03021.tar.gz
     sha256: 8e7b955f04bc6984e4f14074d0d191474f76a6c8e849e04a9dced49bc975f2d4
