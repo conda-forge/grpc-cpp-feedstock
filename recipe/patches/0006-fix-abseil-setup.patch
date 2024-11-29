@@ -1,7 +1,7 @@
-From 55668c2a71cc12f78c49d54ef202bb7820bc1f1b Mon Sep 17 00:00:00 2001
+From c7275632d4649b3a405ba486095c1af503f759fa Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 4 Sep 2022 14:34:52 +0200
-Subject: [PATCH 06/11] fix abseil setup
+Subject: [PATCH 06/13] fix abseil setup
 
 ---
  setup.py | 16 +++++++++++-----
