@@ -1,7 +1,7 @@
-From 55da995a6b0627be214bee600cc85e77aed8d9db Mon Sep 17 00:00:00 2001
+From 55674dab464b79c7e6ef56a6a710b47140de982f Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 6 Feb 2024 16:09:08 +0100
-Subject: [PATCH 08/11] fix missing DLL-exports in vendored upb
+Subject: [PATCH 08/13] fix missing DLL-exports in vendored upb
 
 ---
  CMakeLists.txt                                | 12 +++++++
@@ -11,10 +11,10 @@ Subject: [PATCH 08/11] fix missing DLL-exports in vendored upb
  4 files changed, 50 insertions(+), 2 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 33b48e5..57a3ef3 100644
+index 25362b9..8bf7505 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -3756,6 +3756,12 @@ if(WIN32 AND MSVC)
+@@ -4167,6 +4167,12 @@ if(WIN32 AND MSVC)
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
      )
    endif()
@@ -27,7 +27,7 @@ index 33b48e5..57a3ef3 100644
  endif()
  
  target_include_directories(upb_mem_lib
-@@ -3821,6 +3827,12 @@ if(WIN32 AND MSVC)
+@@ -4232,6 +4238,12 @@ if(WIN32 AND MSVC)
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
      )
    endif()
@@ -54,12 +54,12 @@ index 441731d..db048ce 100644
  /* Functions that hard-code the global malloc.
   *
 diff --git a/third_party/upb/upb/mini_table/internal/message.h b/third_party/upb/upb/mini_table/internal/message.h
-index e044c0e..fd026c1 100644
+index fd88e57..9a5ff34 100644
 --- a/third_party/upb/upb/mini_table/internal/message.h
 +++ b/third_party/upb/upb/mini_table/internal/message.h
-@@ -75,8 +75,9 @@ struct upb_MiniTable {
- extern "C" {
- #endif
+@@ -88,8 +88,9 @@ UPB_INLINE const struct upb_MiniTable* UPB_PRIVATE(
+   return mt;
+ }
  
 +UPB_MSG_DLL extern const struct upb_MiniTable UPB_PRIVATE(_kUpb_MiniTable_Empty);
 +
@@ -69,12 +69,12 @@ index e044c0e..fd026c1 100644
    return &UPB_PRIVATE(_kUpb_MiniTable_Empty);
  }
 diff --git a/third_party/upb/upb/port/def.inc b/third_party/upb/upb/port/def.inc
-index 7d23d5c..53d8a67 100644
+index 6aa1835..4168377 100644
 --- a/third_party/upb/upb/port/def.inc
 +++ b/third_party/upb/upb/port/def.inc
-@@ -350,3 +350,38 @@ void __asan_unpoison_memory_region(void const volatile *addr, size_t size);
- error UPB_TRACING_ENABLED Tracing should be disabled in production builds
- #endif
+@@ -421,3 +421,38 @@ void __asan_unpoison_memory_region(void const volatile *addr, size_t size);
+ #define UPB_LINKARR_APPEND(name)
+ 
  #endif
 +
 +// UPB_{MEM,MSG}_DLL

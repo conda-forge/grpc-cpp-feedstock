@@ -1,7 +1,7 @@
-From 45091a959906120f9fdf70c8fa368d7f9decd943 Mon Sep 17 00:00:00 2001
+From f6bfe05ea6a366c6d718a78f0edf2c95327fb051 Mon Sep 17 00:00:00 2001
 From: Marius van Niekerk <marius.v.niekerk@gmail.com>
 Date: Mon, 13 Jun 2022 17:13:07 -0400
-Subject: [PATCH 03/11] Link against grpc
+Subject: [PATCH 03/13] Link against grpc
 
 Co-Authored-By: H. Vetinari <h.vetinari@gmx.com>
 ---
