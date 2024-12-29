@@ -1,7 +1,7 @@
 From a46df6574963a46e437b64e946422fcf5dab71c8 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Wed, 17 Jul 2024 22:12:06 +1100
-Subject: [PATCH 11/15] add missing GRPC_DLL macro
+Subject: [PATCH 11/16] add missing GRPC_DLL macro
 
 ---
  src/core/lib/debug/trace_flags.h | 2 +-
