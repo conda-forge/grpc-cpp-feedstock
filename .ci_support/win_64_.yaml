@@ -15,7 +15,7 @@ libabseil:
 libgrpc:
 - '1.67'
 libprotobuf:
-- 5.28.2
+- 5.28.3
 openssl:
 - '3'
 pin_run_as_build:
