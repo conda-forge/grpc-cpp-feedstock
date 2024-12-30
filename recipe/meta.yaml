@@ -38,9 +38,15 @@ source:
       # work-around for https://github.com/grpc/grpc/issues/36654
       - patches/0010-set-Wl-undefined-dynamic_lookup-for-upb_-json-textfo.patch
       - patches/0011-add-missing-GRPC_DLL-macro.patch
+      # backport https://github.com/protocolbuffers/protobuf/commit/0309d86d3175cb3fb82d37150e6eff90b11bed77
+      # due to https://developercommunity.visualstudio.com/t/NAN-is-no-longer-compile-time-constant-i/10688907
+      - patches/0012-Fixed-NAN-INFINITY-definitions-to-work-on-Windows-11.patch
   - url: https://pypi.org/packages/source/g/grpcio-tools/grpcio_tools-{{ version }}.tar.gz
     sha256: d9657f5ddc62b52f58904e6054b7d8a8909ed08a1e28b734be3a707087bcf004
     folder: grpcio_tools
+    patches:
+      # same backport as above, but different paths to vendored upb
+      - patches_grpcio/0001-Fixed-NAN-INFINITY-definitions-to-work-on-Windows-11.patch
 
 build:
   number: 1
