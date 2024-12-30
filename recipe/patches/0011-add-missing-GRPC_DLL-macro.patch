@@ -1,14 +1,14 @@
-From e81b16b676534213ef09ee8c1cb15915841f1e14 Mon Sep 17 00:00:00 2001
+From 38fa09f65b3c608ca53c127fa877d9d40ed6f74a Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Wed, 17 Jul 2024 22:12:06 +1100
-Subject: [PATCH 11/11] add missing GRPC_DLL macro
+Subject: [PATCH 11/12] add missing GRPC_DLL macro
 
 ---
  src/core/lib/debug/trace_flags.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/core/lib/debug/trace_flags.h b/src/core/lib/debug/trace_flags.h
-index f185adb..dd19d51 100644
+index f185adb65e..dd19d51fbf 100644
 --- a/src/core/lib/debug/trace_flags.h
 +++ b/src/core/lib/debug/trace_flags.h
 @@ -47,7 +47,7 @@ extern DebugOnlyTraceFlag subchannel_refcount_trace;
