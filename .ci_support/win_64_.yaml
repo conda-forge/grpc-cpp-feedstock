@@ -12,6 +12,8 @@ cxx_compiler:
 - vs2019
 libabseil:
 - '20240722'
+libgrpc:
+- '1.67'
 libprotobuf:
 - 5.28.2
 openssl:
