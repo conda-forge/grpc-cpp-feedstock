@@ -44,8 +44,6 @@ source:
 
 build:
   number: 1
-  # temporarily skip windows
-  skip: true  # [win]
 
 outputs:
   - name: libgrpc
