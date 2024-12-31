@@ -1,4 +1,4 @@
 c_compiler:     # [win]
-  - clang       # [win]
+  - vs2022      # [win]
 cxx_compiler:   # [win]
-  - clangxx     # [win]
+  - vs2022      # [win]

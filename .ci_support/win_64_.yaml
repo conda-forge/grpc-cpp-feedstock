@@ -1,7 +1,7 @@
 c_ares:
 - '1'
 c_compiler:
-- clang
+- vs2022
 c_stdlib:
 - vs
 channel_sources:
@@ -9,7 +9,7 @@ channel_sources:
 channel_targets:
 - conda-forge main
 cxx_compiler:
-- clangxx
+- vs2022
 libabseil:
 - '20240722'
 libgrpc:
