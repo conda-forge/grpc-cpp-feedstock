@@ -1,20 +1,22 @@
-From ca8f992019f4e367fe2c0210d669d862fef37a79 Mon Sep 17 00:00:00 2001
+From 377669f9e46d4bb86d617f85e91a861e6916cbd1 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Fri, 11 Sep 2020 14:20:04 +0200
-Subject: [PATCH 04/12] force protoc executable
+Subject: [PATCH 04/17] force protoc executable
 
 ---
- cmake/protobuf.cmake | 17 ++---------------
- 1 file changed, 2 insertions(+), 15 deletions(-)
+ cmake/protobuf.cmake | 19 ++-----------------
+ 1 file changed, 2 insertions(+), 17 deletions(-)
 
 diff --git a/cmake/protobuf.cmake b/cmake/protobuf.cmake
-index fab2eb00e9..fd3f326247 100644
+index ad80ca6e46..97243a5577 100644
 --- a/cmake/protobuf.cmake
 +++ b/cmake/protobuf.cmake
-@@ -71,21 +71,8 @@ elseif(gRPC_PROTOBUF_PROVIDER STREQUAL "package")
+@@ -68,23 +68,8 @@ elseif(gRPC_PROTOBUF_PROVIDER STREQUAL "package")
+     else()
        set(_gRPC_PROTOBUF_PROTOC_LIBRARIES ${PROTOBUF_PROTOC_LIBRARIES})
-       set(_gRPC_PROTOBUF_WELLKNOWN_INCLUDE_DIR ${PROTOBUF_INCLUDE_DIRS})
      endif()
+-    # Well-known proto files are expected to be in the Protobuf include directory.
+-    get_target_property(_gRPC_PROTOBUF_WELLKNOWN_INCLUDE_DIR ${_gRPC_PROTOBUF_LIBRARIES} INTERFACE_INCLUDE_DIRECTORIES)
 -    if(TARGET protobuf::protoc)
 -      set(_gRPC_PROTOBUF_PROTOC protobuf::protoc)
 -      if(CMAKE_CROSSCOMPILING)

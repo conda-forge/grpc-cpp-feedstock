@@ -83,6 +83,7 @@ cmake -GNinja \
       -DgRPC_ABSL_PROVIDER="package" \
       -DgRPC_RE2_PROVIDER="package" \
       -DProtobuf_ROOT=$PREFIX \
+      -D_gRPC_PROTOBUF_WELLKNOWN_INCLUDE_DIR=$PREFIX/include \
       ..
 
 ninja install
