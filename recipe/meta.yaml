@@ -47,7 +47,7 @@ source:
       - patches/0013-Build-protobufs-for-tests-only-if-gRPC_BUILD_TESTS.patch
       - patches/0014-export-_upb_Arena_SlowMalloc-symbol.patch
       # when exporting all symbols, grpc.dll blows past the maximum of 65535 symbols of the PE/DLL format
-      - patches/0015-do-not-set-CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS.patch
+      - patches/0015-do-not-set-CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS-for-grpc.patch
   - url: https://pypi.org/packages/source/g/grpcio-tools/grpcio_tools-{{ tools_version }}.tar.gz
     sha256: 2413a17ad16c9c821b36e4a67fc64c37b9e4636ab1c3a07778018801378739ba
     folder: grpcio_tools

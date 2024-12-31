@@ -1,0 +1,36 @@
+From f20c4b12de1369e42374c508ac792a68fac53bc0 Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Tue, 31 Dec 2024 11:33:30 +0100
+Subject: [PATCH 15/15] do not set CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS for grpc
+
+---
+ CMakeLists.txt | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 52b3ee9c62..0f0deee761 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -2260,6 +2260,10 @@ if(gRPC_INSTALL)
+   )
+ endif()
+ 
++if(BUILD_SHARED_LIBS AND MSVC)
++  # switch off because grpc breaks limit of 65535 exportable symbols otherwise
++  set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS OFF)
++endif()
+ 
+ add_library(grpc
+   src/core/channelz/channel_trace.cc
+@@ -3247,6 +3251,11 @@ if(gRPC_INSTALL)
+   )
+ endif()
+ 
++if(BUILD_SHARED_LIBS AND MSVC)
++  # switch on again after grpc
++  set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
++endif()
++
+ if(gRPC_BUILD_TESTS)
+ 
+ add_library(grpc_test_util
