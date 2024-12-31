@@ -1,0 +1,493 @@
+From 2a15f5010f69f7eca5b4d20ffa11176f7d79748b Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Tue, 31 Dec 2024 18:08:20 +0100
+Subject: [PATCH 17/17] mark stuff with GRPC_DLL / GRPCAPI for required
+ visibility
+
+---
+ include/grpc/credentials.h                    | 16 +++++------
+ .../lib/event_engine/default_event_engine.h   |  4 +--
+ src/core/lib/iomgr/iomgr.h                    | 14 +++++-----
+ src/core/lib/iomgr/socket_mutator.h           | 16 +++++------
+ .../lib/security/context/security_context.h   |  6 ++--
+ .../tls/grpc_tls_certificate_provider.h       |  8 +++---
+ src/core/lib/security/util/json_util.h        |  4 +--
+ src/core/lib/surface/call.h                   | 28 +++++++++----------
+ src/core/lib/surface/completion_queue.h       | 24 ++++++++--------
+ src/core/util/json/json_reader.h              |  2 +-
+ src/core/util/load_file.h                     |  2 +-
+ src/core/util/time.h                          |  4 +--
+ 12 files changed, 64 insertions(+), 64 deletions(-)
+
+diff --git a/include/grpc/credentials.h b/include/grpc/credentials.h
+index 8875dd115b..0fe7b2dafe 100644
+--- a/include/grpc/credentials.h
++++ b/include/grpc/credentials.h
+@@ -820,7 +820,7 @@ typedef struct grpc_tls_certificate_verifier_external {
+  * Note that we will not take the ownership of the external_verifier. Callers
+  * will need to delete external_verifier in its own destruct function.
+  */
+-grpc_tls_certificate_verifier* grpc_tls_certificate_verifier_external_create(
++GRPCAPI grpc_tls_certificate_verifier* grpc_tls_certificate_verifier_external_create(
+     grpc_tls_certificate_verifier_external* external_verifier);
+ 
+ /**
+@@ -832,7 +832,7 @@ grpc_tls_certificate_verifier* grpc_tls_certificate_verifier_external_create(
+  * to the MITM(Man-In-The-Middle) attacks. Users should avoid doing so in
+  * production environments.
+  */
+-grpc_tls_certificate_verifier* grpc_tls_certificate_verifier_no_op_create();
++GRPCAPI grpc_tls_certificate_verifier* grpc_tls_certificate_verifier_no_op_create();
+ 
+ /**
+  * EXPERIMENTAL API - Subject to change
+@@ -840,7 +840,7 @@ grpc_tls_certificate_verifier* grpc_tls_certificate_verifier_no_op_create();
+  * Factory function for an internal verifier that will do the default hostname
+  * check.
+  */
+-grpc_tls_certificate_verifier* grpc_tls_certificate_verifier_host_name_create();
++GRPCAPI grpc_tls_certificate_verifier* grpc_tls_certificate_verifier_host_name_create();
+ 
+ /**
+  * EXPERIMENTAL API - Subject to change
+@@ -848,7 +848,7 @@ grpc_tls_certificate_verifier* grpc_tls_certificate_verifier_host_name_create();
+  * Releases a grpc_tls_certificate_verifier object. The creator of the
+  * grpc_tls_certificate_verifier object is responsible for its release.
+  */
+-void grpc_tls_certificate_verifier_release(
++GRPCAPI void grpc_tls_certificate_verifier_release(
+     grpc_tls_certificate_verifier* verifier);
+ 
+ /**
+@@ -861,7 +861,7 @@ void grpc_tls_certificate_verifier_release(
+  * verification result through request->status and request->error_details.
+  * Otherwise, inspect through the parameter of |callback|.
+  */
+-int grpc_tls_certificate_verifier_verify(
++GRPCAPI int grpc_tls_certificate_verifier_verify(
+     grpc_tls_certificate_verifier* verifier,
+     grpc_tls_custom_verification_check_request* request,
+     grpc_tls_on_custom_verification_check_done_cb callback, void* callback_arg,
+@@ -874,7 +874,7 @@ int grpc_tls_certificate_verifier_verify(
+  * This is typically used when composing the internal verifiers as part of the
+  * custom verification.
+  */
+-void grpc_tls_certificate_verifier_cancel(
++GRPCAPI void grpc_tls_certificate_verifier_cancel(
+     grpc_tls_certificate_verifier* verifier,
+     grpc_tls_custom_verification_check_request* request);
+ 
+@@ -893,7 +893,7 @@ GRPCAPI grpc_tls_credentials_options* grpc_tls_credentials_options_create(void);
+  * grpc_channel_credentials will take the ownership of the |options|. The
+  * security level of the resulting connection is GRPC_PRIVACY_AND_INTEGRITY.
+  */
+-grpc_channel_credentials* grpc_tls_credentials_create(
++GRPCAPI grpc_channel_credentials* grpc_tls_credentials_create(
+     grpc_tls_credentials_options* options);
+ 
+ /**
+@@ -903,7 +903,7 @@ grpc_channel_credentials* grpc_tls_credentials_create(
+  * grpc_tls_credentials_options specified by callers. The
+  * grpc_server_credentials will take the ownership of the |options|.
+  */
+-grpc_server_credentials* grpc_tls_server_credentials_create(
++GRPCAPI grpc_server_credentials* grpc_tls_server_credentials_create(
+     grpc_tls_credentials_options* options);
+ 
+ /**
+diff --git a/src/core/lib/event_engine/default_event_engine.h b/src/core/lib/event_engine/default_event_engine.h
+index 2a254d4958..45e41cbed5 100644
+--- a/src/core/lib/event_engine/default_event_engine.h
++++ b/src/core/lib/event_engine/default_event_engine.h
+@@ -52,12 +52,12 @@ namespace experimental {
+ /// ChannelArgs, or the channel stack for example - or 2) if not otherwise
+ /// available, call \a GetDefaultEventEngine and save that shared_ptr to ensure
+ /// the Engine's lifetime is at least as long as you need it to be.
+-std::shared_ptr<EventEngine> GetDefaultEventEngine(
++GRPC_DLL std::shared_ptr<EventEngine> GetDefaultEventEngine(
+     grpc_core::SourceLocation location = grpc_core::SourceLocation());
+ 
+ /// On ingress, ensure that an EventEngine exists in channel args via
+ /// preconditioning.
+-void RegisterEventEngineChannelArgPreconditioning(
++GRPC_DLL void RegisterEventEngineChannelArgPreconditioning(
+     grpc_core::CoreConfiguration::Builder* builder);
+ 
+ }  // namespace experimental
+diff --git a/src/core/lib/iomgr/iomgr.h b/src/core/lib/iomgr/iomgr.h
+index 280471fae8..0bbee39a38 100644
+--- a/src/core/lib/iomgr/iomgr.h
++++ b/src/core/lib/iomgr/iomgr.h
+@@ -26,31 +26,31 @@
+ #include "src/core/lib/iomgr/port.h"
+ 
+ /// Initializes the iomgr.
+-void grpc_iomgr_init();
++GRPC_DLL void grpc_iomgr_init();
+ 
+ /// Starts any background threads for iomgr.
+-void grpc_iomgr_start();
++GRPC_DLL void grpc_iomgr_start();
+ 
+ /// Signals the intention to shutdown the iomgr. Expects to be able to flush
+ /// exec_ctx.
+-void grpc_iomgr_shutdown();
++GRPC_DLL void grpc_iomgr_shutdown();
+ 
+ /// Signals the intention to shutdown all the closures registered in the
+ /// background poller.
+-void grpc_iomgr_shutdown_background_closure();
++GRPC_DLL void grpc_iomgr_shutdown_background_closure();
+ 
+ // Returns true if polling engine runs in the background, false otherwise.
+ // Currently only 'epollbg' runs in the background.
+ //
+-bool grpc_iomgr_run_in_background();
++GRPC_DLL bool grpc_iomgr_run_in_background();
+ 
+ /// Returns true if the caller is a worker thread for any background poller.
+-bool grpc_iomgr_is_any_background_poller_thread();
++GRPC_DLL bool grpc_iomgr_is_any_background_poller_thread();
+ 
+ /// Returns true if the closure is registered into the background poller. Note
+ /// that the closure may or may not run yet when this function returns, and the
+ /// closure should not be blocking or long-running.
+-bool grpc_iomgr_add_closure_to_background_poller(grpc_closure* closure,
++GRPC_DLL bool grpc_iomgr_add_closure_to_background_poller(grpc_closure* closure,
+                                                  grpc_error_handle error);
+ 
+ // Exposed only for testing
+diff --git a/src/core/lib/iomgr/socket_mutator.h b/src/core/lib/iomgr/socket_mutator.h
+index 9ce180b345..571d65c905 100644
+--- a/src/core/lib/iomgr/socket_mutator.h
++++ b/src/core/lib/iomgr/socket_mutator.h
+@@ -43,7 +43,7 @@ typedef struct {
+ } grpc_mutate_socket_info;
+ 
+ /// The virtual table of grpc_socket_mutator
+-struct grpc_socket_mutator_vtable {
++GRPC_DLL struct grpc_socket_mutator_vtable {
+   /// Mutates the socket options of \a fd -- deprecated, prefer mutate_fd_2
+   bool (*mutate_fd)(int fd, grpc_socket_mutator* mutator);
+   /// Compare socket mutator \a a and \a b
+@@ -57,26 +57,26 @@ struct grpc_socket_mutator_vtable {
+ };
+ 
+ /// The Socket Mutator interface allows changes on socket options
+-struct grpc_socket_mutator {
++GRPC_DLL struct grpc_socket_mutator {
+   const grpc_socket_mutator_vtable* vtable;
+   gpr_refcount refcount;
+ };
+ 
+ /// called by concrete implementations to initialize the base struct
+-void grpc_socket_mutator_init(grpc_socket_mutator* mutator,
++GRPC_DLL void grpc_socket_mutator_init(grpc_socket_mutator* mutator,
+                               const grpc_socket_mutator_vtable* vtable);
+ 
+ /// Wrap \a mutator as a grpc_arg
+-grpc_arg grpc_socket_mutator_to_arg(grpc_socket_mutator* mutator);
++GRPC_DLL grpc_arg grpc_socket_mutator_to_arg(grpc_socket_mutator* mutator);
+ 
+ /// Perform the file descriptor mutation operation of \a mutator on \a fd
+-bool grpc_socket_mutator_mutate_fd(grpc_socket_mutator* mutator, int fd,
++GRPC_DLL bool grpc_socket_mutator_mutate_fd(grpc_socket_mutator* mutator, int fd,
+                                    grpc_fd_usage usage);
+ 
+ /// Compare if \a a and \a b are the same mutator or have same settings
+-int grpc_socket_mutator_compare(grpc_socket_mutator* a, grpc_socket_mutator* b);
++GRPC_DLL int grpc_socket_mutator_compare(grpc_socket_mutator* a, grpc_socket_mutator* b);
+ 
+-grpc_socket_mutator* grpc_socket_mutator_ref(grpc_socket_mutator* mutator);
+-void grpc_socket_mutator_unref(grpc_socket_mutator* mutator);
++GRPC_DLL grpc_socket_mutator* grpc_socket_mutator_ref(grpc_socket_mutator* mutator);
++GRPC_DLL void grpc_socket_mutator_unref(grpc_socket_mutator* mutator);
+ 
+ #endif  // GRPC_SRC_CORE_LIB_IOMGR_SOCKET_MUTATOR_H
+diff --git a/src/core/lib/security/context/security_context.h b/src/core/lib/security/context/security_context.h
+index 1a5b7afa32..174095321d 100644
+--- a/src/core/lib/security/context/security_context.h
++++ b/src/core/lib/security/context/security_context.h
+@@ -44,20 +44,20 @@
+ 
+ // Property names are always NULL terminated.
+ 
+-struct grpc_auth_property_array {
++GRPC_DLL struct grpc_auth_property_array {
+   grpc_auth_property* array = nullptr;
+   size_t count = 0;
+   size_t capacity = 0;
+ };
+ 
+-void grpc_auth_property_reset(grpc_auth_property* property);
++GRPC_DLL void grpc_auth_property_reset(grpc_auth_property* property);
+ 
+ #define GRPC_AUTH_CONTEXT_ARG "grpc.auth_context"
+ 
+ // This type is forward declared as a C struct and we cannot define it as a
+ // class. Otherwise, compiler will complain about type mismatch due to
+ // -Wmismatched-tags.
+-struct grpc_auth_context
++GRPC_DLL struct grpc_auth_context
+     : public grpc_core::RefCounted<grpc_auth_context,
+                                    grpc_core::NonPolymorphicRefCount> {
+  public:
+diff --git a/src/core/lib/security/credentials/tls/grpc_tls_certificate_provider.h b/src/core/lib/security/credentials/tls/grpc_tls_certificate_provider.h
+index 56f227d5ad..3ea29f128e 100644
+--- a/src/core/lib/security/credentials/tls/grpc_tls_certificate_provider.h
++++ b/src/core/lib/security/credentials/tls/grpc_tls_certificate_provider.h
+@@ -48,7 +48,7 @@
+ // grpc_tls_certificate_distributor object. When the credentials and validation
+ // contexts become valid or changed, a grpc_tls_certificate_provider should
+ // notify its distributor so as to propagate the update to the watchers.
+-struct grpc_tls_certificate_provider
++GRPC_DLL struct grpc_tls_certificate_provider
+     : public grpc_core::RefCounted<grpc_tls_certificate_provider> {
+  public:
+   virtual grpc_core::RefCountedPtr<grpc_tls_certificate_distributor>
+@@ -92,7 +92,7 @@ namespace grpc_core {
+ 
+ // A basic provider class that will get credentials from string during
+ // initialization.
+-class StaticDataCertificateProvider final
++GRPC_DLL class StaticDataCertificateProvider final
+     : public grpc_tls_certificate_provider {
+  public:
+   StaticDataCertificateProvider(std::string root_certificate,
+@@ -131,7 +131,7 @@ class StaticDataCertificateProvider final
+ };
+ 
+ // A provider class that will watch the credential changes on the file system.
+-class FileWatcherCertificateProvider final
++GRPC_DLL class FileWatcherCertificateProvider final
+     : public grpc_tls_certificate_provider {
+  public:
+   FileWatcherCertificateProvider(std::string private_key_path,
+@@ -198,7 +198,7 @@ class FileWatcherCertificateProvider final
+ //  Checks if the private key matches the certificate's public key.
+ //  Returns a not-OK status on failure, or a bool indicating
+ //  whether the key/cert pair matches.
+-absl::StatusOr<bool> PrivateKeyAndCertificateMatch(
++GRPC_DLL absl::StatusOr<bool> PrivateKeyAndCertificateMatch(
+     absl::string_view private_key, absl::string_view cert_chain);
+ 
+ }  // namespace grpc_core
+diff --git a/src/core/lib/security/util/json_util.h b/src/core/lib/security/util/json_util.h
+index 6425d32aaf..8f66fcb5ed 100644
+--- a/src/core/lib/security/util/json_util.h
++++ b/src/core/lib/security/util/json_util.h
+@@ -31,13 +31,13 @@
+ #define GRPC_AUTH_JSON_TYPE_EXTERNAL_ACCOUNT "external_account"
+ 
+ // Gets a child property from a json node.
+-const char* grpc_json_get_string_property(const grpc_core::Json& json,
++GRPC_DLL const char* grpc_json_get_string_property(const grpc_core::Json& json,
+                                           const char* prop_name,
+                                           grpc_error_handle* error);
+ 
+ // Copies the value of the json child property specified by prop_name.
+ // Returns false if the property was not found.
+-bool grpc_copy_json_string_property(const grpc_core::Json& json,
++GRPC_DLL bool grpc_copy_json_string_property(const grpc_core::Json& json,
+                                     const char* prop_name, char** copied_value);
+ 
+ #endif  // GRPC_SRC_CORE_LIB_SECURITY_UTIL_JSON_UTIL_H
+diff --git a/src/core/lib/surface/call.h b/src/core/lib/surface/call.h
+index e95d368666..1034ada2f9 100644
+--- a/src/core/lib/surface/call.h
++++ b/src/core/lib/surface/call.h
+@@ -51,7 +51,7 @@
+ typedef void (*grpc_ioreq_completion_func)(grpc_call* call, int success,
+                                            void* user_data);
+ 
+-typedef struct grpc_call_create_args {
++typedef GRPC_DLL struct grpc_call_create_args {
+   grpc_core::RefCountedPtr<grpc_core::Channel> channel;
+   grpc_core::ServerInterface* server;
+ 
+@@ -237,16 +237,16 @@ struct ArenaContextType<Call> {
+ // Create a new call based on \a args.
+ // Regardless of success or failure, always returns a valid new call into *call
+ //
+-grpc_error_handle grpc_call_create(grpc_call_create_args* args,
++GRPC_DLL grpc_error_handle grpc_call_create(grpc_call_create_args* args,
+                                    grpc_call** call);
+ 
+-void grpc_call_set_completion_queue(grpc_call* call, grpc_completion_queue* cq);
++GRPC_DLL void grpc_call_set_completion_queue(grpc_call* call, grpc_completion_queue* cq);
+ 
+-grpc_core::Arena* grpc_call_get_arena(grpc_call* call);
++GRPC_DLL grpc_core::Arena* grpc_call_get_arena(grpc_call* call);
+ 
+-grpc_call_stack* grpc_call_get_call_stack(grpc_call* call);
++GRPC_DLL grpc_call_stack* grpc_call_get_call_stack(grpc_call* call);
+ 
+-grpc_call_error grpc_call_start_batch_and_execute(grpc_call* call,
++GRPC_DLL grpc_call_error grpc_call_start_batch_and_execute(grpc_call* call,
+                                                   const grpc_op* ops,
+                                                   size_t nops,
+                                                   grpc_closure* closure);
+@@ -256,12 +256,12 @@ grpc_call_error grpc_call_start_batch_and_execute(grpc_call* call,
+ void grpc_call_cancel_internal(grpc_call* call);
+ 
+ // Given the top call_element, get the call object.
+-grpc_call* grpc_call_from_top_element(grpc_call_element* surface_element);
++GRPC_DLL grpc_call* grpc_call_from_top_element(grpc_call_element* surface_element);
+ 
+-void grpc_call_log_batch(const char* file, int line, const grpc_op* ops,
++GRPC_DLL void grpc_call_log_batch(const char* file, int line, const grpc_op* ops,
+                          size_t nops);
+ 
+-void grpc_call_tracer_set(grpc_call* call, grpc_core::ClientCallTracer* tracer);
++GRPC_DLL void grpc_call_tracer_set(grpc_call* call, grpc_core::ClientCallTracer* tracer);
+ 
+ // Sets call tracer on the call and manages its life by using the call's arena.
+ // When using this API, the tracer will be destroyed by grpc_call arena when
+@@ -270,10 +270,10 @@ void grpc_call_tracer_set(grpc_call* call, grpc_core::ClientCallTracer* tracer);
+ // Arena to manage the lifetime of the call tracer. Python needs this API
+ // because the tracer was created within a separate shared object library which
+ // doesn't have access to core functions like arena->ManagedNew<>.
+-void grpc_call_tracer_set_and_manage(grpc_call* call,
++GRPC_DLL void grpc_call_tracer_set_and_manage(grpc_call* call,
+                                      grpc_core::ClientCallTracer* tracer);
+ 
+-void* grpc_call_tracer_get(grpc_call* call);
++GRPC_DLL void* grpc_call_tracer_get(grpc_call* call);
+ 
+ #define GRPC_CALL_LOG_BATCH(ops, nops)                    \
+   do {                                                    \
+@@ -295,15 +295,15 @@ class ClientCallTracerWrapper {
+ 
+ // Return an appropriate compression algorithm for the requested compression \a
+ // level in the context of \a call.
+-grpc_compression_algorithm grpc_call_compression_for_level(
++GRPC_DLL grpc_compression_algorithm grpc_call_compression_for_level(
+     grpc_call* call, grpc_compression_level level);
+ 
+ // Did this client call receive a trailers-only response
+ // TODO(markdroth): This is currently available only to the C++ API.
+ //                  Move to surface API if requested by other languages.
+-bool grpc_call_is_trailers_only(const grpc_call* call);
++GRPC_DLL bool grpc_call_is_trailers_only(const grpc_call* call);
+ 
+ // Returns the authority for the call, as seen on the server side.
+-absl::string_view grpc_call_server_authority(const grpc_call* call);
++GRPC_DLL absl::string_view grpc_call_server_authority(const grpc_call* call);
+ 
+ #endif  // GRPC_SRC_CORE_LIB_SURFACE_CALL_H
+diff --git a/src/core/lib/surface/completion_queue.h b/src/core/lib/surface/completion_queue.h
+index 5b8a634ddb..3100cf8b53 100644
+--- a/src/core/lib/surface/completion_queue.h
++++ b/src/core/lib/surface/completion_queue.h
+@@ -30,7 +30,7 @@
+ #include "src/core/util/manual_constructor.h"
+ #include "src/core/util/mpscq.h"
+ 
+-typedef struct grpc_cq_completion {
++typedef GRPC_DLL struct grpc_cq_completion {
+   grpc_core::ManualConstructor<
+       grpc_core::MultiProducerSingleConsumerQueue::Node>
+       node;
+@@ -46,17 +46,17 @@ typedef struct grpc_cq_completion {
+ } grpc_cq_completion;
+ 
+ #ifndef NDEBUG
+-void grpc_cq_internal_ref(grpc_completion_queue* cq, const char* reason,
++GRPC_DLL void grpc_cq_internal_ref(grpc_completion_queue* cq, const char* reason,
+                           const char* file, int line);
+-void grpc_cq_internal_unref(grpc_completion_queue* cq, const char* reason,
++GRPC_DLL void grpc_cq_internal_unref(grpc_completion_queue* cq, const char* reason,
+                             const char* file, int line);
+ #define GRPC_CQ_INTERNAL_REF(cq, reason) \
+   grpc_cq_internal_ref(cq, reason, __FILE__, __LINE__)
+ #define GRPC_CQ_INTERNAL_UNREF(cq, reason) \
+   grpc_cq_internal_unref(cq, reason, __FILE__, __LINE__)
+ #else
+-void grpc_cq_internal_ref(grpc_completion_queue* cq);
+-void grpc_cq_internal_unref(grpc_completion_queue* cq);
++GRPC_DLL void grpc_cq_internal_ref(grpc_completion_queue* cq);
++GRPC_DLL void grpc_cq_internal_unref(grpc_completion_queue* cq);
+ #define GRPC_CQ_INTERNAL_REF(cq, reason) grpc_cq_internal_ref(cq)
+ #define GRPC_CQ_INTERNAL_UNREF(cq, reason) grpc_cq_internal_unref(cq)
+ #endif
+@@ -65,25 +65,25 @@ void grpc_cq_internal_unref(grpc_completion_queue* cq);
+ // shutdown until a corrensponding grpc_cq_end_* call is made.
+ // \a tag is currently used only in debug builds. Return true on success, and
+ // false if completion_queue has been shutdown.
+-bool grpc_cq_begin_op(grpc_completion_queue* cq, void* tag);
++GRPC_DLL bool grpc_cq_begin_op(grpc_completion_queue* cq, void* tag);
+ 
+ // Queue a GRPC_OP_COMPLETED operation; tag must correspond to the tag passed to
+ // grpc_cq_begin_op
+-void grpc_cq_end_op(grpc_completion_queue* cq, void* tag,
++GRPC_DLL void grpc_cq_end_op(grpc_completion_queue* cq, void* tag,
+                     grpc_error_handle error,
+                     void (*done)(void* done_arg, grpc_cq_completion* storage),
+                     void* done_arg, grpc_cq_completion* storage,
+                     bool internal = false);
+ 
+-grpc_pollset* grpc_cq_pollset(grpc_completion_queue* cq);
++GRPC_DLL grpc_pollset* grpc_cq_pollset(grpc_completion_queue* cq);
+ 
+-bool grpc_cq_can_listen(grpc_completion_queue* cq);
++GRPC_DLL bool grpc_cq_can_listen(grpc_completion_queue* cq);
+ 
+-grpc_cq_completion_type grpc_get_cq_completion_type(grpc_completion_queue* cq);
++GRPC_DLL grpc_cq_completion_type grpc_get_cq_completion_type(grpc_completion_queue* cq);
+ 
+-int grpc_get_cq_poll_num(grpc_completion_queue* cq);
++GRPC_DLL int grpc_get_cq_poll_num(grpc_completion_queue* cq);
+ 
+-grpc_completion_queue* grpc_completion_queue_create_internal(
++GRPC_DLL grpc_completion_queue* grpc_completion_queue_create_internal(
+     grpc_cq_completion_type completion_type, grpc_cq_polling_type polling_type,
+     grpc_completion_queue_functor* shutdown_callback);
+ 
+diff --git a/src/core/util/json/json_reader.h b/src/core/util/json/json_reader.h
+index 127b380880..864857dab1 100644
+--- a/src/core/util/json/json_reader.h
++++ b/src/core/util/json/json_reader.h
+@@ -26,7 +26,7 @@
+ namespace grpc_core {
+ 
+ // Parses JSON string from json_str.
+-absl::StatusOr<Json> JsonParse(absl::string_view json_str);
++GRPC_DLL absl::StatusOr<Json> JsonParse(absl::string_view json_str);
+ 
+ }  // namespace grpc_core
+ 
+diff --git a/src/core/util/load_file.h b/src/core/util/load_file.h
+index 980e0c11af..d5206b0534 100644
+--- a/src/core/util/load_file.h
++++ b/src/core/util/load_file.h
+@@ -26,7 +26,7 @@ namespace grpc_core {
+ 
+ // Loads the content of a file into a slice. add_null_terminator will add a NULL
+ // terminator if true.
+-absl::StatusOr<Slice> LoadFile(const std::string& filename,
++GRPC_DLL absl::StatusOr<Slice> LoadFile(const std::string& filename,
+                                bool add_null_terminator);
+ }  // namespace grpc_core
+ 
+diff --git a/src/core/util/time.h b/src/core/util/time.h
+index c51b3cf63e..c25388eaff 100644
+--- a/src/core/util/time.h
++++ b/src/core/util/time.h
+@@ -70,7 +70,7 @@ constexpr inline int64_t MillisMul(int64_t millis, int64_t mul) {
+ class Duration;
+ 
+ // Timestamp represents a discrete point in time.
+-class Timestamp {
++GRPC_DLL class Timestamp {
+  public:
+   // Base interface for time providers.
+   class Source {
+@@ -181,7 +181,7 @@ class ScopedTimeCache final : public Timestamp::ScopedSource {
+ };
+ 
+ // Duration represents a span of time.
+-class Duration {
++GRPC_DLL class Duration {
+  public:
+   constexpr Duration() noexcept : millis_(0) {}
+ 

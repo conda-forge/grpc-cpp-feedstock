@@ -1,7 +1,7 @@
 From f20c4b12de1369e42374c508ac792a68fac53bc0 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 31 Dec 2024 11:33:30 +0100
-Subject: [PATCH 15/16] do not set CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS for grpc
+Subject: [PATCH 15/17] do not set CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS for grpc
 
 ---
  CMakeLists.txt | 9 +++++++++
