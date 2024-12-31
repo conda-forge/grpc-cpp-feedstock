@@ -1,17 +1,17 @@
-From 946465930acae5170c1fb972f0c345d53561313c Mon Sep 17 00:00:00 2001
+From 8b684cea31977e0f462aad03b5d1516f97eb35f2 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 6 Feb 2024 16:09:08 +0100
 Subject: [PATCH 08/12] fix missing DLL-exports in vendored upb
 
 ---
- CMakeLists.txt                                | 12 +++++++
+ CMakeLists.txt                                | 13 +++++++
  third_party/upb/upb/mem/alloc.h               |  2 +-
  .../upb/upb/mini_table/internal/message.h     |  3 +-
  third_party/upb/upb/port/def.inc              | 35 +++++++++++++++++++
- 4 files changed, 50 insertions(+), 2 deletions(-)
+ 4 files changed, 51 insertions(+), 2 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 3c6029077a..b242b428f1 100644
+index 3c6029077a..afd5297eb9 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -3756,6 +3756,12 @@ if(WIN32 AND MSVC)
@@ -27,7 +27,7 @@ index 3c6029077a..b242b428f1 100644
  endif()
  
  target_include_directories(upb_mem_lib
-@@ -3821,6 +3827,12 @@ if(WIN32 AND MSVC)
+@@ -3821,6 +3827,13 @@ if(WIN32 AND MSVC)
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
      )
    endif()
@@ -36,6 +36,7 @@ index 3c6029077a..b242b428f1 100644
 +  set_target_properties(upb_message_lib PROPERTIES DEFINE_SYMBOL "UPB_MSG_DLL_EXPORTS")
 +  if(BUILD_SHARED_LIBS)
 +    target_compile_definitions(upb_message_lib INTERFACE UPB_MSG_DLL_IMPORTS)
++    target_compile_definitions(upb_message_lib PRIVATE UPB_MEM_DLL_IMPORTS)
 +  endif()
  endif()
  

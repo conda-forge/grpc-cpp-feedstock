@@ -1,4 +1,4 @@
-From 007b8e0769b08cfb6b2a78ceb0532dff281a85e7 Mon Sep 17 00:00:00 2001
+From 6bf9d06284347f099b7082d7529c5b9ce1266a50 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 16 Jul 2024 17:40:18 +1100
 Subject: [PATCH 10/12] set `-Wl,-undefined,dynamic_lookup` for
@@ -9,7 +9,7 @@ Subject: [PATCH 10/12] set `-Wl,-undefined,dynamic_lookup` for
  1 file changed, 6 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 8c6525eb12..47eb6c6ce2 100644
+index c5b99f2014..5c8c48de7b 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -3694,6 +3694,9 @@ if(WIN32 AND MSVC)
@@ -22,7 +22,7 @@ index 8c6525eb12..47eb6c6ce2 100644
  endif()
  
  target_include_directories(upb_json_lib
-@@ -3961,6 +3964,9 @@ if(WIN32 AND MSVC)
+@@ -3962,6 +3965,9 @@ if(WIN32 AND MSVC)
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
      )
    endif()

@@ -1,4 +1,4 @@
-From b5ecd224d512e8e7ef4b6454e6d73a9d8f7cf61f Mon Sep 17 00:00:00 2001
+From f36df3f109b0b490669c1e553009a00a0b52c092 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Thu, 29 Feb 2024 20:31:21 +1100
 Subject: [PATCH 09/12] for main targets, set *_DLL_EXPORTS when building and
@@ -9,7 +9,7 @@ Subject: [PATCH 09/12] for main targets, set *_DLL_EXPORTS when building and
  1 file changed, 10 insertions(+), 26 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index b242b428f1..8c6525eb12 100644
+index afd5297eb9..c5b99f2014 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -1742,10 +1742,8 @@ if(WIN32 AND MSVC)
@@ -53,7 +53,7 @@ index b242b428f1..8c6525eb12 100644
    endif()
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc_unsecure.pdb
-@@ -4276,12 +4268,8 @@ if(WIN32 AND MSVC)
+@@ -4277,12 +4269,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)
@@ -68,7 +68,7 @@ index b242b428f1..8c6525eb12 100644
    endif()
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc++.pdb
-@@ -5025,12 +5013,8 @@ if(WIN32 AND MSVC)
+@@ -5026,12 +5014,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)
