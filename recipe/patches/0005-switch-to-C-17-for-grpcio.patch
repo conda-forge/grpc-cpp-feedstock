@@ -1,14 +1,14 @@
-From e95f7541c3d6e2f70798f00b998b99b3c77eb313 Mon Sep 17 00:00:00 2001
+From 1428fdf397a3646542503fbb24975c00243704bc Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sat, 3 Sep 2022 19:23:15 +0200
-Subject: [PATCH 05/11] switch to C++17 for grpcio
+Subject: [PATCH 05/12] switch to C++17 for grpcio
 
 ---
  setup.py | 10 +++++-----
  1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index 4033b4a..17040bd 100644
+index 4033b4ae81..17040bd25d 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -221,7 +221,7 @@ def check_linker_need_libatomic():

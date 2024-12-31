@@ -1,17 +1,17 @@
-From 55da995a6b0627be214bee600cc85e77aed8d9db Mon Sep 17 00:00:00 2001
+From 8b684cea31977e0f462aad03b5d1516f97eb35f2 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 6 Feb 2024 16:09:08 +0100
-Subject: [PATCH 08/11] fix missing DLL-exports in vendored upb
+Subject: [PATCH 08/12] fix missing DLL-exports in vendored upb
 
 ---
- CMakeLists.txt                                | 12 +++++++
+ CMakeLists.txt                                | 13 +++++++
  third_party/upb/upb/mem/alloc.h               |  2 +-
  .../upb/upb/mini_table/internal/message.h     |  3 +-
  third_party/upb/upb/port/def.inc              | 35 +++++++++++++++++++
- 4 files changed, 50 insertions(+), 2 deletions(-)
+ 4 files changed, 51 insertions(+), 2 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 33b48e5..57a3ef3 100644
+index 3c6029077a..afd5297eb9 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -3756,6 +3756,12 @@ if(WIN32 AND MSVC)
@@ -27,7 +27,7 @@ index 33b48e5..57a3ef3 100644
  endif()
  
  target_include_directories(upb_mem_lib
-@@ -3821,6 +3827,12 @@ if(WIN32 AND MSVC)
+@@ -3821,6 +3827,13 @@ if(WIN32 AND MSVC)
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
      )
    endif()
@@ -36,12 +36,13 @@ index 33b48e5..57a3ef3 100644
 +  set_target_properties(upb_message_lib PROPERTIES DEFINE_SYMBOL "UPB_MSG_DLL_EXPORTS")
 +  if(BUILD_SHARED_LIBS)
 +    target_compile_definitions(upb_message_lib INTERFACE UPB_MSG_DLL_IMPORTS)
++    target_compile_definitions(upb_message_lib PRIVATE UPB_MEM_DLL_IMPORTS)
 +  endif()
  endif()
  
  target_include_directories(upb_message_lib
 diff --git a/third_party/upb/upb/mem/alloc.h b/third_party/upb/upb/mem/alloc.h
-index 441731d..db048ce 100644
+index 441731d2d8..db048ceeff 100644
 --- a/third_party/upb/upb/mem/alloc.h
 +++ b/third_party/upb/upb/mem/alloc.h
 @@ -52,7 +52,7 @@ UPB_INLINE void upb_free(upb_alloc* alloc, void* ptr) {
@@ -54,7 +55,7 @@ index 441731d..db048ce 100644
  /* Functions that hard-code the global malloc.
   *
 diff --git a/third_party/upb/upb/mini_table/internal/message.h b/third_party/upb/upb/mini_table/internal/message.h
-index e044c0e..fd026c1 100644
+index e044c0e48c..fd026c101b 100644
 --- a/third_party/upb/upb/mini_table/internal/message.h
 +++ b/third_party/upb/upb/mini_table/internal/message.h
 @@ -75,8 +75,9 @@ struct upb_MiniTable {
@@ -69,7 +70,7 @@ index e044c0e..fd026c1 100644
    return &UPB_PRIVATE(_kUpb_MiniTable_Empty);
  }
 diff --git a/third_party/upb/upb/port/def.inc b/third_party/upb/upb/port/def.inc
-index 7d23d5c..53d8a67 100644
+index 7d23d5c8b3..53d8a671de 100644
 --- a/third_party/upb/upb/port/def.inc
 +++ b/third_party/upb/upb/port/def.inc
 @@ -350,3 +350,38 @@ void __asan_unpoison_memory_region(void const volatile *addr, size_t size);

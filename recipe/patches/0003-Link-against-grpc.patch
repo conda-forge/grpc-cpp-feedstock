@@ -1,7 +1,7 @@
-From 45091a959906120f9fdf70c8fa368d7f9decd943 Mon Sep 17 00:00:00 2001
+From 2e641131b3e55d14008462a02bdb91e63b754ce7 Mon Sep 17 00:00:00 2001
 From: Marius van Niekerk <marius.v.niekerk@gmail.com>
 Date: Mon, 13 Jun 2022 17:13:07 -0400
-Subject: [PATCH 03/11] Link against grpc
+Subject: [PATCH 03/12] Link against grpc
 
 Co-Authored-By: H. Vetinari <h.vetinari@gmx.com>
 ---
@@ -9,7 +9,7 @@ Co-Authored-By: H. Vetinari <h.vetinari@gmx.com>
  1 file changed, 11 insertions(+)
 
 diff --git a/setup.py b/setup.py
-index 0dc41e4..4033b4a 100644
+index 0dc41e42e3..4033b4ae81 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -180,6 +180,8 @@ BUILD_WITH_STATIC_LIBSTDCXX = _env_bool_value(
