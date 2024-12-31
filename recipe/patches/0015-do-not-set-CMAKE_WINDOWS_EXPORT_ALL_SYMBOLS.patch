@@ -1,0 +1,24 @@
+From 0802fd3d3855f8f25952f41f7fc0b58ffe0d8b37 Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Tue, 31 Dec 2024 11:33:30 +0100
+Subject: [PATCH 15/15] do not set CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS
+
+---
+ CMakeLists.txt | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 52b3ee9c62..b05a63d2de 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -35,10 +35,6 @@ set(PACKAGE_TARNAME       "${PACKAGE_NAME}-${PACKAGE_VERSION}")
+ set(PACKAGE_BUGREPORT     "https://github.com/grpc/grpc/issues/")
+ project(${PACKAGE_NAME} LANGUAGES C CXX)
+ 
+-if(BUILD_SHARED_LIBS AND MSVC)
+-  set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+-endif()
+-
+ set(gRPC_INSTALL_BINDIR "bin" CACHE STRING "Installation directory for executables")
+ set(gRPC_INSTALL_LIBDIR "lib" CACHE STRING "Installation directory for libraries")
+ set(gRPC_INSTALL_INCLUDEDIR "include" CACHE STRING "Installation directory for headers")
