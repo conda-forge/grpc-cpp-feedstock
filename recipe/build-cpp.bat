@@ -1,5 +1,9 @@
 @echo on
 
+:: use lld because the regular MSVC linker runs into
+:: LINK : fatal error LNK1189: library limit of 65535 objects exceeded
+set "LD=lld-link.exe"
+
 echo %CFLAGS%
 echo %CXXFLAGS%
 
@@ -10,6 +14,7 @@ cmake -GNinja ^
       -DBUILD_SHARED_LIBS=ON ^
       -DCMAKE_CXX_STANDARD=17 ^
       -DCMAKE_BUILD_TYPE=Release ^
+      -DCMAKE_LINKER_TYPE=LLD ^
       -DCMAKE_PREFIX_PATH=%CONDA_PREFIX% ^
       -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% ^
       -DgRPC_MSVC_STATIC_RUNTIME=OFF ^
