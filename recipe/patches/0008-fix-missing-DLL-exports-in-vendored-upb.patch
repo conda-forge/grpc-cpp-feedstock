@@ -1,7 +1,7 @@
 From 946465930acae5170c1fb972f0c345d53561313c Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 6 Feb 2024 16:09:08 +0100
-Subject: [PATCH 08/12] fix missing DLL-exports in vendored upb
+Subject: [PATCH 08/13] fix missing DLL-exports in vendored upb
 
 ---
  CMakeLists.txt                                | 12 +++++++

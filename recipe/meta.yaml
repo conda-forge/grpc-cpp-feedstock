@@ -41,6 +41,7 @@ source:
       # backport https://github.com/protocolbuffers/protobuf/commit/0309d86d3175cb3fb82d37150e6eff90b11bed77
       # due to https://developercommunity.visualstudio.com/t/NAN-is-no-longer-compile-time-constant-i/10688907
       - patches/0012-Fixed-NAN-INFINITY-definitions-to-work-on-Windows-11.patch
+      - patches/0013-set-UPB_MEM_DLL_IMPORTS-for-upb_message_lib.patch
   - url: https://pypi.org/packages/source/g/grpcio-tools/grpcio_tools-{{ version }}.tar.gz
     sha256: d9657f5ddc62b52f58904e6054b7d8a8909ed08a1e28b734be3a707087bcf004
     folder: grpcio_tools

@@ -1,0 +1,21 @@
+From a17f0be4a6cff0a30a1ea8a80c2a1618aa9f46c4 Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Tue, 31 Dec 2024 06:23:02 +0100
+Subject: [PATCH 13/13] set UPB_MEM_DLL_IMPORTS for upb_message_lib
+
+---
+ CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 47eb6c6ce2..5c8c48de7b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -3827,6 +3827,7 @@ if(WIN32 AND MSVC)
+   set_target_properties(upb_message_lib PROPERTIES DEFINE_SYMBOL "UPB_MSG_DLL_EXPORTS")
+   if(BUILD_SHARED_LIBS)
+     target_compile_definitions(upb_message_lib INTERFACE UPB_MSG_DLL_IMPORTS)
++    target_compile_definitions(upb_message_lib PRIVATE UPB_MEM_DLL_IMPORTS)
+   endif()
+ endif()
+ 
