@@ -49,7 +49,7 @@ source:
       # when exporting all symbols, grpc.dll blows past the maximum of 65535 symbols of the PE/DLL format
       - patches/0015-do-not-set-CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS-for-grpc.patch
       # use GRPCAPI (as more fine-grained replacement of CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS)
-      - patches/0016-set-GRPCAPI-when-building-grpc.patch
+      - patches/0016-set-GRPCAPI-when-building-consuming-grpc.patch
   - url: https://pypi.org/packages/source/g/grpcio-tools/grpcio_tools-{{ tools_version }}.tar.gz
     sha256: 2413a17ad16c9c821b36e4a67fc64c37b9e4636ab1c3a07778018801378739ba
     folder: grpcio_tools
