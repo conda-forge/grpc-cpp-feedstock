@@ -4,10 +4,9 @@
 {% set tools_version = "1.68.1" %}
 
 # core package & vendored libs use different version scheme than CPP libs, see
-# https://github.com/grpc/grpc/blob/v1.48.1/CMakeLists.txt#L28-L32
-# the difference of 24 is empirical and most recently changed with 1.68 (before: 1.54)
-{% set core_major = version.split(".")[1] | int - 24 %}
-{% set core_version = core_major | string ~ ".1.0" %}
+# top of https://github.com/grpc/grpc/blob/v{{ version }}/CMakeLists.txt
+# as of 1.67 the pattern is not trivially deducible from the version anymore
+{% set core_version = "44.1.1" %}
 
 {% set core_libs = ["gpr", "grpc", "grpc_unsecure"] %}
 {% set core_cpp_libs = ["grpc++", "grpc++_unsecure"] %}
