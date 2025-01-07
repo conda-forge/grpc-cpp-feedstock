@@ -1,12 +1,12 @@
-{% set version = "1.68.2" %}
+{% set version = "1.69.0" %}
 # it would be nice to build `grpcio-tools` ourselves (same sources, but non-trivial due to bazel);
 # currently relies on PyPI releases, which don't always have matching patch versions to latest tags
-{% set tools_version = "1.68.1" %}
+{% set tools_version = "currently_unused" %}
 
 # core package & vendored libs use different version scheme than CPP libs, see
 # top of https://github.com/grpc/grpc/blob/v{{ version }}/CMakeLists.txt
 # as of 1.67 the pattern is not trivially deducible from the version anymore
-{% set core_version = "44.1.1" %}
+{% set core_version = "44.2.0" %}
 
 {% set core_libs = ["gpr", "grpc", "grpc_unsecure"] %}
 {% set core_cpp_libs = ["grpc++", "grpc++_unsecure"] %}
@@ -21,7 +21,7 @@ package:
 
 source:
   - url: https://github.com/grpc/grpc/archive/v{{ version.replace(".pre", "-pre") }}.tar.gz
-    sha256: afbc5d78d6ba6d509cc6e264de0d49dcd7304db435cbf2d630385bacf49e066c
+    sha256: cd256d91781911d46a57506978b3979bfee45d5086a1b6668a3ae19c5e77f8dc
     patches:
       - patches/0001-windows-ssl-lib-names.patch
       - patches/0002-fix-win-setup-cmds.patch
@@ -82,8 +82,8 @@ source:
 
   # would be nice to avoid this; it's contained in the main sources, but we'd need to build with bazel
   - folder: grpcio_tools
-    url: https://pypi.org/packages/source/g/grpcio-tools/grpcio_tools-{{ tools_version }}.tar.gz
-    sha256: 2413a17ad16c9c821b36e4a67fc64c37b9e4636ab1c3a07778018801378739ba
+    url: https://pypi.org/packages/source/g/grpcio-tools/grpcio_tools-{{ version }}.tar.gz
+    sha256: 3e1a98f4d9decb84979e1ddd3deb09c0a33a84b6e3c0776d5bde4097e3ab66dd
     patches:
       # same backport as above, but different paths to vendored upb
       - patches_grpcio/0001-Fixed-NAN-INFINITY-definitions-to-work-on-Windows-11.patch
