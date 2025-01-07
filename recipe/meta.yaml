@@ -82,9 +82,6 @@ source:
   - folder: grpcio_tools
     url: https://pypi.org/packages/source/g/grpcio-tools/grpcio_tools-{{ version }}.tar.gz
     sha256: 3e1a98f4d9decb84979e1ddd3deb09c0a33a84b6e3c0776d5bde4097e3ab66dd
-    patches:
-      # same backport as above, but different paths to vendored upb
-      - patches_grpcio/0001-Fixed-NAN-INFINITY-definitions-to-work-on-Windows-11.patch
 
 build:
   number: 0
