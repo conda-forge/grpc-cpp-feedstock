@@ -1,7 +1,7 @@
-From b8669b29d455f796c3d34d5ab51ef3d86b079e22 Mon Sep 17 00:00:00 2001
+From fae5072850ac6c972c9c95b088dd5f39ee8ba5d1 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 6 Feb 2024 16:09:08 +0100
-Subject: [PATCH 08/21] fix missing DLL-exports in vendored upb
+Subject: [PATCH 08/20] fix missing DLL-exports in vendored upb
 
 ---
  CMakeLists.txt                                | 12 +++++++
@@ -11,10 +11,10 @@ Subject: [PATCH 08/21] fix missing DLL-exports in vendored upb
  4 files changed, 50 insertions(+), 2 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index ea8417671a..c932dcb799 100644
+index f04ff9fcbb..70a036a093 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -4172,6 +4172,12 @@ if(WIN32 AND MSVC)
+@@ -4124,6 +4124,12 @@ if(WIN32 AND MSVC)
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
      )
    endif()
@@ -27,7 +27,7 @@ index ea8417671a..c932dcb799 100644
  endif()
  
  target_include_directories(upb_mem_lib
-@@ -4237,6 +4243,12 @@ if(WIN32 AND MSVC)
+@@ -4189,6 +4195,12 @@ if(WIN32 AND MSVC)
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
      )
    endif()
@@ -69,11 +69,11 @@ index fd88e57442..9a5ff34c4f 100644
    return &UPB_PRIVATE(_kUpb_MiniTable_Empty);
  }
 diff --git a/third_party/upb/upb/port/def.inc b/third_party/upb/upb/port/def.inc
-index 6aa1835f40..4168377d7d 100644
+index 4c073b32ff..268ab50773 100644
 --- a/third_party/upb/upb/port/def.inc
 +++ b/third_party/upb/upb/port/def.inc
-@@ -421,3 +421,38 @@ void __asan_unpoison_memory_region(void const volatile *addr, size_t size);
- #define UPB_LINKARR_APPEND(name)
+@@ -440,3 +440,38 @@ void __asan_unpoison_memory_region(void const volatile *addr, size_t size);
+ #define UPB_FUTURE_PYTHON_CLOSED_ENUM_ENFORCEMENT 1
  
  #endif
 +

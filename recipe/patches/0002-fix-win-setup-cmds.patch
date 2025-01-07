@@ -1,7 +1,7 @@
-From f8e2cc2a439567e942f550bfeecba51e39065726 Mon Sep 17 00:00:00 2001
+From d7df69d56389b57bc7d2c4218e757ec68f40fdfa Mon Sep 17 00:00:00 2001
 From: Mike Sarahan <msarahan@gmail.com>
 Date: Tue, 18 Feb 2020 13:53:05 -0600
-Subject: [PATCH 02/21] fix win setup cmds
+Subject: [PATCH 02/20] fix win setup cmds
 
 Co-Authored-By: Julien Schueller <schueller@phimeca.com>
 Co-Authored-By: Nicholas Bollweg <nick.bollweg@gmail.com>
@@ -13,7 +13,7 @@ Co-Authored-By: H. Vetinari <h.vetinari@gmx.com>
  2 files changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index dc3de7f226..0dc41e42e3 100644
+index c9fd14f5ba..799ed5a2c1 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -209,6 +209,9 @@ ENABLE_DOCUMENTATION_BUILD = _env_bool_value(
@@ -26,7 +26,7 @@ index dc3de7f226..0dc41e42e3 100644
      """Test if linker on system needs libatomic."""
      code_test = (
          b"#include <atomic>\n"
-@@ -250,9 +253,6 @@ if EXTRA_ENV_COMPILE_ARGS is None:
+@@ -265,9 +268,6 @@ if EXTRA_ENV_COMPILE_ARGS is None:
      if "win32" in sys.platform:
          # MSVC by defaults uses C++14 so C11 needs to be specified.
          EXTRA_ENV_COMPILE_ARGS += " /std:c11"
@@ -37,7 +37,7 @@ index dc3de7f226..0dc41e42e3 100644
          # GCC by defaults uses C17 so only C++14 needs to be specified.
          EXTRA_ENV_COMPILE_ARGS += " -std=c++14"
 diff --git a/src/python/grpcio/commands.py b/src/python/grpcio/commands.py
-index 0ceb0546a9..3abee65bc3 100644
+index 4673157fc9..724aea93d2 100644
 --- a/src/python/grpcio/commands.py
 +++ b/src/python/grpcio/commands.py
 @@ -252,6 +252,8 @@ class BuildExt(build_ext.build_ext):

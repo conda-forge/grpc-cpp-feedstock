@@ -1,7 +1,7 @@
-From 020839b09613ac5a6973637c86c9fb44633da5fc Mon Sep 17 00:00:00 2001
+From d4312a46f18a0234cb9e5ab22f74849351d06898 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 16 Jul 2024 17:40:18 +1100
-Subject: [PATCH 10/21] set `-Wl,-undefined,dynamic_lookup` for
+Subject: [PATCH 10/20] set `-Wl,-undefined,dynamic_lookup` for
  `upb_{json,textformat}_lib` on osx
 
 ---
@@ -9,10 +9,10 @@ Subject: [PATCH 10/21] set `-Wl,-undefined,dynamic_lookup` for
  1 file changed, 6 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index c81b50395d..6fb7d1f808 100644
+index aac65deba7..e9f08be340 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -4110,6 +4110,9 @@ if(WIN32 AND MSVC)
+@@ -4062,6 +4062,9 @@ if(WIN32 AND MSVC)
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
      )
    endif()
@@ -22,7 +22,7 @@ index c81b50395d..6fb7d1f808 100644
  endif()
  
  target_include_directories(upb_json_lib
-@@ -4379,6 +4382,9 @@ if(WIN32 AND MSVC)
+@@ -4331,6 +4334,9 @@ if(WIN32 AND MSVC)
        DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
      )
    endif()
