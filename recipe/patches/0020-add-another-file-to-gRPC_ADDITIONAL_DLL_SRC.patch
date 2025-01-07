@@ -1,0 +1,21 @@
+From fc5a60b4dfaaba72789a43890d4a62ae38f2847c Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Sat, 1 Mar 2025 09:33:10 +1100
+Subject: [PATCH 20/20] add another file to gRPC_ADDITIONAL_DLL_SRC
+
+---
+ CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 7738bff337..b3e4e93493 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -517,6 +517,7 @@ set(gRPC_ADDITIONAL_DLL_SRC
+   src/core/lib/security/credentials/tls/grpc_tls_certificate_provider.cc
+   src/core/lib/security/credentials/tls/grpc_tls_certificate_verifier.cc
+   src/core/lib/security/credentials/tls/grpc_tls_credentials_options.cc
++  src/core/tsi/ssl_transport_security_utils.cc
+ )
+ 
+ set(gRPC_ADDITIONAL_DLL_CXX_SRC

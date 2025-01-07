@@ -40,21 +40,19 @@ source:
       # work-around for https://github.com/grpc/grpc/issues/36654
       - patches/0010-set-Wl-undefined-dynamic_lookup-for-upb_-json-textfo.patch
       - patches/0011-add-missing-GRPC_DLL-macro.patch
-      # backport https://github.com/protocolbuffers/protobuf/commit/0309d86d3175cb3fb82d37150e6eff90b11bed77
-      # due to https://developercommunity.visualstudio.com/t/NAN-is-no-longer-compile-time-constant-i/10688907
-      - patches/0012-Fixed-NAN-INFINITY-definitions-to-work-on-Windows-11.patch
       # get gRPC_BUILD_TESTS=ON to build
-      - patches/0013-add-missing-linkages-for-gRPC_BUILD_TESTS-ON.patch
-      # tests don't get executed without enable_testing
-      - patches/0014-add-enable_testing-so-tests-get-run.patch
-      - patches/0015-Build-protobufs-for-tests-only-if-gRPC_BUILD_TESTS.patch
-      - patches/0016-export-_upb_Arena_SlowMalloc-symbol.patch
+      - patches/0012-add-missing-linkages-for-gRPC_BUILD_TESTS-ON.patch
+      # see https://github.com/grpc/grpc/pull/38893
+      - patches/0013-add-enable_testing-so-tests-get-run.patch
+      # see https://github.com/grpc/grpc/pull/38892
+      - patches/0014-Build-protobufs-for-tests-only-if-gRPC_BUILD_TESTS.patch
+      - patches/0015-export-_upb_Arena_SlowMalloc-symbol.patch
       # shared grpc.dll blows past the maximum of 65535 symbols of the PE/DLL format; split it
-      - patches/0017-break-out-part-of-grpc-into-grpc_upb-due-to-too-many.patch     # [win]
-      - patches/0018-add-symbol-export-annotations-to-UPB-definitions.patch         # [win]
-      - patches/0019-build-descriptor.upb_minitable.c-as-part-of-upb_json.patch     # [win]
-      - patches/0020-add-linkage-to-openssl-to-grpc_unsecure.patch                  # [win]
-      - patches/0021-add-another-file-to-gRPC_ADDITIONAL_DLL_SRC.patch              # [win]
+      - patches/0016-break-out-part-of-grpc-into-grpc_upb-due-to-too-many.patch     # [win]
+      - patches/0017-add-symbol-export-annotations-to-UPB-definitions.patch         # [win]
+      - patches/0018-build-descriptor.upb_minitable.c-as-part-of-upb_json.patch     # [win]
+      - patches/0019-add-linkage-to-openssl-to-grpc_unsecure.patch                  # [win]
+      - patches/0020-add-another-file-to-gRPC_ADDITIONAL_DLL_SRC.patch              # [win]
 
   - folder: third_party/benchmark
     url: https://github.com/google/benchmark/archive/344117638c8ff7e239044fd0fa7085839fc03021.tar.gz

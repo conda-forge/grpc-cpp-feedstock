@@ -1,0 +1,85 @@
+From 88c12f294db2c89b4a7d8ced7b3d0069e635fcac Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Tue, 26 Sep 2023 18:25:54 +1100
+Subject: [PATCH 12/20] add missing linkages for gRPC_BUILD_TESTS=ON
+
+---
+ CMakeLists.txt | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e9f08be340..f104a2d9bf 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -8265,6 +8265,7 @@ target_include_directories(authorization_matchers_test
+ )
+ 
+ target_link_libraries(authorization_matchers_test
++  ${_gRPC_RE2_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+   gtest
+   grpc_test_util
+@@ -16965,6 +16966,7 @@ target_include_directories(grpc_authorization_engine_test
+ )
+ 
+ target_link_libraries(grpc_authorization_engine_test
++  ${_gRPC_RE2_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+   gtest
+   grpc_test_util
+@@ -19312,6 +19314,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+   )
+ 
+   target_link_libraries(httpcli_test
++    ${_gRPC_CARES_LIBRARIES}
+     ${_gRPC_ALLTARGETS_LIBRARIES}
+     gtest
+     grpc++_test_util
+@@ -21413,6 +21416,7 @@ target_include_directories(matchers_test
+ )
+ 
+ target_link_libraries(matchers_test
++  ${_gRPC_RE2_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+   gtest
+   grpc_test_util
+@@ -26752,6 +26756,7 @@ target_include_directories(resolve_address_using_ares_resolver_test
+ )
+ 
+ target_link_libraries(resolve_address_using_ares_resolver_test
++  ${_gRPC_CARES_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+   gtest
+   grpc_test_util
+@@ -26858,6 +26863,7 @@ target_include_directories(resolve_address_using_native_resolver_test
+ )
+ 
+ target_link_libraries(resolve_address_using_native_resolver_test
++  ${_gRPC_CARES_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+   gtest
+   grpc_test_util
+@@ -39460,6 +39466,7 @@ target_include_directories(xds_common_types_test
+ )
+ 
+ target_link_libraries(xds_common_types_test
++  ${_gRPC_RE2_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+   gtest
+   grpc++
+@@ -40120,6 +40127,7 @@ target_include_directories(xds_credentials_test
+ )
+ 
+ target_link_libraries(xds_credentials_test
++  ${_gRPC_RE2_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+   gtest
+   grpc_test_util
+@@ -45103,6 +45111,7 @@ target_include_directories(xds_listener_resource_type_test
+ )
+ 
+ target_link_libraries(xds_listener_resource_type_test
++  ${_gRPC_RE2_LIBRARIES}
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+   gtest
+   grpc++

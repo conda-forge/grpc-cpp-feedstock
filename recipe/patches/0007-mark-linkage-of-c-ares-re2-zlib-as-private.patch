@@ -1,7 +1,7 @@
-From 2991959fa4bf800207038469c46d1c31632d26fc Mon Sep 17 00:00:00 2001
+From 4b2d76c2edb3eda957b0280973bbf6a42e3fdf4a Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 23 Aug 2022 11:45:20 +0200
-Subject: [PATCH 07/21] mark linkage of c-ares/re2/zlib as private
+Subject: [PATCH 07/20] mark linkage of c-ares/re2/zlib as private
 
 See also: https://github.com/grpc/grpc/issues/30838
 
@@ -11,10 +11,10 @@ Co-Authored-By: Mark Harfouche <mark.harfouche@gmail.com>
  1 file changed, 60 insertions(+), 50 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index dc276c4439..ea8417671a 100644
+index aa34fea7f0..f04ff9fcbb 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -3120,34 +3120,39 @@ target_include_directories(grpc
+@@ -3070,34 +3070,39 @@ target_include_directories(grpc
      ${_gRPC_ZLIB_INCLUDE_DIR}
  )
  target_link_libraries(grpc
@@ -80,7 +80,7 @@ index dc276c4439..ea8417671a 100644
  endif()
  
  foreach(_hdr
-@@ -3816,32 +3821,37 @@ target_include_directories(grpc_unsecure
+@@ -3768,32 +3773,37 @@ target_include_directories(grpc_unsecure
      ${_gRPC_ZLIB_INCLUDE_DIR}
  )
  target_link_libraries(grpc_unsecure
