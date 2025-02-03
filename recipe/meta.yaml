@@ -50,6 +50,8 @@ source:
       - patches/0014-add-enable_testing-so-tests-get-run.patch
       - patches/0015-Build-protobufs-for-tests-only-if-gRPC_BUILD_TESTS.patch
       - patches/0016-export-_upb_Arena_SlowMalloc-symbol.patch
+      # shared grpc.dll blows past the maximum of 65535 symbols of the PE/DLL format; split it
+      - patches/0017-break-out-part-of-grpc-into-grpc_upb-due-to-too-many.patch     # [win]
 
   - url: https://github.com/google/benchmark/archive/344117638c8ff7e239044fd0fa7085839fc03021.tar.gz
     sha256: 8e7b955f04bc6984e4f14074d0d191474f76a6c8e849e04a9dced49bc975f2d4
