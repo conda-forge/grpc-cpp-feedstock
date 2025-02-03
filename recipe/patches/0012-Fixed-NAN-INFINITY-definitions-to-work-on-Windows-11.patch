@@ -1,7 +1,7 @@
 From 7747aa9f7a23717d20d82a1fbc70cc4d592b9c15 Mon Sep 17 00:00:00 2001
 From: Joshua Haberman <haberman@google.com>
 Date: Thu, 28 Nov 2024 20:45:33 +0100
-Subject: [PATCH 12/17] Fixed NAN/INFINITY definitions to work on Windows 11
+Subject: [PATCH 12/18] Fixed NAN/INFINITY definitions to work on Windows 11
  SDK.
 
 Co-authored-by: Uwe L. Korn <uwelk@xhochy.com>

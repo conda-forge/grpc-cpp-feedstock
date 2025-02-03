@@ -1,7 +1,7 @@
 From 36f8672be5a0e4f2aaf9cc64e3564f75c75fce0b Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 29 Dec 2024 08:05:15 +0100
-Subject: [PATCH 16/17] export _upb_Arena_SlowMalloc symbol
+Subject: [PATCH 16/18] export _upb_Arena_SlowMalloc symbol
 
 ---
  third_party/upb/upb/mem/internal/arena.h | 2 ++
