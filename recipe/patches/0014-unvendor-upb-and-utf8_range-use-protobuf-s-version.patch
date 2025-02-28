@@ -1,0 +1,557 @@
+From 395daeada9d9e9c5093d836c8eb64ab04d167187 Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Fri, 28 Feb 2025 15:09:41 +1100
+Subject: [PATCH 14/18] unvendor upb and utf8_range, use protobuf's version
+
+---
+ CMakeLists.txt | 507 +------------------------------------------------
+ 1 file changed, 6 insertions(+), 501 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index b6c0f7c3ce..89e98636d0 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -377,6 +377,9 @@ if(UNIX OR APPLE)
+   endif()
+ endif()
+ 
++# from libprotobuf
++find_package(protobuf CONFIG REQUIRED)
++
+ # configure ccache if requested
+ include(cmake/ccache.cmake)
+ 
+@@ -3075,9 +3078,8 @@ target_link_libraries(grpc
+   PUBLIC  ${_gRPC_ALLTARGETS_LIBRARIES}
+   # vendored libs
+   PUBLIC  ${_gRPC_ADDRESS_SORTING_LIBRARIES}
+-  PUBLIC  upb_json_lib
+-  PUBLIC  upb_textformat_lib
+   # external dependencies used within grpc
++  PRIVATE protobuf::libupb
+   PRIVATE ${_gRPC_CARES_LIBRARIES}
+   PRIVATE ${_gRPC_RE2_LIBRARIES}
+   PRIVATE ${_gRPC_ZLIB_LIBRARIES}
+@@ -3775,9 +3777,8 @@ target_link_libraries(grpc_unsecure
+   PUBLIC  ${_gRPC_ALLTARGETS_LIBRARIES}
+   # vendored libs
+   PUBLIC  ${_gRPC_ADDRESS_SORTING_LIBRARIES}
+-  PUBLIC  upb_mini_descriptor_lib
+-  PUBLIC  upb_wire_lib
+   # external dependencies used within grpc
++  PRIVATE protobuf::libupb
+   PRIVATE ${_gRPC_ZLIB_LIBRARIES}
+   PRIVATE ${_gRPC_CARES_LIBRARIES}
+   # external dependencies that need to available at runtime
+@@ -3973,501 +3974,6 @@ target_link_libraries(gtest
+ 
+ endif()
+ 
+-add_library(upb_base_lib
+-  third_party/upb/upb/base/status.c
+-)
+-
+-target_compile_features(upb_base_lib PUBLIC cxx_std_14)
+-
+-set_target_properties(upb_base_lib PROPERTIES
+-  VERSION ${gRPC_CORE_VERSION}
+-  SOVERSION ${gRPC_CORE_SOVERSION}
+-)
+-
+-if(WIN32 AND MSVC)
+-  set_target_properties(upb_base_lib PROPERTIES COMPILE_PDB_NAME "upb_base_lib"
+-    COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+-  )
+-  if(gRPC_INSTALL)
+-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/upb_base_lib.pdb
+-      DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+-    )
+-  endif()
+-endif()
+-
+-target_include_directories(upb_base_lib
+-  PUBLIC $<INSTALL_INTERFACE:${gRPC_INSTALL_INCLUDEDIR}> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+-  PRIVATE
+-    ${CMAKE_CURRENT_SOURCE_DIR}
+-    ${_gRPC_ADDRESS_SORTING_INCLUDE_DIR}
+-    ${_gRPC_RE2_INCLUDE_DIR}
+-    ${_gRPC_SSL_INCLUDE_DIR}
+-    ${_gRPC_UPB_GENERATED_DIR}
+-    ${_gRPC_UPB_GRPC_GENERATED_DIR}
+-    ${_gRPC_UPB_INCLUDE_DIR}
+-    ${_gRPC_XXHASH_INCLUDE_DIR}
+-    ${_gRPC_ZLIB_INCLUDE_DIR}
+-)
+-target_link_libraries(upb_base_lib
+-  ${_gRPC_ALLTARGETS_LIBRARIES}
+-)
+-
+-
+-
+-if(gRPC_INSTALL)
+-  install(TARGETS upb_base_lib EXPORT gRPCTargets
+-    RUNTIME DESTINATION ${gRPC_INSTALL_BINDIR}
+-    BUNDLE DESTINATION  ${gRPC_INSTALL_BINDIR}
+-    LIBRARY DESTINATION ${gRPC_INSTALL_LIBDIR}
+-    ARCHIVE DESTINATION ${gRPC_INSTALL_LIBDIR}
+-  )
+-endif()
+-
+-
+-add_library(upb_json_lib ${_gRPC_STATIC_WIN32}
+-  third_party/upb/upb/json/decode.c
+-  third_party/upb/upb/json/encode.c
+-  third_party/upb/upb/lex/atoi.c
+-  third_party/upb/upb/lex/round_trip.c
+-  third_party/upb/upb/lex/strtod.c
+-  third_party/upb/upb/lex/unicode.c
+-  third_party/upb/upb/message/copy.c
+-  third_party/upb/upb/message/merge.c
+-  third_party/upb/upb/reflection/def_pool.c
+-  third_party/upb/upb/reflection/def_type.c
+-  third_party/upb/upb/reflection/desc_state.c
+-  third_party/upb/upb/reflection/enum_def.c
+-  third_party/upb/upb/reflection/enum_reserved_range.c
+-  third_party/upb/upb/reflection/enum_value_def.c
+-  third_party/upb/upb/reflection/extension_range.c
+-  third_party/upb/upb/reflection/field_def.c
+-  third_party/upb/upb/reflection/file_def.c
+-  third_party/upb/upb/reflection/internal/def_builder.c
+-  third_party/upb/upb/reflection/internal/strdup2.c
+-  third_party/upb/upb/reflection/message.c
+-  third_party/upb/upb/reflection/message_def.c
+-  third_party/upb/upb/reflection/message_reserved_range.c
+-  third_party/upb/upb/reflection/method_def.c
+-  third_party/upb/upb/reflection/oneof_def.c
+-  third_party/upb/upb/reflection/service_def.c
+-)
+-
+-target_compile_features(upb_json_lib PUBLIC cxx_std_14)
+-
+-set_target_properties(upb_json_lib PROPERTIES
+-  VERSION ${gRPC_CORE_VERSION}
+-  SOVERSION ${gRPC_CORE_SOVERSION}
+-)
+-
+-if(WIN32 AND MSVC)
+-  set_target_properties(upb_json_lib PROPERTIES COMPILE_PDB_NAME "upb_json_lib"
+-    COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+-  )
+-  if(gRPC_INSTALL)
+-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/upb_json_lib.pdb
+-      DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+-    )
+-  endif()
+-elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+-  # see https://github.com/grpc/grpc/issues/36654
+-  target_link_options(upb_json_lib PRIVATE -Wl,-undefined,dynamic_lookup)
+-endif()
+-
+-target_include_directories(upb_json_lib
+-  PUBLIC $<INSTALL_INTERFACE:${gRPC_INSTALL_INCLUDEDIR}> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+-  PRIVATE
+-    ${CMAKE_CURRENT_SOURCE_DIR}
+-    ${_gRPC_ADDRESS_SORTING_INCLUDE_DIR}
+-    ${_gRPC_RE2_INCLUDE_DIR}
+-    ${_gRPC_SSL_INCLUDE_DIR}
+-    ${_gRPC_UPB_GENERATED_DIR}
+-    ${_gRPC_UPB_GRPC_GENERATED_DIR}
+-    ${_gRPC_UPB_INCLUDE_DIR}
+-    ${_gRPC_XXHASH_INCLUDE_DIR}
+-    ${_gRPC_ZLIB_INCLUDE_DIR}
+-)
+-target_link_libraries(upb_json_lib
+-  ${_gRPC_ALLTARGETS_LIBRARIES}
+-  upb_mini_descriptor_lib
+-  upb_wire_lib
+-)
+-
+-
+-
+-if(gRPC_INSTALL)
+-  install(TARGETS upb_json_lib EXPORT gRPCTargets
+-    RUNTIME DESTINATION ${gRPC_INSTALL_BINDIR}
+-    BUNDLE DESTINATION  ${gRPC_INSTALL_BINDIR}
+-    LIBRARY DESTINATION ${gRPC_INSTALL_LIBDIR}
+-    ARCHIVE DESTINATION ${gRPC_INSTALL_LIBDIR}
+-  )
+-endif()
+-
+-
+-add_library(upb_mem_lib
+-  third_party/upb/upb/mem/alloc.c
+-  third_party/upb/upb/mem/arena.c
+-)
+-
+-target_compile_features(upb_mem_lib PUBLIC cxx_std_14)
+-
+-set_target_properties(upb_mem_lib PROPERTIES
+-  VERSION ${gRPC_CORE_VERSION}
+-  SOVERSION ${gRPC_CORE_SOVERSION}
+-)
+-
+-if(WIN32 AND MSVC)
+-  set_target_properties(upb_mem_lib PROPERTIES COMPILE_PDB_NAME "upb_mem_lib"
+-    COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+-  )
+-  if(gRPC_INSTALL)
+-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/upb_mem_lib.pdb
+-      DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+-    )
+-  endif()
+-endif()
+-
+-target_include_directories(upb_mem_lib
+-  PUBLIC $<INSTALL_INTERFACE:${gRPC_INSTALL_INCLUDEDIR}> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+-  PRIVATE
+-    ${CMAKE_CURRENT_SOURCE_DIR}
+-    ${_gRPC_ADDRESS_SORTING_INCLUDE_DIR}
+-    ${_gRPC_RE2_INCLUDE_DIR}
+-    ${_gRPC_SSL_INCLUDE_DIR}
+-    ${_gRPC_UPB_GENERATED_DIR}
+-    ${_gRPC_UPB_GRPC_GENERATED_DIR}
+-    ${_gRPC_UPB_INCLUDE_DIR}
+-    ${_gRPC_XXHASH_INCLUDE_DIR}
+-    ${_gRPC_ZLIB_INCLUDE_DIR}
+-)
+-target_link_libraries(upb_mem_lib
+-  ${_gRPC_ALLTARGETS_LIBRARIES}
+-)
+-
+-
+-
+-if(gRPC_INSTALL)
+-  install(TARGETS upb_mem_lib EXPORT gRPCTargets
+-    RUNTIME DESTINATION ${gRPC_INSTALL_BINDIR}
+-    BUNDLE DESTINATION  ${gRPC_INSTALL_BINDIR}
+-    LIBRARY DESTINATION ${gRPC_INSTALL_LIBDIR}
+-    ARCHIVE DESTINATION ${gRPC_INSTALL_LIBDIR}
+-  )
+-endif()
+-
+-
+-add_library(upb_message_lib
+-  third_party/upb/upb/hash/common.c
+-  third_party/upb/upb/message/accessors.c
+-  third_party/upb/upb/message/array.c
+-  third_party/upb/upb/message/compat.c
+-  third_party/upb/upb/message/internal/compare_unknown.c
+-  third_party/upb/upb/message/internal/extension.c
+-  third_party/upb/upb/message/internal/message.c
+-  third_party/upb/upb/message/map.c
+-  third_party/upb/upb/message/map_sorter.c
+-  third_party/upb/upb/message/message.c
+-  third_party/upb/upb/mini_table/extension_registry.c
+-  third_party/upb/upb/mini_table/internal/message.c
+-  third_party/upb/upb/mini_table/message.c
+-  third_party/upb/upb/wire/eps_copy_input_stream.c
+-  third_party/upb/upb/wire/reader.c
+-)
+-
+-target_compile_features(upb_message_lib PUBLIC cxx_std_14)
+-
+-set_target_properties(upb_message_lib PROPERTIES
+-  VERSION ${gRPC_CORE_VERSION}
+-  SOVERSION ${gRPC_CORE_SOVERSION}
+-)
+-
+-if(WIN32 AND MSVC)
+-  set_target_properties(upb_message_lib PROPERTIES COMPILE_PDB_NAME "upb_message_lib"
+-    COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+-  )
+-  if(gRPC_INSTALL)
+-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/upb_message_lib.pdb
+-      DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+-    )
+-  endif()
+-endif()
+-
+-target_include_directories(upb_message_lib
+-  PUBLIC $<INSTALL_INTERFACE:${gRPC_INSTALL_INCLUDEDIR}> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+-  PRIVATE
+-    ${CMAKE_CURRENT_SOURCE_DIR}
+-    ${_gRPC_ADDRESS_SORTING_INCLUDE_DIR}
+-    ${_gRPC_RE2_INCLUDE_DIR}
+-    ${_gRPC_SSL_INCLUDE_DIR}
+-    ${_gRPC_UPB_GENERATED_DIR}
+-    ${_gRPC_UPB_GRPC_GENERATED_DIR}
+-    ${_gRPC_UPB_INCLUDE_DIR}
+-    ${_gRPC_XXHASH_INCLUDE_DIR}
+-    ${_gRPC_ZLIB_INCLUDE_DIR}
+-)
+-target_link_libraries(upb_message_lib
+-  ${_gRPC_ALLTARGETS_LIBRARIES}
+-  upb_base_lib
+-  upb_mem_lib
+-)
+-
+-
+-
+-if(gRPC_INSTALL)
+-  install(TARGETS upb_message_lib EXPORT gRPCTargets
+-    RUNTIME DESTINATION ${gRPC_INSTALL_BINDIR}
+-    BUNDLE DESTINATION  ${gRPC_INSTALL_BINDIR}
+-    LIBRARY DESTINATION ${gRPC_INSTALL_LIBDIR}
+-    ARCHIVE DESTINATION ${gRPC_INSTALL_LIBDIR}
+-  )
+-endif()
+-
+-
+-add_library(upb_mini_descriptor_lib
+-  third_party/upb/upb/hash/common.c
+-  third_party/upb/upb/mini_descriptor/build_enum.c
+-  third_party/upb/upb/mini_descriptor/decode.c
+-  third_party/upb/upb/mini_descriptor/internal/base92.c
+-  third_party/upb/upb/mini_descriptor/internal/encode.c
+-  third_party/upb/upb/mini_descriptor/link.c
+-  third_party/upb/upb/mini_table/extension_registry.c
+-  third_party/upb/upb/mini_table/internal/message.c
+-  third_party/upb/upb/mini_table/message.c
+-)
+-
+-target_compile_features(upb_mini_descriptor_lib PUBLIC cxx_std_14)
+-
+-set_target_properties(upb_mini_descriptor_lib PROPERTIES
+-  VERSION ${gRPC_CORE_VERSION}
+-  SOVERSION ${gRPC_CORE_SOVERSION}
+-)
+-
+-if(WIN32 AND MSVC)
+-  set_target_properties(upb_mini_descriptor_lib PROPERTIES COMPILE_PDB_NAME "upb_mini_descriptor_lib"
+-    COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+-  )
+-  if(gRPC_INSTALL)
+-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/upb_mini_descriptor_lib.pdb
+-      DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+-    )
+-  endif()
+-endif()
+-
+-target_include_directories(upb_mini_descriptor_lib
+-  PUBLIC $<INSTALL_INTERFACE:${gRPC_INSTALL_INCLUDEDIR}> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+-  PRIVATE
+-    ${CMAKE_CURRENT_SOURCE_DIR}
+-    ${_gRPC_ADDRESS_SORTING_INCLUDE_DIR}
+-    ${_gRPC_RE2_INCLUDE_DIR}
+-    ${_gRPC_SSL_INCLUDE_DIR}
+-    ${_gRPC_UPB_GENERATED_DIR}
+-    ${_gRPC_UPB_GRPC_GENERATED_DIR}
+-    ${_gRPC_UPB_INCLUDE_DIR}
+-    ${_gRPC_XXHASH_INCLUDE_DIR}
+-    ${_gRPC_ZLIB_INCLUDE_DIR}
+-)
+-target_link_libraries(upb_mini_descriptor_lib
+-  ${_gRPC_ALLTARGETS_LIBRARIES}
+-  upb_base_lib
+-  upb_mem_lib
+-)
+-
+-
+-
+-if(gRPC_INSTALL)
+-  install(TARGETS upb_mini_descriptor_lib EXPORT gRPCTargets
+-    RUNTIME DESTINATION ${gRPC_INSTALL_BINDIR}
+-    BUNDLE DESTINATION  ${gRPC_INSTALL_BINDIR}
+-    LIBRARY DESTINATION ${gRPC_INSTALL_LIBDIR}
+-    ARCHIVE DESTINATION ${gRPC_INSTALL_LIBDIR}
+-  )
+-endif()
+-
+-
+-add_library(upb_textformat_lib ${_gRPC_STATIC_WIN32}
+-  third_party/upb/upb/lex/atoi.c
+-  third_party/upb/upb/lex/round_trip.c
+-  third_party/upb/upb/lex/strtod.c
+-  third_party/upb/upb/lex/unicode.c
+-  third_party/upb/upb/message/copy.c
+-  third_party/upb/upb/message/merge.c
+-  third_party/upb/upb/reflection/def_pool.c
+-  third_party/upb/upb/reflection/def_type.c
+-  third_party/upb/upb/reflection/desc_state.c
+-  third_party/upb/upb/reflection/enum_def.c
+-  third_party/upb/upb/reflection/enum_reserved_range.c
+-  third_party/upb/upb/reflection/enum_value_def.c
+-  third_party/upb/upb/reflection/extension_range.c
+-  third_party/upb/upb/reflection/field_def.c
+-  third_party/upb/upb/reflection/file_def.c
+-  third_party/upb/upb/reflection/internal/def_builder.c
+-  third_party/upb/upb/reflection/internal/strdup2.c
+-  third_party/upb/upb/reflection/message.c
+-  third_party/upb/upb/reflection/message_def.c
+-  third_party/upb/upb/reflection/message_reserved_range.c
+-  third_party/upb/upb/reflection/method_def.c
+-  third_party/upb/upb/reflection/oneof_def.c
+-  third_party/upb/upb/reflection/service_def.c
+-  third_party/upb/upb/text/encode.c
+-  third_party/upb/upb/text/internal/encode.c
+-)
+-
+-target_compile_features(upb_textformat_lib PUBLIC cxx_std_14)
+-
+-set_target_properties(upb_textformat_lib PROPERTIES
+-  VERSION ${gRPC_CORE_VERSION}
+-  SOVERSION ${gRPC_CORE_SOVERSION}
+-)
+-
+-if(WIN32 AND MSVC)
+-  set_target_properties(upb_textformat_lib PROPERTIES COMPILE_PDB_NAME "upb_textformat_lib"
+-    COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+-  )
+-  if(gRPC_INSTALL)
+-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/upb_textformat_lib.pdb
+-      DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+-    )
+-  endif()
+-elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+-  # see https://github.com/grpc/grpc/issues/36654
+-  target_link_options(upb_textformat_lib PRIVATE -Wl,-undefined,dynamic_lookup)
+-endif()
+-
+-target_include_directories(upb_textformat_lib
+-  PUBLIC $<INSTALL_INTERFACE:${gRPC_INSTALL_INCLUDEDIR}> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+-  PRIVATE
+-    ${CMAKE_CURRENT_SOURCE_DIR}
+-    ${_gRPC_ADDRESS_SORTING_INCLUDE_DIR}
+-    ${_gRPC_RE2_INCLUDE_DIR}
+-    ${_gRPC_SSL_INCLUDE_DIR}
+-    ${_gRPC_UPB_GENERATED_DIR}
+-    ${_gRPC_UPB_GRPC_GENERATED_DIR}
+-    ${_gRPC_UPB_INCLUDE_DIR}
+-    ${_gRPC_XXHASH_INCLUDE_DIR}
+-    ${_gRPC_ZLIB_INCLUDE_DIR}
+-)
+-target_link_libraries(upb_textformat_lib
+-  ${_gRPC_ALLTARGETS_LIBRARIES}
+-  upb_mini_descriptor_lib
+-  upb_wire_lib
+-)
+-
+-
+-
+-if(gRPC_INSTALL)
+-  install(TARGETS upb_textformat_lib EXPORT gRPCTargets
+-    RUNTIME DESTINATION ${gRPC_INSTALL_BINDIR}
+-    BUNDLE DESTINATION  ${gRPC_INSTALL_BINDIR}
+-    LIBRARY DESTINATION ${gRPC_INSTALL_LIBDIR}
+-    ARCHIVE DESTINATION ${gRPC_INSTALL_LIBDIR}
+-  )
+-endif()
+-
+-
+-add_library(upb_wire_lib
+-  third_party/upb/upb/wire/decode.c
+-  third_party/upb/upb/wire/encode.c
+-  third_party/upb/upb/wire/internal/decode_fast.c
+-)
+-
+-target_compile_features(upb_wire_lib PUBLIC cxx_std_14)
+-
+-set_target_properties(upb_wire_lib PROPERTIES
+-  VERSION ${gRPC_CORE_VERSION}
+-  SOVERSION ${gRPC_CORE_SOVERSION}
+-)
+-
+-if(WIN32 AND MSVC)
+-  set_target_properties(upb_wire_lib PROPERTIES COMPILE_PDB_NAME "upb_wire_lib"
+-    COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+-  )
+-  if(gRPC_INSTALL)
+-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/upb_wire_lib.pdb
+-      DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+-    )
+-  endif()
+-endif()
+-
+-target_include_directories(upb_wire_lib
+-  PUBLIC $<INSTALL_INTERFACE:${gRPC_INSTALL_INCLUDEDIR}> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+-  PRIVATE
+-    ${CMAKE_CURRENT_SOURCE_DIR}
+-    ${_gRPC_ADDRESS_SORTING_INCLUDE_DIR}
+-    ${_gRPC_RE2_INCLUDE_DIR}
+-    ${_gRPC_SSL_INCLUDE_DIR}
+-    ${_gRPC_UPB_GENERATED_DIR}
+-    ${_gRPC_UPB_GRPC_GENERATED_DIR}
+-    ${_gRPC_UPB_INCLUDE_DIR}
+-    ${_gRPC_XXHASH_INCLUDE_DIR}
+-    ${_gRPC_ZLIB_INCLUDE_DIR}
+-)
+-target_link_libraries(upb_wire_lib
+-  ${_gRPC_ALLTARGETS_LIBRARIES}
+-  utf8_range_lib
+-  upb_message_lib
+-)
+-
+-
+-
+-if(gRPC_INSTALL)
+-  install(TARGETS upb_wire_lib EXPORT gRPCTargets
+-    RUNTIME DESTINATION ${gRPC_INSTALL_BINDIR}
+-    BUNDLE DESTINATION  ${gRPC_INSTALL_BINDIR}
+-    LIBRARY DESTINATION ${gRPC_INSTALL_LIBDIR}
+-    ARCHIVE DESTINATION ${gRPC_INSTALL_LIBDIR}
+-  )
+-endif()
+-
+-
+-add_library(utf8_range_lib
+-  third_party/utf8_range/utf8_range.c
+-)
+-
+-target_compile_features(utf8_range_lib PUBLIC cxx_std_14)
+-
+-set_target_properties(utf8_range_lib PROPERTIES
+-  VERSION ${gRPC_CORE_VERSION}
+-  SOVERSION ${gRPC_CORE_SOVERSION}
+-)
+-
+-if(WIN32 AND MSVC)
+-  set_target_properties(utf8_range_lib PROPERTIES COMPILE_PDB_NAME "utf8_range_lib"
+-    COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+-  )
+-  if(gRPC_INSTALL)
+-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/utf8_range_lib.pdb
+-      DESTINATION ${gRPC_INSTALL_LIBDIR} OPTIONAL
+-    )
+-  endif()
+-endif()
+-
+-target_include_directories(utf8_range_lib
+-  PUBLIC $<INSTALL_INTERFACE:${gRPC_INSTALL_INCLUDEDIR}> $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+-  PRIVATE
+-    ${CMAKE_CURRENT_SOURCE_DIR}
+-    ${_gRPC_ADDRESS_SORTING_INCLUDE_DIR}
+-    ${_gRPC_RE2_INCLUDE_DIR}
+-    ${_gRPC_SSL_INCLUDE_DIR}
+-    ${_gRPC_UPB_GENERATED_DIR}
+-    ${_gRPC_UPB_GRPC_GENERATED_DIR}
+-    ${_gRPC_UPB_INCLUDE_DIR}
+-    ${_gRPC_XXHASH_INCLUDE_DIR}
+-    ${_gRPC_ZLIB_INCLUDE_DIR}
+-)
+-target_link_libraries(utf8_range_lib
+-  ${_gRPC_ALLTARGETS_LIBRARIES}
+-)
+-
+-
+-
+-if(gRPC_INSTALL)
+-  install(TARGETS utf8_range_lib EXPORT gRPCTargets
+-    RUNTIME DESTINATION ${gRPC_INSTALL_BINDIR}
+-    BUNDLE DESTINATION  ${gRPC_INSTALL_BINDIR}
+-    LIBRARY DESTINATION ${gRPC_INSTALL_LIBDIR}
+-    ARCHIVE DESTINATION ${gRPC_INSTALL_LIBDIR}
+-  )
+-endif()
+ 
+ if(gRPC_BUILD_TESTS)
+ 
+@@ -5948,8 +5454,7 @@ target_include_directories(grpc_authorization_provider
+ )
+ target_link_libraries(grpc_authorization_provider
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  upb_mini_descriptor_lib
+-  upb_wire_lib
++  protobuf::libupb
+   ${_gRPC_RE2_LIBRARIES}
+   ${_gRPC_ZLIB_LIBRARIES}
+   absl::config

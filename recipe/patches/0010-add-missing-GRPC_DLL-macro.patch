@@ -1,0 +1,22 @@
+From 1d39178466ae6622c6b54187fe1fb5e1dd1742eb Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Wed, 17 Jul 2024 22:12:06 +1100
+Subject: [PATCH 10/18] add missing GRPC_DLL macro
+
+---
+ src/core/lib/debug/trace_flags.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/core/lib/debug/trace_flags.h b/src/core/lib/debug/trace_flags.h
+index f185adb65e..dd19d51fbf 100644
+--- a/src/core/lib/debug/trace_flags.h
++++ b/src/core/lib/debug/trace_flags.h
+@@ -47,7 +47,7 @@ extern DebugOnlyTraceFlag subchannel_refcount_trace;
+ extern DebugOnlyTraceFlag work_serializer_trace;
+ extern TraceFlag api_trace;
+ extern TraceFlag apple_polling_trace;
+-extern TraceFlag backend_metric_trace;
++GRPC_DLL extern TraceFlag backend_metric_trace;
+ extern TraceFlag backend_metric_filter_trace;
+ extern TraceFlag bdp_estimator_trace;
+ extern TraceFlag call_trace;
