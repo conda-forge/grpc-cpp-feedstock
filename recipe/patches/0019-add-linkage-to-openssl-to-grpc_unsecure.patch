@@ -1,7 +1,7 @@
 From a47a32a5b43cf1dc5d87855f4779dab1ed4e63ca Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sat, 1 Mar 2025 08:06:28 +1100
-Subject: [PATCH 19/20] add linkage to openssl to grpc_unsecure
+Subject: [PATCH 19/21] add linkage to openssl to grpc_unsecure
 
 ---
  CMakeLists.txt | 1 +
