@@ -44,13 +44,13 @@ source:
       # get gRPC_BUILD_TESTS=ON to build
       - patches/0013-add-missing-linkages-for-gRPC_BUILD_TESTS-ON.patch
 
-  - folder: third_party/benchmark
-    git_url: https://github.com/google/benchmark.git
-    git_rev: 344117638c8ff7e239044fd0fa7085839fc03021
+  - url: https://github.com/google/benchmark/archive/344117638c8ff7e239044fd0fa7085839fc03021.tar.gz
+    sha256: 8e7b955f04bc6984e4f14074d0d191474f76a6c8e849e04a9dced49bc975f2d4
+    folder: third_party/benchmark
 
-  - folder: third_party/googletest
-    git_url: https://github.com/google/googletest.git
-    git_rev: 2dd1c131950043a8ad5ab0d2dda0e0970596586a
+  - url: https://github.com/google/googletest/archive/2dd1c131950043a8ad5ab0d2dda0e0970596586a.tar.gz
+    sha256: 31bf78bd91b96dd5e24fab3bb1d7f3f7453ccbaceec9afb86d6e4816a15ab109
+    folder: third_party/googletest
 
   - url: https://pypi.org/packages/source/g/grpcio-tools/grpcio_tools-{{ version }}.tar.gz
     sha256: d9657f5ddc62b52f58904e6054b7d8a8909ed08a1e28b734be3a707087bcf004
