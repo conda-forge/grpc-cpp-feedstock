@@ -1,0 +1,21 @@
+From 9c0534bf0c3a25800d0578057b3c4b5c42ad3b3b Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Sat, 1 Mar 2025 08:06:28 +1100
+Subject: [PATCH 17/18] add linkage to openssl to grpc_unsecure
+
+---
+ CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 1d2ed9e5b4..264206d6da 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -3869,6 +3869,7 @@ target_link_libraries(grpc_unsecure
+   PRIVATE ${_gRPC_ZLIB_LIBRARIES}
+   PRIVATE ${_gRPC_CARES_LIBRARIES}
+   # external dependencies that need to available at runtime
++  PUBLIC  ${_gRPC_SSL_LIBRARIES}
+   PUBLIC  absl::algorithm_container
+   PUBLIC  absl::config
+   PUBLIC  absl::no_destructor
