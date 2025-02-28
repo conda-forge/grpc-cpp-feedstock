@@ -1,7 +1,7 @@
 From a01f80b549da4e80d97241e275931dd1fc6d36ce Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Fri, 11 Sep 2020 14:20:04 +0200
-Subject: [PATCH 04/18] force protoc executable
+Subject: [PATCH 04/19] force protoc executable
 
 ---
  cmake/protobuf.cmake | 17 ++---------------
