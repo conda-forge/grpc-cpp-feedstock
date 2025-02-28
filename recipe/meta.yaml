@@ -54,6 +54,7 @@ source:
       - patches/0017-break-out-part-of-grpc-into-grpc_upb-due-to-too-many.patch     # [win]
       - patches/0018-add-symbol-export-annotations-to-UPB-definitions.patch         # [win]
       - patches/0019-build-descriptor.upb_minitable.c-as-part-of-upb_json.patch     # [win]
+      - patches/0020-add-linkage-to-openssl-to-grpc_unsecure.patch                  # [win]
 
   - url: https://github.com/google/benchmark/archive/344117638c8ff7e239044fd0fa7085839fc03021.tar.gz
     sha256: 8e7b955f04bc6984e4f14074d0d191474f76a6c8e849e04a9dced49bc975f2d4
