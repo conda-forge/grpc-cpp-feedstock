@@ -1,7 +1,7 @@
 From 95c87c1e07ab61eccffb6ecdbbefba513fbf2cc7 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Thu, 28 Nov 2024 20:40:54 +0100
-Subject: [PATCH 14/20] Build protobufs for tests only if gRPC_BUILD_TESTS
+Subject: [PATCH 14/21] Build protobufs for tests only if gRPC_BUILD_TESTS
 
 ---
  CMakeLists.txt | 4 +++-

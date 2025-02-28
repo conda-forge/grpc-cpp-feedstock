@@ -1,7 +1,7 @@
 From cda636e9385ad3325fa53a6c3d20c8b6d3828a2b Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Mon, 3 Feb 2025 14:00:47 +1100
-Subject: [PATCH 17/20] add symbol export annotations to UPB definitions
+Subject: [PATCH 17/21] add symbol export annotations to UPB definitions
 
 Automated with this script:
 ```
