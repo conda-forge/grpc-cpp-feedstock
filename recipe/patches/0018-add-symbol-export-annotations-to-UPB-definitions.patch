@@ -1,7 +1,7 @@
 From 3f3e900061e119711b0986e3a8a6a2ddb63c1ed6 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Mon, 3 Feb 2025 14:00:47 +1100
-Subject: [PATCH 18/20] add symbol export annotations to UPB definitions
+Subject: [PATCH 18/21] add symbol export annotations to UPB definitions
 
 Automated with this script:
 ```
