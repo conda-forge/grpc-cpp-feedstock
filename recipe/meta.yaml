@@ -43,6 +43,8 @@ source:
       - patches/0012-Fixed-NAN-INFINITY-definitions-to-work-on-Windows-11.patch
       # get gRPC_BUILD_TESTS=ON to build
       - patches/0013-add-missing-linkages-for-gRPC_BUILD_TESTS-ON.patch
+      # tests don't get executed without enable_testing
+      - patches/0014-add-enable_testing-so-tests-get-run.patch
 
   - url: https://github.com/google/benchmark/archive/344117638c8ff7e239044fd0fa7085839fc03021.tar.gz
     sha256: 8e7b955f04bc6984e4f14074d0d191474f76a6c8e849e04a9dced49bc975f2d4
