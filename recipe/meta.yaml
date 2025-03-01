@@ -57,28 +57,28 @@ source:
       - patches/0019-add-another-file-to-gRPC_ADDITIONAL_DLL_SRC.patch              # [win]
 
   - folder: third_party/benchmark
-    url: https://github.com/google/benchmark/archive/344117638c8ff7e239044fd0fa7085839fc03021.tar.gz
-    sha256: 8e7b955f04bc6984e4f14074d0d191474f76a6c8e849e04a9dced49bc975f2d4
+    git_url: https://github.com/google/benchmark.git
+    git_rev: 344117638c8ff7e239044fd0fa7085839fc03021
 
   - folder: third_party/envoy-api
-    url: https://github.com/envoyproxy/data-plane-api/archive/f8b75d1efa92bbf534596a013d9ca5873f79dd30.tar.gz
-    sha256: e525a6fb6e6ed3eef1eec6bef3da9b5708e471f0f9335a7604df14a4b386231e
+    git_url: https://github.com/envoyproxy/data-plane-api.git
+    git_rev: f8b75d1efa92bbf534596a013d9ca5873f79dd30
 
   - folder: third_party/googleapis
-    url: https://github.com/googleapis/googleapis/archive/fe8ba054ad4f7eca946c2d14a63c3f07c0b586a0.tar.gz
-    sha256: 0513f0f40af63bd05dc789cacc334ab6cec27cc89db596557cb2dfe8919463e4
+    git_url: https://github.com/googleapis/googleapis.git
+    git_rev: fe8ba054ad4f7eca946c2d14a63c3f07c0b586a0
 
   - folder: third_party/googletest
-    url: https://github.com/google/googletest/archive/2dd1c131950043a8ad5ab0d2dda0e0970596586a.tar.gz
-    sha256: 31bf78bd91b96dd5e24fab3bb1d7f3f7453ccbaceec9afb86d6e4816a15ab109
+    git_url: https://github.com/google/googletest.git
+    git_rev: 2dd1c131950043a8ad5ab0d2dda0e0970596586a
 
   - folder: third_party/protoc-gen-validate
-    url: https://github.com/envoyproxy/protoc-gen-validate/archive/32c2415389a3538082507ae537e7edd9578c64ed.tar.gz
-    sha256: a9faaabb7fcc70d1bd2b3fdd1616f3ea0cd3522e0c2a37330966536a92697ed3
+    git_url: https://github.com/envoyproxy/protoc-gen-validate.git
+    git_rev: 32c2415389a3538082507ae537e7edd9578c64ed
 
   - folder: third_party/xds
-    url: https://github.com/cncf/xds/archive/3a472e524827f72d1ad621c4983dd5af54c46776.tar.gz
-    sha256: dc305e20c9fa80822322271b50aa2ffa917bf4fd3973bcec52bfc28dc32c5927
+    git_url: https://github.com/cncf/xds.git
+    git_rev: 3a472e524827f72d1ad621c4983dd5af54c46776
 
   # would be nice to avoid this; it's contained in the main sources, but we'd need to build with bazel
   - folder: grpcio_tools
