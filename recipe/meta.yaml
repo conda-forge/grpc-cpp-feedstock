@@ -55,6 +55,7 @@ source:
       - patches/0017-add-symbol-export-annotations-to-UPB-definitions.patch         # [win]
       - patches/0018-add-linkage-to-openssl-to-grpc_unsecure.patch                  # [win]
       - patches/0019-add-another-file-to-gRPC_ADDITIONAL_DLL_SRC.patch              # [win]
+      - patches/0020-update-GRPC_DLL-instances-where-necessary.patch                # [win]
 
   - folder: third_party/benchmark
     git_url: https://github.com/google/benchmark.git
