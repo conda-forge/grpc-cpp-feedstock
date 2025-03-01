@@ -1,7 +1,7 @@
 From e5c7aa5b3ff932bb10586a751df16022a0e3ae29 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sat, 1 Mar 2025 09:33:10 +1100
-Subject: [PATCH 19/19] add another file to gRPC_ADDITIONAL_DLL_SRC
+Subject: [PATCH 19/20] add another file to gRPC_ADDITIONAL_DLL_SRC
 
 ---
  CMakeLists.txt | 1 +

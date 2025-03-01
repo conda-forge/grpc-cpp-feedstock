@@ -1,7 +1,7 @@
 From 83d62b304be1385e33e9957b8cbf8ca9b6bb3880 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Mon, 3 Feb 2025 11:51:28 +1100
-Subject: [PATCH 16/19] break out part of grpc into grpc_upb due to too many
+Subject: [PATCH 16/20] break out part of grpc into grpc_upb due to too many
  symbols
 
 ---

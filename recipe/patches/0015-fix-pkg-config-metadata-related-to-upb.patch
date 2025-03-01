@@ -1,7 +1,7 @@
 From eb4b8b7696d81623b1ff109ea4e8e2ece32ab2c7 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Fri, 28 Feb 2025 21:47:42 +1100
-Subject: [PATCH 15/19] fix pkg-config metadata related to upb
+Subject: [PATCH 15/20] fix pkg-config metadata related to upb
 
 ---
  CMakeLists.txt | 20 ++++++++++----------
