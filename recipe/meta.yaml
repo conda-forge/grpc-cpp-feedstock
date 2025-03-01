@@ -58,7 +58,7 @@ source:
 
   - folder: third_party/benchmark
     git_url: https://github.com/google/benchmark.git
-    git_rev: 344117638c8ff7e239044fd0fa7085839fc03021
+    git_rev: 12235e24652fc7f809373e7c11a5f73c5763fc4c
 
   - folder: third_party/envoy-api
     git_url: https://github.com/envoyproxy/data-plane-api.git
