@@ -1,18 +1,18 @@
-From 83d62b304be1385e33e9957b8cbf8ca9b6bb3880 Mon Sep 17 00:00:00 2001
+From 6c54945e234a49e4ea013022807cad1f73ad852e Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Mon, 3 Feb 2025 11:51:28 +1100
 Subject: [PATCH 16/20] break out part of grpc into grpc_upb due to too many
  symbols
 
 ---
- CMakeLists.txt | 243 +++++++++++++++++++++++++++++++++----------------
- 1 file changed, 165 insertions(+), 78 deletions(-)
+ CMakeLists.txt | 242 +++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 164 insertions(+), 78 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 15c4139809..fcaf94e7a2 100644
+index 85f3a10edd..26123116bd 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -2216,82 +2216,8 @@ if(gRPC_INSTALL)
+@@ -2217,82 +2217,8 @@ if(gRPC_INSTALL)
  endif()
  
  
@@ -97,7 +97,7 @@ index 15c4139809..fcaf94e7a2 100644
    src/core/ext/upb-gen/envoy/admin/v3/certs.upb_minitable.c
    src/core/ext/upb-gen/envoy/admin/v3/clusters.upb_minitable.c
    src/core/ext/upb-gen/envoy/admin/v3/config_dump.upb_minitable.c
-@@ -2613,6 +2539,165 @@ add_library(grpc
+@@ -2614,6 +2540,164 @@ add_library(grpc
    src/core/ext/upbdefs-gen/xds/type/v3/cel.upbdefs.c
    src/core/ext/upbdefs-gen/xds/type/v3/range.upbdefs.c
    src/core/ext/upbdefs-gen/xds/type/v3/typed_struct.upbdefs.c
@@ -144,7 +144,6 @@ index 15c4139809..fcaf94e7a2 100644
 +  # vendored libs
 +  PUBLIC  ${_gRPC_ADDRESS_SORTING_LIBRARIES}
 +  # external dependencies used within grpc
-+  PRIVATE protobuf::libupb
 +  PRIVATE ${_gRPC_CARES_LIBRARIES}
 +  PRIVATE ${_gRPC_RE2_LIBRARIES}
 +  PRIVATE ${_gRPC_ZLIB_LIBRARIES}
@@ -263,7 +262,7 @@ index 15c4139809..fcaf94e7a2 100644
    src/core/filter/blackboard.cc
    src/core/handshaker/endpoint_info/endpoint_info_handshaker.cc
    src/core/handshaker/handshaker.cc
-@@ -3050,8 +3135,8 @@ if(WIN32 AND MSVC)
+@@ -3051,8 +3135,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)
@@ -274,7 +273,7 @@ index 15c4139809..fcaf94e7a2 100644
    endif()
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc.pdb
-@@ -3074,6 +3159,8 @@ target_include_directories(grpc
+@@ -3075,6 +3159,8 @@ target_include_directories(grpc
      ${_gRPC_ZLIB_INCLUDE_DIR}
  )
  target_link_libraries(grpc
