@@ -57,17 +57,18 @@ source:
       - patches/0020-add-linkage-to-openssl-to-grpc_unsecure.patch                  # [win]
       - patches/0021-add-another-file-to-gRPC_ADDITIONAL_DLL_SRC.patch              # [win]
 
-  - url: https://github.com/google/benchmark/archive/344117638c8ff7e239044fd0fa7085839fc03021.tar.gz
+  - folder: third_party/benchmark
+    url: https://github.com/google/benchmark/archive/344117638c8ff7e239044fd0fa7085839fc03021.tar.gz
     sha256: 8e7b955f04bc6984e4f14074d0d191474f76a6c8e849e04a9dced49bc975f2d4
-    folder: third_party/benchmark
 
-  - url: https://github.com/google/googletest/archive/2dd1c131950043a8ad5ab0d2dda0e0970596586a.tar.gz
+  - folder: third_party/googletest
+    url: https://github.com/google/googletest/archive/2dd1c131950043a8ad5ab0d2dda0e0970596586a.tar.gz
     sha256: 31bf78bd91b96dd5e24fab3bb1d7f3f7453ccbaceec9afb86d6e4816a15ab109
-    folder: third_party/googletest
 
-  - url: https://pypi.org/packages/source/g/grpcio-tools/grpcio_tools-{{ tools_version }}.tar.gz
+  # would be nice to avoid this; it's contained in the main sources, but we'd need to build with bazel
+  - folder: grpcio_tools
+    url: https://pypi.org/packages/source/g/grpcio-tools/grpcio_tools-{{ tools_version }}.tar.gz
     sha256: 2413a17ad16c9c821b36e4a67fc64c37b9e4636ab1c3a07778018801378739ba
-    folder: grpcio_tools
     patches:
       # same backport as above, but different paths to vendored upb
       - patches_grpcio/0001-Fixed-NAN-INFINITY-definitions-to-work-on-Windows-11.patch
