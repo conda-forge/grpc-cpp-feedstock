@@ -100,8 +100,8 @@ outputs:
         - {{ pin_subpackage('libgrpc', max_pin='x.x') }}
     requirements:
       build:
+        - {{ stdlib('c') }}
         - {{ compiler('c') }}
-        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
         - cmake
         - ninja
@@ -192,8 +192,8 @@ outputs:
         - python                                 # [build_platform != target_platform]
         - cross-python_{{ target_platform }}     # [build_platform != target_platform]
         - cython                                 # [build_platform != target_platform]
+        - {{ stdlib('c') }}
         - {{ compiler('c') }}
-        - {{ stdlib("c") }}
         - {{ compiler('cxx') }}
       host:
         - python
@@ -257,13 +257,13 @@ outputs:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
       host:
-        - grpcio ={{ version }}=*_{{ PKG_BUILDNUM }}
+        - grpcio {{ version }} *_{{ PKG_BUILDNUM }}
         - python
         - cython
         - pip
         - setuptools
       run:
-        - grpcio ={{ version }}=*_{{ PKG_BUILDNUM }}
+        - grpcio {{ version }} *_{{ PKG_BUILDNUM }}
         - python
         - protobuf
         - setuptools
