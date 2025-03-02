@@ -88,6 +88,8 @@ source:
 
 build:
   number: 0
+  # debug
+  skip: true  # [win]
 
 outputs:
   - name: libgrpc
