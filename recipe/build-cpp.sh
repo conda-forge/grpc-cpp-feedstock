@@ -64,6 +64,10 @@ else
   CXXFLAGS="${CXXFLAGS} -w"
 fi
 
+# needs upb API to be visible, see
+# https://github.com/protocolbuffers/protobuf/blob/v29.1/upb/port/def.inc#L69-L97
+CXXFLAGS="${CXXFLAGS} -DEXPORT_UPBC"
+
 mkdir -p build-cpp
 pushd build-cpp
 
