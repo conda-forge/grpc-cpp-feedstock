@@ -1,4 +1,4 @@
-From 9d4e84de806bbbb871710c8bf6347b52296b54ad Mon Sep 17 00:00:00 2001
+From 7b7eeeedaff3fe4d2a9fa344ec43d813ff5e3911 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 2 Mar 2025 08:22:39 +1100
 Subject: [PATCH 21/21] reduce buildtests_cxx target to end2end tests
@@ -9,13 +9,13 @@ easily greppable (to make a choice of subset, and an easy rule for rebasing),
 as well as being the most high-level tests that assure the library functions
 as intended.
 
-also add missing enable_testing() for tests to be executable with ctest
+Plus two support libraries (`grpc{,++}_test_util`) and the vendored gtest
 ---
- CMakeLists.txt | 754 +++----------------------------------------------
- 1 file changed, 46 insertions(+), 708 deletions(-)
+ CMakeLists.txt | 756 +++----------------------------------------------
+ 1 file changed, 47 insertions(+), 709 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index ad9abac278..112747dab5 100644
+index ad9abac278..b67aab2987 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -47,11 +47,12 @@ set(gRPC_INSTALL_SHAREDIR "share/grpc" CACHE STRING "Installation directory for
@@ -805,6 +805,15 @@ index ad9abac278..112747dab5 100644
  
  add_library(grpc_test_util
    test/core/event_engine/test_init.cc
+@@ -3989,7 +3327,7 @@ if(gRPC_INSTALL)
+   )
+ endif()
+ 
+-if(gRPC_BUILD_TESTS)
++if(gRPC_CF_TESTS)
+ 
+ add_library(gtest
+   third_party/googletest/googlemock/src/gmock-cardinalities.cc
 @@ -4843,7 +4181,7 @@ target_link_libraries(grpc++_test_config
  
  
