@@ -1,4 +1,4 @@
-From c5c9c24ff363c1fe19314745218366238231fb16 Mon Sep 17 00:00:00 2001
+From 9d4e84de806bbbb871710c8bf6347b52296b54ad Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 2 Mar 2025 08:22:39 +1100
 Subject: [PATCH 21/21] reduce buildtests_cxx target to end2end tests
@@ -11,11 +11,11 @@ as intended.
 
 also add missing enable_testing() for tests to be executable with ctest
 ---
- CMakeLists.txt | 750 +++----------------------------------------------
- 1 file changed, 44 insertions(+), 706 deletions(-)
+ CMakeLists.txt | 754 +++----------------------------------------------
+ 1 file changed, 46 insertions(+), 708 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index ad9abac278..cf93c29b7f 100644
+index ad9abac278..112747dab5 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -47,11 +47,12 @@ set(gRPC_INSTALL_SHAREDIR "share/grpc" CACHE STRING "Installation directory for
@@ -796,6 +796,24 @@ index ad9abac278..cf93c29b7f 100644
    if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
      add_dependencies(buildtests_cxx xds_wrr_end2end_test)
    endif()
+@@ -3291,7 +2629,7 @@ if(gRPC_INSTALL)
+   )
+ endif()
+ 
+-if(gRPC_BUILD_TESTS)
++if(gRPC_CF_TESTS)
+ 
+ add_library(grpc_test_util
+   test/core/event_engine/test_init.cc
+@@ -4843,7 +4181,7 @@ target_link_libraries(grpc++_test_config
+ 
+ 
+ endif()
+-if(gRPC_BUILD_TESTS)
++if(gRPC_CF_TESTS)
+ 
+ add_library(grpc++_test_util
+   src/core/util/subprocess_posix.cc
 @@ -6215,7 +5553,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
  endif()

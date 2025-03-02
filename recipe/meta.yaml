@@ -115,8 +115,9 @@ outputs:
         - re2           # [build_platform != target_platform]
         - zlib          # [build_platform != target_platform]
       host:
-        - libabseil
         - c-ares
+        - gtest         # [unix and x86_64]
+        - libabseil
         - libprotobuf
         - re2
         - openssl
