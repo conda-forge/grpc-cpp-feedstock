@@ -1,7 +1,7 @@
 From 0d524f3f653458c21447a06ed64cd227f30fc8bf Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Fri, 28 Feb 2025 15:09:41 +1100
-Subject: [PATCH 14/20] unvendor upb and utf8_range, use protobuf's version
+Subject: [PATCH 14/21] unvendor upb and utf8_range, use protobuf's version
 
 ---
  CMakeLists.txt  | 507 +-----------------------------------------------
