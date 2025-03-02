@@ -1,7 +1,7 @@
 From 2db07f26f515305623add2ed6f2ef3738fa8fa76 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 16 Jul 2024 17:40:18 +1100
-Subject: [PATCH 09/20] set `-Wl,-undefined,dynamic_lookup` for
+Subject: [PATCH 09/21] set `-Wl,-undefined,dynamic_lookup` for
  `upb_{json,textformat}_lib` on osx
 
 ---
