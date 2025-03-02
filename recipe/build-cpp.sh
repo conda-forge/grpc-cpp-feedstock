@@ -94,7 +94,7 @@ cmake -GNinja \
       -DProtobuf_ROOT=$PREFIX \
       ..
 
-cmake --build .
+cmake --build . -j${CPU_COUNT}
 
 if [[ "$CONDA_BUILD_CROSS_COMPILATION" != 1 ]]; then
     ctest --progress --output-on-failure

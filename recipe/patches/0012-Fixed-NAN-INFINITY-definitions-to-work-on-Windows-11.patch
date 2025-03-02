@@ -1,7 +1,7 @@
-From 52f343ba6de1aefe785a3b8dc78794646bb58d09 Mon Sep 17 00:00:00 2001
+From 7747aa9f7a23717d20d82a1fbc70cc4d592b9c15 Mon Sep 17 00:00:00 2001
 From: Joshua Haberman <haberman@google.com>
 Date: Thu, 28 Nov 2024 20:45:33 +0100
-Subject: [PATCH 12/14] Fixed NAN/INFINITY definitions to work on Windows 11
+Subject: [PATCH 12/21] Fixed NAN/INFINITY definitions to work on Windows 11
  SDK.
 
 Co-authored-by: Uwe L. Korn <uwelk@xhochy.com>
@@ -10,7 +10,7 @@ Co-authored-by: Uwe L. Korn <uwelk@xhochy.com>
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/third_party/upb/upb/message/internal/message.c b/third_party/upb/upb/message/internal/message.c
-index 856fc97016..db78138a65 100644
+index 57ab2d7371..5f321c7bb2 100644
 --- a/third_party/upb/upb/message/internal/message.c
 +++ b/third_party/upb/upb/message/internal/message.c
 @@ -17,9 +17,9 @@
