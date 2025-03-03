@@ -1,12 +1,12 @@
-{% set version = "1.68.2" %}
+{% set version = "1.69.0" %}
 # it would be nice to build `grpcio-tools` ourselves (same sources, but non-trivial due to bazel);
 # currently relies on PyPI releases, which don't always have matching patch versions to latest tags
-{% set tools_version = "1.68.1" %}
+{% set tools_version = "currently_unused" %}
 
 # core package & vendored libs use different version scheme than CPP libs, see
 # top of https://github.com/grpc/grpc/blob/v{{ version }}/CMakeLists.txt
 # as of 1.67 the pattern is not trivially deducible from the version anymore
-{% set core_version = "44.1.1" %}
+{% set core_version = "44.2.0" %}
 
 {% set core_libs = ["gpr", "grpc", "grpc_unsecure"] %}
 {% set core_cpp_libs = ["grpc++", "grpc++_unsecure"] %}
@@ -21,7 +21,7 @@ package:
 
 source:
   - url: https://github.com/grpc/grpc/archive/v{{ version.replace(".pre", "-pre") }}.tar.gz
-    sha256: afbc5d78d6ba6d509cc6e264de0d49dcd7304db435cbf2d630385bacf49e066c
+    sha256: cd256d91781911d46a57506978b3979bfee45d5086a1b6668a3ae19c5e77f8dc
     patches:
       - patches/0001-windows-ssl-lib-names.patch
       - patches/0002-fix-win-setup-cmds.patch
@@ -33,60 +33,59 @@ source:
       # at runtime just to link to grp, see grpc/grpc#30838;
       # not much point in marking baselibs or vendored libs (e.g. upb) as private
       - patches/0007-mark-linkage-of-c-ares-re2-zlib-as-private.patch
-      # see https://github.com/grpc/grpc/issues/35794
-      - patches/0008-fix-missing-DLL-exports-in-vendored-upb.patch
       # fix symbol visibility regression on windows
-      - patches/0009-for-main-targets-set-_DLL_EXPORTS-when-building-and-.patch
+      - patches/0008-for-main-targets-set-_DLL_EXPORTS-when-building-and-.patch
       # work-around for https://github.com/grpc/grpc/issues/36654
-      - patches/0010-set-Wl-undefined-dynamic_lookup-for-upb_-json-textfo.patch
-      - patches/0011-add-missing-GRPC_DLL-macro.patch
-      # backport https://github.com/protocolbuffers/protobuf/commit/0309d86d3175cb3fb82d37150e6eff90b11bed77
-      # due to https://developercommunity.visualstudio.com/t/NAN-is-no-longer-compile-time-constant-i/10688907
-      - patches/0012-Fixed-NAN-INFINITY-definitions-to-work-on-Windows-11.patch
+      - patches/0009-set-Wl-undefined-dynamic_lookup-for-upb_-json-textfo.patch
+      - patches/0010-add-missing-GRPC_DLL-macro.patch
       # get gRPC_BUILD_TESTS=ON to build
-      - patches/0013-add-missing-linkages-for-gRPC_BUILD_TESTS-ON.patch
-      # tests don't get executed without enable_testing
-      - patches/0014-add-enable_testing-so-tests-get-run.patch
-      - patches/0015-Build-protobufs-for-tests-only-if-gRPC_BUILD_TESTS.patch
-      - patches/0016-export-_upb_Arena_SlowMalloc-symbol.patch
+      - patches/0011-add-missing-linkages-for-gRPC_BUILD_TESTS-ON.patch
+      # see https://github.com/grpc/grpc/pull/38893
+      - patches/0012-add-enable_testing-so-tests-get-run.patch
+      # see https://github.com/grpc/grpc/pull/38892
+      - patches/0013-Build-protobufs-for-tests-only-if-gRPC_BUILD_TESTS.patch
+      # protobuf is now shipping upb, so we cannot ship it here; see
+      # https://github.com/protocolbuffers/protobuf/issues/12927
+      # https://github.com/conda-forge/libprotobuf-feedstock/pull/240
+      # https://github.com/grpc/grpc/commit/7819891fabcd1d2ff55c26c2b0755ab52ccd8e20
+      - patches/0014-unvendor-upb-and-utf8_range-use-protobuf-s-version.patch
+      - patches/0015-fix-pkg-config-metadata-related-to-upb.patch
       # shared grpc.dll blows past the maximum of 65535 symbols of the PE/DLL format; split it
-      - patches/0017-break-out-part-of-grpc-into-grpc_upb-due-to-too-many.patch     # [win]
-      - patches/0018-add-symbol-export-annotations-to-UPB-definitions.patch         # [win]
-      - patches/0019-build-descriptor.upb_minitable.c-as-part-of-upb_json.patch     # [win]
-      - patches/0020-add-linkage-to-openssl-to-grpc_unsecure.patch                  # [win]
-      - patches/0021-add-another-file-to-gRPC_ADDITIONAL_DLL_SRC.patch              # [win]
+      - patches/0016-break-out-part-of-grpc-into-grpc_upb-due-to-too-many.patch     # [win]
+      - patches/0017-add-symbol-export-annotations-to-UPB-definitions.patch         # [win]
+      - patches/0018-add-linkage-to-openssl-to-grpc_unsecure.patch                  # [win]
+      - patches/0019-add-another-file-to-gRPC_ADDITIONAL_DLL_SRC.patch              # [win]
+      - patches/0020-update-GRPC_DLL-instances-where-necessary.patch                # [win]
+      - patches/0021-reduce-buildtests_cxx-target-to-end2end-tests.patch
 
   - folder: third_party/benchmark
-    url: https://github.com/google/benchmark/archive/344117638c8ff7e239044fd0fa7085839fc03021.tar.gz
-    sha256: 8e7b955f04bc6984e4f14074d0d191474f76a6c8e849e04a9dced49bc975f2d4
+    git_url: https://github.com/google/benchmark.git
+    git_rev: 12235e24652fc7f809373e7c11a5f73c5763fc4c
 
   - folder: third_party/envoy-api
-    url: https://github.com/envoyproxy/data-plane-api/archive/f8b75d1efa92bbf534596a013d9ca5873f79dd30.tar.gz
-    sha256: e525a6fb6e6ed3eef1eec6bef3da9b5708e471f0f9335a7604df14a4b386231e
+    git_url: https://github.com/envoyproxy/data-plane-api.git
+    git_rev: f8b75d1efa92bbf534596a013d9ca5873f79dd30
 
   - folder: third_party/googleapis
-    url: https://github.com/googleapis/googleapis/archive/fe8ba054ad4f7eca946c2d14a63c3f07c0b586a0.tar.gz
-    sha256: 0513f0f40af63bd05dc789cacc334ab6cec27cc89db596557cb2dfe8919463e4
+    git_url: https://github.com/googleapis/googleapis.git
+    git_rev: fe8ba054ad4f7eca946c2d14a63c3f07c0b586a0
 
   - folder: third_party/googletest
-    url: https://github.com/google/googletest/archive/2dd1c131950043a8ad5ab0d2dda0e0970596586a.tar.gz
-    sha256: 31bf78bd91b96dd5e24fab3bb1d7f3f7453ccbaceec9afb86d6e4816a15ab109
+    git_url: https://github.com/google/googletest.git
+    git_rev: 2dd1c131950043a8ad5ab0d2dda0e0970596586a
 
   - folder: third_party/protoc-gen-validate
-    url: https://github.com/envoyproxy/protoc-gen-validate/archive/32c2415389a3538082507ae537e7edd9578c64ed.tar.gz
-    sha256: a9faaabb7fcc70d1bd2b3fdd1616f3ea0cd3522e0c2a37330966536a92697ed3
+    git_url: https://github.com/envoyproxy/protoc-gen-validate.git
+    git_rev: 32c2415389a3538082507ae537e7edd9578c64ed
 
   - folder: third_party/xds
-    url: https://github.com/cncf/xds/archive/3a472e524827f72d1ad621c4983dd5af54c46776.tar.gz
-    sha256: dc305e20c9fa80822322271b50aa2ffa917bf4fd3973bcec52bfc28dc32c5927
+    git_url: https://github.com/cncf/xds.git
+    git_rev: 3a472e524827f72d1ad621c4983dd5af54c46776
 
   # would be nice to avoid this; it's contained in the main sources, but we'd need to build with bazel
   - folder: grpcio_tools
-    url: https://pypi.org/packages/source/g/grpcio-tools/grpcio_tools-{{ tools_version }}.tar.gz
-    sha256: 2413a17ad16c9c821b36e4a67fc64c37b9e4636ab1c3a07778018801378739ba
-    patches:
-      # same backport as above, but different paths to vendored upb
-      - patches_grpcio/0001-Fixed-NAN-INFINITY-definitions-to-work-on-Windows-11.patch
+    url: https://pypi.org/packages/source/g/grpcio-tools/grpcio_tools-{{ version }}.tar.gz
+    sha256: 3e1a98f4d9decb84979e1ddd3deb09c0a33a84b6e3c0776d5bde4097e3ab66dd
 
 build:
   number: 0
@@ -184,6 +183,9 @@ outputs:
         - cmake -GNinja -DCMAKE_CXX_STANDARD=17 %CMAKE_ARGS% .  # [win]
         - cmake --build .
 
+  # temporarily disabled; publish only libgrpc builds to
+  # ease iterations on building grpcio-tools from source
+  {% if False %}
   - name: grpcio
     script: build-grpcio.sh  # [not win]
     script: build-grpcio.bat  # [win]
@@ -274,6 +276,7 @@ outputs:
         - pip check
       imports:
         - grpc_tools
+  {% endif %}
 
 about:
   home: https://grpc.io/

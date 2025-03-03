@@ -1,4 +1,4 @@
-From 62e6461e4cdcfedd9ecab33c94c8ceed62fea564 Mon Sep 17 00:00:00 2001
+From 035ef837f7dc7f3377cd83455a2c92fed0903796 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sat, 3 Sep 2022 19:23:15 +0200
 Subject: [PATCH 05/21] switch to C++17 for grpcio
@@ -8,7 +8,7 @@ Subject: [PATCH 05/21] switch to C++17 for grpcio
  1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index 4033b4ae81..17040bd25d 100644
+index 4902dbb564..eb325cfad4 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -221,7 +221,7 @@ def check_linker_need_libatomic():
@@ -29,7 +29,7 @@ index 4033b4ae81..17040bd25d 100644
          stdin=PIPE,
          stdout=PIPE,
          stderr=PIPE,
-@@ -254,16 +254,16 @@ if EXTRA_ENV_COMPILE_ARGS is None:
+@@ -269,16 +269,16 @@ if EXTRA_ENV_COMPILE_ARGS is None:
      EXTRA_ENV_COMPILE_ARGS = ""
      if "win32" in sys.platform:
          # MSVC by defaults uses C++14 so C11 needs to be specified.
