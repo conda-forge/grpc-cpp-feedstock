@@ -1,4 +1,4 @@
-From 9dfb09cba784ab367022e5d74da38f25fc247949 Mon Sep 17 00:00:00 2001
+From 9f3f63b38d709c0e136c94576bef8c6a258bc4a2 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Fri, 28 Feb 2025 21:47:42 +1100
 Subject: [PATCH 15/21] fix pkg-config metadata related to upb
@@ -8,7 +8,7 @@ Subject: [PATCH 15/21] fix pkg-config metadata related to upb
  1 file changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 6e65a008c5..85f3a10edd 100644
+index 374f3036d1..e4dbec5daf 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -49821,8 +49821,8 @@ generate_pkgconfig(

@@ -1,4 +1,4 @@
-From cee37a630dc98d0210fc5487092a149b95d18ebb Mon Sep 17 00:00:00 2001
+From 3bedc70a261cb7a87a86f3eae029ac92549c23a7 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sat, 1 Mar 2025 08:06:28 +1100
 Subject: [PATCH 18/21] add linkage to openssl to grpc_unsecure
@@ -8,7 +8,7 @@ Subject: [PATCH 18/21] add linkage to openssl to grpc_unsecure
  1 file changed, 1 insertion(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 26123116bd..d039c4a95f 100644
+index 43f33ae60e..76c0e2444e 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -3867,6 +3867,7 @@ target_link_libraries(grpc_unsecure

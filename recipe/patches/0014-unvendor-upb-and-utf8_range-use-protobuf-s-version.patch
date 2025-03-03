@@ -1,4 +1,4 @@
-From 0d524f3f653458c21447a06ed64cd227f30fc8bf Mon Sep 17 00:00:00 2001
+From 6229f406e6fed43d77fe9f63f072e132e70a1b54 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Fri, 28 Feb 2025 15:09:41 +1100
 Subject: [PATCH 14/21] unvendor upb and utf8_range, use protobuf's version
@@ -9,7 +9,7 @@ Subject: [PATCH 14/21] unvendor upb and utf8_range, use protobuf's version
  2 files changed, 6 insertions(+), 505 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index b6c0f7c3ce..6e65a008c5 100644
+index 7ff07bcaa7..374f3036d1 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -346,11 +346,15 @@ else()
@@ -30,20 +30,20 @@ index b6c0f7c3ce..6e65a008c5 100644
      find_library(LIBRT rt)
      if(LIBRT)
 @@ -3075,8 +3079,6 @@ target_link_libraries(grpc
-   PUBLIC  ${_gRPC_ALLTARGETS_LIBRARIES}
+   PRIVATE ${_gRPC_ALLTARGETS_LIBRARIES}
    # vendored libs
-   PUBLIC  ${_gRPC_ADDRESS_SORTING_LIBRARIES}
--  PUBLIC  upb_json_lib
--  PUBLIC  upb_textformat_lib
+   PRIVATE ${_gRPC_ADDRESS_SORTING_LIBRARIES}
+-  PRIVATE upb_json_lib
+-  PRIVATE upb_textformat_lib
    # external dependencies used within grpc
    PRIVATE ${_gRPC_CARES_LIBRARIES}
    PRIVATE ${_gRPC_RE2_LIBRARIES}
 @@ -3775,8 +3777,6 @@ target_link_libraries(grpc_unsecure
-   PUBLIC  ${_gRPC_ALLTARGETS_LIBRARIES}
+   PRIVATE ${_gRPC_ALLTARGETS_LIBRARIES}
    # vendored libs
-   PUBLIC  ${_gRPC_ADDRESS_SORTING_LIBRARIES}
--  PUBLIC  upb_mini_descriptor_lib
--  PUBLIC  upb_wire_lib
+   PRIVATE ${_gRPC_ADDRESS_SORTING_LIBRARIES}
+-  PRIVATE upb_mini_descriptor_lib
+-  PRIVATE upb_wire_lib
    # external dependencies used within grpc
    PRIVATE ${_gRPC_ZLIB_LIBRARIES}
    PRIVATE ${_gRPC_CARES_LIBRARIES}

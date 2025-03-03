@@ -1,4 +1,4 @@
-From fb3ee3a3cb9f5a0311d4aafb9275040f51beaef6 Mon Sep 17 00:00:00 2001
+From ccaed7fffce3d280d8a841f47578442e1982cb09 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 23 Aug 2022 11:45:20 +0200
 Subject: [PATCH 07/21] mark linkage of c-ares/re2/zlib as private
@@ -11,7 +11,7 @@ Co-Authored-By: Mark Harfouche <mark.harfouche@gmail.com>
  1 file changed, 60 insertions(+), 50 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index aa34fea7f0..f04ff9fcbb 100644
+index aa34fea7f0..8022c477d5 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -3070,34 +3070,39 @@ target_include_directories(grpc
@@ -44,11 +44,11 @@ index aa34fea7f0..f04ff9fcbb 100644
 -  ${_gRPC_SSL_LIBRARIES}
 -  ${_gRPC_ADDRESS_SORTING_LIBRARIES}
 +  # core libs
-+  PUBLIC  ${_gRPC_ALLTARGETS_LIBRARIES}
++  PRIVATE ${_gRPC_ALLTARGETS_LIBRARIES}
 +  # vendored libs
-+  PUBLIC  ${_gRPC_ADDRESS_SORTING_LIBRARIES}
-+  PUBLIC  upb_json_lib
-+  PUBLIC  upb_textformat_lib
++  PRIVATE ${_gRPC_ADDRESS_SORTING_LIBRARIES}
++  PRIVATE upb_json_lib
++  PRIVATE upb_textformat_lib
 +  # external dependencies used within grpc
 +  PRIVATE ${_gRPC_CARES_LIBRARIES}
 +  PRIVATE ${_gRPC_RE2_LIBRARIES}
@@ -108,11 +108,11 @@ index aa34fea7f0..f04ff9fcbb 100644
 -  gpr
 -  ${_gRPC_ADDRESS_SORTING_LIBRARIES}
 +  # core libs
-+  PUBLIC  ${_gRPC_ALLTARGETS_LIBRARIES}
++  PRIVATE ${_gRPC_ALLTARGETS_LIBRARIES}
 +  # vendored libs
-+  PUBLIC  ${_gRPC_ADDRESS_SORTING_LIBRARIES}
-+  PUBLIC  upb_mini_descriptor_lib
-+  PUBLIC  upb_wire_lib
++  PRIVATE ${_gRPC_ADDRESS_SORTING_LIBRARIES}
++  PRIVATE upb_mini_descriptor_lib
++  PRIVATE upb_wire_lib
 +  # external dependencies used within grpc
 +  PRIVATE ${_gRPC_ZLIB_LIBRARIES}
 +  PRIVATE ${_gRPC_CARES_LIBRARIES}

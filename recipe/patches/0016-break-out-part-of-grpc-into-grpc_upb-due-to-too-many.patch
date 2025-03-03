@@ -1,4 +1,4 @@
-From 6c54945e234a49e4ea013022807cad1f73ad852e Mon Sep 17 00:00:00 2001
+From 9a34f24309288b8849a3aaa6c0f3e22e1c343f5e Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Mon, 3 Feb 2025 11:51:28 +1100
 Subject: [PATCH 16/21] break out part of grpc into grpc_upb due to too many
@@ -9,7 +9,7 @@ Subject: [PATCH 16/21] break out part of grpc into grpc_upb due to too many
  1 file changed, 164 insertions(+), 78 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 85f3a10edd..26123116bd 100644
+index e4dbec5daf..43f33ae60e 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -2217,82 +2217,8 @@ if(gRPC_INSTALL)
@@ -140,9 +140,9 @@ index 85f3a10edd..26123116bd 100644
 +)
 +target_link_libraries(grpc_upbgen
 +  # core libs
-+  PUBLIC  ${_gRPC_ALLTARGETS_LIBRARIES}
++  PRIVATE ${_gRPC_ALLTARGETS_LIBRARIES}
 +  # vendored libs
-+  PUBLIC  ${_gRPC_ADDRESS_SORTING_LIBRARIES}
++  PRIVATE ${_gRPC_ADDRESS_SORTING_LIBRARIES}
 +  # external dependencies used within grpc
 +  PRIVATE ${_gRPC_CARES_LIBRARIES}
 +  PRIVATE ${_gRPC_RE2_LIBRARIES}
@@ -278,7 +278,7 @@ index 85f3a10edd..26123116bd 100644
  )
  target_link_libraries(grpc
 +  # broken out of grpc
-+  PUBLIC  grpc_upbgen
++  PRIVATE grpc_upbgen
    # core libs
-   PUBLIC  ${_gRPC_ALLTARGETS_LIBRARIES}
+   PRIVATE ${_gRPC_ALLTARGETS_LIBRARIES}
    # vendored libs

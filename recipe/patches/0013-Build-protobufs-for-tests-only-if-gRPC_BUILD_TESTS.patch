@@ -1,4 +1,4 @@
-From 393894cfdcd7cf6743a41fc8302ae3064969a551 Mon Sep 17 00:00:00 2001
+From f51489ab181b96136d74fd3d971ebf6462840e7c Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Thu, 28 Nov 2024 20:40:54 +0100
 Subject: [PATCH 13/21] Build protobufs for tests only if gRPC_BUILD_TESTS
@@ -8,7 +8,7 @@ Subject: [PATCH 13/21] Build protobufs for tests only if gRPC_BUILD_TESTS
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 1d9c50a443..b6c0f7c3ce 100644
+index 86d26efc60..7ff07bcaa7 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -711,6 +711,9 @@ protobuf_generate_grpc_cpp_with_import_path_correction(
