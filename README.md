@@ -40,45 +40,45 @@ Current build status
         <table>
           <thead><tr><th>Variant</th><th>Status</th></tr></thead>
           <tbody><tr>
-              <td>linux_64</td>
+              <td>linux_64_python3.12.____cpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_python3.12.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_aarch64</td>
+              <td>linux_aarch64_python3.12.____cpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_python3.12.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_ppc64le</td>
+              <td>linux_ppc64le_python3.12.____cpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_python3.12.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>osx_64</td>
+              <td>osx_64_python3.12.____cpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_python3.12.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>osx_arm64</td>
+              <td>osx_arm64_python3.12.____cpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_python3.12.____cpython" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>win_64</td>
+              <td>win_64_python3.12.____cpython</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6172&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=win&configuration=win%20win_64_" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpc-cpp-feedstock?branchName=main&jobName=win&configuration=win%20win_64_python3.12.____cpython" alt="variant">
                 </a>
               </td>
             </tr>
@@ -96,7 +96,6 @@ Current release info
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-grpcio-green.svg)](https://anaconda.org/conda-forge/grpcio) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/grpcio.svg)](https://anaconda.org/conda-forge/grpcio) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/grpcio.svg)](https://anaconda.org/conda-forge/grpcio) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/grpcio.svg)](https://anaconda.org/conda-forge/grpcio) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-grpcio--tools-green.svg)](https://anaconda.org/conda-forge/grpcio-tools) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/grpcio-tools.svg)](https://anaconda.org/conda-forge/grpcio-tools) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/grpcio-tools.svg)](https://anaconda.org/conda-forge/grpcio-tools) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/grpcio-tools.svg)](https://anaconda.org/conda-forge/grpcio-tools) |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-libgrpc-green.svg)](https://anaconda.org/conda-forge/libgrpc) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/libgrpc.svg)](https://anaconda.org/conda-forge/libgrpc) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/libgrpc.svg)](https://anaconda.org/conda-forge/libgrpc) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/libgrpc.svg)](https://anaconda.org/conda-forge/libgrpc) |
 
 Installing grpc-cpp
 ===================
@@ -108,16 +107,16 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `grpcio, grpcio-tools, libgrpc` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `grpcio, grpcio-tools` can be installed with `conda`:
 
 ```
-conda install grpcio grpcio-tools libgrpc
+conda install grpcio grpcio-tools
 ```
 
 or with `mamba`:
 
 ```
-mamba install grpcio grpcio-tools libgrpc
+mamba install grpcio grpcio-tools
 ```
 
 It is possible to list all of the versions of `grpcio` available on your platform with `conda`:
