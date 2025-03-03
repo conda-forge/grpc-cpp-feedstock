@@ -183,6 +183,9 @@ outputs:
         - cmake -GNinja -DCMAKE_CXX_STANDARD=17 %CMAKE_ARGS% .  # [win]
         - cmake --build .
 
+  # temporarily disabled; publish only libgrpc builds to
+  # ease iterations on building grpcio-tools from source
+  {% if False %}
   - name: grpcio
     script: build-grpcio.sh  # [not win]
     script: build-grpcio.bat  # [win]
@@ -273,6 +276,7 @@ outputs:
         - pip check
       imports:
         - grpc_tools
+  {% endif %}
 
 about:
   home: https://grpc.io/
