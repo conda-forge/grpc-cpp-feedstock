@@ -1,7 +1,4 @@
 {% set version = "1.69.0" %}
-# it would be nice to build `grpcio-tools` ourselves (same sources, but non-trivial due to bazel);
-# currently relies on PyPI releases, which don't always have matching patch versions to latest tags
-{% set tools_version = "currently_unused" %}
 
 # core package & vendored libs use different version scheme than CPP libs, see
 # top of https://github.com/grpc/grpc/blob/v{{ version }}/CMakeLists.txt
@@ -51,7 +48,10 @@ source:
       - patches/0014-add-linkage-to-openssl-to-grpc_unsecure.patch                  # [win]
       - patches/0015-add-another-file-to-gRPC_ADDITIONAL_DLL_SRC.patch              # [win]
       - patches/0016-update-GRPC_DLL-instances-where-necessary.patch                # [win]
+      # full test suite takes too long to build; reduce set of tests
       - patches/0017-reduce-buildtests_cxx-target-to-end2end-tests.patch
+      # don't rebuild protobuf/upb/abseil for grpcio-tools
+      - patches/0018-build-grpcio-tools-from-source.patch
 
   - folder: third_party/benchmark
     git_url: https://github.com/google/benchmark.git
@@ -76,11 +76,6 @@ source:
   - folder: third_party/xds
     git_url: https://github.com/cncf/xds.git
     git_rev: 3a472e524827f72d1ad621c4983dd5af54c46776
-
-  # would be nice to avoid this; it's contained in the main sources, but we'd need to build with bazel
-  - folder: grpcio_tools
-    url: https://pypi.org/packages/source/g/grpcio-tools/grpcio_tools-{{ version }}.tar.gz
-    sha256: 3e1a98f4d9decb84979e1ddd3deb09c0a33a84b6e3c0776d5bde4097e3ab66dd
 
 build:
   number: 0
@@ -238,7 +233,7 @@ outputs:
   - name: grpcio-tools
     build:
       script:
-        - cd grpcio_tools
+        - cd tools/distrib/python/grpcio_tools
         - export GRPC_PYTHON_BUILD_WITH_CYTHON=true  # [unix]
         - set GRPC_PYTHON_BUILD_WITH_CYTHON=true     # [win]
         - python -m pip install . -vv
@@ -256,6 +251,8 @@ outputs:
         - cython
         - pip
         - setuptools
+        - libabseil
+        - libprotobuf
       run:
         - grpcio ={{ version }}=*_{{ PKG_BUILDNUM }}
         - python
@@ -264,10 +261,12 @@ outputs:
     test:
       requires:
         - pip
-      commands:
-        - pip check
       imports:
         - grpc_tools
+      commands:
+        - pip check
+        # see https://github.com/conda-forge/grpc-cpp-feedstock/issues/385
+        - test "$(python -m grpc_tools.protoc --version)" == "$(protoc --version)"  # [unix]
 
 about:
   home: https://grpc.io/
