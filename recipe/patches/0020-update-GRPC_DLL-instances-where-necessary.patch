@@ -1,0 +1,50 @@
+From 3714e83bf3bed4b1401ed7f290980260269f8658 Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Sun, 2 Mar 2025 07:16:19 +1100
+Subject: [PATCH 20/21] update GRPC_DLL instances where necessary
+
+---
+ include/grpc/event_engine/event_engine.h | 2 +-
+ src/core/config/core_configuration.h     | 2 +-
+ src/core/lib/experiments/config.h        | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/include/grpc/event_engine/event_engine.h b/include/grpc/event_engine/event_engine.h
+index 6c329590fc..46620eab48 100644
+--- a/include/grpc/event_engine/event_engine.h
++++ b/include/grpc/event_engine/event_engine.h
+@@ -138,7 +138,7 @@ class EventEngine : public std::enable_shared_from_this<EventEngine>,
+   /// Returned by \a Connect, and can be passed to \a CancelConnect.
+   struct ConnectionHandle {
+     intptr_t keys[2];
+-    static const GRPC_DLL ConnectionHandle kInvalid;
++    static const ConnectionHandle kInvalid;
+   };
+   /// Thin wrapper around a platform-specific sockaddr type. A sockaddr struct
+   /// exists on all platforms that gRPC supports.
+diff --git a/src/core/config/core_configuration.h b/src/core/config/core_configuration.h
+index 29bacf96d5..08f17a2d40 100644
+--- a/src/core/config/core_configuration.h
++++ b/src/core/config/core_configuration.h
+@@ -35,7 +35,7 @@ namespace grpc_core {
+ 
+ // Global singleton that stores library configuration - factories, etc...
+ // that plugins might choose to extend.
+-class GRPC_DLL CoreConfiguration {
++class CoreConfiguration {
+  public:
+   CoreConfiguration(const CoreConfiguration&) = delete;
+   CoreConfiguration& operator=(const CoreConfiguration&) = delete;
+diff --git a/src/core/lib/experiments/config.h b/src/core/lib/experiments/config.h
+index e74f7c6b71..69fc9966db 100644
+--- a/src/core/lib/experiments/config.h
++++ b/src/core/lib/experiments/config.h
+@@ -76,7 +76,7 @@ class ExperimentFlags {
+   static constexpr size_t kNumExperimentFlagsWords = 8;
+   static constexpr size_t kFlagsPerWord = 63;
+   static constexpr uint64_t kLoadedFlag = 0x8000000000000000ull;
+-  static std::atomic<uint64_t> experiment_flags_[kNumExperimentFlagsWords];
++  GRPC_DLL static std::atomic<uint64_t> experiment_flags_[kNumExperimentFlagsWords];
+ };
+ 
+ // Return true if experiment \a experiment_id is enabled.

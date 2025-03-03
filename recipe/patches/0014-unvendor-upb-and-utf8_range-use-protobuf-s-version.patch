@@ -1,52 +1,53 @@
-From b087c46c16b09197a16e13b65ef6b53ef03496ef Mon Sep 17 00:00:00 2001
+From 6229f406e6fed43d77fe9f63f072e132e70a1b54 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Fri, 28 Feb 2025 15:09:41 +1100
-Subject: [PATCH 14/22] unvendor upb and utf8_range, use protobuf's version
+Subject: [PATCH 14/21] unvendor upb and utf8_range, use protobuf's version
 
 ---
- CMakeLists.txt  | 506 +-----------------------------------------------
+ CMakeLists.txt  | 507 +-----------------------------------------------
  cmake/upb.cmake |   4 +-
- 2 files changed, 5 insertions(+), 505 deletions(-)
+ 2 files changed, 6 insertions(+), 505 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index b6c0f7c3ce..67e4b0b500 100644
+index 7ff07bcaa7..374f3036d1 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -346,11 +346,14 @@ else()
+@@ -346,11 +346,15 @@ else()
    set(_gRPC_CORE_NOSTDCXX_FLAGS "")
  endif()
  
 +# from libprotobuf
 +find_package(protobuf CONFIG REQUIRED)
++set(_gRPC_ALLTARGETS_LIBRARIES protobuf::libupb)
 +
  if(UNIX AND NOT HAIKU)
    # -pthread does more than -lpthread
    set(THREADS_PREFER_PTHREAD_FLAG ON)
    find_package(Threads)
 -  set(_gRPC_ALLTARGETS_LIBRARIES ${CMAKE_DL_LIBS} m Threads::Threads)
-+  set(_gRPC_ALLTARGETS_LIBRARIES ${CMAKE_DL_LIBS} m Threads::Threads protobuf::libupb)
++  set(_gRPC_ALLTARGETS_LIBRARIES ${_gRPC_ALLTARGETS_LIBRARIES} ${CMAKE_DL_LIBS} m Threads::Threads)
    if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_POSIX)
      find_library(LIBRT rt)
      if(LIBRT)
-@@ -3075,8 +3078,6 @@ target_link_libraries(grpc
-   PUBLIC  ${_gRPC_ALLTARGETS_LIBRARIES}
+@@ -3075,8 +3079,6 @@ target_link_libraries(grpc
+   PRIVATE ${_gRPC_ALLTARGETS_LIBRARIES}
    # vendored libs
-   PUBLIC  ${_gRPC_ADDRESS_SORTING_LIBRARIES}
--  PUBLIC  upb_json_lib
--  PUBLIC  upb_textformat_lib
+   PRIVATE ${_gRPC_ADDRESS_SORTING_LIBRARIES}
+-  PRIVATE upb_json_lib
+-  PRIVATE upb_textformat_lib
    # external dependencies used within grpc
    PRIVATE ${_gRPC_CARES_LIBRARIES}
    PRIVATE ${_gRPC_RE2_LIBRARIES}
-@@ -3775,8 +3776,6 @@ target_link_libraries(grpc_unsecure
-   PUBLIC  ${_gRPC_ALLTARGETS_LIBRARIES}
+@@ -3775,8 +3777,6 @@ target_link_libraries(grpc_unsecure
+   PRIVATE ${_gRPC_ALLTARGETS_LIBRARIES}
    # vendored libs
-   PUBLIC  ${_gRPC_ADDRESS_SORTING_LIBRARIES}
--  PUBLIC  upb_mini_descriptor_lib
--  PUBLIC  upb_wire_lib
+   PRIVATE ${_gRPC_ADDRESS_SORTING_LIBRARIES}
+-  PRIVATE upb_mini_descriptor_lib
+-  PRIVATE upb_wire_lib
    # external dependencies used within grpc
    PRIVATE ${_gRPC_ZLIB_LIBRARIES}
    PRIVATE ${_gRPC_CARES_LIBRARIES}
-@@ -3973,501 +3972,6 @@ target_link_libraries(gtest
+@@ -3973,501 +3973,6 @@ target_link_libraries(gtest
  
  endif()
  
@@ -548,7 +549,7 @@ index b6c0f7c3ce..67e4b0b500 100644
  
  if(gRPC_BUILD_TESTS)
  
-@@ -5948,8 +5452,6 @@ target_include_directories(grpc_authorization_provider
+@@ -5948,8 +5453,6 @@ target_include_directories(grpc_authorization_provider
  )
  target_link_libraries(grpc_authorization_provider
    ${_gRPC_ALLTARGETS_LIBRARIES}
