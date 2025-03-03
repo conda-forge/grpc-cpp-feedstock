@@ -79,8 +79,14 @@ source:
 
 build:
   number: 0
+  skip: true  # [py!=312]
+
+requirements:
+  host:
+    - python
 
 outputs:
+  {% if False %}
   - name: libgrpc
     script: build-cpp.sh  # [not win]
     script: build-cpp.bat  # [win]
@@ -172,10 +178,13 @@ outputs:
         - cmake -GNinja -DCMAKE_CXX_STANDARD=17 $CMAKE_ARGS .   # [unix]
         - cmake -GNinja -DCMAKE_CXX_STANDARD=17 %CMAKE_ARGS% .  # [win]
         - cmake --build .
+  {% endif %}
 
   - name: grpcio
     script: build-grpcio.sh  # [not win]
     script: build-grpcio.bat  # [win]
+    build:
+      skip: true  # [py!=312]
     requirements:
       build:
         - python                                 # [build_platform != target_platform]
@@ -189,12 +198,13 @@ outputs:
         - pip
         - setuptools
         - cython
-        - {{ pin_subpackage('libgrpc', exact=True) }}
+        - python
+        - libgrpc {{ version }}.* *_{{ PKG_BUILDNUM }}
         - pthread-stubs                               # [linux]
         - zlib
       run:
         - python
-        - {{ pin_subpackage('libgrpc', exact=True) }}
+        - libgrpc {{ version }}.* *_{{ PKG_BUILDNUM }}
     test:
       source_files:
         - examples/python/helloworld/
@@ -232,6 +242,7 @@ outputs:
 
   - name: grpcio-tools
     build:
+      skip: true  # [py!=312]
       script:
         - cd tools/distrib/python/grpcio_tools
         - export GRPC_PYTHON_BUILD_WITH_CYTHON=true  # [unix]
@@ -246,7 +257,7 @@ outputs:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }}
       host:
-        - grpcio ={{ version }}=*_{{ PKG_BUILDNUM }}
+        - {{ pin_subpackage('grpcio', exact=True) }}
         - python
         - cython
         - pip
@@ -254,7 +265,7 @@ outputs:
         - libabseil
         - libprotobuf
       run:
-        - grpcio ={{ version }}=*_{{ PKG_BUILDNUM }}
+        - {{ pin_subpackage('grpcio', exact=True) }}
         - python
         - protobuf
         - setuptools
