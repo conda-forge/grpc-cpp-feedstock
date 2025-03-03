@@ -53,7 +53,7 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" == 1 ]]; then
   # don't build tests in cross-compilation; cannot run them anyway
   export CMAKE_ARGS="${CMAKE_ARGS} -DgRPC_BUILD_TESTS=OFF"
 else
-  export CMAKE_ARGS="${CMAKE_ARGS} -DgRPC_BUILD_TESTS=ON"
+  export CMAKE_ARGS="${CMAKE_ARGS} -DgRPC_CF_TESTS=ON"
 fi
 
 if [[ "${target_platform}" == osx-* ]]; then
