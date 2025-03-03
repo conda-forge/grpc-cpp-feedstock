@@ -1,7 +1,7 @@
 From f31151be199367cf1a0aaedd41e9c7e5222b5537 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 2 Mar 2025 07:16:19 +1100
-Subject: [PATCH 20/22] update GRPC_DLL instances where necessary
+Subject: [PATCH 20/23] update GRPC_DLL instances where necessary
 
 ---
  include/grpc/event_engine/event_engine.h | 2 +-

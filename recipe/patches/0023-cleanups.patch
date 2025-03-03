@@ -1,0 +1,108 @@
+From 1fcee3b0a115daa84e2f0b46d4d79392e05dc09c Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Mon, 3 Mar 2025 13:41:44 +1100
+Subject: [PATCH 23/23] cleanups
+
+---
+ CMakeLists.txt | 28 +++++++++++-----------------
+ 1 file changed, 11 insertions(+), 17 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e8b8e30f0e..e3291a8b2d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -347,11 +347,14 @@ else()
+   set(_gRPC_CORE_NOSTDCXX_FLAGS "")
+ endif()
+ 
++# from libprotobuf
++find_package(protobuf CONFIG REQUIRED)
++
+ if(UNIX AND NOT HAIKU)
+   # -pthread does more than -lpthread
+   set(THREADS_PREFER_PTHREAD_FLAG ON)
+   find_package(Threads)
+-  set(_gRPC_ALLTARGETS_LIBRARIES ${CMAKE_DL_LIBS} m Threads::Threads)
++  set(_gRPC_ALLTARGETS_LIBRARIES ${CMAKE_DL_LIBS} m Threads::Threads protobuf::libupb)
+   if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_POSIX)
+     find_library(LIBRT rt)
+     if(LIBRT)
+@@ -378,9 +381,6 @@ if(UNIX OR APPLE)
+   endif()
+ endif()
+ 
+-# from libprotobuf
+-find_package(protobuf CONFIG REQUIRED)
+-
+ # configure ccache if requested
+ include(cmake/ccache.cmake)
+ 
+@@ -1917,11 +1917,10 @@ target_include_directories(grpc_upbgen
+ )
+ target_link_libraries(grpc_upbgen
+   # core libs
+-  PUBLIC  ${_gRPC_ALLTARGETS_LIBRARIES}
++  PRIVATE ${_gRPC_ALLTARGETS_LIBRARIES}
+   # vendored libs
+-  PUBLIC  ${_gRPC_ADDRESS_SORTING_LIBRARIES}
++  PRIVATE ${_gRPC_ADDRESS_SORTING_LIBRARIES}
+   # external dependencies used within grpc
+-  PRIVATE protobuf::libupb
+   PRIVATE ${_gRPC_CARES_LIBRARIES}
+   PRIVATE ${_gRPC_RE2_LIBRARIES}
+   PRIVATE ${_gRPC_ZLIB_LIBRARIES}
+@@ -2499,13 +2498,12 @@ target_include_directories(grpc
+ )
+ target_link_libraries(grpc
+   # broken out of grpc
+-  PUBLIC  grpc_upbgen
++  PRIVATE grpc_upbgen
+   # core libs
+-  PUBLIC  ${_gRPC_ALLTARGETS_LIBRARIES}
++  PRIVATE ${_gRPC_ALLTARGETS_LIBRARIES}
+   # vendored libs
+-  PUBLIC  ${_gRPC_ADDRESS_SORTING_LIBRARIES}
++  PRIVATE ${_gRPC_ADDRESS_SORTING_LIBRARIES}
+   # external dependencies used within grpc
+-  PRIVATE protobuf::libupb
+   PRIVATE ${_gRPC_CARES_LIBRARIES}
+   PRIVATE ${_gRPC_RE2_LIBRARIES}
+   PRIVATE ${_gRPC_ZLIB_LIBRARIES}
+@@ -3200,11 +3198,10 @@ target_include_directories(grpc_unsecure
+ )
+ target_link_libraries(grpc_unsecure
+   # core libs
+-  PUBLIC  ${_gRPC_ALLTARGETS_LIBRARIES}
++  PRIVATE ${_gRPC_ALLTARGETS_LIBRARIES}
+   # vendored libs
+-  PUBLIC  ${_gRPC_ADDRESS_SORTING_LIBRARIES}
++  PRIVATE ${_gRPC_ADDRESS_SORTING_LIBRARIES}
+   # external dependencies used within grpc
+-  PRIVATE protobuf::libupb
+   PRIVATE ${_gRPC_ZLIB_LIBRARIES}
+   PRIVATE ${_gRPC_CARES_LIBRARIES}
+   # external dependencies that need to available at runtime
+@@ -3595,7 +3592,6 @@ target_include_directories(grpc++
+ )
+ target_link_libraries(grpc++
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  protobuf::libupb
+   absl::absl_check
+   absl::absl_log
+   grpc
+@@ -4339,7 +4335,6 @@ target_include_directories(grpc++_unsecure
+ )
+ target_link_libraries(grpc++_unsecure
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  protobuf::libupb
+   absl::absl_check
+   absl::absl_log
+   grpc_unsecure
+@@ -4883,7 +4878,6 @@ target_include_directories(grpc_authorization_provider
+ )
+ target_link_libraries(grpc_authorization_provider
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  protobuf::libupb
+   ${_gRPC_RE2_LIBRARIES}
+   ${_gRPC_ZLIB_LIBRARIES}
+   absl::config
