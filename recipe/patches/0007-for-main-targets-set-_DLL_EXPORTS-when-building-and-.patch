@@ -1,0 +1,85 @@
+From 8bf4e89807e05cb0aa936a328cc43d6eb4a5e40d Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Thu, 29 Feb 2024 20:31:21 +1100
+Subject: [PATCH 07/17] for main targets, set *_DLL_EXPORTS when building and
+ *_DLL_IMPORTS in interface
+
+---
+ CMakeLists.txt | 36 ++++++++++--------------------------
+ 1 file changed, 10 insertions(+), 26 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 8022c477d5..406ee10209 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -2099,10 +2099,8 @@ if(WIN32 AND MSVC)
+     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+   )
+   if(BUILD_SHARED_LIBS)
+-    target_compile_definitions(gpr
+-    PRIVATE
+-      "GPR_DLL_EXPORTS"
+-    )
++    set_target_properties(gpr PROPERTIES DEFINE_SYMBOL "GPR_DLL_EXPORTS")
++    target_compile_definitions(gpr INTERFACE "GPR_DLL_IMPORTS")
+   endif()
+   if(gRPC_INSTALL)
+     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/gpr.pdb
+@@ -3043,11 +3041,8 @@ if(WIN32 AND MSVC)
+     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+   )
+   if(BUILD_SHARED_LIBS)
+-    target_compile_definitions(grpc
+-    PRIVATE
+-      "GRPC_DLL_EXPORTS"
+-      "GPR_DLL_IMPORTS"
+-    )
++    set_target_properties(grpc PROPERTIES DEFINE_SYMBOL "GRPC_DLL_EXPORTS")
++    target_compile_definitions(grpc INTERFACE "GRPC_DLL_IMPORTS")
+   endif()
+   if(gRPC_INSTALL)
+     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc.pdb
+@@ -3746,11 +3741,8 @@ if(WIN32 AND MSVC)
+     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+   )
+   if(BUILD_SHARED_LIBS)
+-    target_compile_definitions(grpc_unsecure
+-    PRIVATE
+-      "GRPC_DLL_EXPORTS"
+-      "GPR_DLL_IMPORTS"
+-    )
++    set_target_properties(grpc_unsecure PROPERTIES DEFINE_SYMBOL "GRPC_DLL_EXPORTS")
++    target_compile_definitions(grpc_unsecure INTERFACE "GRPC_DLL_IMPORTS")
+   endif()
+   if(gRPC_INSTALL)
+     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc_unsecure.pdb
+@@ -4632,12 +4624,8 @@ if(WIN32 AND MSVC)
+     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+   )
+   if(BUILD_SHARED_LIBS)
+-    target_compile_definitions(grpc++
+-    PRIVATE
+-      "GRPCXX_DLL_EXPORTS"
+-      "GPR_DLL_IMPORTS"
+-      "GRPC_DLL_IMPORTS"
+-    )
++    set_target_properties(grpc++ PROPERTIES DEFINE_SYMBOL "GRPCXX_DLL_EXPORTS")
++    target_compile_definitions(grpc++ INTERFACE "GRPCXX_DLL_IMPORTS")
+   endif()
+   if(gRPC_INSTALL)
+     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc++.pdb
+@@ -5379,12 +5367,8 @@ if(WIN32 AND MSVC)
+     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+   )
+   if(BUILD_SHARED_LIBS)
+-    target_compile_definitions(grpc++_unsecure
+-    PRIVATE
+-      "GRPCXX_DLL_EXPORTS"
+-      "GPR_DLL_IMPORTS"
+-      "GRPC_DLL_IMPORTS"
+-    )
++    set_target_properties(grpc++_unsecure PROPERTIES DEFINE_SYMBOL "GRPCXX_DLL_EXPORTS")
++    target_compile_definitions(grpc++_unsecure INTERFACE "GRPCXX_DLL_IMPORTS")
+   endif()
+   if(gRPC_INSTALL)
+     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc++_unsecure.pdb
