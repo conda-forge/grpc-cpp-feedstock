@@ -1,0 +1,31 @@
+From 4d31045c90eeaae99aa1cb40895474467d989f52 Mon Sep 17 00:00:00 2001
+From: "Uwe L. Korn" <uwe.korn@quantco.com>
+Date: Thu, 28 Nov 2024 20:40:54 +0100
+Subject: [PATCH 10/18] Build protobufs for tests only if gRPC_BUILD_TESTS
+
+---
+ CMakeLists.txt | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 51c9f3b5b8..58abc7cbf2 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -711,6 +711,9 @@ protobuf_generate_grpc_cpp_with_import_path_correction(
+ protobuf_generate_grpc_cpp_with_import_path_correction(
+   src/proto/grpc/reflection/v1alpha/reflection.proto src/proto/grpc/reflection/v1alpha/reflection.proto
+ )
++
++if(gRPC_BUILD_TESTS)
++
+ protobuf_generate_grpc_cpp_with_import_path_correction(
+   src/proto/grpc/testing/benchmark_service.proto src/proto/grpc/testing/benchmark_service.proto
+ )
+@@ -1245,7 +1248,6 @@ protobuf_generate_grpc_cpp_with_import_path_correction(
+ )
+ endif()
+ 
+-if(gRPC_BUILD_TESTS)
+   add_custom_target(buildtests_c)
+   if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+     add_dependencies(buildtests_c fd_conservation_posix_test)
