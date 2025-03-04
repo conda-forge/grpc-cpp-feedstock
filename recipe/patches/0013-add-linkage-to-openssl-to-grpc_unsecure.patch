@@ -1,0 +1,33 @@
+From 594ba42d371523b3d45c08faf9ba5780a1c7e1d7 Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Sat, 1 Mar 2025 08:06:28 +1100
+Subject: [PATCH 13/15] add linkage to openssl to grpc_unsecure
+
+grpc_unsecure actually requires ParsePemCertificateChain / ParsePemPrivateKey
+from that TU in ValidatePemKeyCertPair, see
+https://github.com/grpc/grpc/blob/v1.69.0/src/core/lib/security/credentials/tls/grpc_tls_certificate_provider.cc#L66
+https://github.com/grpc/grpc/blob/v1.69.0/src/core/tsi/ssl_transport_security_utils.cc#L380
+---
+ CMakeLists.txt | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index bad1fd3100..59ba9259e6 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -3047,6 +3047,7 @@ add_library(grpc_unsecure
+   src/core/tsi/alts/handshaker/transport_security_common_api.cc
+   src/core/tsi/fake_transport_security.cc
+   src/core/tsi/local_transport_security.cc
++  src/core/tsi/ssl_transport_security_utils.cc
+   src/core/tsi/transport_security.cc
+   src/core/tsi/transport_security_grpc.cc
+   src/core/util/backoff.cc
+@@ -3123,6 +3124,7 @@ target_link_libraries(grpc_unsecure
+   PRIVATE ${_gRPC_ZLIB_LIBRARIES}
+   PRIVATE ${_gRPC_CARES_LIBRARIES}
+   # external dependencies that need to available at runtime
++  PUBLIC  ${_gRPC_SSL_LIBRARIES}
+   PRIVATE absl::algorithm_container
+   PRIVATE absl::config
+   PRIVATE absl::no_destructor

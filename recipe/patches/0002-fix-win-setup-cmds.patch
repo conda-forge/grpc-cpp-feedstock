@@ -1,19 +1,18 @@
-From d7df69d56389b57bc7d2c4218e757ec68f40fdfa Mon Sep 17 00:00:00 2001
+From bbba53b399637526977100f162bf6b63e0d1e391 Mon Sep 17 00:00:00 2001
 From: Mike Sarahan <msarahan@gmail.com>
 Date: Tue, 18 Feb 2020 13:53:05 -0600
-Subject: [PATCH 02/16] fix win setup cmds
+Subject: [PATCH 02/15] fix win setup cmds
 
 Co-Authored-By: Julien Schueller <schueller@phimeca.com>
 Co-Authored-By: Nicholas Bollweg <nick.bollweg@gmail.com>
 Co-Authored-By: Marius van Niekerk <marius.v.niekerk@gmail.com>
 Co-Authored-By: H. Vetinari <h.vetinari@gmx.com>
 ---
- setup.py                      | 6 +++---
- src/python/grpcio/commands.py | 2 ++
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ setup.py | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index c9fd14f5ba..799ed5a2c1 100644
+index 471b2fcd51..0458773b5b 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -209,6 +209,9 @@ ENABLE_DOCUMENTATION_BUILD = _env_bool_value(
@@ -26,26 +25,13 @@ index c9fd14f5ba..799ed5a2c1 100644
      """Test if linker on system needs libatomic."""
      code_test = (
          b"#include <atomic>\n"
-@@ -265,9 +268,6 @@ if EXTRA_ENV_COMPILE_ARGS is None:
-     if "win32" in sys.platform:
-         # MSVC by defaults uses C++14 so C11 needs to be specified.
+@@ -266,9 +269,6 @@ if EXTRA_ENV_COMPILE_ARGS is None:
+         # MSVC by defaults uses C++14 and C89 so both needs to be configured.
+         EXTRA_ENV_COMPILE_ARGS += " /std:c++17"
          EXTRA_ENV_COMPILE_ARGS += " /std:c11"
 -        # We need to statically link the C++ Runtime, only the C runtime is
 -        # available dynamically
 -        EXTRA_ENV_COMPILE_ARGS += " /MT"
      elif "linux" in sys.platform:
-         # GCC by defaults uses C17 so only C++14 needs to be specified.
-         EXTRA_ENV_COMPILE_ARGS += " -std=c++14"
-diff --git a/src/python/grpcio/commands.py b/src/python/grpcio/commands.py
-index 4673157fc9..724aea93d2 100644
---- a/src/python/grpcio/commands.py
-+++ b/src/python/grpcio/commands.py
-@@ -252,6 +252,8 @@ class BuildExt(build_ext.build_ext):
-             """Test if default compiler is okay with specifying c++ version
-             when invoked in C mode. GCC is okay with this, while clang is not.
-             """
-+            if sys.platform == "win32":
-+                return False
-             try:
-                 # TODO(lidiz) Remove the generated a.out for success tests.
-                 cc = os.environ.get("CC", "cc")
+         # GCC by defaults uses C17 so only C++17 needs to be specified.
+         EXTRA_ENV_COMPILE_ARGS += " -std=c++17"

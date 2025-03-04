@@ -1,7 +1,7 @@
-From 56d81ece5662c360416d65ab64d0d92d7292f343 Mon Sep 17 00:00:00 2001
+From c8fc56a8b360c9b3b37833170727654f28aaa983 Mon Sep 17 00:00:00 2001
 From: Marius van Niekerk <marius.v.niekerk@gmail.com>
 Date: Mon, 13 Jun 2022 17:13:07 -0400
-Subject: [PATCH 03/16] Link against grpc and abseil
+Subject: [PATCH 03/15] Link against grpc and abseil
 
 Co-Authored-By: H. Vetinari <h.vetinari@gmx.com>
 ---
@@ -9,7 +9,7 @@ Co-Authored-By: H. Vetinari <h.vetinari@gmx.com>
  1 file changed, 18 insertions(+), 4 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index 799ed5a2c1..baff77d494 100644
+index 0458773b5b..9d6b47a57e 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -180,6 +180,8 @@ BUILD_WITH_STATIC_LIBSTDCXX = _env_bool_value(
@@ -21,7 +21,7 @@ index 799ed5a2c1..baff77d494 100644
  # For local development use only: This skips building gRPC Core and its
  # dependencies, including protobuf and boringssl. This allows "incremental"
  # compilation by first building gRPC Core using make, then building only the
-@@ -377,10 +379,19 @@ if BUILD_WITH_SYSTEM_CARES:
+@@ -378,10 +380,19 @@ if BUILD_WITH_SYSTEM_CARES:
  if BUILD_WITH_SYSTEM_RE2:
      EXTENSION_LIBRARIES += ("re2",)
  if BUILD_WITH_SYSTEM_ABSL:
@@ -45,7 +45,7 @@ index 799ed5a2c1..baff77d494 100644
  
  DEFINE_MACROS = (("_WIN32_WINNT", 0x600),)
  asm_files = []
-@@ -492,6 +503,9 @@ def cython_extensions_and_necessity():
+@@ -493,6 +504,9 @@ def cython_extensions_and_necessity():
              prefix + "libgrpc.a",
          ]
          core_c_files = []
