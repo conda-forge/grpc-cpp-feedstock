@@ -1,3 +1,8 @@
+c_compiler:         # [win]
+  - vs2022          # [win]
+cxx_compiler:       # [win]
+  - vs2022          # [win]
+
 # see https://github.com/grpc/grpc/commit/14ac94d923b80650e0df55bed17be5efa0e4becd
 c_stdlib_version:   # [osx and x86_64]
   - 10.14           # [osx and x86_64]
