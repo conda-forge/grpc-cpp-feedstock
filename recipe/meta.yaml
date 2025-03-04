@@ -3,7 +3,7 @@
 # core package & vendored libs use different version scheme than CPP libs, see
 # top of https://github.com/grpc/grpc/blob/v{{ version }}/CMakeLists.txt
 # as of 1.67 the pattern is not trivially deducible from the version anymore
-{% set core_version = "44.2.0" %}
+{% set core_version = "45.0.0" %}
 
 {% set core_libs = ["gpr", "grpc", "grpc_unsecure"] %}
 {% set core_cpp_libs = ["grpc++", "grpc++_unsecure"] %}
@@ -54,7 +54,7 @@ source:
 
   - folder: third_party/envoy-api
     git_url: https://github.com/envoyproxy/data-plane-api.git
-    git_rev: f8b75d1efa92bbf534596a013d9ca5873f79dd30
+    git_rev: 88a37373e3cb5e1ab09e75dfb302b083168e6654
 
   - folder: third_party/googleapis
     git_url: https://github.com/googleapis/googleapis.git
