@@ -1,4 +1,4 @@
-From b87edaac36ccaea271562fdea5ed537b29af9f52 Mon Sep 17 00:00:00 2001
+From 2a88a6a8c4d2872cb9cbe8742e17b50365feb28d Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sat, 1 Mar 2025 09:33:10 +1100
 Subject: [PATCH 15/18] add another file to gRPC_ADDITIONAL_DLL_SRC
@@ -8,7 +8,7 @@ Subject: [PATCH 15/18] add another file to gRPC_ADDITIONAL_DLL_SRC
  1 file changed, 1 insertion(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 76c0e2444e..0e5a2019ba 100644
+index 7faf19eebf..e85c59afe6 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -521,6 +521,7 @@ set(gRPC_ADDITIONAL_DLL_SRC

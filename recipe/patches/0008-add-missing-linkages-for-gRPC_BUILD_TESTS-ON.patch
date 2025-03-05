@@ -1,4 +1,4 @@
-From 9a8162547bbec5100f991def27a0821c8066e767 Mon Sep 17 00:00:00 2001
+From 819dc641906b1f36e92d818963ab76b366ec4a45 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 26 Sep 2023 18:25:54 +1100
 Subject: [PATCH 08/18] add missing linkages for gRPC_BUILD_TESTS=ON
@@ -8,7 +8,7 @@ Subject: [PATCH 08/18] add missing linkages for gRPC_BUILD_TESTS=ON
  1 file changed, 9 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 406ee10209..5b5c670a80 100644
+index e7393ea1cd..078cf76a38 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -8247,6 +8247,7 @@ target_include_directories(authorization_matchers_test

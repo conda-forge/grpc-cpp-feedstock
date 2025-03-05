@@ -1,4 +1,4 @@
-From 295800e206638638f3edc40541df49b2dad3a5c2 Mon Sep 17 00:00:00 2001
+From ea4c7cddc8244c9dd76342ee66f4529e0a710aa7 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Mon, 3 Feb 2025 11:51:28 +1100
 Subject: [PATCH 12/18] break out part of grpc into grpc_upb due to too many
@@ -9,7 +9,7 @@ Subject: [PATCH 12/18] break out part of grpc into grpc_upb due to too many
  1 file changed, 164 insertions(+), 78 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index e4dbec5daf..43f33ae60e 100644
+index 8175f8786f..0a1b20ada5 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -2217,82 +2217,8 @@ if(gRPC_INSTALL)
@@ -148,25 +148,25 @@ index e4dbec5daf..43f33ae60e 100644
 +  PRIVATE ${_gRPC_RE2_LIBRARIES}
 +  PRIVATE ${_gRPC_ZLIB_LIBRARIES}
 +  # external dependencies that need to available at runtime
-+  PUBLIC  ${_gRPC_SSL_LIBRARIES}
-+  PUBLIC  absl::algorithm_container
-+  PUBLIC  absl::config
-+  PUBLIC  absl::no_destructor
-+  PUBLIC  absl::cleanup
-+  PUBLIC  absl::flat_hash_map
-+  PUBLIC  absl::flat_hash_set
-+  PUBLIC  absl::inlined_vector
-+  PUBLIC  absl::bind_front
-+  PUBLIC  absl::function_ref
-+  PUBLIC  absl::hash
-+  PUBLIC  absl::type_traits
-+  PUBLIC  absl::random_bit_gen_ref
-+  PUBLIC  absl::random_distributions
-+  PUBLIC  absl::statusor
-+  PUBLIC  absl::span
-+  PUBLIC  absl::utility
++  PRIVATE ${_gRPC_SSL_LIBRARIES}
++  PRIVATE absl::algorithm_container
++  PRIVATE absl::config
++  PRIVATE absl::no_destructor
++  PRIVATE absl::cleanup
++  PRIVATE absl::flat_hash_map
++  PRIVATE absl::flat_hash_set
++  PRIVATE absl::inlined_vector
++  PRIVATE absl::bind_front
++  PRIVATE absl::function_ref
++  PRIVATE absl::hash
++  PRIVATE absl::type_traits
++  PRIVATE absl::random_bit_gen_ref
++  PRIVATE absl::random_distributions
++  PRIVATE absl::statusor
++  PRIVATE absl::span
++  PRIVATE absl::utility
 +  # targets which belong to grpc anyway
-+  PUBLIC  gpr
++  PRIVATE gpr
 +)
 +if(_gRPC_PLATFORM_IOS OR _gRPC_PLATFORM_MAC)
 +  target_link_libraries(grpc_upbgen PUBLIC "-framework CoreFoundation")

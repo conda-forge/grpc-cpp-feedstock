@@ -1,4 +1,4 @@
-From 36bf801797b0d53b8ac780c0590668939391d0cd Mon Sep 17 00:00:00 2001
+From 731c0e0719cf8a670335e1176fc0814d9df73f95 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 2 Mar 2025 08:22:39 +1100
 Subject: [PATCH 17/18] reduce buildtests_cxx target to end2end tests
@@ -15,7 +15,7 @@ Plus four support libraries (`grpc{,++}_test{,_config,_util}`) and the vendored 
  1 file changed, 49 insertions(+), 711 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 0e5a2019ba..540315829f 100644
+index e85c59afe6..7be50f4957 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -47,11 +47,12 @@ set(gRPC_INSTALL_SHAREDIR "share/grpc" CACHE STRING "Installation directory for
