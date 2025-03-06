@@ -67,6 +67,9 @@ for txt_file in glob.glob(os.path.join(symbols_dir, "symbols_*.txt")):
             # skip labels and metadata
             if "Label" in line or any(symbol.startswith(x) for x in [".", "$", "@", "??", "?$", "__"]):
                 continue
+            # skip opencensus for now; re-evaluate together with #220
+            if "opencensus" in symbol.lower():
+                continue
             symbols.add(symbol)
             ### potential further avenues for symbol reduction
             # # Skip lambda-related symbols and anonymous namespaces
