@@ -92,6 +92,8 @@ outputs:
         - cmake
         - ninja
         - python *      # [win]
+        # for analysing total number of symbols in grpc.dll
+        - py-lief       # [win]
         # During cross-compilation, we need to build the grpc_cpp_plugin for the
         # architecture of the build agent (where it will be executed afterwards),
         # thus we need the respective host dependencies also in the build env.
@@ -122,8 +124,6 @@ outputs:
         - cmake
         - ninja
         - pkg-config
-        # for analysing total number of symbols in grpc.dll
-        - py-lief       # [win]
         # only required for pkg-config test (which wants to find zlib.pc)
         - zlib
       files:
@@ -166,9 +166,6 @@ outputs:
         # CMake test: compile upstream example
         - ./test_grpc.sh   # [unix]
         - ./test_grpc.bat  # [win]
-
-        # check number of symbols in grpc.dll on windows
-        - python -c "import os, lief; print(len(lief.parse(os.environ['LIBRARY_BIN'] + r'\grpc.dll').exported_functions))"  # [win]
 
         # test availability of symbol needed by arrow (esp. on windows)
         - cd cmake_test

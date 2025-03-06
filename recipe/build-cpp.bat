@@ -7,7 +7,7 @@ echo %CXXFLAGS%
 copy %RECIPE_DIR%\generate_def.py %SRC_DIR%\generate_def.py
 
 mkdir build-cpp
-cd build-cpp
+pushd build-cpp
 
 :: we need to modify upb/port/def.inc, because that's the only header getting included in all
 :: the src/core/ext/upb-gen/* files; save the original so we don't get issues with clobbering
@@ -42,3 +42,8 @@ if %ERRORLEVEL% neq 0 exit 1
 
 :: restore original
 move .\upb_port_def_orig.inc %LIBRARY_INC%\upb\port\def.inc
+
+:: check number of symbols in grpc.dll on windows
+python -c "import os, lief; print(len(lief.parse(os.environ['LIBRARY_BIN'] + r'\grpc.dll').exported_functions))"
+
+popd
