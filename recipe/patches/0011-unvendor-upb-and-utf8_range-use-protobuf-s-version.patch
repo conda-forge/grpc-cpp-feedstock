@@ -1,7 +1,7 @@
-From e63c71b0b684174f023c70668b49ffd89e174b7a Mon Sep 17 00:00:00 2001
+From d410ea0dd522cc71dc4d6a010880befa3ef35b13 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Fri, 28 Feb 2025 15:09:41 +1100
-Subject: [PATCH 11/18] unvendor upb and utf8_range, use protobuf's version
+Subject: [PATCH 11/16] unvendor upb and utf8_range, use protobuf's version
 
 ---
  CMakeLists.txt  | 521 ++----------------------------------------------
@@ -9,7 +9,7 @@ Subject: [PATCH 11/18] unvendor upb and utf8_range, use protobuf's version
  2 files changed, 16 insertions(+), 509 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 58abc7cbf2..e4dbec5daf 100644
+index 27eaab94d2..8175f8786f 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -346,11 +346,15 @@ else()
