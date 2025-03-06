@@ -1,7 +1,7 @@
-From f25e968c590ae4e0305c3deaa2839a9f4b81a063 Mon Sep 17 00:00:00 2001
+From b2366399938babc9f52cb9af27c854c09935fa32 Mon Sep 17 00:00:00 2001
 From: Jonathan Helmus <jjhelmus@gmail.com>
 Date: Mon, 17 Feb 2020 15:45:06 -0600
-Subject: [PATCH 01/16] windows ssl lib names
+Subject: [PATCH 01/15] windows ssl lib names
 
 Co-Authored-By: Julien Schueller <schueller@phimeca.com>
 Co-Authored-By: Nicholas Bollweg <nick.bollweg@gmail.com>
@@ -11,10 +11,10 @@ Co-Authored-By: Marius van Niekerk <marius.v.niekerk@gmail.com>
  1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index 3b6edbe002..c9fd14f5ba 100644
+index 4d13d878c0..471b2fcd51 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -366,10 +366,10 @@ if "win32" in sys.platform:
+@@ -367,10 +367,10 @@ if "win32" in sys.platform:
          "ws2_32",
      )
  if BUILD_WITH_SYSTEM_OPENSSL:
