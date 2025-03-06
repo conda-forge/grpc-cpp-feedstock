@@ -3,6 +3,9 @@
 echo %CFLAGS%
 echo %CXXFLAGS%
 
+:: copy a necessary helper to source directory
+copy %RECIPE_DIR%\generate_def.py %SRC_DIR%\generate_def.py
+
 mkdir build-cpp
 cd build-cpp
 
