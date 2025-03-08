@@ -3,7 +3,7 @@
 # core package & vendored libs use different version scheme than CPP libs, see
 # top of https://github.com/grpc/grpc/blob/v{{ version }}/CMakeLists.txt
 # as of 1.67 the pattern is not trivially deducible from the version anymore
-{% set core_version = "45.0.0" %}
+{% set core_version = "46.0.0" %}
 
 {% set core_libs = ["gpr", "grpc", "grpc_unsecure"] %}
 {% set core_cpp_libs = ["grpc++", "grpc++_unsecure"] %}
