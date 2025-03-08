@@ -1,4 +1,4 @@
-From 7a149870add49cc06cf51a638332ad7257ae1086 Mon Sep 17 00:00:00 2001
+From 5e660b8727fd0386388b7b13ac310fbe60786f7c Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Thu, 28 Nov 2024 20:40:54 +0100
 Subject: [PATCH 09/15] Build protobufs for tests only if gRPC_BUILD_TESTS
@@ -8,10 +8,10 @@ Subject: [PATCH 09/15] Build protobufs for tests only if gRPC_BUILD_TESTS
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 0407d82808..447e8fd361 100644
+index 72ee817a05..b69b216f3d 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -711,6 +711,9 @@ protobuf_generate_grpc_cpp_with_import_path_correction(
+@@ -720,6 +720,9 @@ protobuf_generate_grpc_cpp_with_import_path_correction(
  protobuf_generate_grpc_cpp_with_import_path_correction(
    src/proto/grpc/reflection/v1alpha/reflection.proto src/proto/grpc/reflection/v1alpha/reflection.proto
  )
@@ -21,7 +21,7 @@ index 0407d82808..447e8fd361 100644
  protobuf_generate_grpc_cpp_with_import_path_correction(
    src/proto/grpc/testing/benchmark_service.proto src/proto/grpc/testing/benchmark_service.proto
  )
-@@ -1245,7 +1248,6 @@ protobuf_generate_grpc_cpp_with_import_path_correction(
+@@ -1260,7 +1263,6 @@ protobuf_generate_grpc_cpp_with_import_path_correction(
  )
  endif()
  

@@ -1,4 +1,4 @@
-From f0870360cf5c51f5634daa1a80b5ce001dff979b Mon Sep 17 00:00:00 2001
+From 50ba587ddae9dc56a66e8213d6ec1c132a247688 Mon Sep 17 00:00:00 2001
 From: "Uwe L. Korn" <uwe.korn@quantco.com>
 Date: Fri, 11 Sep 2020 14:20:04 +0200
 Subject: [PATCH 04/15] force protoc executable
