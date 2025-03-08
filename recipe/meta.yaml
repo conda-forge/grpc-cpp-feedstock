@@ -54,7 +54,7 @@ source:
 
   - folder: third_party/envoy-api
     git_url: https://github.com/envoyproxy/data-plane-api.git
-    git_rev: 88a37373e3cb5e1ab09e75dfb302b083168e6654
+    git_rev: 4de3c74cf21a9958c1cf26d8993c55c6e0d28b49
 
   - folder: third_party/googleapis
     git_url: https://github.com/googleapis/googleapis.git
