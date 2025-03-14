@@ -76,6 +76,8 @@ source:
 
 build:
   number: 1
+  # debug
+  skip: true  # [not win]
 
 outputs:
   - name: libgrpc
