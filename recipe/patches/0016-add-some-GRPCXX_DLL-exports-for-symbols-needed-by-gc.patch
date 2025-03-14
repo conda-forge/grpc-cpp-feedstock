@@ -1,13 +1,16 @@
-From 2a13446a8ba1ca096d2701039267b82c531f924c Mon Sep 17 00:00:00 2001
+From daff5526aae5c6364983e52f67da6ab890c96b7f Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Fri, 14 Mar 2025 12:27:58 +1100
 Subject: [PATCH 16/16] add some GRPCXX_DLL exports for symbols needed by gcp
 
+also move CallbackUnaryCall to .cc, otherwise we get clashes between something
+that's supposed to be dllimported, yet having a definition in the header
 ---
- include/grpcpp/impl/rpc_service_method.h | 3 ++-
- include/grpcpp/support/client_callback.h | 4 ++--
- include/grpcpp/support/method_handler.h  | 2 +-
- 3 files changed, 5 insertions(+), 4 deletions(-)
+ include/grpcpp/impl/rpc_service_method.h |  3 ++-
+ include/grpcpp/support/client_callback.h | 13 +++----------
+ include/grpcpp/support/method_handler.h  |  2 +-
+ src/cpp/client/client_callback.cc        | 16 ++++++++++++++++
+ 4 files changed, 22 insertions(+), 12 deletions(-)
 
 diff --git a/include/grpcpp/impl/rpc_service_method.h b/include/grpcpp/impl/rpc_service_method.h
 index 1b9911eca4..f551a7d606 100644
@@ -31,10 +34,10 @@ index 1b9911eca4..f551a7d606 100644
        : RpcMethod(name, type),
          server_tag_(nullptr),
 diff --git a/include/grpcpp/support/client_callback.h b/include/grpcpp/support/client_callback.h
-index b3818eada6..f10fcf4d18 100644
+index b3818eada6..e9c706c163 100644
 --- a/include/grpcpp/support/client_callback.h
 +++ b/include/grpcpp/support/client_callback.h
-@@ -49,7 +49,7 @@ class RpcMethod;
+@@ -49,18 +49,11 @@ class RpcMethod;
  template <class InputMessage, class OutputMessage,
            class BaseInputMessage = InputMessage,
            class BaseOutputMessage = OutputMessage>
@@ -43,7 +46,19 @@ index b3818eada6..f10fcf4d18 100644
                         const grpc::internal::RpcMethod& method,
                         grpc::ClientContext* context,
                         const InputMessage* request, OutputMessage* result,
-@@ -1203,7 +1203,7 @@ class ClientCallbackUnaryImpl final : public ClientCallbackUnary {
+-                       std::function<void(grpc::Status)> on_completion) {
+-  static_assert(std::is_base_of<BaseInputMessage, InputMessage>::value,
+-                "Invalid input message specification");
+-  static_assert(std::is_base_of<BaseOutputMessage, OutputMessage>::value,
+-                "Invalid output message specification");
+-  CallbackUnaryCallImpl<BaseInputMessage, BaseOutputMessage> x(
+-      channel, method, context, request, result, on_completion);
+-}
++                       std::function<void(grpc::Status)> on_completion);
+ 
+ template <class InputMessage, class OutputMessage>
+ class CallbackUnaryCallImpl {
+@@ -1203,7 +1196,7 @@ class ClientCallbackUnaryImpl final : public ClientCallbackUnary {
    std::atomic<intptr_t> callbacks_outstanding_{2};
  };
  
@@ -65,3 +80,29 @@ index a61843bdb8..3791d5a78c 100644
        std::function<grpc::Status(ServiceType*, grpc::ServerContext*,
                                   const RequestType*, ResponseType*)>
            func,
+diff --git a/src/cpp/client/client_callback.cc b/src/cpp/client/client_callback.cc
+index 85e3ec4569..a8e3b3e2b8 100644
+--- a/src/cpp/client/client_callback.cc
++++ b/src/cpp/client/client_callback.cc
+@@ -28,5 +28,21 @@ bool ClientReactor::InternalTrailersOnly(const grpc_call* call) const {
+   return grpc_call_is_trailers_only(call);
+ }
+ 
++template <class InputMessage, class OutputMessage,
++          class BaseInputMessage = InputMessage,
++          class BaseOutputMessage = OutputMessage>
++void CallbackUnaryCall(grpc::ChannelInterface* channel,
++                       const grpc::internal::RpcMethod& method,
++                       grpc::ClientContext* context,
++                       const InputMessage* request, OutputMessage* result,
++                       std::function<void(grpc::Status)> on_completion) {
++  static_assert(std::is_base_of<BaseInputMessage, InputMessage>::value,
++                "Invalid input message specification");
++  static_assert(std::is_base_of<BaseOutputMessage, OutputMessage>::value,
++                "Invalid output message specification");
++  CallbackUnaryCallImpl<BaseInputMessage, BaseOutputMessage> x(
++      channel, method, context, request, result, on_completion);
++}
++
+ }  // namespace internal
+ }  // namespace grpc
