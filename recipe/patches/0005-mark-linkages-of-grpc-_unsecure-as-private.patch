@@ -1,7 +1,7 @@
 From 61600719d36d394f9e02a23cf85926b9e31bfcfc Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 23 Aug 2022 11:45:20 +0200
-Subject: [PATCH 05/15] mark linkages of grpc{,_unsecure} as private
+Subject: [PATCH 05/16] mark linkages of grpc{,_unsecure} as private
 
 except openssl & gpr, which are needed by dependents
 

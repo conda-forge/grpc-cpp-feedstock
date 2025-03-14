@@ -1,7 +1,7 @@
 From 90613fc7c920bee58acbb8c10c5b324a14f1e4d7 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 26 Sep 2023 18:25:54 +1100
-Subject: [PATCH 07/15] add missing linkages for gRPC_BUILD_TESTS=ON
+Subject: [PATCH 07/16] add missing linkages for gRPC_BUILD_TESTS=ON
 
 ---
  CMakeLists.txt | 9 +++++++++
