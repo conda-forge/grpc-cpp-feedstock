@@ -1,15 +1,15 @@
-From b52e1b28dcf98f6a9a1127c0f72bfc9caf38d903 Mon Sep 17 00:00:00 2001
+From 3ac8eedcac80613588f8b426b25cf7518db2862b Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Thu, 29 Feb 2024 20:31:21 +1100
 Subject: [PATCH 06/15] for main targets, set *_DLL_EXPORTS when building and
  *_DLL_IMPORTS in interface
 
 ---
- CMakeLists.txt | 36 ++++++++++--------------------------
- 1 file changed, 10 insertions(+), 26 deletions(-)
+ CMakeLists.txt | 52 ++++++++++++++------------------------------------
+ 1 file changed, 14 insertions(+), 38 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index aa48ccb04c..fb3f60850b 100644
+index aa48ccb04c..1766735441 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -2092,10 +2092,8 @@ if(WIN32 AND MSVC)
@@ -20,7 +20,7 @@ index aa48ccb04c..fb3f60850b 100644
 -    PRIVATE
 -      "GPR_DLL_EXPORTS"
 -    )
-+    set_target_properties(gpr PROPERTIES DEFINE_SYMBOL "GPR_DLL_EXPORTS")
++    target_compile_definitions(gpr PRIVATE "GPR_DLL_EXPORTS")
 +    target_compile_definitions(gpr INTERFACE "GPR_DLL_IMPORTS")
    endif()
    if(gRPC_INSTALL)
@@ -34,7 +34,7 @@ index aa48ccb04c..fb3f60850b 100644
 -      "GRPC_DLL_EXPORTS"
 -      "GPR_DLL_IMPORTS"
 -    )
-+    set_target_properties(grpc PROPERTIES DEFINE_SYMBOL "GRPC_DLL_EXPORTS")
++    target_compile_definitions(grpc PRIVATE "GRPC_DLL_EXPORTS")
 +    target_compile_definitions(grpc INTERFACE "GRPC_DLL_IMPORTS")
    endif()
    if(gRPC_INSTALL)
@@ -48,7 +48,7 @@ index aa48ccb04c..fb3f60850b 100644
 -      "GRPC_DLL_EXPORTS"
 -      "GPR_DLL_IMPORTS"
 -    )
-+    set_target_properties(grpc_unsecure PROPERTIES DEFINE_SYMBOL "GRPC_DLL_EXPORTS")
++    target_compile_definitions(grpc_unsecure PRIVATE "GRPC_DLL_EXPORTS")
 +    target_compile_definitions(grpc_unsecure INTERFACE "GRPC_DLL_IMPORTS")
    endif()
    if(gRPC_INSTALL)
@@ -63,12 +63,27 @@ index aa48ccb04c..fb3f60850b 100644
 -      "GPR_DLL_IMPORTS"
 -      "GRPC_DLL_IMPORTS"
 -    )
-+    set_target_properties(grpc++ PROPERTIES DEFINE_SYMBOL "GRPCXX_DLL_EXPORTS")
-+    target_compile_definitions(grpc++ INTERFACE "GRPCXX_DLL_IMPORTS")
++    target_compile_definitions(grpc++ PRIVATE "GRPC_DLL_IMPORTS" "GRPCXX_DLL_EXPORTS")
++    target_compile_definitions(grpc++ INTERFACE "GRPC_DLL_IMPORTS" "GRPCXX_DLL_IMPORTS")
    endif()
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc++.pdb
-@@ -5306,12 +5294,8 @@ if(WIN32 AND MSVC)
+@@ -4994,12 +4982,8 @@ if(WIN32 AND MSVC)
+     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+   )
+   if(BUILD_SHARED_LIBS)
+-    target_compile_definitions(grpc++_reflection
+-    PRIVATE
+-      "GPR_DLL_IMPORTS"
+-      "GRPC_DLL_IMPORTS"
+-      "GRPCXX_DLL_IMPORTS"
+-    )
++    target_compile_definitions(grpc++_reflection PRIVATE "GRPC_DLL_IMPORTS" "GRPCXX_DLL_EXPORTS")
++    target_compile_definitions(grpc++_reflection INTERFACE "GRPC_DLL_IMPORTS" "GRPCXX_DLL_IMPORTS")
+   endif()
+   if(gRPC_INSTALL)
+     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc++_reflection.pdb
+@@ -5306,12 +5290,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)
@@ -78,8 +93,23 @@ index aa48ccb04c..fb3f60850b 100644
 -      "GPR_DLL_IMPORTS"
 -      "GRPC_DLL_IMPORTS"
 -    )
-+    set_target_properties(grpc++_unsecure PROPERTIES DEFINE_SYMBOL "GRPCXX_DLL_EXPORTS")
-+    target_compile_definitions(grpc++_unsecure INTERFACE "GRPCXX_DLL_IMPORTS")
++    target_compile_definitions(grpc++_unsecure PRIVATE "GRPC_DLL_IMPORTS" "GRPCXX_DLL_EXPORTS")
++    target_compile_definitions(grpc++_unsecure INTERFACE "GRPC_DLL_IMPORTS" "GRPCXX_DLL_IMPORTS")
    endif()
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc++_unsecure.pdb
+@@ -6057,12 +6037,8 @@ if(WIN32 AND MSVC)
+     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+   )
+   if(BUILD_SHARED_LIBS)
+-    target_compile_definitions(grpcpp_channelz
+-    PRIVATE
+-      "GPR_DLL_IMPORTS"
+-      "GRPC_DLL_IMPORTS"
+-      "GRPCXX_DLL_IMPORTS"
+-    )
++    target_compile_definitions(grpcpp_channelz PRIVATE "GRPC_DLL_IMPORTS" "GRPCXX_DLL_EXPORTS")
++    target_compile_definitions(grpcpp_channelz INTERFACE "GRPC_DLL_IMPORTS" "GRPCXX_DLL_IMPORTS")
+   endif()
+   if(gRPC_INSTALL)
+     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpcpp_channelz.pdb
