@@ -58,14 +58,14 @@ for txt_file in glob.glob(os.path.join(symbols_dir, "symbols_*.txt")):
             # from another object, but since we do a union, it doesn't matter);
             # Static symbols aren't visible to the linker, so even if we put
             # them in the .def file, they would not be found; save the hassle.
-            if "UNDEF" in line or "Static" in line:
+            if any(x in line for x in ["UNDEF", "Static", "Label"]):
                 continue
             # get pure symbol, i.e. what comes after "|", minus spaces, and removing potentially
             # trailing demangled names (e.g. "(`upb_FieldType_CType'::`2'::c_type)" above);
             # don't use [-1] because some demangled symbols contain `operator|`
             symbol = line.split("|")[1].strip().split()[0]
-            # skip labels and metadata
-            if "Label" in line or any(symbol.startswith(x) for x in [".", "$", "@", "??", "?$", "__"]):
+            # skip internal symbols; prefix to #symbols as of v1.71: {"??": 57072, "?$": 102, "__": 84}
+            if any(symbol.startswith(x) for x in ["??", "?$", "__"]):
                 continue
             # skip opencensus for now; re-evaluate together with #220
             if "opencensus" in symbol.lower():
