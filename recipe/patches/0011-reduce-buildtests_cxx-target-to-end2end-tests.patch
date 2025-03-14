@@ -1,4 +1,4 @@
-From 418aef191c1269ec7de1b63cd1a0ba5b47485042 Mon Sep 17 00:00:00 2001
+From 5778a21aa4f44beffd79002c3ac4a038ac97c61c Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 2 Mar 2025 08:22:39 +1100
 Subject: [PATCH 11/16] reduce buildtests_cxx target to end2end tests
@@ -15,7 +15,7 @@ Plus four support libraries (`grpc{,++}_test{,_config,_util}`) and the vendored 
  1 file changed, 50 insertions(+), 688 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index ed2331df0a..643e5298dd 100644
+index 9654b4416d..77f95ed57f 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -47,11 +47,12 @@ set(gRPC_INSTALL_SHAREDIR "share/grpc" CACHE STRING "Installation directory for
@@ -793,7 +793,7 @@ index ed2331df0a..643e5298dd 100644
  
  add_library(gtest
    third_party/googletest/googlemock/src/gmock-cardinalities.cc
-@@ -4551,7 +3913,7 @@ if(gRPC_INSTALL)
+@@ -4555,7 +3917,7 @@ if(gRPC_INSTALL)
  endif()
  
  endif()
@@ -802,7 +802,7 @@ index ed2331df0a..643e5298dd 100644
  
  add_library(grpc++_test
    src/cpp/client/channel_test_peer.cc
-@@ -4624,7 +3986,7 @@ foreach(_hdr
+@@ -4628,7 +3990,7 @@ foreach(_hdr
  endforeach()
  
  endif()
@@ -811,7 +811,7 @@ index ed2331df0a..643e5298dd 100644
  
  add_library(grpc++_test_config
    test/cpp/util/test_config_cc.cc
-@@ -4676,7 +4038,7 @@ target_link_libraries(grpc++_test_config
+@@ -4680,7 +4042,7 @@ target_link_libraries(grpc++_test_config
  
  
  endif()
@@ -820,7 +820,7 @@ index ed2331df0a..643e5298dd 100644
  
  add_library(grpc++_test_util
    src/core/util/subprocess_posix.cc
-@@ -5961,7 +5323,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+@@ -5969,7 +5331,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
  endif()
  endif()
@@ -829,7 +829,7 @@ index ed2331df0a..643e5298dd 100644
  
  add_executable(admin_services_end2end_test
    ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/testing/xds/v3/csds.pb.cc
-@@ -7376,7 +6738,7 @@ target_link_libraries(arena_test
+@@ -7384,7 +6746,7 @@ target_link_libraries(arena_test
  
  
  endif()
@@ -838,7 +838,7 @@ index ed2331df0a..643e5298dd 100644
  
  add_executable(async_end2end_test
    ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/health/v1/health.pb.cc
-@@ -11370,7 +10732,7 @@ target_link_libraries(client_authority_filter_test
+@@ -11378,7 +10740,7 @@ target_link_libraries(client_authority_filter_test
  
  
  endif()
@@ -847,7 +847,7 @@ index ed2331df0a..643e5298dd 100644
  
  add_executable(client_callback_end2end_test
    ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/testing/echo.pb.cc
-@@ -11615,7 +10977,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+@@ -11623,7 +10985,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
  endif()
  endif()
@@ -856,7 +856,7 @@ index ed2331df0a..643e5298dd 100644
  
  add_executable(client_interceptors_end2end_test
    ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/testing/echo.pb.cc
-@@ -11692,7 +11054,7 @@ target_link_libraries(client_interceptors_end2end_test
+@@ -11700,7 +11062,7 @@ target_link_libraries(client_interceptors_end2end_test
  
  
  endif()
@@ -865,7 +865,7 @@ index ed2331df0a..643e5298dd 100644
  if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
    add_executable(client_lb_end2end_test
-@@ -12620,7 +11982,7 @@ target_link_libraries(connectivity_test
+@@ -12628,7 +11990,7 @@ target_link_libraries(connectivity_test
  
  
  endif()
@@ -874,7 +874,7 @@ index ed2331df0a..643e5298dd 100644
  
  add_executable(context_allocator_end2end_test
    ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/testing/echo.pb.cc
-@@ -13718,7 +13080,7 @@ target_link_libraries(empty_batch_test
+@@ -13726,7 +13088,7 @@ target_link_libraries(empty_batch_test
  
  
  endif()
@@ -883,7 +883,7 @@ index ed2331df0a..643e5298dd 100644
  
  add_executable(end2end_test
    ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/testing/duplicate/echo_duplicate.pb.cc
-@@ -15806,7 +15168,7 @@ target_link_libraries(gcp_authentication_filter_test
+@@ -15814,7 +15176,7 @@ target_link_libraries(gcp_authentication_filter_test
  
  
  endif()
@@ -892,7 +892,7 @@ index ed2331df0a..643e5298dd 100644
  
  add_executable(generic_end2end_test
    ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/testing/duplicate/echo_duplicate.pb.cc
-@@ -16376,7 +15738,7 @@ target_link_libraries(grpc_authorization_policy_provider_test
+@@ -16384,7 +15746,7 @@ target_link_libraries(grpc_authorization_policy_provider_test
  
  
  endif()
@@ -901,7 +901,7 @@ index ed2331df0a..643e5298dd 100644
  
  add_executable(grpc_authz_end2end_test
    ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/testing/echo.pb.cc
-@@ -17424,7 +16786,7 @@ target_link_libraries(grpclb_api_test
+@@ -17432,7 +16794,7 @@ target_link_libraries(grpclb_api_test
  
  
  endif()
@@ -910,7 +910,7 @@ index ed2331df0a..643e5298dd 100644
  if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
    add_executable(grpclb_end2end_test
-@@ -17854,7 +17216,7 @@ target_link_libraries(headers_bad_client_test
+@@ -17862,7 +17224,7 @@ target_link_libraries(headers_bad_client_test
  
  
  endif()
@@ -919,7 +919,7 @@ index ed2331df0a..643e5298dd 100644
  
  add_executable(health_service_end2end_test
    ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/health/v1/health.pb.cc
-@@ -18763,7 +18125,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+@@ -18771,7 +18133,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
  endif()
  endif()
@@ -928,7 +928,7 @@ index ed2331df0a..643e5298dd 100644
  
  add_executable(hybrid_end2end_test
    ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/testing/duplicate/echo_duplicate.pb.cc
-@@ -21119,7 +20481,7 @@ target_link_libraries(memory_quota_test
+@@ -21127,7 +20489,7 @@ target_link_libraries(memory_quota_test
  
  
  endif()
@@ -937,7 +937,7 @@ index ed2331df0a..643e5298dd 100644
  
  add_executable(message_allocator_end2end_test
    ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/testing/echo.pb.cc
-@@ -22288,7 +21650,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+@@ -22296,7 +21658,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
  endif()
  endif()
@@ -946,7 +946,7 @@ index ed2331df0a..643e5298dd 100644
  
  add_executable(orca_service_end2end_test
    ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/testing/xds/v3/orca_service.pb.cc
-@@ -23665,7 +23027,7 @@ target_link_libraries(poll_test
+@@ -23673,7 +23035,7 @@ target_link_libraries(poll_test
  
  
  endif()
@@ -955,7 +955,7 @@ index ed2331df0a..643e5298dd 100644
  
  add_executable(port_sharing_end2end_test
    ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/testing/echo.pb.cc
-@@ -25378,7 +24740,7 @@ target_link_libraries(random_early_detection_test
+@@ -25386,7 +24748,7 @@ target_link_libraries(random_early_detection_test
  
  
  endif()
@@ -964,7 +964,7 @@ index ed2331df0a..643e5298dd 100644
  
  add_executable(raw_end2end_test
    ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/testing/duplicate/echo_duplicate.pb.cc
-@@ -26234,7 +25596,7 @@ target_link_libraries(resolve_address_using_native_resolver_test
+@@ -26242,7 +25604,7 @@ target_link_libraries(resolve_address_using_native_resolver_test
  
  
  endif()
@@ -973,7 +973,7 @@ index ed2331df0a..643e5298dd 100644
  
  add_executable(resource_quota_end2end_stress_test
    ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/testing/echo.pb.cc
-@@ -29386,7 +28748,7 @@ target_link_libraries(ring_hash_test
+@@ -29394,7 +28756,7 @@ target_link_libraries(ring_hash_test
  
  
  endif()
@@ -982,7 +982,7 @@ index ed2331df0a..643e5298dd 100644
  
  add_executable(rls_end2end_test
    ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/lookup/v1/rls.pb.cc
-@@ -30420,7 +29782,7 @@ target_link_libraries(server_finishes_request_test
+@@ -30428,7 +29790,7 @@ target_link_libraries(server_finishes_request_test
  
  
  endif()
@@ -991,7 +991,7 @@ index ed2331df0a..643e5298dd 100644
  
  add_executable(server_interceptors_end2end_test
    ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/testing/echo.pb.cc
-@@ -30796,7 +30158,7 @@ target_link_libraries(server_test
+@@ -30804,7 +30166,7 @@ target_link_libraries(server_test
  
  
  endif()
@@ -1000,7 +1000,7 @@ index ed2331df0a..643e5298dd 100644
  
  add_executable(service_config_end2end_test
    ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/testing/duplicate/echo_duplicate.pb.cc
-@@ -33160,7 +32522,7 @@ target_link_libraries(test_core_channelz_channelz_test
+@@ -33168,7 +32530,7 @@ target_link_libraries(test_core_channelz_channelz_test
  
  
  endif()
@@ -1009,7 +1009,7 @@ index ed2331df0a..643e5298dd 100644
  
  add_executable(test_core_end2end_channelz_test
    ${_gRPC_PROTO_GENS_DIR}/src/core/ext/transport/chaotic_good/chaotic_good_frame.pb.cc
-@@ -33673,7 +33035,7 @@ target_link_libraries(test_cpp_client_credentials_test
+@@ -33681,7 +33043,7 @@ target_link_libraries(test_cpp_client_credentials_test
  
  
  endif()
@@ -1018,7 +1018,7 @@ index ed2331df0a..643e5298dd 100644
  
  add_executable(test_cpp_end2end_ssl_credentials_test
    ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/testing/echo.pb.cc
-@@ -37301,7 +36663,7 @@ target_link_libraries(xds_client_test
+@@ -37309,7 +36671,7 @@ target_link_libraries(xds_client_test
  
  
  endif()
@@ -1027,7 +1027,7 @@ index ed2331df0a..643e5298dd 100644
  if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
    add_executable(xds_cluster_end2end_test
-@@ -38344,7 +37706,7 @@ target_link_libraries(xds_cluster_resource_type_test
+@@ -38352,7 +37714,7 @@ target_link_libraries(xds_cluster_resource_type_test
  
  
  endif()
@@ -1036,7 +1036,7 @@ index ed2331df0a..643e5298dd 100644
  if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
    add_executable(xds_cluster_type_end2end_test
-@@ -39234,7 +38596,7 @@ target_link_libraries(xds_common_types_test
+@@ -39242,7 +38604,7 @@ target_link_libraries(xds_common_types_test
  
  
  endif()
@@ -1045,7 +1045,7 @@ index ed2331df0a..643e5298dd 100644
  if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
    add_executable(xds_core_end2end_test
-@@ -39765,7 +39127,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+@@ -39773,7 +39135,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
  endif()
  endif()
@@ -1054,7 +1054,7 @@ index ed2331df0a..643e5298dd 100644
  
  add_executable(xds_credentials_end2end_test
    ${_gRPC_PROTO_GENS_DIR}/src/proto/grpc/testing/echo.pb.cc
-@@ -39892,7 +39254,7 @@ target_link_libraries(xds_credentials_test
+@@ -39900,7 +39262,7 @@ target_link_libraries(xds_credentials_test
  
  
  endif()
@@ -1063,7 +1063,7 @@ index ed2331df0a..643e5298dd 100644
  if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
    add_executable(xds_csds_end2end_test
-@@ -40515,7 +39877,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+@@ -40523,7 +39885,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
  endif()
  endif()
@@ -1072,7 +1072,7 @@ index ed2331df0a..643e5298dd 100644
  if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
    add_executable(xds_enabled_server_end2end_test
-@@ -41360,7 +40722,7 @@ target_link_libraries(xds_endpoint_resource_type_test
+@@ -41368,7 +40730,7 @@ target_link_libraries(xds_endpoint_resource_type_test
  
  
  endif()
@@ -1081,7 +1081,7 @@ index ed2331df0a..643e5298dd 100644
  if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
    add_executable(xds_fallback_end2end_test
-@@ -41890,7 +41252,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+@@ -41898,7 +41260,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
  endif()
  endif()
@@ -1090,7 +1090,7 @@ index ed2331df0a..643e5298dd 100644
  if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_POSIX)
  
    add_executable(xds_fault_injection_end2end_test
-@@ -42428,7 +41790,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_POSIX)
+@@ -42436,7 +41798,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_POSIX)
  
  endif()
  endif()
@@ -1099,7 +1099,7 @@ index ed2331df0a..643e5298dd 100644
  if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
    add_executable(xds_gcp_authn_end2end_test
-@@ -42962,7 +42324,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+@@ -42970,7 +42332,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
  endif()
  endif()
@@ -1108,7 +1108,7 @@ index ed2331df0a..643e5298dd 100644
  if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
    add_executable(xds_http_connect_end2end_test
-@@ -45163,7 +44525,7 @@ target_link_libraries(xds_metadata_test
+@@ -45171,7 +44533,7 @@ target_link_libraries(xds_metadata_test
  
  
  endif()
@@ -1117,7 +1117,7 @@ index ed2331df0a..643e5298dd 100644
  if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
    add_executable(xds_outlier_detection_end2end_test
-@@ -45701,7 +45063,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+@@ -45709,7 +45071,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
  endif()
  endif()
@@ -1126,7 +1126,7 @@ index ed2331df0a..643e5298dd 100644
  if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
    add_executable(xds_override_host_end2end_test
-@@ -46330,7 +45692,7 @@ target_link_libraries(xds_override_host_test
+@@ -46338,7 +45700,7 @@ target_link_libraries(xds_override_host_test
  
  
  endif()
@@ -1135,7 +1135,7 @@ index ed2331df0a..643e5298dd 100644
  if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
    add_executable(xds_pick_first_end2end_test
-@@ -46869,7 +46231,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+@@ -46877,7 +46239,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
  endif()
  endif()
@@ -1144,7 +1144,7 @@ index ed2331df0a..643e5298dd 100644
  if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
    add_executable(xds_ring_hash_end2end_test
-@@ -47404,7 +46766,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+@@ -47412,7 +46774,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
  endif()
  endif()
@@ -1153,7 +1153,7 @@ index ed2331df0a..643e5298dd 100644
  if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
    add_executable(xds_rls_end2end_test
-@@ -48345,7 +47707,7 @@ target_link_libraries(xds_route_config_resource_type_test
+@@ -48353,7 +47715,7 @@ target_link_libraries(xds_route_config_resource_type_test
  
  
  endif()
@@ -1162,7 +1162,7 @@ index ed2331df0a..643e5298dd 100644
  if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
    add_executable(xds_routing_end2end_test
-@@ -48883,7 +48245,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+@@ -48891,7 +48253,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
  endif()
  endif()
@@ -1171,7 +1171,7 @@ index ed2331df0a..643e5298dd 100644
  if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
    add_executable(xds_security_end2end_test
-@@ -50017,7 +49379,7 @@ target_link_libraries(xds_stats_watcher_test
+@@ -50025,7 +49387,7 @@ target_link_libraries(xds_stats_watcher_test
  
  
  endif()

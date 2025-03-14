@@ -1,4 +1,4 @@
-From daff5526aae5c6364983e52f67da6ab890c96b7f Mon Sep 17 00:00:00 2001
+From 94c967993f6f1fe0c6e162a8362b9f2274afa68f Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Fri, 14 Mar 2025 12:27:58 +1100
 Subject: [PATCH 16/16] add some GRPCXX_DLL exports for symbols needed by gcp
