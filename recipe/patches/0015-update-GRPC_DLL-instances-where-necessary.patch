@@ -1,4 +1,4 @@
-From a1b3b6828b80bc9b669aedc51c085992b05ed8f3 Mon Sep 17 00:00:00 2001
+From c0f82f588cdd717f7250c90ddfbfcb5f12211f99 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 2 Mar 2025 07:16:19 +1100
 Subject: [PATCH 15/16] update GRPC_DLL instances where necessary
@@ -6,6 +6,8 @@ Subject: [PATCH 15/16] update GRPC_DLL instances where necessary
 ---
  include/grpc/event_engine/event_engine.h                  | 2 +-
  src/core/config/core_configuration.h                      | 2 +-
+ src/core/credentials/call/json_util.h                     | 2 +-
+ .../transport/tls/grpc_tls_certificate_provider.h         | 2 +-
  src/core/ext/transport/chttp2/server/chttp2_server.h      | 2 +-
  src/core/ext/transport/inproc/inproc_transport.h          | 2 +-
  src/core/lib/channel/channel_args.h                       | 4 ++--
@@ -14,11 +16,9 @@ Subject: [PATCH 15/16] update GRPC_DLL instances where necessary
  src/core/lib/iomgr/iomgr.h                                | 2 +-
  src/core/lib/promise/activity.h                           | 2 +-
  src/core/lib/resource_quota/thread_quota.h                | 2 +-
- src/core/lib/security/context/security_context.h          | 2 +-
- .../credentials/tls/grpc_tls_certificate_provider.h       | 2 +-
- src/core/lib/security/util/json_util.h                    | 2 +-
  src/core/lib/surface/call.h                               | 4 ++--
  src/core/lib/surface/completion_queue.h                   | 8 ++++----
+ src/core/transport/auth_context.h                         | 2 +-
  src/core/util/json/json_reader.cc                         | 2 +-
  src/core/util/json/json_reader.h                          | 2 +-
  src/core/util/load_file.h                                 | 2 +-
@@ -39,7 +39,7 @@ index 36485af1f6..6198dac4c1 100644
    /// Thin wrapper around a platform-specific sockaddr type. A sockaddr struct
    /// exists on all platforms that gRPC supports.
 diff --git a/src/core/config/core_configuration.h b/src/core/config/core_configuration.h
-index 29bacf96d5..08f17a2d40 100644
+index a75ebdbeb2..ab041ad4a6 100644
 --- a/src/core/config/core_configuration.h
 +++ b/src/core/config/core_configuration.h
 @@ -35,7 +35,7 @@ namespace grpc_core {
@@ -51,11 +51,37 @@ index 29bacf96d5..08f17a2d40 100644
   public:
    CoreConfiguration(const CoreConfiguration&) = delete;
    CoreConfiguration& operator=(const CoreConfiguration&) = delete;
+diff --git a/src/core/credentials/call/json_util.h b/src/core/credentials/call/json_util.h
+index da7ff0a771..d1f6a52fdf 100644
+--- a/src/core/credentials/call/json_util.h
++++ b/src/core/credentials/call/json_util.h
+@@ -31,7 +31,7 @@
+ #define GRPC_AUTH_JSON_TYPE_EXTERNAL_ACCOUNT "external_account"
+ 
+ // Gets a child property from a json node.
+-const char* grpc_json_get_string_property(const grpc_core::Json& json,
++GRPC_DLL const char* grpc_json_get_string_property(const grpc_core::Json& json,
+                                           const char* prop_name,
+                                           grpc_error_handle* error);
+ 
+diff --git a/src/core/credentials/transport/tls/grpc_tls_certificate_provider.h b/src/core/credentials/transport/tls/grpc_tls_certificate_provider.h
+index d69aa6e7d5..9514cf6275 100644
+--- a/src/core/credentials/transport/tls/grpc_tls_certificate_provider.h
++++ b/src/core/credentials/transport/tls/grpc_tls_certificate_provider.h
+@@ -106,7 +106,7 @@ class StaticDataCertificateProvider final
+ 
+   UniqueTypeName type() const override;
+ 
+-  absl::Status ValidateCredentials() const;
++  GRPC_DLL absl::Status ValidateCredentials() const;
+ 
+  private:
+   struct WatcherInfo {
 diff --git a/src/core/ext/transport/chttp2/server/chttp2_server.h b/src/core/ext/transport/chttp2/server/chttp2_server.h
-index 7cbec1b304..fe99f42ee1 100644
+index e69cde5093..46a5013a34 100644
 --- a/src/core/ext/transport/chttp2/server/chttp2_server.h
 +++ b/src/core/ext/transport/chttp2/server/chttp2_server.h
-@@ -231,7 +231,7 @@ class PassiveListenerImpl final : public PassiveListener {
+@@ -235,7 +235,7 @@ class PassiveListenerImpl final : public PassiveListener {
        std::unique_ptr<grpc_event_engine::experimental::EventEngine::Endpoint>
            endpoint) override ABSL_LOCKS_EXCLUDED(mu_);
  
@@ -78,10 +104,10 @@ index 05030d6e40..b1a9fe8e9a 100644
                                           void* reserved);
  
 diff --git a/src/core/lib/channel/channel_args.h b/src/core/lib/channel/channel_args.h
-index d32b5585b4..0849a66d10 100644
+index d11925beb5..59496144e4 100644
 --- a/src/core/lib/channel/channel_args.h
 +++ b/src/core/lib/channel/channel_args.h
-@@ -393,8 +393,8 @@ class ChannelArgs {
+@@ -412,8 +412,8 @@ class ChannelArgs {
    using CPtr =
        std::unique_ptr<const grpc_channel_args, ChannelArgs::ChannelArgsDeleter>;
  
@@ -93,7 +119,7 @@ index d32b5585b4..0849a66d10 100644
    ChannelArgs& operator=(const ChannelArgs&);
    ChannelArgs(ChannelArgs&&) noexcept;
 diff --git a/src/core/lib/debug/trace_flags.h b/src/core/lib/debug/trace_flags.h
-index a01353ffff..4929415d57 100644
+index e3fa160e45..0f7b2bdc4f 100644
 --- a/src/core/lib/debug/trace_flags.h
 +++ b/src/core/lib/debug/trace_flags.h
 @@ -49,7 +49,7 @@ extern DebugOnlyTraceFlag subchannel_refcount_trace;
@@ -166,45 +192,6 @@ index 18a6e13e7f..83594ba83b 100644
  
   private:
    Mutex mu_;
-diff --git a/src/core/lib/security/context/security_context.h b/src/core/lib/security/context/security_context.h
-index 105222eefd..604c2fe367 100644
---- a/src/core/lib/security/context/security_context.h
-+++ b/src/core/lib/security/context/security_context.h
-@@ -52,7 +52,7 @@ struct grpc_auth_property_array {
-   size_t capacity = 0;
- };
- 
--void grpc_auth_property_reset(grpc_auth_property* property);
-+GRPC_DLL void grpc_auth_property_reset(grpc_auth_property* property);
- 
- #define GRPC_AUTH_CONTEXT_ARG "grpc.auth_context"
- 
-diff --git a/src/core/lib/security/credentials/tls/grpc_tls_certificate_provider.h b/src/core/lib/security/credentials/tls/grpc_tls_certificate_provider.h
-index f002013aef..1063917004 100644
---- a/src/core/lib/security/credentials/tls/grpc_tls_certificate_provider.h
-+++ b/src/core/lib/security/credentials/tls/grpc_tls_certificate_provider.h
-@@ -106,7 +106,7 @@ class StaticDataCertificateProvider final
- 
-   UniqueTypeName type() const override;
- 
--  absl::Status ValidateCredentials() const;
-+  GRPC_DLL absl::Status ValidateCredentials() const;
- 
-  private:
-   struct WatcherInfo {
-diff --git a/src/core/lib/security/util/json_util.h b/src/core/lib/security/util/json_util.h
-index 6425d32aaf..a15056773f 100644
---- a/src/core/lib/security/util/json_util.h
-+++ b/src/core/lib/security/util/json_util.h
-@@ -31,7 +31,7 @@
- #define GRPC_AUTH_JSON_TYPE_EXTERNAL_ACCOUNT "external_account"
- 
- // Gets a child property from a json node.
--const char* grpc_json_get_string_property(const grpc_core::Json& json,
-+GRPC_DLL const char* grpc_json_get_string_property(const grpc_core::Json& json,
-                                           const char* prop_name,
-                                           grpc_error_handle* error);
- 
 diff --git a/src/core/lib/surface/call.h b/src/core/lib/surface/call.h
 index bc7220ac60..baec12c33c 100644
 --- a/src/core/lib/surface/call.h
@@ -250,6 +237,19 @@ index d99c7a248c..d68ce75f8c 100644
                      grpc_error_handle error,
                      void (*done)(void* done_arg, grpc_cq_completion* storage),
                      void* done_arg, grpc_cq_completion* storage,
+diff --git a/src/core/transport/auth_context.h b/src/core/transport/auth_context.h
+index 7d93906336..eccad9f30e 100644
+--- a/src/core/transport/auth_context.h
++++ b/src/core/transport/auth_context.h
+@@ -50,7 +50,7 @@ struct grpc_auth_property_array {
+   size_t capacity = 0;
+ };
+ 
+-void grpc_auth_property_reset(grpc_auth_property* property);
++GRPC_DLL void grpc_auth_property_reset(grpc_auth_property* property);
+ 
+ #define GRPC_AUTH_CONTEXT_ARG "grpc.auth_context"
+ 
 diff --git a/src/core/util/json/json_reader.cc b/src/core/util/json/json_reader.cc
 index 5b437af925..d9c2a609c6 100644
 --- a/src/core/util/json/json_reader.cc
