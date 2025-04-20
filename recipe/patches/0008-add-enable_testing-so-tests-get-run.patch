@@ -1,7 +1,7 @@
 From c80cd00b33125db5e62805554bcf46a9f9f89bb1 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Fri, 28 Feb 2025 22:07:19 +1100
-Subject: [PATCH 08/15] add enable_testing so tests get run
+Subject: [PATCH 08/16] add enable_testing so tests get run
 
 ---
  CMakeLists.txt | 4 ++++
