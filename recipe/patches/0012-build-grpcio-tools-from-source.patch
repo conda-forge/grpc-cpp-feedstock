@@ -1,4 +1,4 @@
-From 2c18e1846f6c317e3d38c913dcd35ad86a8fc0ff Mon Sep 17 00:00:00 2001
+From a1cbc01407073a77389f23ebc3487fdd50939ffd Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 4 Mar 2025 08:53:30 +1100
 Subject: [PATCH 12/16] build grpcio-tools from source

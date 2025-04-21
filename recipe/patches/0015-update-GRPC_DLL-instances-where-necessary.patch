@@ -1,4 +1,4 @@
-From c0f82f588cdd717f7250c90ddfbfcb5f12211f99 Mon Sep 17 00:00:00 2001
+From e38a2f153e1dea7b97c7b0459420dc9acd26f078 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 2 Mar 2025 07:16:19 +1100
 Subject: [PATCH 15/16] update GRPC_DLL instances where necessary

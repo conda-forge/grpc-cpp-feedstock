@@ -1,4 +1,4 @@
-From f41345ee3895f17a19ace5db58cd678316aa34ff Mon Sep 17 00:00:00 2001
+From 3036a404b6004af1abbe205d9141327c37078b89 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sat, 1 Mar 2025 08:06:28 +1100
 Subject: [PATCH 13/16] add linkage to openssl to grpc_unsecure

@@ -1,4 +1,4 @@
-From f390867be4ccc4e7d99c84e8f55975e3193facf1 Mon Sep 17 00:00:00 2001
+From 7d3aacb52ee304e36b43a7d27fa1ff62cbf8308b Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 23 Aug 2022 11:45:20 +0200
 Subject: [PATCH 05/16] mark linkages of grpc{,_unsecure} as private

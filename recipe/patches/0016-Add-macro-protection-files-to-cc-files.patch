@@ -1,4 +1,4 @@
-From db5b3c38578cfb45ed18770e9b886b9069deecc0 Mon Sep 17 00:00:00 2001
+From 0d0730d66e2b6d1bca6943b8b8e65c85f331e6c3 Mon Sep 17 00:00:00 2001
 From: Tomasz Kaczkowski <tomasz.kaczkowski@volue.com>
 Date: Wed, 16 Apr 2025 12:40:50 +0200
 Subject: [PATCH 16/16] Add macro protection files to cc files
