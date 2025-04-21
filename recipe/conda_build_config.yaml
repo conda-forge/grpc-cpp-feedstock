@@ -1,3 +1,8 @@
+# grpc 1.72 requires macOS 11, see
+# https://github.com/grpc/grpc/commit/f122d248443c81592e748da1adb240cbf0a0231c
+c_stdlib_version:   # [osx]
+  - 11.0            # [osx]
+
 # grpc 1.72 requires protobuf >=v30
 libprotobuf:
   - 6.30.2
