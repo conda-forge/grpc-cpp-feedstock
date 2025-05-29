@@ -1,4 +1,4 @@
-{% set version = "1.72.0.pre1" %}
+{% set version = "1.73.0.pre1" %}
 
 # core package & vendored libs use different version scheme than CPP libs, see
 # top of https://github.com/grpc/grpc/blob/v{{ version }}/CMakeLists.txt
@@ -19,7 +19,7 @@ package:
 
 source:
   - url: https://github.com/grpc/grpc/archive/v{{ version.replace(".pre", "-pre") }}.tar.gz
-    sha256: 05a21b2d85c5f22a28ea7b5061080a9163f175f3deab0497a325455cd24bbe4a
+    sha256: c2d5837086286f303dd88a9701dddca37a008babd0a5b91692e7415d05235dab
     patches:
       - patches/0001-windows-ssl-lib-names.patch
       - patches/0002-fix-win-setup-cmds.patch
@@ -65,7 +65,7 @@ source:
 
   - folder: third_party/googletest
     git_url: https://github.com/google/googletest.git
-    git_rev: 2dd1c131950043a8ad5ab0d2dda0e0970596586a
+    git_rev: 52eb8108c5bdec04579160ae17225d66034bd723
 
   - folder: third_party/protoc-gen-validate
     git_url: https://github.com/envoyproxy/protoc-gen-validate.git
