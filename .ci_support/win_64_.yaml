@@ -1,7 +1,9 @@
 c_ares:
 - '1'
 c_compiler:
-- vs2019
+- vs
+c_compiler_version:
+- '2022'
 c_stdlib:
 - vs
 channel_sources:
@@ -9,13 +11,15 @@ channel_sources:
 channel_targets:
 - conda-forge main
 cxx_compiler:
-- vs2019
+- vs
+cxx_compiler_version:
+- '2022'
 libabseil:
-- '20250127'
+- '20250512'
 libgrpc:
-- '1.71'
+- '1.73'
 libprotobuf:
-- 6.30.2
+- 6.31.1
 openssl:
 - '3'
 pin_run_as_build:
