@@ -1,4 +1,4 @@
-From ea018504901c20b36d5264ec717043f99575fbd8 Mon Sep 17 00:00:00 2001
+From 125988603f3967381fc3e7d71673decd1ae46601 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 23 Aug 2022 11:45:20 +0200
 Subject: [PATCH 05/14] mark linkages of grpc{,_unsecure} as private
@@ -13,10 +13,10 @@ Co-Authored-By: Mark Harfouche <mark.harfouche@gmail.com>
  1 file changed, 60 insertions(+), 50 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index c9e86fa7fd..c34fb54a5a 100644
+index ded1f310f1..87cb862d5b 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -3018,34 +3018,39 @@ target_include_directories(grpc
+@@ -3069,35 +3069,40 @@ target_include_directories(grpc
      ${_gRPC_ZLIB_INCLUDE_DIR}
  )
  target_link_libraries(grpc
@@ -39,6 +39,7 @@ index c9e86fa7fd..c34fb54a5a 100644
 -  absl::random_bit_gen_ref
 -  absl::random_distributions
 -  absl::statusor
+-  absl::string_view
 -  absl::span
 -  absl::utility
 -  ${_gRPC_CARES_LIBRARIES}
@@ -71,6 +72,7 @@ index c9e86fa7fd..c34fb54a5a 100644
 +  PRIVATE absl::random_bit_gen_ref
 +  PRIVATE absl::random_distributions
 +  PRIVATE absl::statusor
++  PRIVATE absl::string_view
 +  PRIVATE absl::span
 +  PRIVATE absl::utility
 +  # targets which belong to grpc anyway
@@ -82,13 +84,16 @@ index c9e86fa7fd..c34fb54a5a 100644
  endif()
  
  foreach(_hdr
-@@ -3711,32 +3716,37 @@ target_include_directories(grpc_unsecure
+@@ -3791,32 +3796,37 @@ target_include_directories(grpc_unsecure
      ${_gRPC_ZLIB_INCLUDE_DIR}
  )
  target_link_libraries(grpc_unsecure
 -  ${_gRPC_ALLTARGETS_LIBRARIES}
--  upb_mini_descriptor_lib
--  upb_wire_lib
++  # core libs
++  PRIVATE ${_gRPC_ALLTARGETS_LIBRARIES}
++  # vendored libs
++  PRIVATE ${_gRPC_ADDRESS_SORTING_LIBRARIES}
+   upb_textformat_lib
 -  ${_gRPC_ZLIB_LIBRARIES}
 -  absl::algorithm_container
 -  absl::config
@@ -104,17 +109,12 @@ index c9e86fa7fd..c34fb54a5a 100644
 -  absl::random_bit_gen_ref
 -  absl::random_distributions
 -  absl::statusor
+-  absl::string_view
 -  absl::span
 -  absl::utility
 -  ${_gRPC_CARES_LIBRARIES}
 -  gpr
 -  ${_gRPC_ADDRESS_SORTING_LIBRARIES}
-+  # core libs
-+  PRIVATE ${_gRPC_ALLTARGETS_LIBRARIES}
-+  # vendored libs
-+  PRIVATE ${_gRPC_ADDRESS_SORTING_LIBRARIES}
-+  PRIVATE upb_mini_descriptor_lib
-+  PRIVATE upb_wire_lib
 +  # external dependencies used within grpc
 +  PRIVATE ${_gRPC_ZLIB_LIBRARIES}
 +  PRIVATE ${_gRPC_CARES_LIBRARIES}
@@ -133,6 +133,7 @@ index c9e86fa7fd..c34fb54a5a 100644
 +  PRIVATE absl::random_bit_gen_ref
 +  PRIVATE absl::random_distributions
 +  PRIVATE absl::statusor
++  PRIVATE absl::string_view
 +  PRIVATE absl::span
 +  PRIVATE absl::utility
 +  # targets which belong to grpc anyway

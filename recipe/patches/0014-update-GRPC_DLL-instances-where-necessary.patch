@@ -1,4 +1,4 @@
-From a56bd8b3b29f17aa6dded8bd8c5f06bcf1bba3b0 Mon Sep 17 00:00:00 2001
+From e2876e4b05d6e1e96f253f56ce69e88beefa1de7 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 2 Mar 2025 07:16:19 +1100
 Subject: [PATCH 14/14] update GRPC_DLL instances where necessary
@@ -26,10 +26,10 @@ Subject: [PATCH 14/14] update GRPC_DLL instances where necessary
  19 files changed, 26 insertions(+), 26 deletions(-)
 
 diff --git a/include/grpc/event_engine/event_engine.h b/include/grpc/event_engine/event_engine.h
-index 46ec9552e0..cc4dc6720d 100644
+index d2c91ca596..1abaa7ac6f 100644
 --- a/include/grpc/event_engine/event_engine.h
 +++ b/include/grpc/event_engine/event_engine.h
-@@ -142,7 +142,7 @@ class EventEngine : public std::enable_shared_from_this<EventEngine>,
+@@ -147,7 +147,7 @@ class EventEngine : public std::enable_shared_from_this<EventEngine>,
    /// Returned by \a Connect, and can be passed to \a CancelConnect.
    struct ConnectionHandle {
      intptr_t keys[2];
@@ -39,10 +39,10 @@ index 46ec9552e0..cc4dc6720d 100644
    /// Thin wrapper around a platform-specific sockaddr type. A sockaddr struct
    /// exists on all platforms that gRPC supports.
 diff --git a/src/core/config/core_configuration.h b/src/core/config/core_configuration.h
-index 9eeb96a6cd..7fe86b5713 100644
+index b3522d9294..c71eec8655 100644
 --- a/src/core/config/core_configuration.h
 +++ b/src/core/config/core_configuration.h
-@@ -38,7 +38,7 @@ namespace grpc_core {
+@@ -39,7 +39,7 @@ namespace grpc_core {
  
  // Global singleton that stores library configuration - factories, etc...
  // that plugins might choose to extend.
@@ -104,10 +104,10 @@ index 05030d6e40..b1a9fe8e9a 100644
                                           void* reserved);
  
 diff --git a/src/core/lib/channel/channel_args.h b/src/core/lib/channel/channel_args.h
-index 3cca824bd0..11de3e1238 100644
+index 0184ead9fb..b6f20dd50d 100644
 --- a/src/core/lib/channel/channel_args.h
 +++ b/src/core/lib/channel/channel_args.h
-@@ -412,8 +412,8 @@ class ChannelArgs {
+@@ -413,8 +413,8 @@ class ChannelArgs {
    using CPtr =
        std::unique_ptr<const grpc_channel_args, ChannelArgs::ChannelArgsDeleter>;
  
@@ -167,7 +167,7 @@ index 280471fae8..506c6e3682 100644
  /// Returns true if the caller is a worker thread for any background poller.
  bool grpc_iomgr_is_any_background_poller_thread();
 diff --git a/src/core/lib/promise/activity.h b/src/core/lib/promise/activity.h
-index d08ef2dd6a..a3e9e22fb2 100644
+index f3aa85925a..673a5beca2 100644
 --- a/src/core/lib/promise/activity.h
 +++ b/src/core/lib/promise/activity.h
 @@ -75,7 +75,7 @@ struct Unwakeable final : public Wakeable {
