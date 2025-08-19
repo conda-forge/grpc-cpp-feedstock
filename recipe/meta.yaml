@@ -74,6 +74,8 @@ source:
 
 build:
   number: 0
+  error_overdepending: true
+  error_overlinking: true
 
 outputs:
   - name: libgrpc
