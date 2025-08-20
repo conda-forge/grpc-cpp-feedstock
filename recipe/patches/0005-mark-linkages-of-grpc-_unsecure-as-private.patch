@@ -1,4 +1,4 @@
-From 125988603f3967381fc3e7d71673decd1ae46601 Mon Sep 17 00:00:00 2001
+From 5cad386388ee72810dfcbf0afc88ded797f5e840 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 23 Aug 2022 11:45:20 +0200
 Subject: [PATCH 05/14] mark linkages of grpc{,_unsecure} as private
@@ -13,7 +13,7 @@ Co-Authored-By: Mark Harfouche <mark.harfouche@gmail.com>
  1 file changed, 60 insertions(+), 50 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index ded1f310f1..87cb862d5b 100644
+index f652a4055c..2fae60378f 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -3069,35 +3069,40 @@ target_include_directories(grpc
