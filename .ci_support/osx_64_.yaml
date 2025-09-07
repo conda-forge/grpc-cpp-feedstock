@@ -21,11 +21,11 @@ cxx_compiler:
 cxx_compiler_version:
 - '19'
 libabseil:
-- '20250512'
+- '20250814'
 libgrpc:
-- '1.73'
+- '1.74'
 libprotobuf:
-- 6.31.1
+- 6.32.0
 macos_machine:
 - x86_64-apple-darwin13.4.0
 openssl:
@@ -39,9 +39,8 @@ python:
 - 3.11.* *_cpython
 - 3.12.* *_cpython
 - 3.13.* *_cp313
-- 3.9.* *_cpython
 re2:
-- 2024.07.02
+- 2025.08.12
 target_platform:
 - osx-64
 zip_keys:
