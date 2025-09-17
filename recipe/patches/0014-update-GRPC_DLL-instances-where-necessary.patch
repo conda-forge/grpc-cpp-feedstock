@@ -1,4 +1,4 @@
-From c7b24ac6a94629e400844e29759af2edb974008a Mon Sep 17 00:00:00 2001
+From 67c2ed1d4b1eb3eb6110ca4b840014e05984836b Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 2 Mar 2025 07:16:19 +1100
 Subject: [PATCH 14/14] update GRPC_DLL instances where necessary
@@ -39,10 +39,10 @@ index d2c91ca596..1abaa7ac6f 100644
    /// Thin wrapper around a platform-specific sockaddr type. A sockaddr struct
    /// exists on all platforms that gRPC supports.
 diff --git a/src/core/config/core_configuration.h b/src/core/config/core_configuration.h
-index b3522d9294..c71eec8655 100644
+index e6b779bc96..0803899034 100644
 --- a/src/core/config/core_configuration.h
 +++ b/src/core/config/core_configuration.h
-@@ -39,7 +39,7 @@ namespace grpc_core {
+@@ -40,7 +40,7 @@ namespace grpc_core {
  
  // Global singleton that stores library configuration - factories, etc...
  // that plugins might choose to extend.
@@ -65,10 +65,10 @@ index da7ff0a771..d1f6a52fdf 100644
                                            grpc_error_handle* error);
  
 diff --git a/src/core/credentials/transport/tls/grpc_tls_certificate_provider.h b/src/core/credentials/transport/tls/grpc_tls_certificate_provider.h
-index d69aa6e7d5..9514cf6275 100644
+index b3d38f6155..91084b9e3a 100644
 --- a/src/core/credentials/transport/tls/grpc_tls_certificate_provider.h
 +++ b/src/core/credentials/transport/tls/grpc_tls_certificate_provider.h
-@@ -106,7 +106,7 @@ class StaticDataCertificateProvider final
+@@ -107,7 +107,7 @@ class StaticDataCertificateProvider final
  
    UniqueTypeName type() const override;
  
@@ -167,7 +167,7 @@ index 280471fae8..506c6e3682 100644
  /// Returns true if the caller is a worker thread for any background poller.
  bool grpc_iomgr_is_any_background_poller_thread();
 diff --git a/src/core/lib/promise/activity.h b/src/core/lib/promise/activity.h
-index f3aa85925a..673a5beca2 100644
+index b77013b8e0..a95c6af554 100644
 --- a/src/core/lib/promise/activity.h
 +++ b/src/core/lib/promise/activity.h
 @@ -75,7 +75,7 @@ struct Unwakeable final : public Wakeable {
@@ -193,10 +193,10 @@ index 18a6e13e7f..83594ba83b 100644
   private:
    Mutex mu_;
 diff --git a/src/core/lib/surface/call.h b/src/core/lib/surface/call.h
-index bc7220ac60..baec12c33c 100644
+index 9dd89db733..91908e1651 100644
 --- a/src/core/lib/surface/call.h
 +++ b/src/core/lib/surface/call.h
-@@ -302,9 +302,9 @@ grpc_compression_algorithm grpc_call_compression_for_level(
+@@ -303,9 +303,9 @@ grpc_compression_algorithm grpc_call_compression_for_level(
  // Did this client call receive a trailers-only response
  // TODO(markdroth): This is currently available only to the C++ API.
  //                  Move to surface API if requested by other languages.
@@ -238,7 +238,7 @@ index d99c7a248c..d68ce75f8c 100644
                      void (*done)(void* done_arg, grpc_cq_completion* storage),
                      void* done_arg, grpc_cq_completion* storage,
 diff --git a/src/core/transport/auth_context.h b/src/core/transport/auth_context.h
-index e603660042..2b0ba4cc07 100644
+index dbadba9744..e113226990 100644
 --- a/src/core/transport/auth_context.h
 +++ b/src/core/transport/auth_context.h
 @@ -49,7 +49,7 @@ struct grpc_auth_property_array {
