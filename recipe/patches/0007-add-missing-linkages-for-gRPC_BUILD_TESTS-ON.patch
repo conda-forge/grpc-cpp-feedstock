@@ -1,4 +1,4 @@
-From 318a6ce6b4237af2c46a10d42dec5d292909ac3e Mon Sep 17 00:00:00 2001
+From 64aeaa9d104aa3c1415f1f406d56edf40db8115d Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 26 Sep 2023 18:25:54 +1100
 Subject: [PATCH 07/14] add missing linkages for gRPC_BUILD_TESTS=ON
@@ -14,10 +14,10 @@ For some tests, re2 and c-ares have just been forgotten as dependencies.
  1 file changed, 11 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 66be39ef73..b0f134790e 100644
+index 73e4150f76..42ce6b2d80 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -3229,6 +3229,7 @@ target_link_libraries(grpc_test_util
+@@ -3257,6 +3257,7 @@ target_link_libraries(grpc_test_util
    ${_gRPC_ALLTARGETS_LIBRARIES}
    absl::failure_signal_handler
    absl::stacktrace
@@ -25,7 +25,7 @@ index 66be39ef73..b0f134790e 100644
    absl::symbolize
    absl::log_initialize
    grpc
-@@ -3304,6 +3305,7 @@ target_link_libraries(grpc_test_util_unsecure
+@@ -3332,6 +3333,7 @@ target_link_libraries(grpc_test_util_unsecure
    ${_gRPC_ALLTARGETS_LIBRARIES}
    absl::failure_signal_handler
    absl::stacktrace
@@ -33,7 +33,7 @@ index 66be39ef73..b0f134790e 100644
    absl::symbolize
    absl::log_initialize
    grpc_unsecure
-@@ -8335,6 +8337,7 @@ target_include_directories(authorization_matchers_test
+@@ -8378,6 +8380,7 @@ target_include_directories(authorization_matchers_test
  )
  
  target_link_libraries(authorization_matchers_test
@@ -41,7 +41,7 @@ index 66be39ef73..b0f134790e 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    grpc_test_util
-@@ -17316,6 +17319,7 @@ target_include_directories(grpc_authorization_engine_test
+@@ -17794,6 +17797,7 @@ target_include_directories(grpc_authorization_engine_test
  )
  
  target_link_libraries(grpc_authorization_engine_test
@@ -49,7 +49,7 @@ index 66be39ef73..b0f134790e 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    grpc_test_util
-@@ -19776,6 +19780,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+@@ -20267,6 +20271,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
    )
  
    target_link_libraries(httpcli_test
@@ -57,7 +57,7 @@ index 66be39ef73..b0f134790e 100644
      ${_gRPC_ALLTARGETS_LIBRARIES}
      gtest
      grpc++_test_util
-@@ -21869,6 +21874,7 @@ target_include_directories(matchers_test
+@@ -22569,6 +22574,7 @@ target_include_directories(matchers_test
  )
  
  target_link_libraries(matchers_test
@@ -65,7 +65,7 @@ index 66be39ef73..b0f134790e 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    grpc_test_util
-@@ -26804,6 +26810,7 @@ target_include_directories(resolve_address_using_ares_resolver_test
+@@ -27550,6 +27556,7 @@ target_include_directories(resolve_address_using_ares_resolver_test
  )
  
  target_link_libraries(resolve_address_using_ares_resolver_test
@@ -73,7 +73,7 @@ index 66be39ef73..b0f134790e 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    grpc_test_util
-@@ -26892,6 +26899,7 @@ target_include_directories(resolve_address_using_native_resolver_test
+@@ -27638,6 +27645,7 @@ target_include_directories(resolve_address_using_native_resolver_test
  )
  
  target_link_libraries(resolve_address_using_native_resolver_test
@@ -81,7 +81,7 @@ index 66be39ef73..b0f134790e 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    grpc_test_util
-@@ -35879,6 +35887,7 @@ target_include_directories(xds_common_types_test
+@@ -36847,6 +36855,7 @@ target_include_directories(xds_common_types_test
  )
  
  target_link_libraries(xds_common_types_test
@@ -89,7 +89,7 @@ index 66be39ef73..b0f134790e 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    grpc++
-@@ -36530,6 +36539,7 @@ target_include_directories(xds_credentials_test
+@@ -37498,6 +37507,7 @@ target_include_directories(xds_credentials_test
  )
  
  target_link_libraries(xds_credentials_test
@@ -97,7 +97,7 @@ index 66be39ef73..b0f134790e 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    grpc_test_util
-@@ -41495,6 +41505,7 @@ target_include_directories(xds_listener_resource_type_test
+@@ -42463,6 +42473,7 @@ target_include_directories(xds_listener_resource_type_test
  )
  
  target_link_libraries(xds_listener_resource_type_test
