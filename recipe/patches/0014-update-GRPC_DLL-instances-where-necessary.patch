@@ -1,4 +1,4 @@
-From c0c7a332862113124ac03fcd0a3754fe40da2577 Mon Sep 17 00:00:00 2001
+From 5ccdc8b9ea6765b1c6d8744642732d870e0ee0b9 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 2 Mar 2025 07:16:19 +1100
 Subject: [PATCH 14/14] update GRPC_DLL instances where necessary
@@ -8,6 +8,7 @@ Subject: [PATCH 14/14] update GRPC_DLL instances where necessary
  src/core/config/core_configuration.h                      | 2 +-
  src/core/credentials/call/json_util.h                     | 2 +-
  .../transport/tls/grpc_tls_certificate_provider.h         | 2 +-
+ src/core/credentials/transport/tls/spiffe_utils.h         | 4 ++--
  src/core/ext/transport/chttp2/server/chttp2_server.h      | 2 +-
  src/core/ext/transport/inproc/inproc_transport.h          | 2 +-
  src/core/lib/channel/channel_args.h                       | 4 ++--
@@ -20,11 +21,12 @@ Subject: [PATCH 14/14] update GRPC_DLL instances where necessary
  src/core/lib/surface/call.h                               | 4 ++--
  src/core/lib/surface/completion_queue.h                   | 8 ++++----
  src/core/transport/auth_context.h                         | 2 +-
+ src/core/tsi/ssl_transport_security.h                     | 2 +-
  src/core/util/json/json_reader.cc                         | 2 +-
  src/core/util/json/json_reader.h                          | 2 +-
  src/core/util/load_file.h                                 | 2 +-
  src/core/util/time.h                                      | 4 ++--
- 20 files changed, 27 insertions(+), 27 deletions(-)
+ 22 files changed, 30 insertions(+), 30 deletions(-)
 
 diff --git a/include/grpc/event_engine/event_engine.h b/include/grpc/event_engine/event_engine.h
 index d2c91ca596..1abaa7ac6f 100644
@@ -78,6 +80,28 @@ index b3d38f6155..91084b9e3a 100644
  
   private:
    struct WatcherInfo {
+diff --git a/src/core/credentials/transport/tls/spiffe_utils.h b/src/core/credentials/transport/tls/spiffe_utils.h
+index 1c4f011e47..274e6f5b15 100644
+--- a/src/core/credentials/transport/tls/spiffe_utils.h
++++ b/src/core/credentials/transport/tls/spiffe_utils.h
+@@ -86,7 +86,7 @@ class SpiffeBundle final {
+   // SpiffeBundles should be used by loading a SpiffeBundleMap via
+   // SpiffeBundleMap::FromFile
+   SpiffeBundle() = default;
+-  ~SpiffeBundle();
++  GRPC_DLL ~SpiffeBundle();
+   SpiffeBundle(const SpiffeBundle& other);
+   SpiffeBundle& operator=(const SpiffeBundle& other);
+ 
+@@ -136,7 +136,7 @@ class SpiffeBundleMap final {
+   // returned value represents a valid and SPIFFE Bundle Map.
+   // The only supported use is configuring X509 roots for a given trust domain -
+   // no other SPIFFE Bundle configurations are supported.
+-  static absl::StatusOr<SpiffeBundleMap> FromFile(absl::string_view file_path);
++  GRPC_DLL static absl::StatusOr<SpiffeBundleMap> FromFile(absl::string_view file_path);
+ 
+   // Returns the roots for a given trust domain in the SPIFFE Bundle Map.
+   absl::StatusOr<absl::Span<const std::string>> GetRoots(
 diff --git a/src/core/ext/transport/chttp2/server/chttp2_server.h b/src/core/ext/transport/chttp2/server/chttp2_server.h
 index 14d62cb513..90f2fb2252 100644
 --- a/src/core/ext/transport/chttp2/server/chttp2_server.h
@@ -264,6 +288,18 @@ index dbadba9744..e113226990 100644
  
  #define GRPC_AUTH_CONTEXT_ARG "grpc.auth_context"
  
+diff --git a/src/core/tsi/ssl_transport_security.h b/src/core/tsi/ssl_transport_security.h
+index 820d562d05..60524c7ecb 100644
+--- a/src/core/tsi/ssl_transport_security.h
++++ b/src/core/tsi/ssl_transport_security.h
+@@ -448,6 +448,6 @@ tsi_result tsi_ssl_extract_x509_subject_names_from_pem_cert(
+ tsi_result tsi_ssl_get_cert_chain_contents(STACK_OF(X509) * peer_chain,
+                                            tsi_peer_property* property);
+ 
+-bool IsRootCertInfoEmpty(const RootCertInfo* root_cert_info);
++GRPC_DLL bool IsRootCertInfoEmpty(const RootCertInfo* root_cert_info);
+ 
+ #endif  // GRPC_SRC_CORE_TSI_SSL_TRANSPORT_SECURITY_H
 diff --git a/src/core/util/json/json_reader.cc b/src/core/util/json/json_reader.cc
 index 5b437af925..d9c2a609c6 100644
 --- a/src/core/util/json/json_reader.cc
