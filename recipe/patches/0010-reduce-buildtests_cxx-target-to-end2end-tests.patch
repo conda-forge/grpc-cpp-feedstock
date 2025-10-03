@@ -1,4 +1,4 @@
-From e6febfb1b4f8dc2937a6e19f738757f675891c28 Mon Sep 17 00:00:00 2001
+From 49709f831f43315c813e109804d746fb944e7c09 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 2 Mar 2025 08:22:39 +1100
 Subject: [PATCH 10/14] reduce buildtests_cxx target to end2end tests
@@ -15,11 +15,11 @@ When rebasing, use `git show | grep -e "^-.*end2end_"` to ensure that conflict
 resolution didn't accidentally remove an end2end test; for any new end2end tests,
 ensure to rename the guard from gRPC_BUILD_TESTS to gRPC_CF_TESTS
 ---
- CMakeLists.txt | 703 +++++--------------------------------------------
- 1 file changed, 60 insertions(+), 643 deletions(-)
+ CMakeLists.txt | 701 +++++--------------------------------------------
+ 1 file changed, 59 insertions(+), 642 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index fe69e4cc58..78a6c44791 100644
+index c0d1f6f..5b4ae63 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -47,11 +47,12 @@ set(gRPC_INSTALL_SHAREDIR "share/grpc" CACHE STRING "Installation directory for
@@ -1192,15 +1192,6 @@ index fe69e4cc58..78a6c44791 100644
  if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
    add_executable(xds_ring_hash_end2end_test
-@@ -43397,7 +42814,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
- 
- endif()
- endif()
--if(gRPC_BUILD_TESTS)
-+if(gRPC_CF_TESTS)
- if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
- 
-   add_executable(xds_rls_end2end_test
 @@ -44338,7 +43755,7 @@ target_link_libraries(xds_route_config_resource_type_test
  
  
