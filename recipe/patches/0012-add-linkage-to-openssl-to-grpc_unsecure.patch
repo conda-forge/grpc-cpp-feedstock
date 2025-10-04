@@ -1,4 +1,4 @@
-From 54e97a6a208a9b11d4edc9dae544c2edd49a8d0b Mon Sep 17 00:00:00 2001
+From cdf25b9397c38f157c21966014b63b036d147efb Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sat, 1 Mar 2025 08:06:28 +1100
 Subject: [PATCH 12/14] add linkage to openssl to grpc_unsecure
@@ -12,7 +12,7 @@ https://github.com/grpc/grpc/blob/v1.69.0/src/core/tsi/ssl_transport_security_ut
  1 file changed, 2 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 78a6c44791..6f12f7d34b 100644
+index e6b8998..fd1ab1d 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -3143,6 +3143,7 @@ add_library(grpc_unsecure
