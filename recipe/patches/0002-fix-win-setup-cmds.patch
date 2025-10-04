@@ -1,4 +1,4 @@
-From acf51e531a3031bb1e2233dd25c157eb16aac11b Mon Sep 17 00:00:00 2001
+From 24873e8691cafb8198e26e41cac8697be140a87a Mon Sep 17 00:00:00 2001
 From: Mike Sarahan <msarahan@gmail.com>
 Date: Tue, 18 Feb 2020 13:53:05 -0600
 Subject: [PATCH 02/14] fix win setup cmds

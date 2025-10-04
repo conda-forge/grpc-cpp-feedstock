@@ -1,4 +1,4 @@
-From 5a0e7b482d6b5f3da1c77c9f755f1a5febdd77e6 Mon Sep 17 00:00:00 2001
+From c0b6a9145c434702b17c7a980fe2bacbbd0d6f6e Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Fri, 28 Feb 2025 15:09:41 +1100
 Subject: [PATCH 09/14] unvendor upb and utf8_range, use protobuf's version

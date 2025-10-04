@@ -1,4 +1,4 @@
-From b8602d540a137a2495de6b233da6d5068200d889 Mon Sep 17 00:00:00 2001
+From 982d53dd7bb30a10fe49f1659450c5ae65bf168d Mon Sep 17 00:00:00 2001
 From: Jonathan Helmus <jjhelmus@gmail.com>
 Date: Mon, 17 Feb 2020 15:45:06 -0600
 Subject: [PATCH 01/14] windows ssl lib names

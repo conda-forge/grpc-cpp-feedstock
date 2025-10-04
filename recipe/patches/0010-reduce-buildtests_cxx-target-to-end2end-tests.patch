@@ -1,4 +1,4 @@
-From 49709f831f43315c813e109804d746fb944e7c09 Mon Sep 17 00:00:00 2001
+From 9bc1832d12a619a480f911fab8cde9364edc950e Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 2 Mar 2025 08:22:39 +1100
 Subject: [PATCH 10/14] reduce buildtests_cxx target to end2end tests
@@ -15,11 +15,11 @@ When rebasing, use `git show | grep -e "^-.*end2end_"` to ensure that conflict
 resolution didn't accidentally remove an end2end test; for any new end2end tests,
 ensure to rename the guard from gRPC_BUILD_TESTS to gRPC_CF_TESTS
 ---
- CMakeLists.txt | 701 +++++--------------------------------------------
- 1 file changed, 59 insertions(+), 642 deletions(-)
+ CMakeLists.txt | 695 ++++---------------------------------------------
+ 1 file changed, 56 insertions(+), 639 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index c0d1f6f..5b4ae63 100644
+index c0d1f6f..bb9f2fd 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -47,11 +47,12 @@ set(gRPC_INSTALL_SHAREDIR "share/grpc" CACHE STRING "Installation directory for
@@ -1156,33 +1156,6 @@ index c0d1f6f..5b4ae63 100644
  if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
    add_executable(xds_http_connect_end2end_test
-@@ -41156,7 +40573,7 @@ target_link_libraries(xds_metadata_test
- 
- 
- endif()
--if(gRPC_BUILD_TESTS)
-+if(gRPC_CF_TESTS)
- if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
- 
-   add_executable(xds_outlier_detection_end2end_test
-@@ -41694,7 +41111,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
- 
- endif()
- endif()
--if(gRPC_BUILD_TESTS)
-+if(gRPC_CF_TESTS)
- if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
- 
-   add_executable(xds_override_host_end2end_test
-@@ -42323,7 +41740,7 @@ target_link_libraries(xds_override_host_test
- 
- 
- endif()
--if(gRPC_BUILD_TESTS)
-+if(gRPC_CF_TESTS)
- if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
- 
-   add_executable(xds_pick_first_end2end_test
 @@ -42862,7 +42279,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
  endif()
