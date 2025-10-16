@@ -7,7 +7,7 @@ c_ares:
 c_compiler:
 - clang
 c_compiler_version:
-- '18'
+- '19'
 c_stdlib:
 - macosx_deployment_target
 c_stdlib_version:
@@ -19,7 +19,7 @@ channel_targets:
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-- '18'
+- '19'
 libabseil:
 - '20250512'
 libgrpc:
@@ -39,9 +39,9 @@ python:
 - 3.11.* *_cpython
 - 3.12.* *_cpython
 - 3.13.* *_cp313
-- 3.9.* *_cpython
+- 3.14.* *_cp314
 re2:
-- 2024.07.02
+- 2025.08.12
 target_platform:
 - osx-arm64
 zip_keys:
