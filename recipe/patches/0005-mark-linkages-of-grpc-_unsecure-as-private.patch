@@ -1,4 +1,4 @@
-From 5cad386388ee72810dfcbf0afc88ded797f5e840 Mon Sep 17 00:00:00 2001
+From 19f402ca8c02c116a3865fd376f2b4d90b96bfeb Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 23 Aug 2022 11:45:20 +0200
 Subject: [PATCH 05/14] mark linkages of grpc{,_unsecure} as private
@@ -13,10 +13,10 @@ Co-Authored-By: Mark Harfouche <mark.harfouche@gmail.com>
  1 file changed, 60 insertions(+), 50 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index f652a4055c..2fae60378f 100644
+index 67f7511a4e..45badf99e6 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -3069,35 +3069,40 @@ target_include_directories(grpc
+@@ -3097,35 +3097,40 @@ target_include_directories(grpc
      ${_gRPC_ZLIB_INCLUDE_DIR}
  )
  target_link_libraries(grpc
@@ -84,7 +84,7 @@ index f652a4055c..2fae60378f 100644
  endif()
  
  foreach(_hdr
-@@ -3791,32 +3796,37 @@ target_include_directories(grpc_unsecure
+@@ -3824,32 +3829,37 @@ target_include_directories(grpc_unsecure
      ${_gRPC_ZLIB_INCLUDE_DIR}
  )
  target_link_libraries(grpc_unsecure
