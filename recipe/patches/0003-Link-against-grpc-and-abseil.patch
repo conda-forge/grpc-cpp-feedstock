@@ -1,4 +1,4 @@
-From 910363536a8841b0685407cdcbc4e42fe999bcfe Mon Sep 17 00:00:00 2001
+From 41f565b1cc5a805928c9d7a6542f1e6802a4bfa4 Mon Sep 17 00:00:00 2001
 From: Marius van Niekerk <marius.v.niekerk@gmail.com>
 Date: Mon, 13 Jun 2022 17:13:07 -0400
 Subject: [PATCH 03/14] Link against grpc and abseil
@@ -9,7 +9,7 @@ Co-Authored-By: H. Vetinari <h.vetinari@gmx.com>
  1 file changed, 19 insertions(+), 4 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index adfec06..266a690 100644
+index adfec063fd..266a690474 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -180,6 +180,8 @@ BUILD_WITH_STATIC_LIBSTDCXX = _env_bool_value(

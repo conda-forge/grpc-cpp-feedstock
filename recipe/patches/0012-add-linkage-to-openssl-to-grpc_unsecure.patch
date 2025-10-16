@@ -1,4 +1,4 @@
-From cdf25b9397c38f157c21966014b63b036d147efb Mon Sep 17 00:00:00 2001
+From b7eff64d6949288fa94a9d06fca6d222b381d6f4 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sat, 1 Mar 2025 08:06:28 +1100
 Subject: [PATCH 12/14] add linkage to openssl to grpc_unsecure
@@ -12,10 +12,10 @@ https://github.com/grpc/grpc/blob/v1.69.0/src/core/tsi/ssl_transport_security_ut
  1 file changed, 2 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index e6b8998..fd1ab1d 100644
+index b44b6fe124..b28c5a7318 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -3143,6 +3143,7 @@ add_library(grpc_unsecure
+@@ -3091,6 +3091,7 @@ add_library(grpc_unsecure
    src/core/tsi/alts/handshaker/transport_security_common_api.cc
    src/core/tsi/fake_transport_security.cc
    src/core/tsi/local_transport_security.cc
@@ -23,7 +23,7 @@ index e6b8998..fd1ab1d 100644
    src/core/tsi/transport_security.cc
    src/core/tsi/transport_security_grpc.cc
    src/core/util/backoff.cc
-@@ -3221,6 +3222,7 @@ target_link_libraries(grpc_unsecure
+@@ -3169,6 +3170,7 @@ target_link_libraries(grpc_unsecure
    PRIVATE ${_gRPC_ZLIB_LIBRARIES}
    PRIVATE ${_gRPC_CARES_LIBRARIES}
    # external dependencies that need to available at runtime
