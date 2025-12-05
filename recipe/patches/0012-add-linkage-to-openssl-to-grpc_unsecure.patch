@@ -15,7 +15,7 @@ diff --git a/CMakeLists.txt b/CMakeLists.txt
 index b44b6fe124..b28c5a7318 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -3091,6 +3091,7 @@ add_library(grpc_unsecure
+@@ -3792,6 +3792,7 @@ add_library(grpc_unsecure
    src/core/tsi/alts/handshaker/transport_security_common_api.cc
    src/core/tsi/fake_transport_security.cc
    src/core/tsi/local_transport_security.cc
@@ -23,11 +23,11 @@ index b44b6fe124..b28c5a7318 100644
    src/core/tsi/transport_security.cc
    src/core/tsi/transport_security_grpc.cc
    src/core/util/backoff.cc
-@@ -3169,6 +3170,7 @@ target_link_libraries(grpc_unsecure
+@@ -3872,6 +3873,7 @@ target_link_libraries(grpc_unsecure
    PRIVATE ${_gRPC_ZLIB_LIBRARIES}
    PRIVATE ${_gRPC_CARES_LIBRARIES}
    # external dependencies that need to available at runtime
 +  PUBLIC  ${_gRPC_SSL_LIBRARIES}
    PRIVATE absl::algorithm_container
-   PRIVATE absl::config
    PRIVATE absl::no_destructor
+   PRIVATE absl::btree

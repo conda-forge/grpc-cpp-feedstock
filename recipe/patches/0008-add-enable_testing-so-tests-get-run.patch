@@ -11,7 +11,7 @@ diff --git a/CMakeLists.txt b/CMakeLists.txt
 index b0f134790e..e87b7b557d 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -51,6 +51,10 @@ option(gRPC_BUILD_TESTS "Build tests" OFF)
+@@ -50,6 +50,10 @@ option(gRPC_BUILD_TESTS "Build tests" OFF)
  option(gRPC_BUILD_CODEGEN "Build codegen" ON)
  option(gRPC_DOWNLOAD_ARCHIVES "Download archives for empty 3rd party directories" ON)
  

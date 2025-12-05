@@ -12,7 +12,7 @@ diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 2fae60378f..66be39ef73 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -2063,10 +2063,8 @@ if(WIN32 AND MSVC)
+@@ -2095,10 +2095,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)
@@ -25,7 +25,7 @@ index 2fae60378f..66be39ef73 100644
    endif()
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/gpr.pdb
-@@ -3042,11 +3040,8 @@ if(WIN32 AND MSVC)
+@@ -3099,11 +3097,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)
@@ -39,7 +39,7 @@ index 2fae60378f..66be39ef73 100644
    endif()
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc.pdb
-@@ -3769,11 +3764,8 @@ if(WIN32 AND MSVC)
+@@ -3832,11 +3827,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)
@@ -53,7 +53,7 @@ index 2fae60378f..66be39ef73 100644
    endif()
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc_unsecure.pdb
-@@ -4791,12 +4783,8 @@ if(WIN32 AND MSVC)
+@@ -4849,12 +4841,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)
@@ -68,7 +68,7 @@ index 2fae60378f..66be39ef73 100644
    endif()
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc++.pdb
-@@ -5531,12 +5519,8 @@ if(WIN32 AND MSVC)
+@@ -5593,12 +5581,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)
