@@ -719,6 +719,17 @@ index ed6a33c..462bec4 100644
  
  if(gRPC_BUILD_TESTS)
  
+@@ -6330,10 +5665,9 @@ target_include_directories(grpc_plugin_support
+     ${_gRPC_PROTO_GENS_DIR}
+ )
+ target_link_libraries(grpc_plugin_support
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  utf8_range_lib
+   ${_gRPC_ZLIB_LIBRARIES}
+   absl::algorithm_container
+   absl::base
+   absl::config
+
 diff --git a/cmake/upb.cmake b/cmake/upb.cmake
 index 9156e5f..e6fa819 100644
 --- a/cmake/upb.cmake
