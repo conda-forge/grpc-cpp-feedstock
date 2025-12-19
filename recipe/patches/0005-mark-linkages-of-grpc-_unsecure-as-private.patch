@@ -1,4 +1,4 @@
-From 19f402ca8c02c116a3865fd376f2b4d90b96bfeb Mon Sep 17 00:00:00 2001
+From b38c09d71ea3aec9a865fb56680dd1f69611b566 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 23 Aug 2022 11:45:20 +0200
 Subject: [PATCH 05/14] mark linkages of grpc{,_unsecure} as private
@@ -13,10 +13,10 @@ Co-Authored-By: Mark Harfouche <mark.harfouche@gmail.com>
  1 file changed, 60 insertions(+), 50 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 67f7511a4e..45badf99e6 100644
+index bc86c00..ea3a457 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -3097,35 +3097,40 @@ target_include_directories(grpc
+@@ -3127,35 +3127,40 @@ target_include_directories(grpc
      ${_gRPC_ZLIB_INCLUDE_DIR}
  )
  target_link_libraries(grpc
@@ -26,12 +26,12 @@ index 67f7511a4e..45badf99e6 100644
 -  ${_gRPC_RE2_LIBRARIES}
 -  ${_gRPC_ZLIB_LIBRARIES}
 -  absl::algorithm_container
--  absl::config
 -  absl::no_destructor
 -  absl::btree
 -  absl::flat_hash_map
 -  absl::flat_hash_set
 -  absl::inlined_vector
+-  absl::node_hash_map
 -  absl::bind_front
 -  absl::function_ref
 -  absl::hash
@@ -59,11 +59,11 @@ index 67f7511a4e..45badf99e6 100644
 +  # external dependencies that need to available at runtime
 +  PUBLIC  ${_gRPC_SSL_LIBRARIES}
 +  PRIVATE absl::algorithm_container
-+  PRIVATE absl::config
 +  PRIVATE absl::no_destructor
 +  PRIVATE absl::btree
 +  PRIVATE absl::flat_hash_map
 +  PRIVATE absl::flat_hash_set
++  PRIVATE absl::node_hash_map
 +  PRIVATE absl::inlined_vector
 +  PRIVATE absl::bind_front
 +  PRIVATE absl::function_ref
@@ -84,24 +84,35 @@ index 67f7511a4e..45badf99e6 100644
  endif()
  
  foreach(_hdr
-@@ -3824,32 +3829,37 @@ target_include_directories(grpc_unsecure
+@@ -3860,32 +3865,37 @@ target_include_directories(grpc_unsecure
      ${_gRPC_ZLIB_INCLUDE_DIR}
  )
  target_link_libraries(grpc_unsecure
 -  ${_gRPC_ALLTARGETS_LIBRARIES}
-+  # core libs
-+  PRIVATE ${_gRPC_ALLTARGETS_LIBRARIES}
-+  # vendored libs
-+  PRIVATE ${_gRPC_ADDRESS_SORTING_LIBRARIES}
-   upb_textformat_lib
+-  upb_textformat_lib
 -  ${_gRPC_ZLIB_LIBRARIES}
 -  absl::algorithm_container
--  absl::config
 -  absl::no_destructor
 -  absl::btree
 -  absl::flat_hash_map
 -  absl::flat_hash_set
 -  absl::inlined_vector
++  # core libs
++  PRIVATE ${_gRPC_ALLTARGETS_LIBRARIES}
++  # vendored libs
++  PRIVATE ${_gRPC_ADDRESS_SORTING_LIBRARIES}
++   upb_textformat_lib
++  # external dependencies used within grpc
++  PRIVATE ${_gRPC_ZLIB_LIBRARIES}
++  PRIVATE ${_gRPC_CARES_LIBRARIES}
++  # external dependencies that need to available at runtime
++  PRIVATE absl::algorithm_container
++  PRIVATE absl::no_destructor
++  PRIVATE absl::btree
++  PRIVATE absl::flat_hash_map
++  PRIVATE absl::flat_hash_set
++  PRIVATE absl::inlined_vector
+   absl::node_hash_map
 -  absl::bind_front
 -  absl::function_ref
 -  absl::hash
@@ -115,17 +126,6 @@ index 67f7511a4e..45badf99e6 100644
 -  ${_gRPC_CARES_LIBRARIES}
 -  gpr
 -  ${_gRPC_ADDRESS_SORTING_LIBRARIES}
-+  # external dependencies used within grpc
-+  PRIVATE ${_gRPC_ZLIB_LIBRARIES}
-+  PRIVATE ${_gRPC_CARES_LIBRARIES}
-+  # external dependencies that need to available at runtime
-+  PRIVATE absl::algorithm_container
-+  PRIVATE absl::config
-+  PRIVATE absl::no_destructor
-+  PRIVATE absl::btree
-+  PRIVATE absl::flat_hash_map
-+  PRIVATE absl::flat_hash_set
-+  PRIVATE absl::inlined_vector
 +  PRIVATE absl::bind_front
 +  PRIVATE absl::function_ref
 +  PRIVATE absl::hash

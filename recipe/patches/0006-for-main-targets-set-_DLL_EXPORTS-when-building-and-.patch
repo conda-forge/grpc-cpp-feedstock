@@ -1,4 +1,4 @@
-From fd5fcee8d84cf4b1a2370ce6230eb3bf77487925 Mon Sep 17 00:00:00 2001
+From 81bf194ca704ef275223f06e235a232b30a5af49 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Thu, 29 Feb 2024 20:31:21 +1100
 Subject: [PATCH 06/14] for main targets, set *_DLL_EXPORTS when building and
@@ -9,10 +9,10 @@ Subject: [PATCH 06/14] for main targets, set *_DLL_EXPORTS when building and
  1 file changed, 10 insertions(+), 26 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 45badf99e6..73e4150f76 100644
+index ea3a457..c868d91 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -2080,10 +2080,8 @@ if(WIN32 AND MSVC)
+@@ -2096,10 +2096,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)
@@ -25,7 +25,7 @@ index 45badf99e6..73e4150f76 100644
    endif()
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/gpr.pdb
-@@ -3070,11 +3068,8 @@ if(WIN32 AND MSVC)
+@@ -3100,11 +3098,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)
@@ -39,7 +39,7 @@ index 45badf99e6..73e4150f76 100644
    endif()
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc.pdb
-@@ -3802,11 +3797,8 @@ if(WIN32 AND MSVC)
+@@ -3838,11 +3833,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)
@@ -53,7 +53,7 @@ index 45badf99e6..73e4150f76 100644
    endif()
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc_unsecure.pdb
-@@ -4824,12 +4816,8 @@ if(WIN32 AND MSVC)
+@@ -4860,12 +4852,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)
@@ -68,7 +68,7 @@ index 45badf99e6..73e4150f76 100644
    endif()
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc++.pdb
-@@ -5568,12 +5556,8 @@ if(WIN32 AND MSVC)
+@@ -5604,12 +5592,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)
