@@ -1,4 +1,4 @@
-From 5ccdc8b9ea6765b1c6d8744642732d870e0ee0b9 Mon Sep 17 00:00:00 2001
+From 1e5d258796dbbddc71f4353e425681f2850a593c Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 2 Mar 2025 07:16:19 +1100
 Subject: [PATCH 14/14] update GRPC_DLL instances where necessary
@@ -42,7 +42,7 @@ index d2c91ca596..1abaa7ac6f 100644
    /// Thin wrapper around a platform-specific sockaddr type. A sockaddr struct
    /// exists on all platforms that gRPC supports.
 diff --git a/src/core/config/core_configuration.h b/src/core/config/core_configuration.h
-index e6b779bc96..0803899034 100644
+index a169f3efc2..64ec1c6964 100644
 --- a/src/core/config/core_configuration.h
 +++ b/src/core/config/core_configuration.h
 @@ -40,7 +40,7 @@ namespace grpc_core {
@@ -68,7 +68,7 @@ index da7ff0a771..d1f6a52fdf 100644
                                            grpc_error_handle* error);
  
 diff --git a/src/core/credentials/transport/tls/grpc_tls_certificate_provider.h b/src/core/credentials/transport/tls/grpc_tls_certificate_provider.h
-index b3d38f6155..91084b9e3a 100644
+index d46f61853e..60fc8ed3b2 100644
 --- a/src/core/credentials/transport/tls/grpc_tls_certificate_provider.h
 +++ b/src/core/credentials/transport/tls/grpc_tls_certificate_provider.h
 @@ -107,7 +107,7 @@ class StaticDataCertificateProvider final
@@ -81,7 +81,7 @@ index b3d38f6155..91084b9e3a 100644
   private:
    struct WatcherInfo {
 diff --git a/src/core/credentials/transport/tls/spiffe_utils.h b/src/core/credentials/transport/tls/spiffe_utils.h
-index 1c4f011e47..274e6f5b15 100644
+index 9bf4b6dd59..c269e4bd24 100644
 --- a/src/core/credentials/transport/tls/spiffe_utils.h
 +++ b/src/core/credentials/transport/tls/spiffe_utils.h
 @@ -86,7 +86,7 @@ class SpiffeBundle final {
@@ -103,10 +103,10 @@ index 1c4f011e47..274e6f5b15 100644
    // Returns the roots for a given trust domain in the SPIFFE Bundle Map.
    absl::StatusOr<absl::Span<const std::string>> GetRoots(
 diff --git a/src/core/ext/transport/chttp2/server/chttp2_server.h b/src/core/ext/transport/chttp2/server/chttp2_server.h
-index 14d62cb513..90f2fb2252 100644
+index f0f50f9ff2..193105a427 100644
 --- a/src/core/ext/transport/chttp2/server/chttp2_server.h
 +++ b/src/core/ext/transport/chttp2/server/chttp2_server.h
-@@ -235,7 +235,7 @@ class PassiveListenerImpl final : public PassiveListener {
+@@ -234,7 +234,7 @@ class PassiveListenerImpl final : public PassiveListener {
        std::unique_ptr<grpc_event_engine::experimental::EventEngine::Endpoint>
            endpoint) override ABSL_LOCKS_EXCLUDED(mu_);
  
@@ -129,7 +129,7 @@ index 05030d6e40..b1a9fe8e9a 100644
                                           void* reserved);
  
 diff --git a/src/core/lib/channel/channel_args.h b/src/core/lib/channel/channel_args.h
-index 0184ead9fb..b6f20dd50d 100644
+index 24ee039ded..cc4404516d 100644
 --- a/src/core/lib/channel/channel_args.h
 +++ b/src/core/lib/channel/channel_args.h
 @@ -413,8 +413,8 @@ class ChannelArgs {
@@ -144,7 +144,7 @@ index 0184ead9fb..b6f20dd50d 100644
    ChannelArgs& operator=(const ChannelArgs&);
    ChannelArgs(ChannelArgs&&) noexcept;
 diff --git a/src/core/lib/debug/trace_flags.h b/src/core/lib/debug/trace_flags.h
-index 6d4fffe037..41a64c2627 100644
+index b6a39f3dde..599f6047bc 100644
 --- a/src/core/lib/debug/trace_flags.h
 +++ b/src/core/lib/debug/trace_flags.h
 @@ -50,7 +50,7 @@ extern DebugOnlyTraceFlag work_serializer_trace;
@@ -205,7 +205,7 @@ index 9ce180b345..17f484660c 100644
  /// Perform the file descriptor mutation operation of \a mutator on \a fd
  bool grpc_socket_mutator_mutate_fd(grpc_socket_mutator* mutator, int fd,
 diff --git a/src/core/lib/promise/activity.h b/src/core/lib/promise/activity.h
-index b77013b8e0..a95c6af554 100644
+index 9de57809a5..9f63417587 100644
 --- a/src/core/lib/promise/activity.h
 +++ b/src/core/lib/promise/activity.h
 @@ -75,7 +75,7 @@ struct Unwakeable final : public Wakeable {
@@ -218,7 +218,7 @@ index b77013b8e0..a95c6af554 100644
  static Unwakeable* unwakeable() {
    return NoDestructSingleton<Unwakeable>::Get();
 diff --git a/src/core/lib/resource_quota/thread_quota.h b/src/core/lib/resource_quota/thread_quota.h
-index 18a6e13e7f..83594ba83b 100644
+index 35a0514089..98bd1e68c1 100644
 --- a/src/core/lib/resource_quota/thread_quota.h
 +++ b/src/core/lib/resource_quota/thread_quota.h
 @@ -45,7 +45,7 @@ class ThreadQuota : public RefCounted<ThreadQuota> {
@@ -231,10 +231,10 @@ index 18a6e13e7f..83594ba83b 100644
   private:
    Mutex mu_;
 diff --git a/src/core/lib/surface/call.h b/src/core/lib/surface/call.h
-index 9dd89db733..91908e1651 100644
+index 459ade1827..af7867ada8 100644
 --- a/src/core/lib/surface/call.h
 +++ b/src/core/lib/surface/call.h
-@@ -303,9 +303,9 @@ grpc_compression_algorithm grpc_call_compression_for_level(
+@@ -310,9 +310,9 @@ grpc_compression_algorithm grpc_call_compression_for_level(
  // Did this client call receive a trailers-only response
  // TODO(markdroth): This is currently available only to the C++ API.
  //                  Move to surface API if requested by other languages.
@@ -276,7 +276,7 @@ index d99c7a248c..d68ce75f8c 100644
                      void (*done)(void* done_arg, grpc_cq_completion* storage),
                      void* done_arg, grpc_cq_completion* storage,
 diff --git a/src/core/transport/auth_context.h b/src/core/transport/auth_context.h
-index dbadba9744..e113226990 100644
+index 33c6dc6057..22a61a1a99 100644
 --- a/src/core/transport/auth_context.h
 +++ b/src/core/transport/auth_context.h
 @@ -49,7 +49,7 @@ struct grpc_auth_property_array {
@@ -289,7 +289,7 @@ index dbadba9744..e113226990 100644
  #define GRPC_AUTH_CONTEXT_ARG "grpc.auth_context"
  
 diff --git a/src/core/tsi/ssl_transport_security.h b/src/core/tsi/ssl_transport_security.h
-index 820d562d05..60524c7ecb 100644
+index 8379e49296..73d512b27f 100644
 --- a/src/core/tsi/ssl_transport_security.h
 +++ b/src/core/tsi/ssl_transport_security.h
 @@ -448,6 +448,6 @@ tsi_result tsi_ssl_extract_x509_subject_names_from_pem_cert(
@@ -301,7 +301,7 @@ index 820d562d05..60524c7ecb 100644
  
  #endif  // GRPC_SRC_CORE_TSI_SSL_TRANSPORT_SECURITY_H
 diff --git a/src/core/util/json/json_reader.cc b/src/core/util/json/json_reader.cc
-index 5b437af925..d9c2a609c6 100644
+index f1458ff14a..63d2f91d04 100644
 --- a/src/core/util/json/json_reader.cc
 +++ b/src/core/util/json/json_reader.cc
 @@ -946,7 +946,7 @@ absl::StatusOr<Json> JsonReader::Parse(absl::string_view input) {
@@ -314,7 +314,7 @@ index 5b437af925..d9c2a609c6 100644
  }
  
 diff --git a/src/core/util/json/json_reader.h b/src/core/util/json/json_reader.h
-index 127b380880..864857dab1 100644
+index 7ba5220a5e..c92f9c2d7c 100644
 --- a/src/core/util/json/json_reader.h
 +++ b/src/core/util/json/json_reader.h
 @@ -26,7 +26,7 @@
@@ -327,7 +327,7 @@ index 127b380880..864857dab1 100644
  }  // namespace grpc_core
  
 diff --git a/src/core/util/load_file.h b/src/core/util/load_file.h
-index 980e0c11af..d5206b0534 100644
+index 26163f5100..8efaf085e6 100644
 --- a/src/core/util/load_file.h
 +++ b/src/core/util/load_file.h
 @@ -26,7 +26,7 @@ namespace grpc_core {

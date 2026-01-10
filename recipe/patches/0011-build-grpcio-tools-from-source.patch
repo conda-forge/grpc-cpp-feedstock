@@ -1,4 +1,4 @@
-From bf8b63f2b038cc659a4bc4f53f9fb7d99010724f Mon Sep 17 00:00:00 2001
+From 980d72c700f10ed22db92a51c6a3f925e0325f62 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 4 Mar 2025 08:53:30 +1100
 Subject: [PATCH 11/14] build grpcio-tools from source
@@ -8,7 +8,7 @@ Subject: [PATCH 11/14] build grpcio-tools from source
  1 file changed, 31 insertions(+), 12 deletions(-)
 
 diff --git a/tools/distrib/python/grpcio_tools/setup.py b/tools/distrib/python/grpcio_tools/setup.py
-index 6d65e831b8..4e7b83ad46 100644
+index fb6c416c96..033a2fe304 100644
 --- a/tools/distrib/python/grpcio_tools/setup.py
 +++ b/tools/distrib/python/grpcio_tools/setup.py
 @@ -15,6 +15,7 @@
@@ -19,7 +19,7 @@ index 6d65e831b8..4e7b83ad46 100644
  import platform
  import re
  import shlex
-@@ -181,12 +182,9 @@ EXTRA_ENV_LINK_ARGS = os.environ.get("GRPC_PYTHON_LDFLAGS", None)
+@@ -180,12 +181,9 @@ EXTRA_ENV_LINK_ARGS = os.environ.get("GRPC_PYTHON_LDFLAGS", None)
  if EXTRA_ENV_COMPILE_ARGS is None:
      EXTRA_ENV_COMPILE_ARGS = ""
      if "win32" in sys.platform:
@@ -34,7 +34,7 @@ index 6d65e831b8..4e7b83ad46 100644
      elif "linux" in sys.platform:
          # GCC by defaults uses C17 so only C++17 needs to be specified.
          EXTRA_ENV_COMPILE_ARGS += " -std=c++17"
-@@ -245,14 +243,16 @@ EXTRA_LINK_ARGS = shlex.split(EXTRA_ENV_LINK_ARGS)
+@@ -244,14 +242,16 @@ EXTRA_LINK_ARGS = shlex.split(EXTRA_ENV_LINK_ARGS)
  if BUILD_WITH_STATIC_LIBSTDCXX:
      EXTRA_LINK_ARGS.append("-static-libstdc++")
  
@@ -54,7 +54,7 @@ index 6d65e831b8..4e7b83ad46 100644
  
  GRPC_PYTHON_TOOLS_PACKAGE = "grpc_tools"
  GRPC_PYTHON_PROTO_RESOURCES_NAME = "_proto"
-@@ -294,16 +294,34 @@ def package_data():
+@@ -293,16 +293,34 @@ def package_data():
      return {GRPC_PYTHON_TOOLS_PACKAGE: proto_files}
  
  
@@ -91,7 +91,7 @@ index 6d65e831b8..4e7b83ad46 100644
      ] + CC_FILES
  
      plugin_ext = Extension(
-@@ -311,10 +329,11 @@ def extension_modules():
+@@ -310,10 +328,11 @@ def extension_modules():
          sources=plugin_sources,
          include_dirs=[
              ".",
