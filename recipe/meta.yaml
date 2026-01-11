@@ -66,7 +66,7 @@ source:
 
   - folder: third_party/protoc-gen-validate
     git_url: https://github.com/envoyproxy/protoc-gen-validate.git
-    git_rev: 32c2415389a3538082507ae537e7edd9578c64ed
+    git_rev: 7b06248484ceeaa947e93ca2747eccf336a88ecc
 
   - folder: third_party/xds
     git_url: https://github.com/cncf/xds.git
