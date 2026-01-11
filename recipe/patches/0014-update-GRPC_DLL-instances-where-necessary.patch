@@ -1,4 +1,4 @@
-From 260bd26952b0ae517177d55c82663e0238b575f8 Mon Sep 17 00:00:00 2001
+From 1340d87afa376643db238ff0119e3d37ac064ce0 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 2 Mar 2025 07:16:19 +1100
 Subject: [PATCH 14/15] update GRPC_DLL instances where necessary
@@ -81,27 +81,27 @@ index d46f61853e..60fc8ed3b2 100644
   private:
    struct WatcherInfo {
 diff --git a/src/core/credentials/transport/tls/spiffe_utils.h b/src/core/credentials/transport/tls/spiffe_utils.h
-index 9bf4b6dd59..c269e4bd24 100644
+index 9bf4b6dd59..f4cdb63489 100644
 --- a/src/core/credentials/transport/tls/spiffe_utils.h
 +++ b/src/core/credentials/transport/tls/spiffe_utils.h
-@@ -86,7 +86,7 @@ class SpiffeBundle final {
+@@ -80,7 +80,7 @@ class SpiffeBundleKey final {
+ // https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE_Trust_Domain_and_Bundle.md#3-spiffe-bundles
+ // https://github.com/grpc/proposal/blob/master/A87-mtls-spiffe-support.md
+ // Not thread-safe
+-class SpiffeBundle final {
++GRPC_DLL class SpiffeBundle final {
+  public:
+   // Do not use - only exists to work with the JSON library.
    // SpiffeBundles should be used by loading a SpiffeBundleMap via
-   // SpiffeBundleMap::FromFile
-   SpiffeBundle() = default;
--  ~SpiffeBundle();
-+  GRPC_DLL ~SpiffeBundle();
-   SpiffeBundle(const SpiffeBundle& other);
-   SpiffeBundle& operator=(const SpiffeBundle& other);
- 
-@@ -136,7 +136,7 @@ class SpiffeBundleMap final {
-   // returned value represents a valid and SPIFFE Bundle Map.
-   // The only supported use is configuring X509 roots for a given trust domain -
-   // no other SPIFFE Bundle configurations are supported.
--  static absl::StatusOr<SpiffeBundleMap> FromFile(absl::string_view file_path);
-+  GRPC_DLL static absl::StatusOr<SpiffeBundleMap> FromFile(absl::string_view file_path);
- 
-   // Returns the roots for a given trust domain in the SPIFFE Bundle Map.
-   absl::StatusOr<absl::Span<const std::string>> GetRoots(
+@@ -125,7 +125,7 @@ class SpiffeBundle final {
+ // https://github.com/grpc/proposal/blob/master/A87-mtls-spiffe-support.md
+ // Only configuring X509 roots is supported.
+ // Not thread-safe
+-class SpiffeBundleMap final {
++GRPC_DLL class SpiffeBundleMap final {
+  public:
+   static const JsonLoaderInterface* JsonLoader(const JsonArgs&);
+   void JsonPostLoad(const Json& json, const JsonArgs&,
 diff --git a/src/core/ext/transport/chttp2/server/chttp2_server.h b/src/core/ext/transport/chttp2/server/chttp2_server.h
 index f0f50f9ff2..193105a427 100644
 --- a/src/core/ext/transport/chttp2/server/chttp2_server.h

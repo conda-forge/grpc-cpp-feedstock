@@ -1,4 +1,4 @@
-From cd211452d08349035527e23a8fa23dd521ea2081 Mon Sep 17 00:00:00 2001
+From 99b49b48c79bc6b07a9a6860cb883056292a7968 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sat, 10 Jan 2026 20:43:11 +1100
 Subject: [PATCH 15/15] use protobuf's libutf8_range
