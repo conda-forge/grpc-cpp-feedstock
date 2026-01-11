@@ -1,0 +1,22 @@
+From 37ade4a10dc8f3454686876368bc61fcbba3e174 Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Sat, 10 Jan 2026 20:43:11 +1100
+Subject: [PATCH 14/15] use protobuf's libutf8_range
+
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 52694fa702..a1fe2a5656 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -5066,7 +5066,7 @@ target_include_directories(grpc_plugin_support
+ )
+ target_link_libraries(grpc_plugin_support
+   ${_gRPC_ALLTARGETS_LIBRARIES}
+-  utf8_range_lib
++  utf8_range
+   ${_gRPC_ZLIB_LIBRARIES}
+   absl::algorithm_container
+   absl::base
