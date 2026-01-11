@@ -64,6 +64,10 @@ for txt_file in glob.glob(os.path.join(symbols_dir, "symbols_*.txt")):
             # trailing demangled names (e.g. "(`upb_FieldType_CType'::`2'::c_type)" above);
             # don't use [-1] because some demangled symbols contain `operator|`
             symbol = line.split("|")[1].strip().split()[0]
+            # keep constructors/destructors before filtering other symbols starting with "??"
+            if any(symbol.startswith(x) for x in ["??0", "??1"]):
+                symbols.add(symbol)
+                continue
             # skip labels and metadata
             if "Label" in line or any(symbol.startswith(x) for x in [".", "$", "@", "??", "?$", "__"]):
                 continue
