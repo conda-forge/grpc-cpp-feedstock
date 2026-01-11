@@ -198,6 +198,7 @@ outputs:
         - pip
         - setuptools
         - cython
+        - libabseil
         - {{ pin_subpackage('libgrpc', exact=True) }}
         - pthread-stubs                               # [linux]
         - zlib
