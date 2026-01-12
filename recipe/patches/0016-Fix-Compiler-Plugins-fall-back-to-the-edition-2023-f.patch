@@ -1,0 +1,132 @@
+From cd51e47fa9bb8ffd7167374b9fe83b842b918f4b Mon Sep 17 00:00:00 2001
+From: Sergii Tkachenko <sergiitk@google.com>
+Date: Wed, 7 Jan 2026 12:37:00 -0800
+Subject: [PATCH 16/16] [Fix][Compiler] Plugins fall back to the edition 2023
+ for older protobuf (#41357)
+
+Fixes the issue with gRPC protobuf plugins declaring the support for `protobuf::Edition::EDITION_2024`, which is higher than the one supported by the protobuf we're using at the moment: `EDITION_2023` at google/protobuf@74211c0dfc2777318ab53c2cd2c317a2ef9012de.
+
+Related:
+- Effectively undoes #40957
+
+Closes #41357
+
+COPYBARA_INTEGRATE_REVIEW=https://github.com/grpc/grpc/pull/41357 from sergiitk:fix/compiler/protobuf-edition-2023 c3d7b9b27ead199e5e4c66052d4d91d32a7370c6
+PiperOrigin-RevId: 853371790
+---
+ src/compiler/cpp_plugin.h          | 6 ++++++
+ src/compiler/csharp_plugin.cc      | 6 ++++++
+ src/compiler/objective_c_plugin.cc | 6 ++++++
+ src/compiler/php_plugin.cc         | 6 ++++++
+ src/compiler/python_generator.h    | 6 ++++++
+ src/compiler/ruby_plugin.cc        | 6 ++++++
+ 6 files changed, 36 insertions(+)
+
+diff --git a/src/compiler/cpp_plugin.h b/src/compiler/cpp_plugin.h
+index 21e9dc899e..2cccbe6fb7 100644
+--- a/src/compiler/cpp_plugin.h
++++ b/src/compiler/cpp_plugin.h
+@@ -45,7 +45,13 @@ class CppGrpcGenerator : public grpc::protobuf::compiler::CodeGenerator {
+     return grpc::protobuf::Edition::EDITION_PROTO2;
+   }
+   grpc::protobuf::Edition GetMaximumEdition() const override {
++    // TODO(yuanweiz): Remove when the protobuf is updated to a version
++    //      that supports edition 2024.
++#if !defined(GOOGLE_PROTOBUF_VERSION) || GOOGLE_PROTOBUF_VERSION >= 6032000
+     return grpc::protobuf::Edition::EDITION_2024;
++#else
++    return grpc::protobuf::Edition::EDITION_2023;
++#endif
+   }
+ #endif
+ 
+diff --git a/src/compiler/csharp_plugin.cc b/src/compiler/csharp_plugin.cc
+index 6625919f7e..6281bf08c0 100644
+--- a/src/compiler/csharp_plugin.cc
++++ b/src/compiler/csharp_plugin.cc
+@@ -42,7 +42,13 @@ class CSharpGrpcGenerator : public grpc::protobuf::compiler::CodeGenerator {
+     return grpc::protobuf::Edition::EDITION_PROTO2;
+   }
+   grpc::protobuf::Edition GetMaximumEdition() const override {
++    // TODO(yuanweiz): Remove when the protobuf is updated to a version
++    //      that supports edition 2024.
++#if !defined(GOOGLE_PROTOBUF_VERSION) || GOOGLE_PROTOBUF_VERSION >= 6032000
+     return grpc::protobuf::Edition::EDITION_2024;
++#else
++    return grpc::protobuf::Edition::EDITION_2023;
++#endif
+   }
+ #endif
+ 
+diff --git a/src/compiler/objective_c_plugin.cc b/src/compiler/objective_c_plugin.cc
+index 8aa66cf801..d6b35e06d6 100644
+--- a/src/compiler/objective_c_plugin.cc
++++ b/src/compiler/objective_c_plugin.cc
+@@ -93,7 +93,13 @@ class ObjectiveCGrpcGenerator : public grpc::protobuf::compiler::CodeGenerator {
+     return grpc::protobuf::Edition::EDITION_PROTO2;
+   }
+   grpc::protobuf::Edition GetMaximumEdition() const override {
++    // TODO(yuanweiz): Remove when the protobuf is updated to a version
++    //      that supports edition 2024.
++#if !defined(GOOGLE_PROTOBUF_VERSION) || GOOGLE_PROTOBUF_VERSION >= 6032000
+     return grpc::protobuf::Edition::EDITION_2024;
++#else
++    return grpc::protobuf::Edition::EDITION_2023;
++#endif
+   }
+ #endif
+ 
+diff --git a/src/compiler/php_plugin.cc b/src/compiler/php_plugin.cc
+index b3fa2c2145..06fccfe562 100644
+--- a/src/compiler/php_plugin.cc
++++ b/src/compiler/php_plugin.cc
+@@ -46,7 +46,13 @@ class PHPGrpcGenerator : public grpc::protobuf::compiler::CodeGenerator {
+     return grpc::protobuf::Edition::EDITION_PROTO2;
+   }
+   grpc::protobuf::Edition GetMaximumEdition() const override {
++    // TODO(yuanweiz): Remove when the protobuf is updated to a version
++    //      that supports edition 2024.
++#if !defined(GOOGLE_PROTOBUF_VERSION) || GOOGLE_PROTOBUF_VERSION >= 6032000
+     return grpc::protobuf::Edition::EDITION_2024;
++#else
++    return grpc::protobuf::Edition::EDITION_2023;
++#endif
+   }
+ #endif
+ 
+diff --git a/src/compiler/python_generator.h b/src/compiler/python_generator.h
+index 0d5a785ef2..10ac03b008 100644
+--- a/src/compiler/python_generator.h
++++ b/src/compiler/python_generator.h
+@@ -59,7 +59,13 @@ class PythonGrpcGenerator : public grpc::protobuf::compiler::CodeGenerator {
+     return grpc::protobuf::Edition::EDITION_PROTO2;
+   }
+   grpc::protobuf::Edition GetMaximumEdition() const override {
++    // TODO(yuanweiz): Remove when the protobuf is updated to a version
++    //      that supports edition 2024.
++#if !defined(GOOGLE_PROTOBUF_VERSION) || GOOGLE_PROTOBUF_VERSION >= 6032000
+     return grpc::protobuf::Edition::EDITION_2024;
++#else
++    return grpc::protobuf::Edition::EDITION_2023;
++#endif
+   }
+ #endif
+ 
+diff --git a/src/compiler/ruby_plugin.cc b/src/compiler/ruby_plugin.cc
+index 51ed178eab..b5f1d497be 100644
+--- a/src/compiler/ruby_plugin.cc
++++ b/src/compiler/ruby_plugin.cc
+@@ -42,7 +42,13 @@ class RubyGrpcGenerator : public grpc::protobuf::compiler::CodeGenerator {
+     return grpc::protobuf::Edition::EDITION_PROTO2;
+   }
+   grpc::protobuf::Edition GetMaximumEdition() const override {
++    // TODO(yuanweiz): Remove when the protobuf is updated to a version
++    //      that supports edition 2024.
++#if !defined(GOOGLE_PROTOBUF_VERSION) || GOOGLE_PROTOBUF_VERSION >= 6032000
+     return grpc::protobuf::Edition::EDITION_2024;
++#else
++    return grpc::protobuf::Edition::EDITION_2023;
++#endif
+   }
+ #endif
+ 

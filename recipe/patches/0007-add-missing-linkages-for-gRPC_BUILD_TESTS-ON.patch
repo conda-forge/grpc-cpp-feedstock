@@ -1,7 +1,7 @@
 From b529ac5784ffb9e75abbb651bcd81fcdb3482916 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 26 Sep 2023 18:25:54 +1100
-Subject: [PATCH 07/15] add missing linkages for gRPC_BUILD_TESTS=ON
+Subject: [PATCH 07/16] add missing linkages for gRPC_BUILD_TESTS=ON
 
 grpc_event_engine::experimental::MockEndpoint::MockEndpoint() sits in
 https://github.com/grpc/grpc/blob/v1.73.1/test/core/test_util/mock_endpoint.cc
