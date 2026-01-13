@@ -71,6 +71,11 @@ pushd build-cpp
 echo CC="${CC}"
 echo CFLAGS="${CFLAGS}"
 
+# our compilers set `-DNDEBUG` in CPPFLAGS, but grpc does not seem to respect
+# this consistently; add it to CXXFLAGS as well to avoid any doubt, see
+# https://github.com/abseil/abseil-cpp/issues/1624#issuecomment-1968073823
+CXXFLAGS="${CXXFLAGS} -DNDEBUG"
+
 # point to right protoc
 if [[ "$CONDA_BUILD_CROSS_COMPILATION" == 1 ]]; then
     export CMAKE_ARGS="${CMAKE_ARGS} -DProtobuf_PROTOC_EXECUTABLE=$BUILD_PREFIX/bin/protoc"

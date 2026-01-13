@@ -1,4 +1,5 @@
 #!/bin/bash
+set -ex
 
 export GRPC_BUILD_WITH_BORING_SSL_ASM=""
 export GRPC_PYTHON_BUILD_SYSTEM_ABSL="True"
@@ -24,5 +25,10 @@ fi
 
 ln -sf "$(which $CC)" "$SRC_DIR/cc"
 export PATH="$SRC_DIR:$PATH"
+
+# our compilers set `-DNDEBUG` in CPPFLAGS, but grpc does not seem to respect
+# this consistently; add it to CXXFLAGS as well to avoid any doubt, see
+# https://github.com/abseil/abseil-cpp/issues/1624#issuecomment-1968073823
+CXXFLAGS="${CXXFLAGS} -DNDEBUG"
 
 $PYTHON -m pip install . --no-deps --ignore-installed --no-cache-dir -v
