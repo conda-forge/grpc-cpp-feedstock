@@ -14,10 +14,6 @@ c_stdlib_version:
 - '11.0'
 channel_sources:
 - conda-forge
-- conda-forge
-- conda-forge
-- conda-forge
-- conda-forge,conda-forge/label/python_rc
 channel_targets:
 - conda-forge main
 cxx_compiler:
@@ -33,7 +29,7 @@ libprotobuf:
 macos_machine:
 - arm64-apple-darwin20.0.0
 openssl:
-- '3'
+- '3.5'
 pin_run_as_build:
   python:
     min_pin: x.x
@@ -44,6 +40,7 @@ python:
 - 3.12.* *_cpython
 - 3.13.* *_cp313
 - 3.14.* *_cp314
+- 3.14.* *_cp314t
 re2:
 - 2025.08.12
 target_platform:
@@ -51,7 +48,5 @@ target_platform:
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
-- - python
-  - channel_sources
 zlib:
 - '1'
