@@ -1,7 +1,7 @@
-From b529ac5784ffb9e75abbb651bcd81fcdb3482916 Mon Sep 17 00:00:00 2001
+From af7ddb54c50b794a81666e67c31c2a8407650c85 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 26 Sep 2023 18:25:54 +1100
-Subject: [PATCH 07/16] add missing linkages for gRPC_BUILD_TESTS=ON
+Subject: [PATCH 07/15] add missing linkages for gRPC_BUILD_TESTS=ON
 
 grpc_event_engine::experimental::MockEndpoint::MockEndpoint() sits in
 https://github.com/grpc/grpc/blob/v1.73.1/test/core/test_util/mock_endpoint.cc
@@ -14,7 +14,7 @@ For some tests, re2 and c-ares have just been forgotten as dependencies.
  1 file changed, 11 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index ba7ef5ef67..a786f5f8ea 100644
+index 853ad4a773..69b05fe6b7 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -3297,6 +3297,7 @@ target_link_libraries(grpc_test_util

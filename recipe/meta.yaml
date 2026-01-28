@@ -1,4 +1,4 @@
-{% set version = "1.78.0.pre1" %}
+{% set version = "1.78.0" %}
 
 # core package & vendored libs use different version scheme than CPP libs, see
 # top of https://github.com/grpc/grpc/blob/v{{ version }}/CMakeLists.txt
@@ -18,8 +18,9 @@ package:
   version: {{ version }}
 
 source:
-  - url: https://github.com/grpc/grpc/archive/v{{ version.replace(".pre", "-pre") }}.tar.gz
-    sha256: 65260591abab43d5aa130efe199c8d859f2c6c0d95944b59aeeea259e97aec84
+  # - url: https://github.com/grpc/grpc/archive/v{{ version.replace(".pre", "-pre") }}.tar.gz
+  - url: https://github.com/grpc/grpc/archive/ea4d6271b2a3e94c1549317cc1e523be8f294dee.tar.gz
+    sha256: acd7395d2075c12d025612e7b041364fe23689188627b103761a79b042d818b7
     patches:
       - patches/0001-windows-ssl-lib-names.patch
       - patches/0002-fix-win-setup-cmds.patch
@@ -46,8 +47,6 @@ source:
       - patches/0013-update-GRPC_DLL-instances-where-necessary.patch
       - patches/0014-use-protobuf-s-libutf8_range.patch
       - patches/0015-disable-grpc-_unsecure.patch
-      # backport https://github.com/grpc/grpc/pull/41357
-      - patches/0016-Fix-Compiler-Plugins-fall-back-to-the-edition-2023-f.patch
 
   {% if build_platform == target_platform and not win %}
   - folder: third_party/benchmark
