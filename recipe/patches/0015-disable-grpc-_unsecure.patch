@@ -1,0 +1,178 @@
+From 9e93a59bfda323abb3a4fe4b03b5f93f157b5bb7 Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Sun, 11 Jan 2026 22:45:25 +1100
+Subject: [PATCH 15/16] disable grpc{,++}_unsecure
+
+there's no reason to ship the unsecure version (which has almost fully duplicated sources to grpc,
+except the parts that pull in openssl etc.) if we always bundle the full variant anyway. Same for
+grpc++_unsecure vs. grpc++.
+
+more concretely, as of v1.78.0-pre1, grpc_unsecure has a link error
+```
+grpc_tls_certificate_provider.cc.obj : error LNK2001: unresolved external symbol "bool __cdecl IsRootCertInfoEmpty(class std::variant<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class grpc_core::SpiffeBundleMap> const *)" (?IsRootCertInfoEmpty@@YA_NPEBV?$variant@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@VSpiffeBundleMap@grpc_core@@@std@@@Z)
+```
+and the symbol in question (`IsRootCertInfoEmpty`) is in a file (`src/core/tsi/ssl_transport_security.cc`)
+that is explicitly excluded from `grpc_unsecure`, because that's one of the files that depends on openssl,
+the avoidance of which is the entire point of `grpc_unsecure`.
+---
+ CMakeLists.txt | 28 ++++++++++++++++++----------
+ 1 file changed, 18 insertions(+), 10 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 054613d086..aa5b5b3c66 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -2668,7 +2668,7 @@ endif()
+ 
+ 
+ endif()
+-if(gRPC_BUILD_TESTS)
++if(FALSE)
+ 
+ add_library(grpc_test_util_unsecure
+   test/core/event_engine/test_init.cc
+@@ -2744,6 +2744,7 @@ endif()
+ 
+ endif()
+ 
++if(False)
+ add_library(grpc_unsecure
+   src/core/call/call_arena_allocator.cc
+   src/core/call/call_filters.cc
+@@ -3288,6 +3289,7 @@ target_link_libraries(grpc_unsecure
+ if(_gRPC_PLATFORM_IOS OR _gRPC_PLATFORM_MAC)
+   target_link_libraries(grpc_unsecure PUBLIC "-framework CoreFoundation")
+ endif()
++endif()
+ 
+ foreach(_hdr
+   include/grpc/byte_buffer.h
+@@ -3345,7 +3347,7 @@ foreach(_hdr
+ endforeach()
+ 
+ 
+-if(gRPC_INSTALL)
++if(FALSE)
+   install(TARGETS grpc_unsecure EXPORT gRPCTargets
+     RUNTIME DESTINATION ${gRPC_INSTALL_BINDIR}
+     BUNDLE DESTINATION  ${gRPC_INSTALL_BINDIR}
+@@ -4270,6 +4272,7 @@ target_link_libraries(grpc++_test_util
+ 
+ endif()
+ 
++if(FALSE)
+ add_library(grpc++_unsecure
+   src/cpp/client/call_credentials.cc
+   src/cpp/client/channel_cc.cc
+@@ -4362,6 +4365,7 @@ target_link_libraries(grpc++_unsecure
+   grpc_unsecure
+   ${_gRPC_PROTOBUF_LIBRARIES}
+ )
++endif()
+ 
+ foreach(_hdr
+   include/grpc++/alarm.h
+@@ -4582,7 +4586,7 @@ foreach(_hdr
+ endforeach()
+ 
+ 
+-if(gRPC_INSTALL)
++if(FALSE)
+   install(TARGETS grpc++_unsecure EXPORT gRPCTargets
+     RUNTIME DESTINATION ${gRPC_INSTALL_BINDIR}
+     BUNDLE DESTINATION  ${gRPC_INSTALL_BINDIR}
+@@ -5571,7 +5575,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+ 
+ endif()
+ endif()
+-if(gRPC_BUILD_TESTS)
++if(FALSE)
+ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+ 
+   add_executable(address_sorting_test_unsecure
+@@ -6186,7 +6190,7 @@ target_link_libraries(admin_services_end2end_test
+ 
+ 
+ endif()
+-if(gRPC_BUILD_TESTS)
++if(FALSE)
+ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+ 
+   add_executable(alarm_test
+@@ -15953,7 +15957,7 @@ target_link_libraries(filter_fusion_test
+ 
+ 
+ endif()
+-if(gRPC_BUILD_TESTS)
++if(FALSE)
+ 
+ add_executable(filter_test_test
+   ${_gRPC_PROTO_GENS_DIR}/test/core/event_engine/fuzzing_event_engine/fuzzing_event_engine.pb.cc
+@@ -25242,7 +25246,7 @@ target_link_libraries(parser_test
+ 
+ 
+ endif()
+-if(gRPC_BUILD_TESTS)
++if(FALSE)
+ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+ 
+   add_executable(party_mpsc_test
+@@ -25286,7 +25290,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+ 
+ endif()
+ endif()
+-if(gRPC_BUILD_TESTS)
++if(FALSE)
+ 
+ add_executable(party_test
+   test/core/promise/party_test.cc
+@@ -29736,7 +29740,7 @@ target_link_libraries(server_builder_plugin_test
+ 
+ 
+ endif()
+-if(gRPC_BUILD_TESTS)
++if(FALSE)
+ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+ 
+   add_executable(server_builder_test
+@@ -29816,7 +29820,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+ 
+ endif()
+ endif()
+-if(gRPC_BUILD_TESTS)
++if(FALSE)
+ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+ 
+   add_executable(server_builder_with_socket_mutator_test
+@@ -51928,6 +51932,7 @@ generate_pkgconfig(
+   "-laddress_sorting"
+   "grpc.pc")
+ 
++if(FALSE)
+ # grpc_unsecure .pc file
+ generate_pkgconfig(
+   "gRPC unsecure"
+@@ -51938,6 +51943,7 @@ generate_pkgconfig(
+   "-lgrpc_unsecure -lupb"
+   "-laddress_sorting"
+   "grpc_unsecure.pc")
++endif()
+ 
+ # grpc++ .pc file
+ generate_pkgconfig(
+@@ -51950,6 +51956,7 @@ generate_pkgconfig(
+   "-laddress_sorting"
+   "grpc++.pc")
+ 
++if(FALSE)
+ # grpc++_unsecure .pc file
+ generate_pkgconfig(
+   "gRPC++ unsecure"
+@@ -51960,6 +51967,7 @@ generate_pkgconfig(
+   "-lgrpc++_unsecure -lupb"
+   "-laddress_sorting"
+   "grpc++_unsecure.pc")
++endif()
+ 
+ # grpcpp_otel_plugin .pc file
+ generate_pkgconfig(

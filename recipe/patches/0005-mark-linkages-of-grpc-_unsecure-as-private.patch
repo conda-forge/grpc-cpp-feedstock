@@ -1,7 +1,7 @@
-From 5cad386388ee72810dfcbf0afc88ded797f5e840 Mon Sep 17 00:00:00 2001
+From ea77dfc3e0efcfc639002673c153d84d82557dc7 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 23 Aug 2022 11:45:20 +0200
-Subject: [PATCH 05/14] mark linkages of grpc{,_unsecure} as private
+Subject: [PATCH 05/16] mark linkages of grpc{,_unsecure} as private
 
 except openssl & gpr, which are needed by dependents
 
@@ -9,14 +9,14 @@ See also: https://github.com/grpc/grpc/issues/30838
 
 Co-Authored-By: Mark Harfouche <mark.harfouche@gmail.com>
 ---
- CMakeLists.txt | 110 +++++++++++++++++++++++++++----------------------
- 1 file changed, 60 insertions(+), 50 deletions(-)
+ CMakeLists.txt | 106 +++++++++++++++++++++++++++----------------------
+ 1 file changed, 58 insertions(+), 48 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index f652a4055c..2fae60378f 100644
+index 0c7e3d4893..72de82042f 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -3069,35 +3069,40 @@ target_include_directories(grpc
+@@ -3137,34 +3137,39 @@ target_include_directories(grpc
      ${_gRPC_ZLIB_INCLUDE_DIR}
  )
  target_link_libraries(grpc
@@ -26,13 +26,12 @@ index f652a4055c..2fae60378f 100644
 -  ${_gRPC_RE2_LIBRARIES}
 -  ${_gRPC_ZLIB_LIBRARIES}
 -  absl::algorithm_container
--  absl::config
 -  absl::no_destructor
 -  absl::btree
 -  absl::flat_hash_map
 -  absl::flat_hash_set
 -  absl::inlined_vector
--  absl::bind_front
+-  absl::node_hash_map
 -  absl::function_ref
 -  absl::hash
 -  absl::type_traits
@@ -59,13 +58,12 @@ index f652a4055c..2fae60378f 100644
 +  # external dependencies that need to available at runtime
 +  PUBLIC  ${_gRPC_SSL_LIBRARIES}
 +  PRIVATE absl::algorithm_container
-+  PRIVATE absl::config
 +  PRIVATE absl::no_destructor
 +  PRIVATE absl::btree
 +  PRIVATE absl::flat_hash_map
 +  PRIVATE absl::flat_hash_set
 +  PRIVATE absl::inlined_vector
-+  PRIVATE absl::bind_front
++  PRIVATE absl::node_hash_map
 +  PRIVATE absl::function_ref
 +  PRIVATE absl::hash
 +  PRIVATE absl::type_traits
@@ -84,7 +82,7 @@ index f652a4055c..2fae60378f 100644
  endif()
  
  foreach(_hdr
-@@ -3791,32 +3796,37 @@ target_include_directories(grpc_unsecure
+@@ -3875,31 +3880,36 @@ target_include_directories(grpc_unsecure
      ${_gRPC_ZLIB_INCLUDE_DIR}
  )
  target_link_libraries(grpc_unsecure
@@ -96,13 +94,12 @@ index f652a4055c..2fae60378f 100644
    upb_textformat_lib
 -  ${_gRPC_ZLIB_LIBRARIES}
 -  absl::algorithm_container
--  absl::config
 -  absl::no_destructor
 -  absl::btree
 -  absl::flat_hash_map
 -  absl::flat_hash_set
 -  absl::inlined_vector
--  absl::bind_front
+-  absl::node_hash_map
 -  absl::function_ref
 -  absl::hash
 -  absl::type_traits
@@ -120,13 +117,12 @@ index f652a4055c..2fae60378f 100644
 +  PRIVATE ${_gRPC_CARES_LIBRARIES}
 +  # external dependencies that need to available at runtime
 +  PRIVATE absl::algorithm_container
-+  PRIVATE absl::config
 +  PRIVATE absl::no_destructor
 +  PRIVATE absl::btree
 +  PRIVATE absl::flat_hash_map
 +  PRIVATE absl::flat_hash_set
 +  PRIVATE absl::inlined_vector
-+  PRIVATE absl::bind_front
++  PRIVATE absl::node_hash_map
 +  PRIVATE absl::function_ref
 +  PRIVATE absl::hash
 +  PRIVATE absl::type_traits

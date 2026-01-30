@@ -1,14 +1,14 @@
-From 503b3c33580670b772bb321dc44a4b1f1e3b1f03 Mon Sep 17 00:00:00 2001
+From c7318682a69fe48b6c8bdccbaf9598b724672384 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 4 Mar 2025 08:53:30 +1100
-Subject: [PATCH 11/14] build grpcio-tools from source
+Subject: [PATCH 11/16] build grpcio-tools from source
 
 ---
- tools/distrib/python/grpcio_tools/setup.py | 43 ++++++++++++++++------
- 1 file changed, 31 insertions(+), 12 deletions(-)
+ tools/distrib/python/grpcio_tools/setup.py | 47 ++++++++++++++++------
+ 1 file changed, 35 insertions(+), 12 deletions(-)
 
 diff --git a/tools/distrib/python/grpcio_tools/setup.py b/tools/distrib/python/grpcio_tools/setup.py
-index c70bf65192..c005ea6ec0 100644
+index fb6c416c96..c761c3670e 100644
 --- a/tools/distrib/python/grpcio_tools/setup.py
 +++ b/tools/distrib/python/grpcio_tools/setup.py
 @@ -15,6 +15,7 @@
@@ -19,7 +19,7 @@ index c70bf65192..c005ea6ec0 100644
  import platform
  import re
  import shlex
-@@ -177,12 +178,9 @@ EXTRA_ENV_LINK_ARGS = os.environ.get("GRPC_PYTHON_LDFLAGS", None)
+@@ -180,12 +181,9 @@ EXTRA_ENV_LINK_ARGS = os.environ.get("GRPC_PYTHON_LDFLAGS", None)
  if EXTRA_ENV_COMPILE_ARGS is None:
      EXTRA_ENV_COMPILE_ARGS = ""
      if "win32" in sys.platform:
@@ -34,7 +34,7 @@ index c70bf65192..c005ea6ec0 100644
      elif "linux" in sys.platform:
          # GCC by defaults uses C17 so only C++17 needs to be specified.
          EXTRA_ENV_COMPILE_ARGS += " -std=c++17"
-@@ -241,14 +239,16 @@ EXTRA_LINK_ARGS = shlex.split(EXTRA_ENV_LINK_ARGS)
+@@ -244,14 +242,16 @@ EXTRA_LINK_ARGS = shlex.split(EXTRA_ENV_LINK_ARGS)
  if BUILD_WITH_STATIC_LIBSTDCXX:
      EXTRA_LINK_ARGS.append("-static-libstdc++")
  
@@ -54,7 +54,7 @@ index c70bf65192..c005ea6ec0 100644
  
  GRPC_PYTHON_TOOLS_PACKAGE = "grpc_tools"
  GRPC_PYTHON_PROTO_RESOURCES_NAME = "_proto"
-@@ -290,16 +290,34 @@ def package_data():
+@@ -293,16 +293,38 @@ def package_data():
      return {GRPC_PYTHON_TOOLS_PACKAGE: proto_files}
  
  
@@ -81,7 +81,11 @@ index c70bf65192..c005ea6ec0 100644
      else:
          plugin_sources = [os.path.join("grpc_tools", "_protoc_compiler.cpp")]
  
-+    grpc_root = os.environ["SRC_DIR"]
++    # setuptools requires relative paths; calculate it
++    src_dir = pathlib.Path(os.environ["SRC_DIR"]).resolve()
++    setup_dir = pathlib.Path(__file__).resolve().parent
++    # cannot use pathlib's Path.relative_to to go _out_; see https://github.com/python/cpython/issues/88244
++    grpc_root = pathlib.Path(os.path.relpath(src_dir, setup_dir)).as_posix()
      plugin_sources += [
          os.path.join("grpc_tools", "main.cc"),
 -        os.path.join("grpc_root", "src", "compiler", "python_generator.cc"),
@@ -91,7 +95,7 @@ index c70bf65192..c005ea6ec0 100644
      ] + CC_FILES
  
      plugin_ext = Extension(
-@@ -307,10 +325,11 @@ def extension_modules():
+@@ -310,10 +332,11 @@ def extension_modules():
          sources=plugin_sources,
          include_dirs=[
              ".",

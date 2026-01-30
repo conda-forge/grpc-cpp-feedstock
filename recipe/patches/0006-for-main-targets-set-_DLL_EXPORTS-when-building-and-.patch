@@ -1,7 +1,7 @@
-From 7ee05652cf15c9d23b634bfe9fc18028d62e32c1 Mon Sep 17 00:00:00 2001
+From 62276803e50451588d308998695951073e263afd Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Thu, 29 Feb 2024 20:31:21 +1100
-Subject: [PATCH 06/14] for main targets, set *_DLL_EXPORTS when building and
+Subject: [PATCH 06/16] for main targets, set *_DLL_EXPORTS when building and
  *_DLL_IMPORTS in interface
 
 ---
@@ -9,10 +9,10 @@ Subject: [PATCH 06/14] for main targets, set *_DLL_EXPORTS when building and
  1 file changed, 10 insertions(+), 26 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 2fae60378f..66be39ef73 100644
+index 72de82042f..853ad4a773 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -2063,10 +2063,8 @@ if(WIN32 AND MSVC)
+@@ -2103,10 +2103,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)
@@ -25,7 +25,7 @@ index 2fae60378f..66be39ef73 100644
    endif()
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/gpr.pdb
-@@ -3042,11 +3040,8 @@ if(WIN32 AND MSVC)
+@@ -3110,11 +3108,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)
@@ -39,7 +39,7 @@ index 2fae60378f..66be39ef73 100644
    endif()
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc.pdb
-@@ -3769,11 +3764,8 @@ if(WIN32 AND MSVC)
+@@ -3853,11 +3848,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)
@@ -53,7 +53,7 @@ index 2fae60378f..66be39ef73 100644
    endif()
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc_unsecure.pdb
-@@ -4791,12 +4783,8 @@ if(WIN32 AND MSVC)
+@@ -4876,12 +4868,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)
@@ -68,7 +68,7 @@ index 2fae60378f..66be39ef73 100644
    endif()
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc++.pdb
-@@ -5531,12 +5519,8 @@ if(WIN32 AND MSVC)
+@@ -5620,12 +5608,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)
