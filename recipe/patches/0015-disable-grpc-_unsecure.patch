@@ -1,7 +1,7 @@
-From 9e93a59bfda323abb3a4fe4b03b5f93f157b5bb7 Mon Sep 17 00:00:00 2001
+From 8f26432f05cd44a1afae47dbd11876ef51a200de Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 11 Jan 2026 22:45:25 +1100
-Subject: [PATCH 15/16] disable grpc{,++}_unsecure
+Subject: [PATCH 15/15] disable grpc{,++}_unsecure
 
 there's no reason to ship the unsecure version (which has almost fully duplicated sources to grpc,
 except the parts that pull in openssl etc.) if we always bundle the full variant anyway. Same for

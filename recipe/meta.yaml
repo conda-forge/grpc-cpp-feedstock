@@ -18,9 +18,8 @@ package:
   version: {{ version }}
 
 source:
-  # - url: https://github.com/grpc/grpc/archive/v{{ version.replace(".pre", "-pre") }}.tar.gz
-  - url: https://github.com/grpc/grpc/archive/ea4d6271b2a3e94c1549317cc1e523be8f294dee.tar.gz
-    sha256: acd7395d2075c12d025612e7b041364fe23689188627b103761a79b042d818b7
+  - url: https://github.com/grpc/grpc/archive/v{{ version.replace(".pre", "-pre") }}.tar.gz
+    sha256: e2ace790a5f2d0f83259d1390a816a33b013ea34df2e86084d927e58daa4c5d9
     patches:
       - patches/0001-windows-ssl-lib-names.patch
       - patches/0002-fix-win-setup-cmds.patch
@@ -47,8 +46,6 @@ source:
       - patches/0013-update-GRPC_DLL-instances-where-necessary.patch
       - patches/0014-use-protobuf-s-libutf8_range.patch
       - patches/0015-disable-grpc-_unsecure.patch
-      # backport https://github.com/grpc/grpc/pull/41351
-      - patches/0016-build-add-missing-includes-41351.patch
 
   {% if build_platform == target_platform and not win %}
   - folder: third_party/benchmark
@@ -77,7 +74,7 @@ source:
   {% endif %}
 
 build:
-  number: 0
+  number: 1
 
 outputs:
   - name: libgrpc
