@@ -1,7 +1,7 @@
-From af64d72d76a2aeb569a9606f16348c5bde0f8e72 Mon Sep 17 00:00:00 2001
+From e99ad47731d666420995aa8f85024b12859b38d6 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 2 Mar 2025 08:22:39 +1100
-Subject: [PATCH 10/16] reduce buildtests_cxx target to end2end tests
+Subject: [PATCH 10/15] reduce buildtests_cxx target to end2end tests
 
 as of v1.69, the whole set of tests takes extremely long to build (>6h),
 so reduce it to only "end2end" tests. This has the advantage of being

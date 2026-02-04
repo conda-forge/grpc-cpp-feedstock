@@ -1,7 +1,7 @@
-From 6623130f674447fc314891d2271cce58eaac1e8b Mon Sep 17 00:00:00 2001
+From b48f6c11d3a8689a97d1aa677c922b3ea452d349 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sat, 10 Jan 2026 20:43:11 +1100
-Subject: [PATCH 14/16] use protobuf's libutf8_range
+Subject: [PATCH 14/15] use protobuf's libutf8_range
 
 ---
  CMakeLists.txt | 2 +-
