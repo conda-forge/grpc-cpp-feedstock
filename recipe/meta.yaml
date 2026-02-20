@@ -247,7 +247,7 @@ outputs:
         - cd tools/distrib/python/grpcio_tools
         - export GRPC_PYTHON_BUILD_WITH_CYTHON=true  # [unix]
         - set GRPC_PYTHON_BUILD_WITH_CYTHON=true     # [win]
-        - python -m pip install . -vv
+        - python -m pip install . --no-build-isolation -vv
     requirements:
       build:
         - python                                 # [build_platform != target_platform]
