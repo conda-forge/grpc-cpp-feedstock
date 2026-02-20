@@ -1,4 +1,4 @@
-From 8f26432f05cd44a1afae47dbd11876ef51a200de Mon Sep 17 00:00:00 2001
+From 211b12f9a91bfe6fff37869195dbc8c115832882 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 11 Jan 2026 22:45:25 +1100
 Subject: [PATCH 15/15] disable grpc{,++}_unsecure
@@ -19,7 +19,7 @@ the avoidance of which is the entire point of `grpc_unsecure`.
  1 file changed, 18 insertions(+), 10 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 054613d086..aa5b5b3c66 100644
+index 0e0bfc9..c6005ca 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -2668,7 +2668,7 @@ endif()

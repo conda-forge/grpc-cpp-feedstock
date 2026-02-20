@@ -1,4 +1,4 @@
-From a421a5d3dc639ea527058b43101e21ca7d24f773 Mon Sep 17 00:00:00 2001
+From d3b93b3669200f25603b51c128747c9be0ad31d2 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 26 Sep 2023 18:25:54 +1100
 Subject: [PATCH 07/15] add missing linkages for gRPC_BUILD_TESTS=ON
@@ -14,7 +14,7 @@ For some tests, re2 and c-ares have just been forgotten as dependencies.
  1 file changed, 11 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 853ad4a773..69b05fe6b7 100644
+index 2bf0a30..2a086ac 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -3297,6 +3297,7 @@ target_link_libraries(grpc_test_util

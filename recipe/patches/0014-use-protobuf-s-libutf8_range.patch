@@ -1,4 +1,4 @@
-From b48f6c11d3a8689a97d1aa677c922b3ea452d349 Mon Sep 17 00:00:00 2001
+From 78f7e144ce099b66f296f0362bf0b2ce366c0f9a Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sat, 10 Jan 2026 20:43:11 +1100
 Subject: [PATCH 14/15] use protobuf's libutf8_range
@@ -8,7 +8,7 @@ Subject: [PATCH 14/15] use protobuf's libutf8_range
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 0ba1f52b0f..054613d086 100644
+index d26ecd1..0e0bfc9 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -5066,7 +5066,7 @@ target_include_directories(grpc_plugin_support
