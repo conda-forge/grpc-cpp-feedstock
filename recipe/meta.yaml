@@ -240,6 +240,9 @@ outputs:
         - cp ../../../test_grpcio_helloworld.py .
         - python test_grpcio_helloworld.py
         {% endif %}
+        - export GRPC_PYTHON_DISABLE_ABSL_INIT_LOG=1    # [unix]
+        - set GRPC_PYTHON_DISABLE_ABSL_INIT_LOG=1       # [win]
+        - python grpcio_distribtest.py
 
   - name: grpcio-tools
     build:
