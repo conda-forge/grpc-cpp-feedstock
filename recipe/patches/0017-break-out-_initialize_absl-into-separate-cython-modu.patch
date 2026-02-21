@@ -1,4 +1,4 @@
-From 665d96207e490889456122264ea9a2b15b67a299 Mon Sep 17 00:00:00 2001
+From c96192b1dcee785d68cb85fc455b6b898529c079 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sat, 21 Feb 2026 14:29:28 +1100
 Subject: [PATCH 17/17] break out _initialize_absl into separate cython module
@@ -9,10 +9,10 @@ Subject: [PATCH 17/17] break out _initialize_absl into separate cython module
  src/python/grpcio/grpc/_cython/cygrpc.pxd                      | 2 --
  src/python/grpcio/grpc/_cython/cygrpc.pyx                      | 1 -
  .../_cython/{_cygrpc/absl.pxd.pxi => cygrpc_absl_init.pxd}     | 0
- .../_cython/{_cygrpc/absl.pyx.pxi => cygrpc_absl_init.pyx}     | 0
- 6 files changed, 4 insertions(+), 4 deletions(-)
+ .../_cython/{_cygrpc/absl.pyx.pxi => cygrpc_absl_init.pyx}     | 1 +
+ 6 files changed, 5 insertions(+), 4 deletions(-)
  rename src/python/grpcio/grpc/_cython/{_cygrpc/absl.pxd.pxi => cygrpc_absl_init.pxd} (100%)
- rename src/python/grpcio/grpc/_cython/{_cygrpc/absl.pyx.pxi => cygrpc_absl_init.pyx} (100%)
+ rename src/python/grpcio/grpc/_cython/{_cygrpc/absl.pyx.pxi => cygrpc_absl_init.pyx} (98%)
 
 diff --git a/setup.py b/setup.py
 index 33734daf7b..0e0b277608 100644
@@ -71,6 +71,17 @@ similarity index 100%
 rename from src/python/grpcio/grpc/_cython/_cygrpc/absl.pxd.pxi
 rename to src/python/grpcio/grpc/_cython/cygrpc_absl_init.pxd
 diff --git a/src/python/grpcio/grpc/_cython/_cygrpc/absl.pyx.pxi b/src/python/grpcio/grpc/_cython/cygrpc_absl_init.pyx
-similarity index 100%
+similarity index 98%
 rename from src/python/grpcio/grpc/_cython/_cygrpc/absl.pyx.pxi
 rename to src/python/grpcio/grpc/_cython/cygrpc_absl_init.pyx
+index fe60e17c71..1c5c2fbfa8 100644
+--- a/src/python/grpcio/grpc/_cython/_cygrpc/absl.pyx.pxi
++++ b/src/python/grpcio/grpc/_cython/cygrpc_absl_init.pyx
+@@ -12,6 +12,7 @@
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+ 
++import os
+ 
+ cdef bint _disable_absl_init_log = os.environ.get("GRPC_PYTHON_DISABLE_ABSL_INIT_LOG", "") in {"1", "t", "true", "y", "yes"}
+ 
