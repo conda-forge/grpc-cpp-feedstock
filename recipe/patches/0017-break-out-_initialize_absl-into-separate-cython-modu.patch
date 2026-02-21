@@ -1,21 +1,21 @@
-From c96192b1dcee785d68cb85fc455b6b898529c079 Mon Sep 17 00:00:00 2001
+From 866a66a03df015f8745c4479f22bfc8f7230e92f Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sat, 21 Feb 2026 14:29:28 +1100
 Subject: [PATCH 17/17] break out _initialize_absl into separate cython module
 
 ---
- setup.py                                                       | 2 +-
+ setup.py                                                       | 3 ++-
  src/python/grpcio/grpc/__init__.py                             | 3 +++
  src/python/grpcio/grpc/_cython/cygrpc.pxd                      | 2 --
  src/python/grpcio/grpc/_cython/cygrpc.pyx                      | 1 -
  .../_cython/{_cygrpc/absl.pxd.pxi => cygrpc_absl_init.pxd}     | 0
  .../_cython/{_cygrpc/absl.pyx.pxi => cygrpc_absl_init.pyx}     | 1 +
- 6 files changed, 5 insertions(+), 4 deletions(-)
+ 6 files changed, 6 insertions(+), 4 deletions(-)
  rename src/python/grpcio/grpc/_cython/{_cygrpc/absl.pxd.pxi => cygrpc_absl_init.pxd} (100%)
  rename src/python/grpcio/grpc/_cython/{_cygrpc/absl.pyx.pxi => cygrpc_absl_init.pyx} (98%)
 
 diff --git a/setup.py b/setup.py
-index 33734daf7b..0e0b277608 100644
+index 33734daf7b..d2f56f8d56 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -307,7 +307,7 @@ if BUILD_WITH_STATIC_LIBSTDCXX:
@@ -27,6 +27,14 @@ index 33734daf7b..0e0b277608 100644
  
  CYTHON_HELPER_C_FILES = ()
  
+@@ -531,6 +531,7 @@ def cython_extensions_and_necessity():
+                 + core_c_files
+                 + asm_files
+             ),
++            language="c++",
+             include_dirs=list(EXTENSION_INCLUDE_DIRECTORIES),
+             libraries=list(EXTENSION_LIBRARIES),
+             define_macros=list(DEFINE_MACROS),
 diff --git a/src/python/grpcio/grpc/__init__.py b/src/python/grpcio/grpc/__init__.py
 index 0722c3212e..d535d3c371 100644
 --- a/src/python/grpcio/grpc/__init__.py
