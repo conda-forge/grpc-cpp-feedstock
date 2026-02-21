@@ -1,7 +1,7 @@
-From b806c463779e7103384d1829dc34b79ea3cb3369 Mon Sep 17 00:00:00 2001
+From b80ffa34233b75c1a98e264eb4ded638bd068e5e Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Fri, 28 Feb 2025 15:09:41 +1100
-Subject: [PATCH 09/15] unvendor upb and utf8_range, use protobuf's version
+Subject: [PATCH 09/17] unvendor upb and utf8_range, use protobuf's version
 
 ---
  CMakeLists.txt  | 696 ++----------------------------------------------
@@ -9,7 +9,7 @@ Subject: [PATCH 09/15] unvendor upb and utf8_range, use protobuf's version
  2 files changed, 16 insertions(+), 684 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 71bb6e3..d3c51c8 100644
+index 71bb6e3a72..d3c51c8b0b 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -354,11 +354,15 @@ else()
@@ -781,7 +781,7 @@ index 71bb6e3..d3c51c8 100644
 +  "-laddress_sorting"
    "grpcpp_otel_plugin.pc")
 diff --git a/cmake/upb.cmake b/cmake/upb.cmake
-index 9156e5f..e6fa819 100644
+index 9156e5f48f..e6fa81932d 100644
 --- a/cmake/upb.cmake
 +++ b/cmake/upb.cmake
 @@ -12,9 +12,7 @@

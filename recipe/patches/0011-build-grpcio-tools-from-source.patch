@@ -1,14 +1,14 @@
-From 50c51b54898a1db6d3fdc698eefdb9ab9faf45e3 Mon Sep 17 00:00:00 2001
+From 836e8c3049c77b6a71f4c2ee08af7509c95c802b Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 4 Mar 2025 08:53:30 +1100
-Subject: [PATCH 11/15] build grpcio-tools from source
+Subject: [PATCH 11/17] build grpcio-tools from source
 
 ---
  tools/distrib/python/grpcio_tools/setup.py | 47 ++++++++++++++++------
  1 file changed, 35 insertions(+), 12 deletions(-)
 
 diff --git a/tools/distrib/python/grpcio_tools/setup.py b/tools/distrib/python/grpcio_tools/setup.py
-index fb6c416..c761c36 100644
+index fb6c416c96..c761c3670e 100644
 --- a/tools/distrib/python/grpcio_tools/setup.py
 +++ b/tools/distrib/python/grpcio_tools/setup.py
 @@ -15,6 +15,7 @@

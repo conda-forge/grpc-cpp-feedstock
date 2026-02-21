@@ -1,7 +1,7 @@
-From 6ed8cb8897fc17c03e27df28bc0a06b67cf8aba6 Mon Sep 17 00:00:00 2001
+From 8d5ea95126eaddf66c628b7044eb73fa00e41887 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Thu, 29 Feb 2024 20:31:21 +1100
-Subject: [PATCH 06/15] for main targets, set *_DLL_EXPORTS when building and
+Subject: [PATCH 06/17] for main targets, set *_DLL_EXPORTS when building and
  *_DLL_IMPORTS in interface
 
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 06/15] for main targets, set *_DLL_EXPORTS when building and
  1 file changed, 10 insertions(+), 26 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index a4a105a..2bf0a30 100644
+index a4a105af29..2bf0a3077b 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -2103,10 +2103,8 @@ if(WIN32 AND MSVC)
