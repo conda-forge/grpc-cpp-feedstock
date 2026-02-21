@@ -46,10 +46,10 @@ source:
       - patches/0013-update-GRPC_DLL-instances-where-necessary.patch
       - patches/0014-use-protobuf-s-libutf8_range.patch
       - patches/0015-disable-grpc-_unsecure.patch
-      # for https://github.com/grpc/grpc/issues/41672
-      - patches/0016-avoid-circular-import-between-grpc-and-grpc._compres.patch
       # backport https://github.com/grpc/grpc/pull/41705
-      - patches/0017-update-docstrings-referring-to-non-existent-grpc.com.patch
+      - patches/0016-update-docstrings-referring-to-non-existent-grpc.com.patch
+      # for https://github.com/grpc/grpc/issues/41672
+      - patches/0017-break-out-_initialize_absl-into-separate-cython-modu.patch
 
   {% if build_platform == target_platform and not win %}
   - folder: third_party/benchmark
