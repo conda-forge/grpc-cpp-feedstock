@@ -49,8 +49,7 @@ source:
       # backport https://github.com/grpc/grpc/pull/41705
       - patches/0016-update-docstrings-referring-to-non-existent-grpc.com.patch
       # for https://github.com/grpc/grpc/issues/41672
-      - patches/0017-break-out-_initialize_absl-into-separate-cython-modu.patch
-      - patches/0018-avoid-multiple-calls-to-grpc_init-in-grpcio.patch
+      - patches/0017-break-out-init-for-grpc-abseil-logging-into-separate.patch
 
   {% if build_platform == target_platform and not win %}
   - folder: third_party/benchmark
