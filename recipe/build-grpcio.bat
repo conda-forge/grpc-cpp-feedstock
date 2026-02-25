@@ -1,4 +1,4 @@
-if "%ARCH%" == "32" (set PLATFORM=x86) else (set PLATFORM=x64)
+@echo on
 
 set "GRPC_BUILD_WITH_BORING_SSL_ASM="
 set "GRPC_PYTHON_BUILD_SYSTEM_ABSL=True"

@@ -1,0 +1,122 @@
+From ffbb901ece5e2117ceb4a4193c5eb4728b654050 Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Sat, 21 Feb 2026 14:29:28 +1100
+Subject: [PATCH 17/17] break out init for grpc & abseil logging into separate
+ cython module
+
+---
+ setup.py                                               |  3 ++-
+ src/python/grpcio/grpc/__init__.py                     |  3 +++
+ src/python/grpcio/grpc/_cython/cygrpc.pxd              |  2 --
+ src/python/grpcio/grpc/_cython/cygrpc.pyx              |  1 -
+ .../{_cygrpc/absl.pxd.pxi => cygrpc_static_init.pxd}   |  3 +++
+ .../{_cygrpc/absl.pyx.pxi => cygrpc_static_init.pyx}   | 10 ++++++++++
+ 6 files changed, 18 insertions(+), 4 deletions(-)
+ rename src/python/grpcio/grpc/_cython/{_cygrpc/absl.pxd.pxi => cygrpc_static_init.pxd} (92%)
+ rename src/python/grpcio/grpc/_cython/{_cygrpc/absl.pyx.pxi => cygrpc_static_init.pyx} (76%)
+
+diff --git a/setup.py b/setup.py
+index 33734daf7b..a8c58eae93 100644
+--- a/setup.py
++++ b/setup.py
+@@ -307,7 +307,7 @@ if BUILD_WITH_STATIC_LIBSTDCXX:
+ 
+ CYTHON_EXTENSION_PACKAGE_NAMES = ()
+ 
+-CYTHON_EXTENSION_MODULE_NAMES = ("grpc._cython.cygrpc",)
++CYTHON_EXTENSION_MODULE_NAMES = ("grpc._cython.cygrpc", "grpc._cython.cygrpc_static_init")
+ 
+ CYTHON_HELPER_C_FILES = ()
+ 
+@@ -531,6 +531,7 @@ def cython_extensions_and_necessity():
+                 + core_c_files
+                 + asm_files
+             ),
++            language="c++",
+             include_dirs=list(EXTENSION_INCLUDE_DIRECTORIES),
+             libraries=list(EXTENSION_LIBRARIES),
+             define_macros=list(DEFINE_MACROS),
+diff --git a/src/python/grpcio/grpc/__init__.py b/src/python/grpcio/grpc/__init__.py
+index 0722c3212e..72b5fbe739 100644
+--- a/src/python/grpcio/grpc/__init__.py
++++ b/src/python/grpcio/grpc/__init__.py
+@@ -19,6 +19,9 @@ import enum
+ import logging
+ import sys
+ 
++# ensure _initialize_absl() and grpc_init() gets called before anything else, c.f. #38703, #41672
++import grpc._cython.cygrpc_static_init
++
+ from grpc import _compression
+ from grpc._cython import cygrpc as _cygrpc
+ from grpc._runtime_protos import protos
+diff --git a/src/python/grpcio/grpc/_cython/cygrpc.pxd b/src/python/grpcio/grpc/_cython/cygrpc.pxd
+index c894dedd8e..ed04119143 100644
+--- a/src/python/grpcio/grpc/_cython/cygrpc.pxd
++++ b/src/python/grpcio/grpc/_cython/cygrpc.pxd
+@@ -17,8 +17,6 @@ cimport cpython
+ 
+ include "_cygrpc/grpc.pxi"
+ 
+-include "_cygrpc/absl.pxd.pxi"
+-
+ include "_cygrpc/arguments.pxd.pxi"
+ include "_cygrpc/call.pxd.pxi"
+ include "_cygrpc/channel.pxd.pxi"
+diff --git a/src/python/grpcio/grpc/_cython/cygrpc.pyx b/src/python/grpcio/grpc/_cython/cygrpc.pyx
+index 64e7c12b9a..cb0113e574 100644
+--- a/src/python/grpcio/grpc/_cython/cygrpc.pyx
++++ b/src/python/grpcio/grpc/_cython/cygrpc.pyx
+@@ -37,7 +37,6 @@ _LOGGER = logging.getLogger(__name__)
+ # TODO(atash): figure out why the coverage tool gets confused about the Cython
+ # coverage plugin when the following files don't have a '.pxi' suffix.
+ include "_cygrpc/grpc_string.pyx.pxi"
+-include "_cygrpc/absl.pyx.pxi"
+ include "_cygrpc/arguments.pyx.pxi"
+ include "_cygrpc/call.pyx.pxi"
+ include "_cygrpc/channel.pyx.pxi"
+diff --git a/src/python/grpcio/grpc/_cython/_cygrpc/absl.pxd.pxi b/src/python/grpcio/grpc/_cython/cygrpc_static_init.pxd
+similarity index 92%
+rename from src/python/grpcio/grpc/_cython/_cygrpc/absl.pxd.pxi
+rename to src/python/grpcio/grpc/_cython/cygrpc_static_init.pxd
+index 867d27df22..4e0c7f77f5 100644
+--- a/src/python/grpcio/grpc/_cython/_cygrpc/absl.pxd.pxi
++++ b/src/python/grpcio/grpc/_cython/cygrpc_static_init.pxd
+@@ -16,3 +16,6 @@
+ 
+ cdef extern from "absl/log/initialize.h" namespace "absl":
+   void InitializeLog() nogil
++
++cdef extern from "grpc/grpc.h":
++  void grpc_init() nogil
+diff --git a/src/python/grpcio/grpc/_cython/_cygrpc/absl.pyx.pxi b/src/python/grpcio/grpc/_cython/cygrpc_static_init.pyx
+similarity index 76%
+rename from src/python/grpcio/grpc/_cython/_cygrpc/absl.pyx.pxi
+rename to src/python/grpcio/grpc/_cython/cygrpc_static_init.pyx
+index fe60e17c71..dd7e033bf5 100644
+--- a/src/python/grpcio/grpc/_cython/_cygrpc/absl.pyx.pxi
++++ b/src/python/grpcio/grpc/_cython/cygrpc_static_init.pyx
+@@ -12,8 +12,10 @@
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+ 
++import os
+ 
+ cdef bint _disable_absl_init_log = os.environ.get("GRPC_PYTHON_DISABLE_ABSL_INIT_LOG", "") in {"1", "t", "true", "y", "yes"}
++cdef bint _disable_eager_grpc_init = os.environ.get("GRPC_PYTHON_DISABLE_EAGER_GRPC_INIT", "") in {"1", "t", "true", "y", "yes"}
+ 
+ #
+ # initialize absl
+@@ -22,4 +24,12 @@ cdef _initialize_absl():
+   if not _disable_absl_init_log:
+     InitializeLog()
+ 
++#
++# initialize grpc
++#
++cdef _initialize_grpc():
++  if not _disable_eager_grpc_init:
++    grpc_init()
++
+ _initialize_absl()
++_initialize_grpc()

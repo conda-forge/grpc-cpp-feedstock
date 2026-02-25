@@ -1,4 +1,4 @@
-{% set version = "1.78.0" %}
+{% set version = "1.78.1" %}
 
 # core package & vendored libs use different version scheme than CPP libs, see
 # top of https://github.com/grpc/grpc/blob/v{{ version }}/CMakeLists.txt
@@ -19,7 +19,7 @@ package:
 
 source:
   - url: https://github.com/grpc/grpc/archive/v{{ version.replace(".pre", "-pre") }}.tar.gz
-    sha256: e2ace790a5f2d0f83259d1390a816a33b013ea34df2e86084d927e58daa4c5d9
+    sha256: 961a44a2a5a50670e58f5e887c17fe70529253da23802245326d681f6d8d1ba6
     patches:
       - patches/0001-windows-ssl-lib-names.patch
       - patches/0002-fix-win-setup-cmds.patch
@@ -46,6 +46,10 @@ source:
       - patches/0013-update-GRPC_DLL-instances-where-necessary.patch
       - patches/0014-use-protobuf-s-libutf8_range.patch
       - patches/0015-disable-grpc-_unsecure.patch
+      # backport https://github.com/grpc/grpc/pull/41705
+      - patches/0016-update-docstrings-referring-to-non-existent-grpc.com.patch
+      # for https://github.com/grpc/grpc/issues/41672
+      - patches/0017-break-out-init-for-grpc-abseil-logging-into-separate.patch
 
   {% if build_platform == target_platform and not win %}
   - folder: third_party/benchmark
@@ -74,7 +78,7 @@ source:
   {% endif %}
 
 build:
-  number: 1
+  number: 0
 
 outputs:
   - name: libgrpc
@@ -240,6 +244,10 @@ outputs:
         - cp ../../../test_grpcio_helloworld.py .
         - python test_grpcio_helloworld.py
         {% endif %}
+        - export GRPC_PYTHON_DISABLE_ABSL_INIT_LOG=1    # [unix]
+        - set GRPC_PYTHON_DISABLE_ABSL_INIT_LOG=1       # [win]
+        - python "${SRC_DIR}/grpcio_distribtest.py"     # [unix]
+        - python %SRC_DIR%\grpcio_distribtest.py        # [win]
 
   - name: grpcio-tools
     build:
@@ -247,7 +255,7 @@ outputs:
         - cd tools/distrib/python/grpcio_tools
         - export GRPC_PYTHON_BUILD_WITH_CYTHON=true  # [unix]
         - set GRPC_PYTHON_BUILD_WITH_CYTHON=true     # [win]
-        - python -m pip install . -vv
+        - python -m pip install . --no-build-isolation -vv
     requirements:
       build:
         - python                                 # [build_platform != target_platform]
