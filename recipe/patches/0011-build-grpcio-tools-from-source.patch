@@ -1,7 +1,7 @@
-From d1782ceff8a790f5fd6e6cdb1df2175b2302d359 Mon Sep 17 00:00:00 2001
+From 836e8c3049c77b6a71f4c2ee08af7509c95c802b Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 4 Mar 2025 08:53:30 +1100
-Subject: [PATCH 11/15] build grpcio-tools from source
+Subject: [PATCH 11/17] build grpcio-tools from source
 
 ---
  tools/distrib/python/grpcio_tools/setup.py | 47 ++++++++++++++++------
