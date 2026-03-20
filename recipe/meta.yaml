@@ -1,4 +1,4 @@
-{% set version = "1.78.1" %}
+{% set version = "1.80.0.pre1" %}
 
 # core package & vendored libs use different version scheme than CPP libs, see
 # top of https://github.com/grpc/grpc/blob/v{{ version }}/CMakeLists.txt
@@ -19,7 +19,7 @@ package:
 
 source:
   - url: https://github.com/grpc/grpc/archive/v{{ version.replace(".pre", "-pre") }}.tar.gz
-    sha256: 961a44a2a5a50670e58f5e887c17fe70529253da23802245326d681f6d8d1ba6
+    sha256: 471d50a6d80cb9d3b4949d1b5d9ed1960c7b811dde493e8fadb90048c74ec724
     patches:
       - patches/0001-windows-ssl-lib-names.patch
       - patches/0002-fix-win-setup-cmds.patch
@@ -58,11 +58,11 @@ source:
 
   - folder: third_party/envoy-api
     git_url: https://github.com/envoyproxy/data-plane-api.git
-    git_rev: 4de3c74cf21a9958c1cf26d8993c55c6e0d28b49
+    git_rev: 6ef568cf4a67362849911d1d2a546fd9f35db2ff
 
   - folder: third_party/googleapis
     git_url: https://github.com/googleapis/googleapis.git
-    git_rev: fe8ba054ad4f7eca946c2d14a63c3f07c0b586a0
+    git_rev: 2193a2bfcecb92b92aad7a4d81baa428cafd7dfd
 
   - folder: third_party/googletest
     git_url: https://github.com/google/googletest.git
@@ -74,7 +74,7 @@ source:
 
   - folder: third_party/xds
     git_url: https://github.com/cncf/xds.git
-    git_rev: 3a472e524827f72d1ad621c4983dd5af54c46776
+    git_rev: ee656c7534f5d7dc23d44dd611689568f72017a6
   {% endif %}
 
 build:
