@@ -1,0 +1,156 @@
+From c42df9f895d93d60297531b35b3d306f542e9c4b Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Fri, 20 Mar 2026 16:40:03 +1100
+Subject: [PATCH 17/17] fix double metric registration across shared libraries
+ (libgrpc/libgrpc++)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+ResourceQuotaDomain's 5 metrics were defined as `static inline` data
+members in telemetry.h. Each DSO that transitively includes this header
+(via memory_quota.h) gets its own copy of the initializers, causing
+duplicate registration in InstrumentIndex when both libgrpc.so and
+libgrpc++.so are loaded — even though libgrpc++ never uses the metrics.
+
+Convert to function-local statics (Meyers singletons), which are only
+initialized on first call. Since libgrpc++ never calls these methods,
+no registration occurs there.
+
+Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+---
+ .../chttp2/transport/chttp2_transport.cc      |  4 +-
+ .../ext/transport/chttp2/transport/parsing.cc |  2 +-
+ src/core/lib/resource_quota/memory_quota.cc   |  4 +-
+ src/core/lib/resource_quota/telemetry.h       | 67 ++++++++++++-------
+ 4 files changed, 49 insertions(+), 28 deletions(-)
+
+diff --git a/src/core/ext/transport/chttp2/transport/chttp2_transport.cc b/src/core/ext/transport/chttp2/transport/chttp2_transport.cc
+index cdfe96fabb..347713d610 100644
+--- a/src/core/ext/transport/chttp2/transport/chttp2_transport.cc
++++ b/src/core/ext/transport/chttp2/transport/chttp2_transport.cc
+@@ -3378,7 +3378,7 @@ static void benign_reclaimer_locked(
+     // Channel with no active streams: send a goaway to try and make it
+     // disconnect cleanly
+     t->resource_quota_telemetry_storage->Increment(
+-        grpc_core::ResourceQuotaDomain::kConnectionsDropped);
++        grpc_core::ResourceQuotaDomain::kConnectionsDropped());
+     GRPC_TRACE_LOG(resource_quota, INFO)
+         << "HTTP2: " << t->peer_string.as_string_view()
+         << " - send goaway to free memory";
+@@ -3410,7 +3410,7 @@ static void destructive_reclaimer_locked(
+         << "HTTP2: " << t->peer_string.as_string_view()
+         << " - abandon stream id " << s->id;
+     t->resource_quota_telemetry_storage->Increment(
+-        grpc_core::ResourceQuotaDomain::kCallsDropped);
++        grpc_core::ResourceQuotaDomain::kCallsDropped());
+     grpc_chttp2_cancel_stream(
+         t.get(), s,
+         grpc_error_set_int(
+diff --git a/src/core/ext/transport/chttp2/transport/parsing.cc b/src/core/ext/transport/chttp2/transport/parsing.cc
+index 279be89a1b..75502ee507 100644
+--- a/src/core/ext/transport/chttp2/transport/parsing.cc
++++ b/src/core/ext/transport/chttp2/transport/parsing.cc
+@@ -676,7 +676,7 @@ static grpc_error_handle init_header_frame_parser(grpc_chttp2_transport* t,
+       // We have more streams allocated than we'd like, so apply some pushback
+       // by refusing this stream.
+       t->memory_owner.telemetry_storage()->Increment(
+-          grpc_core::ResourceQuotaDomain::kCallsRejected);
++          grpc_core::ResourceQuotaDomain::kCallsRejected());
+       ++t->num_pending_induced_frames;
+       grpc_slice_buffer_add(
+           &t->qbuf, grpc_chttp2_rst_stream_create(
+diff --git a/src/core/lib/resource_quota/memory_quota.cc b/src/core/lib/resource_quota/memory_quota.cc
+index 4f4413184c..909778bd7f 100644
+--- a/src/core/lib/resource_quota/memory_quota.cc
++++ b/src/core/lib/resource_quota/memory_quota.cc
+@@ -714,9 +714,9 @@ BasicMemoryQuota::PressureInfo BasicMemoryQuota::GetPressureInfo() {
+ 
+ void BasicMemoryQuota::PopulateGaugeData(GaugeSink<ResourceQuotaDomain>& sink) {
+   auto pressure_info = GetPressureInfo();
+-  sink.Set(ResourceQuotaDomain::kInstantaneousMemoryPressure,
++  sink.Set(ResourceQuotaDomain::kInstantaneousMemoryPressure(),
+            pressure_info.instantaneous_pressure);
+-  sink.Set(ResourceQuotaDomain::kMemoryPressureControlValue,
++  sink.Set(ResourceQuotaDomain::kMemoryPressureControlValue(),
+            pressure_info.pressure_control_value);
+ }
+ 
+diff --git a/src/core/lib/resource_quota/telemetry.h b/src/core/lib/resource_quota/telemetry.h
+index 87e842227c..4367adafe0 100644
+--- a/src/core/lib/resource_quota/telemetry.h
++++ b/src/core/lib/resource_quota/telemetry.h
+@@ -25,29 +25,50 @@ class ResourceQuotaDomain final : public InstrumentDomain<ResourceQuotaDomain> {
+   static constexpr absl::string_view kName = "resource_quota";
+   static constexpr auto kLabels = Labels("grpc.resource_quota");
+ 
+-  static inline const auto kCallsDropped = RegisterCounter(
+-      "grpc.resource_quota.calls_dropped",
+-      "EXPERIMENTAL.  Number of calls dropped due to resource quota "
+-      "exceeded",
+-      "calls");
+-  static inline const auto kCallsRejected = RegisterCounter(
+-      "grpc.resource_quota.calls_rejected",
+-      "EXPERIMENTAL.  Number of calls rejected due to resource quota "
+-      "exceeded",
+-      "calls");
+-  static inline const auto kConnectionsDropped = RegisterCounter(
+-      "grpc.resource_quota.connections_dropped",
+-      "EXPERIMENTAL.  Number of connections dropped due to resource quota "
+-      "exceeded",
+-      "connections");
+-  static inline const auto kInstantaneousMemoryPressure = RegisterDoubleGauge(
+-      "grpc.resource_quota.instantaneous_memory_pressure",
+-      "The current instantaneously measured memory pressure.", "ratio");
+-  static inline const auto kMemoryPressureControlValue = RegisterDoubleGauge(
+-      "grpc.resource_quota.memory_pressure_control_value",
+-      "A control value that can be used to scale buffer sizes up or down to "
+-      "adjust memory pressure to our target set point.",
+-      "ratio");
++  // Use function-local statics (Meyers singletons) instead of static inline
++  // data members to ensure lazy initialization on first use.  This avoids
++  // duplicate metric registration when the header is transitively included by
++  // translation units compiled into different shared libraries (e.g. libgrpc
++  // and libgrpc++), where each DSO's .init_array would otherwise run its own
++  // copy of the static inline initializers.
++  static const auto& kCallsDropped() {
++    static const auto handle = RegisterCounter(
++        "grpc.resource_quota.calls_dropped",
++        "EXPERIMENTAL.  Number of calls dropped due to resource quota "
++        "exceeded",
++        "calls");
++    return handle;
++  }
++  static const auto& kCallsRejected() {
++    static const auto handle = RegisterCounter(
++        "grpc.resource_quota.calls_rejected",
++        "EXPERIMENTAL.  Number of calls rejected due to resource quota "
++        "exceeded",
++        "calls");
++    return handle;
++  }
++  static const auto& kConnectionsDropped() {
++    static const auto handle = RegisterCounter(
++        "grpc.resource_quota.connections_dropped",
++        "EXPERIMENTAL.  Number of connections dropped due to resource quota "
++        "exceeded",
++        "connections");
++    return handle;
++  }
++  static const auto& kInstantaneousMemoryPressure() {
++    static const auto handle = RegisterDoubleGauge(
++        "grpc.resource_quota.instantaneous_memory_pressure",
++        "The current instantaneously measured memory pressure.", "ratio");
++    return handle;
++  }
++  static const auto& kMemoryPressureControlValue() {
++    static const auto handle = RegisterDoubleGauge(
++        "grpc.resource_quota.memory_pressure_control_value",
++        "A control value that can be used to scale buffer sizes up or down to "
++        "adjust memory pressure to our target set point.",
++        "ratio");
++    return handle;
++  }
+ };
+ 
+ }  // namespace grpc_core
