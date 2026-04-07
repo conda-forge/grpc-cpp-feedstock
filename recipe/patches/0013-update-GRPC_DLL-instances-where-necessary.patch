@@ -1,38 +1,37 @@
-From f34834cb20620478f75f18321c6308ff465134db Mon Sep 17 00:00:00 2001
+From f2ebeb0672b8185fc0bd99f97bb1fc027f4f69b4 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 2 Mar 2025 07:16:19 +1100
 Subject: [PATCH 13/17] update GRPC_DLL instances where necessary
 
 ---
- include/grpc/event_engine/event_engine.h                  | 2 +-
- src/core/config/core_configuration.h                      | 2 +-
- src/core/credentials/call/json_util.h                     | 2 +-
- .../transport/tls/grpc_tls_certificate_provider.h         | 2 +-
- src/core/credentials/transport/tls/spiffe_utils.h         | 4 ++--
- src/core/ext/transport/chttp2/server/chttp2_server.h      | 2 +-
- src/core/ext/transport/inproc/inproc_transport.h          | 2 +-
- src/core/lib/channel/channel_args.h                       | 4 ++--
- src/core/lib/debug/trace_flags.h                          | 2 +-
- src/core/lib/experiments/config.h                         | 4 ++--
- src/core/lib/iomgr/iomgr.h                                | 2 +-
- src/core/lib/iomgr/socket_mutator.h                       | 2 +-
- src/core/lib/promise/activity.h                           | 2 +-
- src/core/lib/resource_quota/thread_quota.h                | 2 +-
- src/core/lib/surface/call.h                               | 4 ++--
- src/core/lib/surface/completion_queue.h                   | 8 ++++----
- src/core/transport/auth_context.h                         | 2 +-
- src/core/tsi/ssl_transport_security.h                     | 2 +-
- src/core/util/json/json_reader.cc                         | 2 +-
- src/core/util/json/json_reader.h                          | 2 +-
- src/core/util/load_file.h                                 | 2 +-
- src/core/util/time.h                                      | 4 ++--
- 22 files changed, 30 insertions(+), 30 deletions(-)
+ include/grpc/event_engine/event_engine.h             | 2 +-
+ src/core/config/core_configuration.h                 | 2 +-
+ src/core/credentials/call/json_util.h                | 2 +-
+ src/core/credentials/transport/tls/spiffe_utils.h    | 4 ++--
+ src/core/ext/transport/chttp2/server/chttp2_server.h | 2 +-
+ src/core/ext/transport/inproc/inproc_transport.h     | 2 +-
+ src/core/lib/channel/channel_args.h                  | 4 ++--
+ src/core/lib/debug/trace_flags.h                     | 2 +-
+ src/core/lib/experiments/config.h                    | 4 ++--
+ src/core/lib/iomgr/iomgr.h                           | 2 +-
+ src/core/lib/iomgr/socket_mutator.h                  | 2 +-
+ src/core/lib/promise/activity.h                      | 2 +-
+ src/core/lib/resource_quota/thread_quota.h           | 2 +-
+ src/core/lib/surface/call.h                          | 4 ++--
+ src/core/lib/surface/completion_queue.h              | 8 ++++----
+ src/core/transport/auth_context.h                    | 2 +-
+ src/core/tsi/ssl_transport_security.h                | 2 +-
+ src/core/util/json/json_reader.cc                    | 2 +-
+ src/core/util/json/json_reader.h                     | 2 +-
+ src/core/util/load_file.h                            | 2 +-
+ src/core/util/time.h                                 | 4 ++--
+ 21 files changed, 29 insertions(+), 29 deletions(-)
 
 diff --git a/include/grpc/event_engine/event_engine.h b/include/grpc/event_engine/event_engine.h
-index d2c91ca596..1abaa7ac6f 100644
+index 47bdc8f7d7..db7442832c 100644
 --- a/include/grpc/event_engine/event_engine.h
 +++ b/include/grpc/event_engine/event_engine.h
-@@ -147,7 +147,7 @@ class EventEngine : public std::enable_shared_from_this<EventEngine>,
+@@ -148,7 +148,7 @@ class EventEngine : public std::enable_shared_from_this<EventEngine>,
    /// Returned by \a Connect, and can be passed to \a CancelConnect.
    struct ConnectionHandle {
      intptr_t keys[2];
@@ -67,19 +66,6 @@ index da7ff0a771..d1f6a52fdf 100644
                                            const char* prop_name,
                                            grpc_error_handle* error);
  
-diff --git a/src/core/credentials/transport/tls/grpc_tls_certificate_provider.h b/src/core/credentials/transport/tls/grpc_tls_certificate_provider.h
-index d46f61853e..60fc8ed3b2 100644
---- a/src/core/credentials/transport/tls/grpc_tls_certificate_provider.h
-+++ b/src/core/credentials/transport/tls/grpc_tls_certificate_provider.h
-@@ -107,7 +107,7 @@ class StaticDataCertificateProvider final
- 
-   UniqueTypeName type() const override;
- 
--  absl::Status ValidateCredentials() const;
-+  GRPC_DLL absl::Status ValidateCredentials() const;
- 
-  private:
-   struct WatcherInfo {
 diff --git a/src/core/credentials/transport/tls/spiffe_utils.h b/src/core/credentials/transport/tls/spiffe_utils.h
 index 9bf4b6dd59..f4cdb63489 100644
 --- a/src/core/credentials/transport/tls/spiffe_utils.h
@@ -129,7 +115,7 @@ index 05030d6e40..b1a9fe8e9a 100644
                                           void* reserved);
  
 diff --git a/src/core/lib/channel/channel_args.h b/src/core/lib/channel/channel_args.h
-index 24ee039ded..cc4404516d 100644
+index cfbc1b1b90..8bfc2c1e21 100644
 --- a/src/core/lib/channel/channel_args.h
 +++ b/src/core/lib/channel/channel_args.h
 @@ -413,8 +413,8 @@ class ChannelArgs {
@@ -144,7 +130,7 @@ index 24ee039ded..cc4404516d 100644
    ChannelArgs& operator=(const ChannelArgs&);
    ChannelArgs(ChannelArgs&&) noexcept;
 diff --git a/src/core/lib/debug/trace_flags.h b/src/core/lib/debug/trace_flags.h
-index b6a39f3dde..599f6047bc 100644
+index 362f44ab25..a2be3f6080 100644
 --- a/src/core/lib/debug/trace_flags.h
 +++ b/src/core/lib/debug/trace_flags.h
 @@ -50,7 +50,7 @@ extern DebugOnlyTraceFlag work_serializer_trace;
@@ -289,22 +275,23 @@ index 33c6dc6057..22a61a1a99 100644
  #define GRPC_AUTH_CONTEXT_ARG "grpc.auth_context"
  
 diff --git a/src/core/tsi/ssl_transport_security.h b/src/core/tsi/ssl_transport_security.h
-index 8379e49296..73d512b27f 100644
+index 18068db93c..205d7ac7aa 100644
 --- a/src/core/tsi/ssl_transport_security.h
 +++ b/src/core/tsi/ssl_transport_security.h
-@@ -448,6 +448,6 @@ tsi_result tsi_ssl_extract_x509_subject_names_from_pem_cert(
- tsi_result tsi_ssl_get_cert_chain_contents(STACK_OF(X509) * peer_chain,
+@@ -453,7 +453,7 @@ tsi_result tsi_ssl_get_cert_chain_contents(STACK_OF(X509) * peer_chain,
                                             tsi_peer_property* property);
  
+ namespace tsi {
 -bool IsRootCertInfoEmpty(const RootCertInfo* root_cert_info);
 +GRPC_DLL bool IsRootCertInfoEmpty(const RootCertInfo* root_cert_info);
+ }  // namespace tsi
  
  #endif  // GRPC_SRC_CORE_TSI_SSL_TRANSPORT_SECURITY_H
 diff --git a/src/core/util/json/json_reader.cc b/src/core/util/json/json_reader.cc
-index f1458ff14a..63d2f91d04 100644
+index d422cbb26a..795e355b57 100644
 --- a/src/core/util/json/json_reader.cc
 +++ b/src/core/util/json/json_reader.cc
-@@ -946,7 +946,7 @@ absl::StatusOr<Json> JsonReader::Parse(absl::string_view input) {
+@@ -942,7 +942,7 @@ absl::StatusOr<Json> JsonReader::Parse(absl::string_view input) {
  
  }  // namespace
  

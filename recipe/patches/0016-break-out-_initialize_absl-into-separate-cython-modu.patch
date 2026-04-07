@@ -1,4 +1,4 @@
-From f41746c6d178df51f0d5f7e363eeb485529959bd Mon Sep 17 00:00:00 2001
+From 422f418559090eb91ff1609b2a7547ff9fee8b9a Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sat, 21 Feb 2026 14:29:28 +1100
 Subject: [PATCH 16/17] break out _initialize_absl into separate cython module
@@ -15,7 +15,7 @@ Subject: [PATCH 16/17] break out _initialize_absl into separate cython module
  rename src/python/grpcio/grpc/_cython/{_cygrpc/absl.pyx.pxi => cygrpc_absl_init.pyx} (98%)
 
 diff --git a/setup.py b/setup.py
-index 33734daf7b..d2f56f8d56 100644
+index 1ea1d60c71..3d59bfc61b 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -307,7 +307,7 @@ if BUILD_WITH_STATIC_LIBSTDCXX:
@@ -25,9 +25,9 @@ index 33734daf7b..d2f56f8d56 100644
 -CYTHON_EXTENSION_MODULE_NAMES = ("grpc._cython.cygrpc",)
 +CYTHON_EXTENSION_MODULE_NAMES = ("grpc._cython.cygrpc", "grpc._cython.cygrpc_absl_init")
  
- CYTHON_HELPER_C_FILES = ()
+ GRPCIO_CC_SRCS = ()
  
-@@ -531,6 +531,7 @@ def cython_extensions_and_necessity():
+@@ -533,6 +533,7 @@ def cython_extensions_and_necessity():
                  + core_c_files
                  + asm_files
              ),
@@ -36,7 +36,7 @@ index 33734daf7b..d2f56f8d56 100644
              libraries=list(EXTENSION_LIBRARIES),
              define_macros=list(DEFINE_MACROS),
 diff --git a/src/python/grpcio/grpc/__init__.py b/src/python/grpcio/grpc/__init__.py
-index d728bb886c..3430ef1c7f 100644
+index 0722c3212e..aad6d94826 100644
 --- a/src/python/grpcio/grpc/__init__.py
 +++ b/src/python/grpcio/grpc/__init__.py
 @@ -19,6 +19,9 @@ import enum
@@ -50,7 +50,7 @@ index d728bb886c..3430ef1c7f 100644
  from grpc._cython import cygrpc as _cygrpc
  from grpc._runtime_protos import protos
 diff --git a/src/python/grpcio/grpc/_cython/cygrpc.pxd b/src/python/grpcio/grpc/_cython/cygrpc.pxd
-index c894dedd8e..ed04119143 100644
+index 2cf29d0816..38d5500ae4 100644
 --- a/src/python/grpcio/grpc/_cython/cygrpc.pxd
 +++ b/src/python/grpcio/grpc/_cython/cygrpc.pxd
 @@ -17,8 +17,6 @@ cimport cpython
@@ -63,7 +63,7 @@ index c894dedd8e..ed04119143 100644
  include "_cygrpc/call.pxd.pxi"
  include "_cygrpc/channel.pxd.pxi"
 diff --git a/src/python/grpcio/grpc/_cython/cygrpc.pyx b/src/python/grpcio/grpc/_cython/cygrpc.pyx
-index 64e7c12b9a..cb0113e574 100644
+index b3acae4aa3..79cd0f878d 100644
 --- a/src/python/grpcio/grpc/_cython/cygrpc.pyx
 +++ b/src/python/grpcio/grpc/_cython/cygrpc.pyx
 @@ -37,7 +37,6 @@ _LOGGER = logging.getLogger(__name__)
@@ -82,7 +82,7 @@ diff --git a/src/python/grpcio/grpc/_cython/_cygrpc/absl.pyx.pxi b/src/python/gr
 similarity index 98%
 rename from src/python/grpcio/grpc/_cython/_cygrpc/absl.pyx.pxi
 rename to src/python/grpcio/grpc/_cython/cygrpc_absl_init.pyx
-index fe60e17c71..1c5c2fbfa8 100644
+index f38a8f5b57..859bd062f1 100644
 --- a/src/python/grpcio/grpc/_cython/_cygrpc/absl.pyx.pxi
 +++ b/src/python/grpcio/grpc/_cython/cygrpc_absl_init.pyx
 @@ -12,6 +12,7 @@
