@@ -9,10 +9,10 @@ Subject: [PATCH 06/17] for main targets, set *_DLL_EXPORTS when building and
  1 file changed, 10 insertions(+), 26 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 8980faabe5..7404369196 100644
+index cd53f12..9c800b1 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -2097,10 +2097,8 @@ if(WIN32 AND MSVC)
+@@ -2118,10 +2118,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)
@@ -25,7 +25,7 @@ index 8980faabe5..7404369196 100644
    endif()
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/gpr.pdb
-@@ -3116,11 +3114,8 @@ if(WIN32 AND MSVC)
+@@ -3146,11 +3144,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)
@@ -39,7 +39,7 @@ index 8980faabe5..7404369196 100644
    endif()
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc.pdb
-@@ -3860,11 +3855,8 @@ if(WIN32 AND MSVC)
+@@ -3892,11 +3887,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)
@@ -53,7 +53,7 @@ index 8980faabe5..7404369196 100644
    endif()
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc_unsecure.pdb
-@@ -4881,12 +4873,8 @@ if(WIN32 AND MSVC)
+@@ -5007,12 +4999,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)
@@ -68,7 +68,7 @@ index 8980faabe5..7404369196 100644
    endif()
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc++.pdb
-@@ -5623,12 +5611,8 @@ if(WIN32 AND MSVC)
+@@ -5755,12 +5743,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)

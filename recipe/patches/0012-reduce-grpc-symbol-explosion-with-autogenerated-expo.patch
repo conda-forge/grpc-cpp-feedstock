@@ -38,10 +38,10 @@ other consumers end up linking to them.
  1 file changed, 48 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 5641fd7c1f..95257bfcc2 100644
+index fad7fd4..1d80a76 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -2429,6 +2429,30 @@ add_library(grpc
+@@ -2452,6 +2452,30 @@ add_library(grpc
    src/core/xds/xds_client/xds_client.cc
  )
  
@@ -72,7 +72,7 @@ index 5641fd7c1f..95257bfcc2 100644
  target_compile_features(grpc PUBLIC cxx_std_17)
  
  set_target_properties(grpc PROPERTIES
-@@ -3170,6 +3194,30 @@ add_library(grpc_unsecure
+@@ -3195,6 +3219,30 @@ add_library(grpc_unsecure
    ${gRPC_ADDITIONAL_DLL_SRC}
  )
  
