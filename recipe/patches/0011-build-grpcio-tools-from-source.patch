@@ -9,7 +9,7 @@ Subject: [PATCH 11/17] build grpcio-tools from source
  2 files changed, 51 insertions(+), 28 deletions(-)
 
 diff --git a/tools/distrib/python/grpcio_tools/protoc_lib_deps.py b/tools/distrib/python/grpcio_tools/protoc_lib_deps.py
-index dde29ffc1a..d0487ecd43 100644
+index 21245be..8aeb7eb 100644
 --- a/tools/distrib/python/grpcio_tools/protoc_lib_deps.py
 +++ b/tools/distrib/python/grpcio_tools/protoc_lib_deps.py
 @@ -383,21 +383,21 @@ CC_FILES=[
@@ -49,8 +49,53 @@ index dde29ffc1a..d0487ecd43 100644
  ]
  
  CC_INCLUDES=[
+diff --git a/tools/distrib/python/grpcio_tools/protoc_lib_deps.py.rej b/tools/distrib/python/grpcio_tools/protoc_lib_deps.py.rej
+new file mode 100644
+index 0000000..e2a9c30
+--- /dev/null
++++ b/tools/distrib/python/grpcio_tools/protoc_lib_deps.py.rej
+@@ -0,0 +1,39 @@
++--- tools/distrib/python/grpcio_tools/protoc_lib_deps.py
+++++ tools/distrib/python/grpcio_tools/protoc_lib_deps.py
++@@ -383,21 +383,21 @@ CC_FILES=[
++ ]
++ 
++ PROTO_FILES=[
++-    'go/google/protobuf/go_features.proto',
++-    'java/core/src/main/resources/google/protobuf/java_features.proto',
++-    'src/google/protobuf/any.proto',
++-    'src/google/protobuf/api.proto',
++-    'src/google/protobuf/compiler/plugin.proto',
++-    'src/google/protobuf/cpp_features.proto',
++-    'src/google/protobuf/descriptor.proto',
++-    'src/google/protobuf/duration.proto',
++-    'src/google/protobuf/empty.proto',
++-    'src/google/protobuf/field_mask.proto',
++-    'src/google/protobuf/source_context.proto',
++-    'src/google/protobuf/struct.proto',
++-    'src/google/protobuf/timestamp.proto',
++-    'src/google/protobuf/type.proto',
++-    'src/google/protobuf/wrappers.proto'
+++    'google/protobuf/go_features.proto',
+++    'google/protobuf/java_features.proto',
+++    'google/protobuf/any.proto',
+++    'google/protobuf/api.proto',
+++    'google/protobuf/compiler/plugin.proto',
+++    'google/protobuf/cpp_features.proto',
+++    'google/protobuf/descriptor.proto',
+++    'google/protobuf/duration.proto',
+++    'google/protobuf/empty.proto',
+++    'google/protobuf/field_mask.proto',
+++    'google/protobuf/source_context.proto',
+++    'google/protobuf/struct.proto',
+++    'google/protobuf/timestamp.proto',
+++    'google/protobuf/type.proto',
+++    'google/protobuf/wrappers.proto'
++ ]
++ 
++ CC_INCLUDES=[
 diff --git a/tools/distrib/python/grpcio_tools/setup.py b/tools/distrib/python/grpcio_tools/setup.py
-index a6ee913718..57c761221c 100644
+index 7370e97..3a8bb79 100644
 --- a/tools/distrib/python/grpcio_tools/setup.py
 +++ b/tools/distrib/python/grpcio_tools/setup.py
 @@ -15,6 +15,7 @@
@@ -73,10 +118,10 @@ index a6ee913718..57c761221c 100644
 -        # available dynamically
 -        EXTRA_ENV_COMPILE_ARGS += " /MT"
 +        EXTRA_ENV_COMPILE_ARGS += " /MD"
-     elif "linux" in sys.platform:
-         # GCC by defaults uses C17 so only C++17 needs to be specified.
-         EXTRA_ENV_COMPILE_ARGS += " -std=c++17"
-@@ -244,15 +242,17 @@ EXTRA_LINK_ARGS = shlex.split(EXTRA_ENV_LINK_ARGS)
+         # Required to build upb from protobuf 33.x
+         # https://github.com/grpc/grpc/issues/41951
+         EXTRA_ENV_COMPILE_ARGS += " /Zc:preprocessor"
+@@ -247,15 +245,17 @@ EXTRA_LINK_ARGS = shlex.split(EXTRA_ENV_LINK_ARGS)
  if BUILD_WITH_STATIC_LIBSTDCXX:
      EXTRA_LINK_ARGS.append("-static-libstdc++")
  
@@ -98,7 +143,7 @@ index a6ee913718..57c761221c 100644
  
  GRPC_PYTHON_TOOLS_PACKAGE = "grpc_tools"
  GRPC_PYTHON_PROTO_RESOURCES_NAME = "_proto"
-@@ -295,16 +295,38 @@ def package_data():
+@@ -298,16 +298,38 @@ def package_data():
      return {GRPC_PYTHON_TOOLS_PACKAGE: proto_files}
  
  
@@ -139,7 +184,7 @@ index a6ee913718..57c761221c 100644
      ] + CC_FILES
  
      plugin_ext = Extension(
-@@ -312,10 +334,11 @@ def extension_modules():
+@@ -315,10 +337,11 @@ def extension_modules():
          sources=plugin_sources,
          include_dirs=[
              ".",

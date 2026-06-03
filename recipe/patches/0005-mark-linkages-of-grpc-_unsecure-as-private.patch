@@ -13,10 +13,10 @@ Co-Authored-By: Mark Harfouche <mark.harfouche@gmail.com>
  1 file changed, 58 insertions(+), 48 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index e36e2fe59c..8980faabe5 100644
+index c72bd40..cd53f12 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -3143,34 +3143,39 @@ target_include_directories(grpc
+@@ -3173,34 +3173,39 @@ target_include_directories(grpc
      ${_gRPC_ZLIB_INCLUDE_DIR}
  )
  target_link_libraries(grpc
@@ -82,7 +82,7 @@ index e36e2fe59c..8980faabe5 100644
  endif()
  
  foreach(_hdr
-@@ -3882,31 +3887,36 @@ target_include_directories(grpc_unsecure
+@@ -3914,31 +3919,36 @@ target_include_directories(grpc_unsecure
      ${_gRPC_ZLIB_INCLUDE_DIR}
  )
  target_link_libraries(grpc_unsecure

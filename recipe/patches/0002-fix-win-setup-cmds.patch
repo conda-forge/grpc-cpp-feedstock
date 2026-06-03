@@ -12,10 +12,10 @@ Co-Authored-By: H. Vetinari <h.vetinari@gmx.com>
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index 44b54a1472..1a3f29bc26 100644
+index 7f46c44..d8e9bc2 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -203,6 +203,9 @@ ENABLE_DOCUMENTATION_BUILD = _env_bool_value(
+@@ -201,6 +201,9 @@ ENABLE_DOCUMENTATION_BUILD = _env_bool_value(
  
  
  def check_linker_need_libatomic():
@@ -25,13 +25,13 @@ index 44b54a1472..1a3f29bc26 100644
      """Test if linker on system needs libatomic."""
      code_test = (
          b"#include <atomic>\n"
-@@ -266,9 +269,6 @@ if EXTRA_ENV_COMPILE_ARGS is None:
+@@ -264,9 +267,6 @@ if EXTRA_ENV_COMPILE_ARGS is None:
          # MSVC by defaults uses C++14 and C89 so both needs to be configured.
          EXTRA_ENV_COMPILE_ARGS += " /std:c++17"
          EXTRA_ENV_COMPILE_ARGS += " /std:c11"
 -        # We need to statically link the C++ Runtime, only the C runtime is
 -        # available dynamically
 -        EXTRA_ENV_COMPILE_ARGS += " /MT"
-     elif "linux" in sys.platform:
-         # GCC by defaults uses C17 so only C++17 needs to be specified.
-         EXTRA_ENV_COMPILE_ARGS += " -std=c++17"
+         # Required to build upb from protobuf 33.x
+         # https://github.com/grpc/grpc/issues/41951
+         EXTRA_ENV_COMPILE_ARGS += " /Zc:preprocessor"
