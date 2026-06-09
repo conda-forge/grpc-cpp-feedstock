@@ -50,6 +50,10 @@ source:
       - patches/0016-break-out-_initialize_absl-into-separate-cython-modu.patch
       # backport https://github.com/grpc/grpc/pull/41910
       - patches/0017-fix-double-metric-registration-across-shared-librari.patch
+      # silence absl::MutexLock(Mutex*) deprecation warnings on newer abseil
+      - patches/0018-silence-absl-MutexLock-pointer-deprecation-warnings.patch
+      # silence absl::Mutex::Lock()/Unlock() deprecation warnings on newer abseil
+      - patches/0019-silence-absl-Mutex-Lock-Unlock-deprecation-warnings.patch
 
   {% if build_platform == target_platform and not win %}
   - folder: third_party/benchmark
