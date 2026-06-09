@@ -38,7 +38,7 @@ other consumers end up linking to them.
  1 file changed, 48 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index fad7fd4..1d80a76 100644
+index 49be44f..e2d21c6 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -2452,6 +2452,30 @@ add_library(grpc
