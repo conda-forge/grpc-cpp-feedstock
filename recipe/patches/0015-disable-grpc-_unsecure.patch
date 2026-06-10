@@ -19,7 +19,7 @@ the avoidance of which is the entire point of `grpc_unsecure`.
  1 file changed, 18 insertions(+), 10 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 3217c58..4fd8f40 100644
+index a9acf34..59cb355 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -2689,7 +2689,7 @@ endif()
@@ -144,7 +144,7 @@ index 3217c58..4fd8f40 100644
  if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
  
    add_executable(server_builder_with_socket_mutator_test
-@@ -53532,6 +53536,7 @@ generate_pkgconfig(
+@@ -53574,6 +53578,7 @@ generate_pkgconfig(
    "-laddress_sorting"
    "grpc.pc")
  
@@ -152,7 +152,7 @@ index 3217c58..4fd8f40 100644
  # grpc_unsecure .pc file
  generate_pkgconfig(
    "gRPC unsecure"
-@@ -53542,6 +53547,7 @@ generate_pkgconfig(
+@@ -53584,6 +53589,7 @@ generate_pkgconfig(
    "-lgrpc_unsecure -lupb"
    "-laddress_sorting"
    "grpc_unsecure.pc")
@@ -160,7 +160,7 @@ index 3217c58..4fd8f40 100644
  
  # grpc++ .pc file
  generate_pkgconfig(
-@@ -53554,6 +53560,7 @@ generate_pkgconfig(
+@@ -53596,6 +53602,7 @@ generate_pkgconfig(
    "-laddress_sorting"
    "grpc++.pc")
  
@@ -168,7 +168,7 @@ index 3217c58..4fd8f40 100644
  # grpc++_unsecure .pc file
  generate_pkgconfig(
    "gRPC++ unsecure"
-@@ -53564,6 +53571,7 @@ generate_pkgconfig(
+@@ -53606,6 +53613,7 @@ generate_pkgconfig(
    "-lgrpc++_unsecure -lupb"
    "-laddress_sorting"
    "grpc++_unsecure.pc")

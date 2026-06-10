@@ -14,10 +14,10 @@ For some tests, re2 and c-ares have just been forgotten as dependencies.
  1 file changed, 11 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 9c800b1..b9ee9cc 100644
+index aaec62d..616885f 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -3336,6 +3336,7 @@ target_link_libraries(grpc_test_util
+@@ -3337,6 +3337,7 @@ target_link_libraries(grpc_test_util
    ${_gRPC_ALLTARGETS_LIBRARIES}
    absl::failure_signal_handler
    absl::stacktrace
@@ -25,7 +25,7 @@ index 9c800b1..b9ee9cc 100644
    absl::symbolize
    absl::log_initialize
    grpc
-@@ -3410,6 +3411,7 @@ target_link_libraries(grpc_test_util_unsecure
+@@ -3411,6 +3412,7 @@ target_link_libraries(grpc_test_util_unsecure
    ${_gRPC_ALLTARGETS_LIBRARIES}
    absl::failure_signal_handler
    absl::stacktrace
@@ -33,7 +33,7 @@ index 9c800b1..b9ee9cc 100644
    absl::symbolize
    absl::log_initialize
    grpc_unsecure
-@@ -8697,6 +8699,7 @@ target_include_directories(authorization_matchers_test
+@@ -8698,6 +8700,7 @@ target_include_directories(authorization_matchers_test
  )
  
  target_link_libraries(authorization_matchers_test
@@ -41,7 +41,7 @@ index 9c800b1..b9ee9cc 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    grpc_test_util
-@@ -19207,6 +19210,7 @@ target_include_directories(grpc_authorization_engine_test
+@@ -19208,6 +19211,7 @@ target_include_directories(grpc_authorization_engine_test
  )
  
  target_link_libraries(grpc_authorization_engine_test
@@ -49,7 +49,7 @@ index 9c800b1..b9ee9cc 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    grpc_test_util
-@@ -21476,6 +21480,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+@@ -21477,6 +21481,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
    )
  
    target_link_libraries(httpcli_test
@@ -57,7 +57,7 @@ index 9c800b1..b9ee9cc 100644
      ${_gRPC_ALLTARGETS_LIBRARIES}
      gtest
      grpc++_test_util
-@@ -24783,6 +24788,7 @@ target_include_directories(matchers_test
+@@ -24784,6 +24789,7 @@ target_include_directories(matchers_test
  )
  
  target_link_libraries(matchers_test
@@ -65,7 +65,7 @@ index 9c800b1..b9ee9cc 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    grpc_test_util
-@@ -30271,6 +30277,7 @@ target_include_directories(resolve_address_using_ares_resolver_test
+@@ -30272,6 +30278,7 @@ target_include_directories(resolve_address_using_ares_resolver_test
  )
  
  target_link_libraries(resolve_address_using_ares_resolver_test
@@ -73,7 +73,7 @@ index 9c800b1..b9ee9cc 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    grpc_test_util
-@@ -30359,6 +30366,7 @@ target_include_directories(resolve_address_using_native_resolver_test
+@@ -30360,6 +30367,7 @@ target_include_directories(resolve_address_using_native_resolver_test
  )
  
  target_link_libraries(resolve_address_using_native_resolver_test
@@ -81,7 +81,7 @@ index 9c800b1..b9ee9cc 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    grpc_test_util
-@@ -41393,6 +41401,7 @@ target_include_directories(xds_common_types_test
+@@ -41436,6 +41444,7 @@ target_include_directories(xds_common_types_test
  )
  
  target_link_libraries(xds_common_types_test
@@ -89,7 +89,7 @@ index 9c800b1..b9ee9cc 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    absl::fixed_array
-@@ -42622,6 +42631,7 @@ target_include_directories(xds_credentials_test
+@@ -42665,6 +42674,7 @@ target_include_directories(xds_credentials_test
  )
  
  target_link_libraries(xds_credentials_test
@@ -97,7 +97,7 @@ index 9c800b1..b9ee9cc 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    grpc_test_util
-@@ -47809,6 +47819,7 @@ target_include_directories(xds_listener_resource_type_test
+@@ -47852,6 +47862,7 @@ target_include_directories(xds_listener_resource_type_test
  )
  
  target_link_libraries(xds_listener_resource_type_test
