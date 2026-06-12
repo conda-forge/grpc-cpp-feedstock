@@ -1,15 +1,15 @@
-From ef63d7d57e382570cde0a76a05400fa6235b57f6 Mon Sep 17 00:00:00 2001
+From 761d2f637a516d585a89c0b32fe81e20a1a534b7 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Fri, 28 Feb 2025 15:09:41 +1100
-Subject: [PATCH 09/17] unvendor upb and utf8_range, use protobuf's version
+Subject: [PATCH 09/18] unvendor upb and utf8_range, use protobuf's version
 
 ---
- CMakeLists.txt  | 696 ++----------------------------------------------
+ CMakeLists.txt  | 789 +-----------------------------------------------
  cmake/upb.cmake |   4 +-
- 2 files changed, 16 insertions(+), 684 deletions(-)
+ 2 files changed, 16 insertions(+), 777 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index c2975ee..8b170fb 100644
+index 60e0b95f8a..8b4b1cce9d 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -354,11 +354,15 @@ else()
@@ -29,7 +29,7 @@ index c2975ee..8b170fb 100644
    if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_POSIX)
      find_library(LIBRT rt)
      if(LIBRT)
-@@ -3177,8 +3181,6 @@ target_link_libraries(grpc
+@@ -3185,8 +3189,6 @@ target_link_libraries(grpc
    PRIVATE ${_gRPC_ALLTARGETS_LIBRARIES}
    # vendored libs
    PRIVATE ${_gRPC_ADDRESS_SORTING_LIBRARIES}
@@ -38,7 +38,7 @@ index c2975ee..8b170fb 100644
    # external dependencies used within grpc
    PRIVATE ${_gRPC_CARES_LIBRARIES}
    PRIVATE ${_gRPC_RE2_LIBRARIES}
-@@ -3922,7 +3924,6 @@ target_link_libraries(grpc_unsecure
+@@ -3931,7 +3933,6 @@ target_link_libraries(grpc_unsecure
    PRIVATE ${_gRPC_ALLTARGETS_LIBRARIES}
    # vendored libs
    PRIVATE ${_gRPC_ADDRESS_SORTING_LIBRARIES}
@@ -46,7 +46,7 @@ index c2975ee..8b170fb 100644
    # external dependencies used within grpc
    PRIVATE ${_gRPC_ZLIB_LIBRARIES}
    PRIVATE ${_gRPC_CARES_LIBRARIES}
-@@ -4092,763 +4093,6 @@ target_link_libraries(gtest
+@@ -4101,765 +4102,6 @@ target_link_libraries(gtest
  
  endif()
  
@@ -510,6 +510,7 @@ index c2975ee..8b170fb 100644
 -
 -add_library(upb_mini_table_lib
 -  third_party/upb/upb/mini_table/extension_registry.c
+-  third_party/upb/upb/mini_table/generated_registry.c
 -  third_party/upb/upb/mini_table/internal/message.c
 -  third_party/upb/upb/mini_table/message.c
 -)
@@ -807,10 +808,11 @@ index c2975ee..8b170fb 100644
 -    ARCHIVE DESTINATION ${gRPC_INSTALL_LIBDIR}
 -  )
 -endif()
- 
+-
  if(gRPC_BUILD_TESTS)
  
-@@ -6362,7 +5606,6 @@ target_include_directories(grpc_authorization_provider
+ if(gRPC_BUILD_CODEGEN)
+@@ -6374,7 +5616,6 @@ target_include_directories(grpc_authorization_provider
  )
  target_link_libraries(grpc_authorization_provider
    ${_gRPC_ALLTARGETS_LIBRARIES}
@@ -818,7 +820,7 @@ index c2975ee..8b170fb 100644
    ${_gRPC_RE2_LIBRARIES}
    ${_gRPC_ZLIB_LIBRARIES}
    absl::no_destructor
-@@ -54968,8 +54211,8 @@ generate_pkgconfig(
+@@ -55492,8 +54733,8 @@ generate_pkgconfig(
    "${gRPC_CORE_VERSION}"
    "absl_algorithm_container absl_any_invocable absl_base absl_bind_front absl_bits absl_btree absl_check absl_cleanup absl_config absl_cord absl_core_headers absl_flags absl_flags_marshalling absl_flat_hash_map absl_flat_hash_set absl_function_ref absl_hash absl_inlined_vector absl_log absl_log_globals absl_log_severity absl_memory absl_no_destructor absl_node_hash_map absl_optional absl_random_bit_gen_ref absl_random_distributions absl_random_random absl_span absl_status absl_statusor absl_str_format absl_string_view absl_strings absl_synchronization absl_time absl_type_traits absl_utility gpr"
    "libcares openssl re2 zlib"
@@ -829,7 +831,7 @@ index c2975ee..8b170fb 100644
    "grpc.pc")
  
  # grpc_unsecure .pc file
-@@ -54979,8 +54222,8 @@ generate_pkgconfig(
+@@ -55503,8 +54744,8 @@ generate_pkgconfig(
    "${gRPC_CORE_VERSION}"
    "absl_algorithm_container absl_any_invocable absl_base absl_bind_front absl_bits absl_btree absl_check absl_cleanup absl_config absl_cord absl_core_headers absl_flags absl_flags_marshalling absl_flat_hash_map absl_flat_hash_set absl_function_ref absl_hash absl_inlined_vector absl_log absl_log_globals absl_log_severity absl_memory absl_no_destructor absl_node_hash_map absl_optional absl_random_bit_gen_ref absl_random_distributions absl_random_random absl_span absl_status absl_statusor absl_str_format absl_string_view absl_strings absl_synchronization absl_time absl_type_traits absl_utility gpr"
    "libcares zlib"
@@ -840,9 +842,9 @@ index c2975ee..8b170fb 100644
    "grpc_unsecure.pc")
  
  # grpc++ .pc file
-@@ -54990,8 +54233,8 @@ generate_pkgconfig(
+@@ -55514,8 +54755,8 @@ generate_pkgconfig(
    "${gRPC_CPP_VERSION}"
-   "absl_absl_check absl_absl_log absl_algorithm_container absl_any_invocable absl_base absl_bind_front absl_bits absl_btree absl_check absl_cleanup absl_config absl_cord absl_core_headers absl_dynamic_annotations absl_flags absl_flags_marshalling absl_flat_hash_map absl_flat_hash_set absl_function_ref absl_hash absl_inlined_vector absl_layout absl_log absl_log_globals absl_log_severity absl_memory absl_no_destructor absl_node_hash_map absl_optional absl_prefetch absl_random_bit_gen_ref absl_random_distributions absl_random_random absl_span absl_status absl_statusor absl_str_format absl_string_view absl_strings absl_strings_internal absl_synchronization absl_time absl_type_traits absl_utility gpr grpc"
+   "absl_absl_check absl_absl_log absl_algorithm_container absl_any_invocable absl_base absl_bind_front absl_bits absl_btree absl_charset absl_check absl_cleanup absl_config absl_cord absl_core_headers absl_dynamic_annotations absl_flags absl_flags_marshalling absl_flat_hash_map absl_flat_hash_set absl_function_ref absl_hash absl_inlined_vector absl_layout absl_log absl_log_globals absl_log_severity absl_memory absl_no_destructor absl_node_hash_map absl_optional absl_prefetch absl_random_bit_gen_ref absl_random_distributions absl_random_random absl_span absl_status absl_statusor absl_str_format absl_string_view absl_strings absl_strings_internal absl_synchronization absl_time absl_type_traits absl_utility gpr grpc"
    "libcares openssl re2 zlib"
 -  "-lgrpc++"
 -  "-laddress_sorting -lupb_textformat_lib -lupb_json_lib -lupb_reflection_lib -lupb_wire_lib -lupb_message_lib -lutf8_range_lib -lupb_descriptor_lib -lupb_mini_descriptor_lib -lupb_mini_table_lib -lupb_hash_lib -lupb_mem_lib -lupb_base_lib -lupb_lex_lib"
@@ -851,9 +853,9 @@ index c2975ee..8b170fb 100644
    "grpc++.pc")
  
  # grpc++_unsecure .pc file
-@@ -55001,8 +54244,8 @@ generate_pkgconfig(
+@@ -55525,8 +54766,8 @@ generate_pkgconfig(
    "${gRPC_CPP_VERSION}"
-   "absl_absl_check absl_absl_log absl_algorithm_container absl_any_invocable absl_base absl_bind_front absl_bits absl_btree absl_check absl_cleanup absl_config absl_cord absl_core_headers absl_dynamic_annotations absl_flags absl_flags_marshalling absl_flat_hash_map absl_flat_hash_set absl_function_ref absl_hash absl_inlined_vector absl_layout absl_log absl_log_globals absl_log_severity absl_memory absl_no_destructor absl_node_hash_map absl_optional absl_prefetch absl_random_bit_gen_ref absl_random_distributions absl_random_random absl_span absl_status absl_statusor absl_str_format absl_string_view absl_strings absl_strings_internal absl_synchronization absl_time absl_type_traits absl_utility gpr grpc_unsecure"
+   "absl_absl_check absl_absl_log absl_algorithm_container absl_any_invocable absl_base absl_bind_front absl_bits absl_btree absl_charset absl_check absl_cleanup absl_config absl_cord absl_core_headers absl_dynamic_annotations absl_flags absl_flags_marshalling absl_flat_hash_map absl_flat_hash_set absl_function_ref absl_hash absl_inlined_vector absl_layout absl_log absl_log_globals absl_log_severity absl_memory absl_no_destructor absl_node_hash_map absl_optional absl_prefetch absl_random_bit_gen_ref absl_random_distributions absl_random_random absl_span absl_status absl_statusor absl_str_format absl_string_view absl_strings absl_strings_internal absl_synchronization absl_time absl_type_traits absl_utility gpr grpc_unsecure"
    "libcares zlib"
 -  "-lgrpc++_unsecure"
 -  "-laddress_sorting -lupb_textformat_lib -lupb_reflection_lib -lupb_wire_lib -lupb_message_lib -lutf8_range_lib -lupb_descriptor_lib -lupb_mini_descriptor_lib -lupb_mini_table_lib -lupb_hash_lib -lupb_mem_lib -lupb_base_lib -lupb_lex_lib"
@@ -862,9 +864,9 @@ index c2975ee..8b170fb 100644
    "grpc++_unsecure.pc")
  
  if(gRPC_BUILD_GRPCPP_OTEL_PLUGIN)
-@@ -55013,7 +54256,7 @@ if(gRPC_BUILD_GRPCPP_OTEL_PLUGIN)
+@@ -55537,7 +54778,7 @@ if(gRPC_BUILD_GRPCPP_OTEL_PLUGIN)
      "${gRPC_CPP_VERSION}"
-     "absl_absl_check absl_absl_log absl_algorithm_container absl_any_invocable absl_base absl_bind_front absl_bits absl_btree absl_check absl_cleanup absl_config absl_cord absl_core_headers absl_dynamic_annotations absl_flags absl_flags_marshalling absl_flat_hash_map absl_flat_hash_set absl_function_ref absl_hash absl_inlined_vector absl_layout absl_log absl_log_globals absl_log_severity absl_memory absl_no_destructor absl_node_hash_map absl_optional absl_prefetch absl_random_bit_gen_ref absl_random_distributions absl_random_random absl_span absl_status absl_statusor absl_str_format absl_string_view absl_strings absl_strings_internal absl_synchronization absl_time absl_type_traits absl_utility gpr grpc grpc++ opentelemetry_api"
+     "absl_absl_check absl_absl_log absl_algorithm_container absl_any_invocable absl_base absl_bind_front absl_bits absl_btree absl_charset absl_check absl_cleanup absl_config absl_cord absl_core_headers absl_dynamic_annotations absl_flags absl_flags_marshalling absl_flat_hash_map absl_flat_hash_set absl_function_ref absl_hash absl_inlined_vector absl_layout absl_log absl_log_globals absl_log_severity absl_memory absl_no_destructor absl_node_hash_map absl_optional absl_prefetch absl_random_bit_gen_ref absl_random_distributions absl_random_random absl_span absl_status absl_statusor absl_str_format absl_string_view absl_strings absl_strings_internal absl_synchronization absl_time absl_type_traits absl_utility gpr grpc grpc++ opentelemetry_api"
      "libcares openssl re2 zlib"
 -    "-lgrpcpp_otel_plugin"
 -    "-laddress_sorting -lupb_textformat_lib -lupb_json_lib -lupb_reflection_lib -lupb_wire_lib -lupb_message_lib -lutf8_range_lib -lupb_descriptor_lib -lupb_mini_descriptor_lib -lupb_mini_table_lib -lupb_hash_lib -lupb_mem_lib -lupb_base_lib -lupb_lex_lib"
@@ -873,7 +875,7 @@ index c2975ee..8b170fb 100644
      "grpcpp_otel_plugin.pc")
  endif()
 diff --git a/cmake/upb.cmake b/cmake/upb.cmake
-index 9156e5f..e6fa819 100644
+index 9156e5f48f..e6fa81932d 100644
 --- a/cmake/upb.cmake
 +++ b/cmake/upb.cmake
 @@ -12,9 +12,7 @@

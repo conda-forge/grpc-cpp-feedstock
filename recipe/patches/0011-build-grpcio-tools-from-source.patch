@@ -1,18 +1,20 @@
-From a794018ce987609c5be112b1c4a28ba6371fd97b Mon Sep 17 00:00:00 2001
+From 1c44116116ab6f4682e44ba54655be3217e464b3 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 4 Mar 2025 08:53:30 +1100
-Subject: [PATCH 11/17] build grpcio-tools from source
+Subject: [PATCH 11/18] build grpcio-tools from source
 
 ---
  .../python/grpcio_tools/protoc_lib_deps.py    | 30 ++++++------
+ .../grpcio_tools/protoc_lib_deps.py.rej       | 39 +++++++++++++++
  tools/distrib/python/grpcio_tools/setup.py    | 49 ++++++++++++++-----
- 2 files changed, 51 insertions(+), 28 deletions(-)
+ 3 files changed, 90 insertions(+), 28 deletions(-)
+ create mode 100644 tools/distrib/python/grpcio_tools/protoc_lib_deps.py.rej
 
 diff --git a/tools/distrib/python/grpcio_tools/protoc_lib_deps.py b/tools/distrib/python/grpcio_tools/protoc_lib_deps.py
-index 21245be..8aeb7eb 100644
+index 8a42929c90..40ec0fc61d 100644
 --- a/tools/distrib/python/grpcio_tools/protoc_lib_deps.py
 +++ b/tools/distrib/python/grpcio_tools/protoc_lib_deps.py
-@@ -383,21 +383,21 @@ CC_FILES=[
+@@ -387,21 +387,21 @@ CC_FILES=[
  ]
  
  PROTO_FILES=[
@@ -51,7 +53,7 @@ index 21245be..8aeb7eb 100644
  CC_INCLUDES=[
 diff --git a/tools/distrib/python/grpcio_tools/protoc_lib_deps.py.rej b/tools/distrib/python/grpcio_tools/protoc_lib_deps.py.rej
 new file mode 100644
-index 0000000..e2a9c30
+index 0000000000..e2a9c309ab
 --- /dev/null
 +++ b/tools/distrib/python/grpcio_tools/protoc_lib_deps.py.rej
 @@ -0,0 +1,39 @@
@@ -95,7 +97,7 @@ index 0000000..e2a9c30
 + 
 + CC_INCLUDES=[
 diff --git a/tools/distrib/python/grpcio_tools/setup.py b/tools/distrib/python/grpcio_tools/setup.py
-index 7370e97..3a8bb79 100644
+index f0d759dafb..32b5a4c92a 100644
 --- a/tools/distrib/python/grpcio_tools/setup.py
 +++ b/tools/distrib/python/grpcio_tools/setup.py
 @@ -15,6 +15,7 @@
