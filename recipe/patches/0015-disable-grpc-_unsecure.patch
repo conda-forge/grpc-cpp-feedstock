@@ -1,4 +1,4 @@
-From ae445f0321c40a8e4b6f4878175abd6df79e828c Mon Sep 17 00:00:00 2001
+From c3ce73eca20b3e10dcb1a809816e287ace93f40b Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 11 Jan 2026 22:45:25 +1100
 Subject: [PATCH 15/18] disable grpc{,++}_unsecure

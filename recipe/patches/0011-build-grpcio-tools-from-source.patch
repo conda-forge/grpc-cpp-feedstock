@@ -1,14 +1,12 @@
-From 1c44116116ab6f4682e44ba54655be3217e464b3 Mon Sep 17 00:00:00 2001
+From fb360213b69720f63b31ccf4f091e5f461b544e6 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 4 Mar 2025 08:53:30 +1100
 Subject: [PATCH 11/18] build grpcio-tools from source
 
 ---
  .../python/grpcio_tools/protoc_lib_deps.py    | 30 ++++++------
- .../grpcio_tools/protoc_lib_deps.py.rej       | 39 +++++++++++++++
  tools/distrib/python/grpcio_tools/setup.py    | 49 ++++++++++++++-----
- 3 files changed, 90 insertions(+), 28 deletions(-)
- create mode 100644 tools/distrib/python/grpcio_tools/protoc_lib_deps.py.rej
+ 2 files changed, 51 insertions(+), 28 deletions(-)
 
 diff --git a/tools/distrib/python/grpcio_tools/protoc_lib_deps.py b/tools/distrib/python/grpcio_tools/protoc_lib_deps.py
 index 8a42929c90..40ec0fc61d 100644
@@ -51,51 +49,6 @@ index 8a42929c90..40ec0fc61d 100644
  ]
  
  CC_INCLUDES=[
-diff --git a/tools/distrib/python/grpcio_tools/protoc_lib_deps.py.rej b/tools/distrib/python/grpcio_tools/protoc_lib_deps.py.rej
-new file mode 100644
-index 0000000000..e2a9c309ab
---- /dev/null
-+++ b/tools/distrib/python/grpcio_tools/protoc_lib_deps.py.rej
-@@ -0,0 +1,39 @@
-+--- tools/distrib/python/grpcio_tools/protoc_lib_deps.py
-++++ tools/distrib/python/grpcio_tools/protoc_lib_deps.py
-+@@ -383,21 +383,21 @@ CC_FILES=[
-+ ]
-+ 
-+ PROTO_FILES=[
-+-    'go/google/protobuf/go_features.proto',
-+-    'java/core/src/main/resources/google/protobuf/java_features.proto',
-+-    'src/google/protobuf/any.proto',
-+-    'src/google/protobuf/api.proto',
-+-    'src/google/protobuf/compiler/plugin.proto',
-+-    'src/google/protobuf/cpp_features.proto',
-+-    'src/google/protobuf/descriptor.proto',
-+-    'src/google/protobuf/duration.proto',
-+-    'src/google/protobuf/empty.proto',
-+-    'src/google/protobuf/field_mask.proto',
-+-    'src/google/protobuf/source_context.proto',
-+-    'src/google/protobuf/struct.proto',
-+-    'src/google/protobuf/timestamp.proto',
-+-    'src/google/protobuf/type.proto',
-+-    'src/google/protobuf/wrappers.proto'
-++    'google/protobuf/go_features.proto',
-++    'google/protobuf/java_features.proto',
-++    'google/protobuf/any.proto',
-++    'google/protobuf/api.proto',
-++    'google/protobuf/compiler/plugin.proto',
-++    'google/protobuf/cpp_features.proto',
-++    'google/protobuf/descriptor.proto',
-++    'google/protobuf/duration.proto',
-++    'google/protobuf/empty.proto',
-++    'google/protobuf/field_mask.proto',
-++    'google/protobuf/source_context.proto',
-++    'google/protobuf/struct.proto',
-++    'google/protobuf/timestamp.proto',
-++    'google/protobuf/type.proto',
-++    'google/protobuf/wrappers.proto'
-+ ]
-+ 
-+ CC_INCLUDES=[
 diff --git a/tools/distrib/python/grpcio_tools/setup.py b/tools/distrib/python/grpcio_tools/setup.py
 index f0d759dafb..32b5a4c92a 100644
 --- a/tools/distrib/python/grpcio_tools/setup.py
