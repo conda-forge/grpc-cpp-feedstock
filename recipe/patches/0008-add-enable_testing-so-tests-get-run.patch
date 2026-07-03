@@ -1,14 +1,14 @@
-From abc9e8ed02fa0fed4e3c21f53260755b39a6c836 Mon Sep 17 00:00:00 2001
+From e42f2aaceb00e6f76cf1cf1ba7c3cafe4bf66d93 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Fri, 28 Feb 2025 22:07:19 +1100
-Subject: [PATCH 08/17] add enable_testing so tests get run
+Subject: [PATCH 08/18] add enable_testing so tests get run
 
 ---
  CMakeLists.txt | 4 ++++
  1 file changed, 4 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 616885f..c2975ee 100644
+index ce9fa4c402..60e0b95f8a 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -51,6 +51,10 @@ option(gRPC_BUILD_TESTS "Build tests" OFF)
