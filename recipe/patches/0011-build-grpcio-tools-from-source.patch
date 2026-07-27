@@ -8,10 +8,12 @@ Subject: [PATCH 11/18] build grpcio-tools from source
  tools/distrib/python/grpcio_tools/setup.py    | 49 ++++++++++++++-----
  2 files changed, 51 insertions(+), 28 deletions(-)
 
-diff --git a/tools/distrib/python/grpcio_tools/protoc_lib_deps.py b/tools/distrib/python/grpcio_tools/protoc_lib_deps.py
-index 8a42929c90..40ec0fc61d 100644
---- a/tools/distrib/python/grpcio_tools/protoc_lib_deps.py
-+++ b/tools/distrib/python/grpcio_tools/protoc_lib_deps.py
+---
+
+diff --git c/tools/distrib/python/grpcio_tools/protoc_lib_deps.py i/tools/distrib/python/grpcio_tools/protoc_lib_deps.py
+index dface2f..b9cc2df 100644
+--- c/tools/distrib/python/grpcio_tools/protoc_lib_deps.py
++++ i/tools/distrib/python/grpcio_tools/protoc_lib_deps.py
 @@ -387,21 +387,21 @@ CC_FILES=[
  ]
  
@@ -49,10 +51,10 @@ index 8a42929c90..40ec0fc61d 100644
  ]
  
  CC_INCLUDES=[
-diff --git a/tools/distrib/python/grpcio_tools/setup.py b/tools/distrib/python/grpcio_tools/setup.py
-index f0d759dafb..32b5a4c92a 100644
---- a/tools/distrib/python/grpcio_tools/setup.py
-+++ b/tools/distrib/python/grpcio_tools/setup.py
+diff --git c/tools/distrib/python/grpcio_tools/setup.py i/tools/distrib/python/grpcio_tools/setup.py
+index 2cd129e..36e418f 100644
+--- c/tools/distrib/python/grpcio_tools/setup.py
++++ i/tools/distrib/python/grpcio_tools/setup.py
 @@ -15,6 +15,7 @@
  import errno
  import os

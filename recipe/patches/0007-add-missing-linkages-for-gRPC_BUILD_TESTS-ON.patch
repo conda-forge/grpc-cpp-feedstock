@@ -10,14 +10,12 @@ is not missing in some other library's link interface, this is the right place.
 
 For some tests, re2 and c-ares have just been forgotten as dependencies.
 ---
- CMakeLists.txt | 11 +++++++++++
- 1 file changed, 11 insertions(+)
 
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 7972c30b19..ce9fa4c402 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -3345,6 +3345,7 @@ target_link_libraries(grpc_test_util
+diff --git c/CMakeLists.txt i/CMakeLists.txt
+index 44c5b7f..ef81114 100644
+--- c/CMakeLists.txt
++++ i/CMakeLists.txt
+@@ -3352,6 +3352,7 @@ target_link_libraries(grpc_test_util
    ${_gRPC_ALLTARGETS_LIBRARIES}
    absl::failure_signal_handler
    absl::stacktrace
@@ -25,7 +23,7 @@ index 7972c30b19..ce9fa4c402 100644
    absl::symbolize
    absl::log_initialize
    grpc
-@@ -3419,6 +3420,7 @@ target_link_libraries(grpc_test_util_unsecure
+@@ -3426,6 +3427,7 @@ target_link_libraries(grpc_test_util_unsecure
    ${_gRPC_ALLTARGETS_LIBRARIES}
    absl::failure_signal_handler
    absl::stacktrace
@@ -33,7 +31,7 @@ index 7972c30b19..ce9fa4c402 100644
    absl::symbolize
    absl::log_initialize
    grpc_unsecure
-@@ -8713,6 +8715,7 @@ target_include_directories(authorization_matchers_test
+@@ -8721,6 +8723,7 @@ target_include_directories(authorization_matchers_test
  )
  
  target_link_libraries(authorization_matchers_test
@@ -41,7 +39,7 @@ index 7972c30b19..ce9fa4c402 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    grpc_test_util
-@@ -19567,6 +19570,7 @@ target_include_directories(grpc_authorization_engine_test
+@@ -19590,6 +19593,7 @@ target_include_directories(grpc_authorization_engine_test
  )
  
  target_link_libraries(grpc_authorization_engine_test
@@ -49,7 +47,7 @@ index 7972c30b19..ce9fa4c402 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    grpc_test_util
-@@ -21833,6 +21837,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
+@@ -21898,6 +21902,7 @@ if(_gRPC_PLATFORM_LINUX OR _gRPC_PLATFORM_MAC OR _gRPC_PLATFORM_POSIX)
    )
  
    target_link_libraries(httpcli_test
@@ -57,7 +55,7 @@ index 7972c30b19..ce9fa4c402 100644
      ${_gRPC_ALLTARGETS_LIBRARIES}
      gtest
      grpc++_test_util
-@@ -25092,6 +25097,7 @@ target_include_directories(matchers_test
+@@ -25157,6 +25162,7 @@ target_include_directories(matchers_test
  )
  
  target_link_libraries(matchers_test
@@ -65,7 +63,7 @@ index 7972c30b19..ce9fa4c402 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    grpc_test_util
-@@ -30726,6 +30732,7 @@ target_include_directories(resolve_address_using_ares_resolver_test
+@@ -30792,6 +30798,7 @@ target_include_directories(resolve_address_using_ares_resolver_test
  )
  
  target_link_libraries(resolve_address_using_ares_resolver_test
@@ -73,7 +71,7 @@ index 7972c30b19..ce9fa4c402 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    grpc_test_util
-@@ -30814,6 +30821,7 @@ target_include_directories(resolve_address_using_native_resolver_test
+@@ -30880,6 +30887,7 @@ target_include_directories(resolve_address_using_native_resolver_test
  )
  
  target_link_libraries(resolve_address_using_native_resolver_test
@@ -81,7 +79,7 @@ index 7972c30b19..ce9fa4c402 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    grpc_test_util
-@@ -41964,6 +41972,7 @@ target_include_directories(xds_common_types_test
+@@ -42397,6 +42405,7 @@ target_include_directories(xds_common_types_test
  )
  
  target_link_libraries(xds_common_types_test
@@ -89,7 +87,7 @@ index 7972c30b19..ce9fa4c402 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    absl::fixed_array
-@@ -43192,6 +43201,7 @@ target_include_directories(xds_credentials_test
+@@ -43625,6 +43634,7 @@ target_include_directories(xds_credentials_test
  )
  
  target_link_libraries(xds_credentials_test
@@ -97,7 +95,7 @@ index 7972c30b19..ce9fa4c402 100644
    ${_gRPC_ALLTARGETS_LIBRARIES}
    gtest
    grpc_test_util
-@@ -48378,6 +48388,7 @@ target_include_directories(xds_listener_resource_type_test
+@@ -48811,6 +48821,7 @@ target_include_directories(xds_listener_resource_type_test
  )
  
  target_link_libraries(xds_listener_resource_type_test

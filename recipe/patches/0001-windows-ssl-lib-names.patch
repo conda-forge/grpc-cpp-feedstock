@@ -7,14 +7,12 @@ Co-Authored-By: Julien Schueller <schueller@phimeca.com>
 Co-Authored-By: Nicholas Bollweg <nick.bollweg@gmail.com>
 Co-Authored-By: Marius van Niekerk <marius.v.niekerk@gmail.com>
 ---
- setup.py | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/setup.py b/setup.py
-index 28860ecf65..7f46c442b9 100644
---- a/setup.py
-+++ b/setup.py
-@@ -381,10 +381,10 @@ if "win32" in sys.platform:
+diff --git c/setup.py i/setup.py
+index 7662934..9838d83 100644
+--- c/setup.py
++++ i/setup.py
+@@ -390,10 +390,10 @@ if "win32" in sys.platform:
          "ws2_32",
      )
  if BUILD_WITH_SYSTEM_OPENSSL:

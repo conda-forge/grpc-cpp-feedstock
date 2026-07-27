@@ -7,10 +7,12 @@ Subject: [PATCH 08/18] add enable_testing so tests get run
  CMakeLists.txt | 4 ++++
  1 file changed, 4 insertions(+)
 
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index ce9fa4c402..60e0b95f8a 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
+---
+
+diff --git c/CMakeLists.txt i/CMakeLists.txt
+index ef81114..eb3c02d 100644
+--- c/CMakeLists.txt
++++ i/CMakeLists.txt
 @@ -51,6 +51,10 @@ option(gRPC_BUILD_TESTS "Build tests" OFF)
  option(gRPC_BUILD_CODEGEN "Build codegen" ON)
  option(gRPC_DOWNLOAD_ARCHIVES "Download archives for empty 3rd party directories" ON)

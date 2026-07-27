@@ -14,11 +14,13 @@ Subject: [PATCH 16/18] break out _initialize_absl into separate cython module
  rename src/python/grpcio/grpc/_cython/{_cygrpc/absl.pxd.pxi => cygrpc_absl_init.pxd} (100%)
  rename src/python/grpcio/grpc/_cython/{_cygrpc/absl.pyx.pxi => cygrpc_absl_init.pyx} (98%)
 
-diff --git a/setup.py b/setup.py
-index dbd69dc50e..ed32051472 100644
---- a/setup.py
-+++ b/setup.py
-@@ -308,7 +308,7 @@ if BUILD_WITH_STATIC_LIBSTDCXX:
+---
+
+diff --git c/setup.py i/setup.py
+index f6e1716..c0cc546 100644
+--- c/setup.py
++++ i/setup.py
+@@ -317,7 +317,7 @@ if BUILD_WITH_STATIC_LIBSTDCXX:
  
  CYTHON_EXTENSION_PACKAGE_NAMES = ()
  
@@ -27,7 +29,7 @@ index dbd69dc50e..ed32051472 100644
  
  GRPCIO_CC_SRCS = ()
  
-@@ -534,6 +534,7 @@ def cython_extensions_and_necessity():
+@@ -539,6 +539,7 @@ def cython_extensions_and_necessity():
                  + core_c_files
                  + asm_files
              ),
@@ -35,10 +37,10 @@ index dbd69dc50e..ed32051472 100644
              include_dirs=list(EXTENSION_INCLUDE_DIRECTORIES),
              libraries=list(EXTENSION_LIBRARIES),
              define_macros=list(DEFINE_MACROS),
-diff --git a/src/python/grpcio/grpc/__init__.py b/src/python/grpcio/grpc/__init__.py
-index efee8bcfcb..3d872c73dc 100644
---- a/src/python/grpcio/grpc/__init__.py
-+++ b/src/python/grpcio/grpc/__init__.py
+diff --git c/src/python/grpcio/grpc/__init__.py i/src/python/grpcio/grpc/__init__.py
+index efee8bc..3d872c7 100644
+--- c/src/python/grpcio/grpc/__init__.py
++++ i/src/python/grpcio/grpc/__init__.py
 @@ -21,6 +21,9 @@ import sys
  import typing
  from typing import Any, Protocol
@@ -49,10 +51,10 @@ index efee8bcfcb..3d872c73dc 100644
  from grpc import _compression
  from grpc._cython import cygrpc as _cygrpc
  from grpc._runtime_protos import protos
-diff --git a/src/python/grpcio/grpc/_cython/cygrpc.pxd b/src/python/grpcio/grpc/_cython/cygrpc.pxd
-index 2cf29d0816..38d5500ae4 100644
---- a/src/python/grpcio/grpc/_cython/cygrpc.pxd
-+++ b/src/python/grpcio/grpc/_cython/cygrpc.pxd
+diff --git c/src/python/grpcio/grpc/_cython/cygrpc.pxd i/src/python/grpcio/grpc/_cython/cygrpc.pxd
+index 2cf29d0..38d5500 100644
+--- c/src/python/grpcio/grpc/_cython/cygrpc.pxd
++++ i/src/python/grpcio/grpc/_cython/cygrpc.pxd
 @@ -17,8 +17,6 @@ cimport cpython
  
  include "_cygrpc/grpc.pxi"
@@ -62,10 +64,10 @@ index 2cf29d0816..38d5500ae4 100644
  include "_cygrpc/arguments.pxd.pxi"
  include "_cygrpc/call.pxd.pxi"
  include "_cygrpc/channel.pxd.pxi"
-diff --git a/src/python/grpcio/grpc/_cython/cygrpc.pyx b/src/python/grpcio/grpc/_cython/cygrpc.pyx
-index b3acae4aa3..79cd0f878d 100644
---- a/src/python/grpcio/grpc/_cython/cygrpc.pyx
-+++ b/src/python/grpcio/grpc/_cython/cygrpc.pyx
+diff --git c/src/python/grpcio/grpc/_cython/cygrpc.pyx i/src/python/grpcio/grpc/_cython/cygrpc.pyx
+index b3acae4..79cd0f8 100644
+--- c/src/python/grpcio/grpc/_cython/cygrpc.pyx
++++ i/src/python/grpcio/grpc/_cython/cygrpc.pyx
 @@ -37,7 +37,6 @@ _LOGGER = logging.getLogger(__name__)
  # TODO(atash): figure out why the coverage tool gets confused about the Cython
  # coverage plugin when the following files don't have a '.pxi' suffix.
@@ -74,17 +76,17 @@ index b3acae4aa3..79cd0f878d 100644
  include "_cygrpc/arguments.pyx.pxi"
  include "_cygrpc/call.pyx.pxi"
  include "_cygrpc/channel.pyx.pxi"
-diff --git a/src/python/grpcio/grpc/_cython/_cygrpc/absl.pxd.pxi b/src/python/grpcio/grpc/_cython/cygrpc_absl_init.pxd
+diff --git c/src/python/grpcio/grpc/_cython/_cygrpc/absl.pxd.pxi i/src/python/grpcio/grpc/_cython/cygrpc_absl_init.pxd
 similarity index 100%
 rename from src/python/grpcio/grpc/_cython/_cygrpc/absl.pxd.pxi
 rename to src/python/grpcio/grpc/_cython/cygrpc_absl_init.pxd
-diff --git a/src/python/grpcio/grpc/_cython/_cygrpc/absl.pyx.pxi b/src/python/grpcio/grpc/_cython/cygrpc_absl_init.pyx
+diff --git c/src/python/grpcio/grpc/_cython/_cygrpc/absl.pyx.pxi i/src/python/grpcio/grpc/_cython/cygrpc_absl_init.pyx
 similarity index 98%
 rename from src/python/grpcio/grpc/_cython/_cygrpc/absl.pyx.pxi
 rename to src/python/grpcio/grpc/_cython/cygrpc_absl_init.pyx
-index f38a8f5b57..859bd062f1 100644
---- a/src/python/grpcio/grpc/_cython/_cygrpc/absl.pyx.pxi
-+++ b/src/python/grpcio/grpc/_cython/cygrpc_absl_init.pyx
+index f38a8f5..859bd06 100644
+--- c/src/python/grpcio/grpc/_cython/_cygrpc/absl.pyx.pxi
++++ i/src/python/grpcio/grpc/_cython/cygrpc_absl_init.pyx
 @@ -12,6 +12,7 @@
  # See the License for the specific language governing permissions and
  # limitations under the License.

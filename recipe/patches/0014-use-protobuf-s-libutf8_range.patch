@@ -7,11 +7,13 @@ Subject: [PATCH 14/18] use protobuf's libutf8_range
  CMakeLists.txt | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 64088d2a54..65b5e0a6ab 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -5105,7 +5105,7 @@ target_include_directories(grpc_plugin_support
+---
+
+diff --git c/CMakeLists.txt i/CMakeLists.txt
+index 50b0289..8bcb70d 100644
+--- c/CMakeLists.txt
++++ i/CMakeLists.txt
+@@ -5109,7 +5109,7 @@ target_include_directories(grpc_plugin_support
  )
  target_link_libraries(grpc_plugin_support
    ${_gRPC_ALLTARGETS_LIBRARIES}
