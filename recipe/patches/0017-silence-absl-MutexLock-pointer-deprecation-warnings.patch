@@ -10,14 +10,11 @@ places, which spams -Wdeprecated-declarations during test builds.
 Provide thin grpc_core/grpc::internal wrappers that accept Mutex* but
 delegate to absl's reference-taking constructors.
 ---
- include/grpcpp/impl/sync.h | 33 +++++++++++++++++++++++++++++++--
- src/core/util/sync.h       | 33 +++++++++++++++++++++++++++++++--
- 2 files changed, 62 insertions(+), 4 deletions(-)
 
-diff --git a/include/grpcpp/impl/sync.h b/include/grpcpp/impl/sync.h
-index dcd4dcd1e8..66001ec63e 100644
---- a/include/grpcpp/impl/sync.h
-+++ b/include/grpcpp/impl/sync.h
+diff --git c/include/grpcpp/impl/sync.h i/include/grpcpp/impl/sync.h
+index dcd4dcd..66001ec 100644
+--- c/include/grpcpp/impl/sync.h
++++ i/include/grpcpp/impl/sync.h
 @@ -48,10 +48,39 @@ namespace internal {
  #ifdef GPR_ABSEIL_SYNC
  
@@ -60,10 +57,10 @@ index dcd4dcd1e8..66001ec63e 100644
  #else
  
  class ABSL_LOCKABLE Mutex {
-diff --git a/src/core/util/sync.h b/src/core/util/sync.h
-index 77d1a54206..33c7c13a73 100644
---- a/src/core/util/sync.h
-+++ b/src/core/util/sync.h
+diff --git c/src/core/util/sync.h i/src/core/util/sync.h
+index 77d1a54..33c7c13 100644
+--- c/src/core/util/sync.h
++++ i/src/core/util/sync.h
 @@ -44,10 +44,39 @@ namespace grpc_core {
  #ifdef GPR_ABSEIL_SYNC
  

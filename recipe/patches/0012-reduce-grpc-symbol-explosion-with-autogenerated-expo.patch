@@ -34,14 +34,12 @@ filter as aggressively as possible (e.g. lambdas), because our main goal is to g
 limit, and indeed, we end up <25k, and we don't want to remove symbols over-zealously if some
 other consumers end up linking to them.
 ---
- CMakeLists.txt | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 48 insertions(+)
 
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 5b089f177f..64088d2a54 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -2457,6 +2457,30 @@ add_library(grpc
+diff --git c/CMakeLists.txt i/CMakeLists.txt
+index 6937ac9..50b0289 100644
+--- c/CMakeLists.txt
++++ i/CMakeLists.txt
+@@ -2460,6 +2460,30 @@ add_library(grpc
    src/core/xds/xds_client/xds_client.cc
  )
  
@@ -72,7 +70,7 @@ index 5b089f177f..64088d2a54 100644
  target_compile_features(grpc PUBLIC cxx_std_17)
  
  set_target_properties(grpc PROPERTIES
-@@ -3201,6 +3225,30 @@ add_library(grpc_unsecure
+@@ -3205,6 +3229,30 @@ add_library(grpc_unsecure
    ${gRPC_ADDITIONAL_DLL_SRC}
  )
  

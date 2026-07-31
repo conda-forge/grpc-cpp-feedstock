@@ -5,14 +5,12 @@ Subject: [PATCH 06/18] for main targets, set *_DLL_EXPORTS when building and
  *_DLL_IMPORTS in interface
 
 ---
- CMakeLists.txt | 36 ++++++++++--------------------------
- 1 file changed, 10 insertions(+), 26 deletions(-)
 
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 46cdc6d35f..7972c30b19 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -2125,10 +2125,8 @@ if(WIN32 AND MSVC)
+diff --git c/CMakeLists.txt i/CMakeLists.txt
+index e3a591e..44c5b7f 100644
+--- c/CMakeLists.txt
++++ i/CMakeLists.txt
+@@ -2129,10 +2129,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)
@@ -25,7 +23,7 @@ index 46cdc6d35f..7972c30b19 100644
    endif()
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/gpr.pdb
-@@ -3155,11 +3153,8 @@ if(WIN32 AND MSVC)
+@@ -3162,11 +3160,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)
@@ -39,7 +37,7 @@ index 46cdc6d35f..7972c30b19 100644
    endif()
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc.pdb
-@@ -3902,11 +3897,8 @@ if(WIN32 AND MSVC)
+@@ -3910,11 +3905,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)
@@ -53,7 +51,7 @@ index 46cdc6d35f..7972c30b19 100644
    endif()
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc_unsecure.pdb
-@@ -5018,12 +5010,8 @@ if(WIN32 AND MSVC)
+@@ -5026,12 +5018,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)
@@ -68,7 +66,7 @@ index 46cdc6d35f..7972c30b19 100644
    endif()
    if(gRPC_INSTALL)
      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/grpc++.pdb
-@@ -5767,12 +5755,8 @@ if(WIN32 AND MSVC)
+@@ -5775,12 +5763,8 @@ if(WIN32 AND MSVC)
      COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
    )
    if(BUILD_SHARED_LIBS)

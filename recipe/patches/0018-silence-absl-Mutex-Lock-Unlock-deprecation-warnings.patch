@@ -12,15 +12,11 @@ Provide a thin grpc_core/grpc::internal Mutex wrapper that forwards the
 legacy names to the standard methods, and use the standard methods in the
 gpr_mu compatibility layer.
 ---
- include/grpcpp/impl/sync.h   | 11 ++++++++++-
- src/core/util/sync.h         | 14 +++++++++++++-
- src/core/util/sync_abseil.cc |  6 +++---
- 3 files changed, 26 insertions(+), 5 deletions(-)
 
-diff --git a/include/grpcpp/impl/sync.h b/include/grpcpp/impl/sync.h
-index 66001ec63e..148ccc3d14 100644
---- a/include/grpcpp/impl/sync.h
-+++ b/include/grpcpp/impl/sync.h
+diff --git c/include/grpcpp/impl/sync.h i/include/grpcpp/impl/sync.h
+index 66001ec..148ccc3 100644
+--- c/include/grpcpp/impl/sync.h
++++ i/include/grpcpp/impl/sync.h
 @@ -47,7 +47,16 @@ namespace internal {
  
  #ifdef GPR_ABSEIL_SYNC
@@ -39,10 +35,10 @@ index 66001ec63e..148ccc3d14 100644
  using CondVar = absl::CondVar;
  
  // absl deprecated MutexLock(Mutex*) in favor of MutexLock(Mutex&), but grpc
-diff --git a/src/core/util/sync.h b/src/core/util/sync.h
-index 33c7c13a73..2d8d8ab136 100644
---- a/src/core/util/sync.h
-+++ b/src/core/util/sync.h
+diff --git c/src/core/util/sync.h i/src/core/util/sync.h
+index 33c7c13..2d8d8ab 100644
+--- c/src/core/util/sync.h
++++ i/src/core/util/sync.h
 @@ -43,7 +43,19 @@ namespace grpc_core {
  
  #ifdef GPR_ABSEIL_SYNC
@@ -64,10 +60,10 @@ index 33c7c13a73..2d8d8ab136 100644
  using CondVar = absl::CondVar;
  
  // absl deprecated MutexLock(Mutex*) in favor of MutexLock(Mutex&), but grpc
-diff --git a/src/core/util/sync_abseil.cc b/src/core/util/sync_abseil.cc
-index d1cd7f71a3..8a38a24497 100644
---- a/src/core/util/sync_abseil.cc
-+++ b/src/core/util/sync_abseil.cc
+diff --git c/src/core/util/sync_abseil.cc i/src/core/util/sync_abseil.cc
+index d1cd7f7..8a38a24 100644
+--- c/src/core/util/sync_abseil.cc
++++ i/src/core/util/sync_abseil.cc
 @@ -43,15 +43,15 @@ void gpr_mu_destroy(gpr_mu* mu) {
  }
  

@@ -8,13 +8,11 @@ Co-Authored-By: Nicholas Bollweg <nick.bollweg@gmail.com>
 Co-Authored-By: Marius van Niekerk <marius.v.niekerk@gmail.com>
 Co-Authored-By: H. Vetinari <h.vetinari@gmx.com>
 ---
- setup.py | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/setup.py b/setup.py
-index 7f46c442b9..d8e9bc256d 100644
---- a/setup.py
-+++ b/setup.py
+diff --git c/setup.py i/setup.py
+index 9838d83..888e684 100644
+--- c/setup.py
++++ i/setup.py
 @@ -201,6 +201,9 @@ ENABLE_DOCUMENTATION_BUILD = _env_bool_value(
  
  

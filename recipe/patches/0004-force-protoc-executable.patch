@@ -7,10 +7,12 @@ Subject: [PATCH 04/18] force protoc executable
  cmake/protobuf.cmake | 17 ++---------------
  1 file changed, 2 insertions(+), 15 deletions(-)
 
-diff --git a/cmake/protobuf.cmake b/cmake/protobuf.cmake
-index ad80ca6e46..7bae8d95bd 100644
---- a/cmake/protobuf.cmake
-+++ b/cmake/protobuf.cmake
+---
+
+diff --git c/cmake/protobuf.cmake i/cmake/protobuf.cmake
+index ad80ca6..7bae8d9 100644
+--- c/cmake/protobuf.cmake
++++ i/cmake/protobuf.cmake
 @@ -70,21 +70,8 @@ elseif(gRPC_PROTOBUF_PROVIDER STREQUAL "package")
      endif()
      # Well-known proto files are expected to be in the Protobuf include directory.
