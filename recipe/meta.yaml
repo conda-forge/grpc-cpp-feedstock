@@ -84,7 +84,7 @@ source:
   {% endif %}
 
 build:
-  number: 1
+  number: 2
 
 outputs:
   - name: libgrpc
@@ -120,7 +120,7 @@ outputs:
         - openssl
         - zlib
       run:
-        - ucrt  # [win]
+        - ucrt  # [win and not arm64]
       run_constrained:
         # make sure we don't co-install with old version of previous package name
         - grpc-cpp ={{ version }}

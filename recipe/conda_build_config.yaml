@@ -1,0 +1,2 @@
+python:  # [win and arm64]
+  - 3.14.* *_cp314  # [win and arm64]
