@@ -50,8 +50,10 @@ source:
     # Refreshes etc/roots.pem from the Chromium root store. Drops emSign ECC
     # Root CA - G3; keeps emSign Root CA - G1. Applies cleanly to v1.83.0.
     - patches/0019-update-grpc-repo-roots.patch
+    # Removes eMudhra emSign Root CA - G1 from etc/roots.pem (applies on top of 0019)
+    - patches/0020-remove-emudhra-emsign-root-ca-g1.patch
 build:
-  number: 2
+  number: 3
 
 outputs:
   - name: libgrpc
@@ -217,7 +219,7 @@ outputs:
         - cp ../../../test_grpcio_helloworld.py .                                # [unix]
         - copy ..\..\..\test_grpcio_helloworld.py .                              # [win]
         - python test_grpcio_helloworld.py
-  
+
   - name: grpcio-tools
     script: build-grpcio-tools.sh  # [not win]
     script: build-grpcio-tools.bat  # [win]
