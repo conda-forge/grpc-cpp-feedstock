@@ -47,7 +47,7 @@ source:
     # silence absl::Mutex::Lock()/Unlock() deprecation warnings on newer abseil
     - patches/0018-silence-absl-Mutex-Lock-Unlock-deprecation-warnings.patch
 build:
-  number: 0
+  number: 1
 
 outputs:
   - name: libgrpc
@@ -67,9 +67,9 @@ outputs:
         # for analysing total number of symbols in grpc.dll
         - py-lief       # [win]
       host:
-        - libabseil 20260526.0
-        - c-ares 1.19.1
-        - libprotobuf 7.35.1
+        - libabseil {{ libabseil }}
+        - c-ares {{ c_ares }}
+        - libprotobuf {{ libprotobuf }}
         - re2 {{ re2 }}.*
         - openssl {{ openssl }}.*
         - zlib {{ zlib }}.*
