@@ -172,7 +172,8 @@ outputs:
         - python
         - pip
         - setuptools >=77.0.1
-        - cython
+        # 3.3.0 emits ::isfinite; GCC 14 -std=c++17 does not declare it (cython#7915). 3.3.1 is not on main.
+        - cython 3.2.9
         - libabseil 20260526.0
         - {{ pin_subpackage('libgrpc', exact=True) }}
         - pthread-stubs ==0.3                     # [linux]
@@ -229,7 +230,8 @@ outputs:
         - grpcio ={{ version }}=*_{{ PKG_BUILDNUM }}
         - python
         - wheel
-        - cython
+        # same GCC 14 / cython 3.3.0 isfinite break as grpcio (cython#7915)
+        - cython 3.2.9
         - pip
         - setuptools >=77.0.1
         - libabseil 20260526.0
