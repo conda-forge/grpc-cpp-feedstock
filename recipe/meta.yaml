@@ -51,7 +51,7 @@ source:
     # Root CA - G3; keeps emSign Root CA - G1. Applies cleanly to v1.83.0.
     - patches/0019-update-grpc-repo-roots.patch
 build:
-  number: 1
+  number: 2
 
 outputs:
   - name: libgrpc
