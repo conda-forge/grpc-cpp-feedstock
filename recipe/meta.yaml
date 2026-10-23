@@ -135,6 +135,7 @@ outputs:
         - cmake
         - ninja
         - pkg-config
+        - libsystemd    # [linux]
         # only required for pkg-config test (which wants to find zlib.pc)
         - zlib
       files:
