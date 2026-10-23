@@ -72,6 +72,10 @@ source:
     git_url: https://github.com/google/googletest.git
     git_rev: 52eb8108c5bdec04579160ae17225d66034bd723
 
+  - folder: third_party/grpc-proto
+    git_url: https://github.com/grpc/grpc-proto.git
+    git_rev: ec30f589e2519d595688b9a42f88a91bdd6b733f
+
   - folder: third_party/protoc-gen-validate
     git_url: https://github.com/envoyproxy/protoc-gen-validate.git
     git_rev: 7b06248484ceeaa947e93ca2747eccf336a88ecc
