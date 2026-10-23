@@ -119,6 +119,7 @@ outputs:
         - c-ares
         - libabseil
         - libprotobuf
+        - libsystemd    # [linux]
         - openssl
         - re2
         - zlib
