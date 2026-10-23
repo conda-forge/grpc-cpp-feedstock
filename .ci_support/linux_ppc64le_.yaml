@@ -24,6 +24,8 @@ libgrpc:
 - '1.82'
 libprotobuf:
 - 7.35.1
+libsystemd:
+- '257'
 openssl:
 - '3.5'
 pin_run_as_build:
