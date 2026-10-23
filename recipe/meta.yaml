@@ -98,6 +98,7 @@ outputs:
         - {{ compiler('cxx') }}
         - cmake
         - ninja
+        - pkg-config
         - python *      # [win]
         # for analysing total number of symbols in grpc.dll
         - py-lief       # [win]
