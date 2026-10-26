@@ -1,4 +1,4 @@
-From f4ae43fc97d52ffe320f7dcb1b4483365e49ddee Mon Sep 17 00:00:00 2001
+From e266f3776de2480cc48637246bebcf895c5d1d87 Mon Sep 17 00:00:00 2001
 From: Julien Jerphanion <git@jjerphan.xyz>
 Date: Tue, 9 Jun 2026 12:30:00 +0000
 Subject: [PATCH 17/17] silence absl Mutex Lock/Unlock deprecation warnings
@@ -40,7 +40,7 @@ index 66001ec63e..148ccc3d14 100644
  
  // absl deprecated MutexLock(Mutex*) in favor of MutexLock(Mutex&), but grpc
 diff --git a/src/core/util/sync.h b/src/core/util/sync.h
-index 33c7c13a73..2d8d8ab136 100644
+index 81ff96db11..86ab4a1117 100644
 --- a/src/core/util/sync.h
 +++ b/src/core/util/sync.h
 @@ -43,7 +43,19 @@ namespace grpc_core {

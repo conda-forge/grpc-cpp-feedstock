@@ -1,4 +1,4 @@
-From 4327740010e98d5ac58531a2af8b1348eb8bca36 Mon Sep 17 00:00:00 2001
+From bb214afa5af43eee9fdebdca77f12888ba5084ca Mon Sep 17 00:00:00 2001
 From: Julien Jerphanion <git@jjerphan.xyz>
 Date: Tue, 9 Jun 2026 12:00:00 +0000
 Subject: [PATCH 16/17] silence absl MutexLock pointer deprecation warnings
@@ -61,7 +61,7 @@ index dcd4dcd1e8..66001ec63e 100644
  
  class ABSL_LOCKABLE Mutex {
 diff --git a/src/core/util/sync.h b/src/core/util/sync.h
-index 77d1a54206..33c7c13a73 100644
+index 32645039d7..81ff96db11 100644
 --- a/src/core/util/sync.h
 +++ b/src/core/util/sync.h
 @@ -44,10 +44,39 @@ namespace grpc_core {
