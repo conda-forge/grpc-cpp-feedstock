@@ -1,4 +1,4 @@
-From 4c67619a8a89e4a4b154f00494b02a70b32d8c7b Mon Sep 17 00:00:00 2001
+From b55d9216e2b873a91cf221740a19545a9bf282f5 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 4 Mar 2025 08:53:30 +1100
 Subject: [PATCH 10/17] build grpcio-tools from source
@@ -9,10 +9,10 @@ Subject: [PATCH 10/17] build grpcio-tools from source
  2 files changed, 51 insertions(+), 28 deletions(-)
 
 diff --git a/tools/distrib/python/grpcio_tools/protoc_lib_deps.py b/tools/distrib/python/grpcio_tools/protoc_lib_deps.py
-index dface2fe4d..b9cc2df618 100644
+index 7d0342a793..fdac60f381 100644
 --- a/tools/distrib/python/grpcio_tools/protoc_lib_deps.py
 +++ b/tools/distrib/python/grpcio_tools/protoc_lib_deps.py
-@@ -387,21 +387,21 @@ CC_FILES=[
+@@ -391,21 +391,21 @@ CC_FILES_WINDOWS_ONLY=[
  ]
  
  PROTO_FILES=[
@@ -50,7 +50,7 @@ index dface2fe4d..b9cc2df618 100644
  
  CC_INCLUDES=[
 diff --git a/tools/distrib/python/grpcio_tools/setup.py b/tools/distrib/python/grpcio_tools/setup.py
-index 2cd129eb32..36e418fa5d 100644
+index 722c5afdae..25b1264ba9 100644
 --- a/tools/distrib/python/grpcio_tools/setup.py
 +++ b/tools/distrib/python/grpcio_tools/setup.py
 @@ -15,6 +15,7 @@
@@ -76,12 +76,14 @@ index 2cd129eb32..36e418fa5d 100644
          # Required to build upb from protobuf 33.x
          # https://github.com/grpc/grpc/issues/41951
          EXTRA_ENV_COMPILE_ARGS += " /Zc:preprocessor"
-@@ -247,15 +245,17 @@ EXTRA_LINK_ARGS = shlex.split(EXTRA_ENV_LINK_ARGS)
- if BUILD_WITH_STATIC_LIBSTDCXX:
-     EXTRA_LINK_ARGS.append("-static-libstdc++")
+@@ -255,17 +253,19 @@ def _get_cc_files():
+     return [os.path.normpath(cc_file) for cc_file in cc_files]
  
--CC_FILES = [os.path.normpath(cc_file) for cc_file in protoc_lib_deps.CC_FILES]
+ 
+-CC_FILES = _get_cc_files()
 +CC_FILES = []
+ 
+ 
  PROTO_FILES = [
      os.path.normpath(proto_file) for proto_file in protoc_lib_deps.PROTO_FILES
  ]
@@ -98,7 +100,7 @@ index 2cd129eb32..36e418fa5d 100644
  
  GRPC_PYTHON_TOOLS_PACKAGE = "grpc_tools"
  GRPC_PYTHON_PROTO_RESOURCES_NAME = "_proto"
-@@ -298,16 +298,38 @@ def package_data():
+@@ -308,16 +308,38 @@ def package_data():
      return {GRPC_PYTHON_TOOLS_PACKAGE: proto_files}
  
  
@@ -139,7 +141,7 @@ index 2cd129eb32..36e418fa5d 100644
      ] + CC_FILES
  
      plugin_ext = Extension(
-@@ -315,10 +337,11 @@ def extension_modules():
+@@ -325,10 +347,11 @@ def extension_modules():
          sources=plugin_sources,
          include_dirs=[
              ".",

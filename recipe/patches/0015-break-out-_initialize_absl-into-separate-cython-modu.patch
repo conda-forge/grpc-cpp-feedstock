@@ -1,4 +1,4 @@
-From 0844cc3fb148754b87223254a26af75569d5d004 Mon Sep 17 00:00:00 2001
+From 4f185594d090a68a5599563fded35d5b4a7687e9 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sat, 21 Feb 2026 14:29:28 +1100
 Subject: [PATCH 15/17] break out _initialize_absl into separate cython module
@@ -15,10 +15,10 @@ Subject: [PATCH 15/17] break out _initialize_absl into separate cython module
  rename src/python/grpcio/grpc/_cython/{_cygrpc/absl.pyx.pxi => cygrpc_absl_init.pyx} (98%)
 
 diff --git a/setup.py b/setup.py
-index f6e1716cdd..8f2bd6c4d5 100644
+index 8d09f288c3..3f80002b24 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -308,6 +308,7 @@ if EXTRA_ENV_LINK_ARGS is None:
+@@ -309,6 +309,7 @@ if EXTRA_ENV_LINK_ARGS is None:
  if "darwin" in sys.platform:
      EXTRA_ENV_LINK_ARGS += " -framework CoreFoundation"
      EXTRA_ENV_LINK_ARGS += " -Wl,-exported_symbol,_PyInit_cygrpc"
@@ -26,7 +26,7 @@ index f6e1716cdd..8f2bd6c4d5 100644
  
  EXTRA_COMPILE_ARGS = shlex.split(EXTRA_ENV_COMPILE_ARGS)
  EXTRA_LINK_ARGS = shlex.split(EXTRA_ENV_LINK_ARGS)
-@@ -317,7 +318,7 @@ if BUILD_WITH_STATIC_LIBSTDCXX:
+@@ -318,7 +319,7 @@ if BUILD_WITH_STATIC_LIBSTDCXX:
  
  CYTHON_EXTENSION_PACKAGE_NAMES = ()
  
@@ -35,7 +35,7 @@ index f6e1716cdd..8f2bd6c4d5 100644
  
  GRPCIO_CC_SRCS = ()
  
-@@ -539,6 +540,7 @@ def cython_extensions_and_necessity():
+@@ -544,6 +545,7 @@ def cython_extensions_and_necessity():
                  + core_c_files
                  + asm_files
              ),

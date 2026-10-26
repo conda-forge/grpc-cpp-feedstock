@@ -1,4 +1,4 @@
-From ac1aa6294f08d2d9cd06b194309e43c609e06195 Mon Sep 17 00:00:00 2001
+From 78507f604711efd9788ab4f44843d16f99614729 Mon Sep 17 00:00:00 2001
 From: Jonathan Helmus <jjhelmus@gmail.com>
 Date: Mon, 17 Feb 2020 15:45:06 -0600
 Subject: [PATCH 01/17] windows ssl lib names
@@ -11,10 +11,10 @@ Co-Authored-By: Marius van Niekerk <marius.v.niekerk@gmail.com>
  1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index 76629341fe..9838d83ec6 100644
+index 0a811c9131..b4acb3199c 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -390,10 +390,10 @@ if "win32" in sys.platform:
+@@ -395,10 +395,10 @@ if "win32" in sys.platform:
          "ws2_32",
      )
  if BUILD_WITH_SYSTEM_OPENSSL:

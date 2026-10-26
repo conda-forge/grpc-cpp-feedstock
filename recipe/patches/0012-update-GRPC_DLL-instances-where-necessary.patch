@@ -1,4 +1,4 @@
-From cced68f8e502569c261fa4c8d2a3fd72137cd3ae Mon Sep 17 00:00:00 2001
+From 3945a39710a4f28d99d179b6da4e976feeadb218 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 2 Mar 2025 07:16:19 +1100
 Subject: [PATCH 12/17] update GRPC_DLL instances where necessary
@@ -90,10 +90,10 @@ index 9bf4b6dd59..f4cdb63489 100644
    static const JsonLoaderInterface* JsonLoader(const JsonArgs&);
    void JsonPostLoad(const Json& json, const JsonArgs&,
 diff --git a/src/core/ext/transport/chttp2/server/chttp2_server.h b/src/core/ext/transport/chttp2/server/chttp2_server.h
-index d1416b76dd..8880edc9c4 100644
+index da1259f7c2..fb736db556 100644
 --- a/src/core/ext/transport/chttp2/server/chttp2_server.h
 +++ b/src/core/ext/transport/chttp2/server/chttp2_server.h
-@@ -243,7 +243,7 @@ class PassiveListenerImpl final : public PassiveListener {
+@@ -244,7 +244,7 @@ class PassiveListenerImpl final : public PassiveListener {
        std::unique_ptr<grpc_event_engine::experimental::EventEngine::Endpoint>
            endpoint) override ABSL_LOCKS_EXCLUDED(mu_);
  
@@ -116,7 +116,7 @@ index 05030d6e40..b1a9fe8e9a 100644
                                           void* reserved);
  
 diff --git a/src/core/lib/channel/channel_args.h b/src/core/lib/channel/channel_args.h
-index 6450a9fa6a..727e938df4 100644
+index dfb1c49d0e..f410d23d6e 100644
 --- a/src/core/lib/channel/channel_args.h
 +++ b/src/core/lib/channel/channel_args.h
 @@ -419,12 +419,12 @@ class ChannelArgs {
@@ -139,13 +139,13 @@ index 6450a9fa6a..727e938df4 100644
    static ChannelArgs FromC(const grpc_channel_args* args);
    static ChannelArgs FromC(const grpc_channel_args& args) {
 diff --git a/src/core/lib/debug/trace_flags.h b/src/core/lib/debug/trace_flags.h
-index 00d703e439..d42bb45afd 100644
+index 621ae7a5a4..c767e0aec2 100644
 --- a/src/core/lib/debug/trace_flags.h
 +++ b/src/core/lib/debug/trace_flags.h
-@@ -50,7 +50,7 @@ extern DebugOnlyTraceFlag work_serializer_trace;
- extern DebugOnlyTraceFlag ztrace_trace;
+@@ -51,7 +51,7 @@ extern DebugOnlyTraceFlag ztrace_trace;
  extern TraceFlag api_trace;
  extern TraceFlag apple_polling_trace;
+ extern TraceFlag autosharding_lb_trace;
 -extern TraceFlag backend_metric_trace;
 +GRPC_DLL extern TraceFlag backend_metric_trace;
  extern TraceFlag backend_metric_filter_trace;
@@ -213,7 +213,7 @@ index 9ce180b345..17f484660c 100644
  /// Perform the file descriptor mutation operation of \a mutator on \a fd
  bool grpc_socket_mutator_mutate_fd(grpc_socket_mutator* mutator, int fd,
 diff --git a/src/core/lib/promise/activity.h b/src/core/lib/promise/activity.h
-index 9de57809a5..9f63417587 100644
+index 3f5da7a859..6b588a115c 100644
 --- a/src/core/lib/promise/activity.h
 +++ b/src/core/lib/promise/activity.h
 @@ -75,7 +75,7 @@ struct Unwakeable final : public Wakeable {
@@ -239,7 +239,7 @@ index 35a0514089..98bd1e68c1 100644
   private:
    Mutex mu_;
 diff --git a/src/core/lib/surface/call.h b/src/core/lib/surface/call.h
-index c0b0433317..967b4ae93e 100644
+index 508111877e..70e1a9ae75 100644
 --- a/src/core/lib/surface/call.h
 +++ b/src/core/lib/surface/call.h
 @@ -327,9 +327,9 @@ grpc_compression_algorithm grpc_call_compression_for_level(
@@ -297,10 +297,10 @@ index 33c6dc6057..22a61a1a99 100644
  #define GRPC_AUTH_CONTEXT_ARG "grpc.auth_context"
  
 diff --git a/src/core/tsi/ssl_transport_security.h b/src/core/tsi/ssl_transport_security.h
-index c7940add89..00fd8f383e 100644
+index 3736c13574..c9446e5b64 100644
 --- a/src/core/tsi/ssl_transport_security.h
 +++ b/src/core/tsi/ssl_transport_security.h
-@@ -507,7 +507,7 @@ tsi_result tsi_ssl_get_cert_chain_contents(STACK_OF(X509) * peer_chain,
+@@ -514,7 +514,7 @@ tsi_result tsi_ssl_get_cert_chain_contents(STACK_OF(X509) * peer_chain,
                                             tsi_peer_property* property);
  
  namespace tsi {

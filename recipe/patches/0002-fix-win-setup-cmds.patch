@@ -1,4 +1,4 @@
-From 7aca6e7289a2ca775fdb780734c9e9e267b92718 Mon Sep 17 00:00:00 2001
+From 72092e906fcfd321380a7e36521ba2647f795599 Mon Sep 17 00:00:00 2001
 From: Mike Sarahan <msarahan@gmail.com>
 Date: Tue, 18 Feb 2020 13:53:05 -0600
 Subject: [PATCH 02/17] fix win setup cmds
@@ -12,10 +12,10 @@ Co-Authored-By: H. Vetinari <h.vetinari@gmx.com>
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index 9838d83ec6..888e684fd4 100644
+index b4acb3199c..240c35c302 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -201,6 +201,9 @@ ENABLE_DOCUMENTATION_BUILD = _env_bool_value(
+@@ -202,6 +202,9 @@ ENABLE_DOCUMENTATION_BUILD = _env_bool_value(
  
  
  def check_linker_need_libatomic():
@@ -25,7 +25,7 @@ index 9838d83ec6..888e684fd4 100644
      """Test if linker on system needs libatomic."""
      code_test = (
          b"#include <atomic>\n"
-@@ -264,9 +267,6 @@ if EXTRA_ENV_COMPILE_ARGS is None:
+@@ -265,9 +268,6 @@ if EXTRA_ENV_COMPILE_ARGS is None:
          # MSVC by defaults uses C++14 and C89 so both needs to be configured.
          EXTRA_ENV_COMPILE_ARGS += " /std:c++17"
          EXTRA_ENV_COMPILE_ARGS += " /std:c11"
