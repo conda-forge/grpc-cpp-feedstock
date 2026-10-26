@@ -73,7 +73,7 @@ source:
 
   - folder: third_party/grpc-proto
     git_url: https://github.com/grpc/grpc-proto.git
-    git_rev: ec30f589e2519d595688b9a42f88a91bdd6b733f
+    git_rev: dd549fc4ed04b60b0fdd3866b82ef0a7c87c6e4f
 
   - folder: third_party/protoc-gen-validate
     git_url: https://github.com/envoyproxy/protoc-gen-validate.git
