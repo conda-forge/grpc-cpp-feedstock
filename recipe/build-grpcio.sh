@@ -1,13 +1,13 @@
 #!/bin/bash
 
 export GRPC_BUILD_WITH_BORING_SSL_ASM=""
-export GRPC_PYTHON_BUILD_SYSTEM_ABSL="True"
-export GRPC_PYTHON_BUILD_SYSTEM_CARES="True"
-export GRPC_PYTHON_BUILD_SYSTEM_GRPC_CORE="True"
-export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL="True"
-export GRPC_PYTHON_BUILD_SYSTEM_RE2="True"
-export GRPC_PYTHON_BUILD_SYSTEM_ZLIB="True"
-export GRPC_PYTHON_BUILD_WITH_CYTHON="True"
+export GRPC_PYTHON_BUILD_SYSTEM_ABSL="1"
+export GRPC_PYTHON_BUILD_SYSTEM_CARES="1"
+export GRPC_PYTHON_BUILD_SYSTEM_GRPC_CORE="1"
+export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL="1"
+export GRPC_PYTHON_BUILD_SYSTEM_RE2="1"
+export GRPC_PYTHON_BUILD_SYSTEM_ZLIB="1"
+export GRPC_PYTHON_BUILD_WITH_CYTHON="1"
 export GRPC_PYTHON_USE_PREBUILT_GRPC_CORE=""
 
 if [[ "${target_platform}" == linux-* ]]; then
@@ -26,6 +26,7 @@ fi
 ln -sf "$(which $CC)" "$SRC_DIR/cc"
 export PATH="$SRC_DIR:$PATH"
 export DYLD_LIBRARY_PATH="${PREFIX}/lib:${DYLD_LIBRARY_PATH}"
-CXXFLAGS="${CXXFLAGS} -DNDEBUG"
+export CXXFLAGS="${CXXFLAGS} -DNDEBUG"
+cd grpc-source
 
 $PYTHON -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -v

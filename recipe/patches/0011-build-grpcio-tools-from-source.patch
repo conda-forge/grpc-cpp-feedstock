@@ -1,20 +1,8 @@
-From fb360213b69720f63b31ccf4f091e5f461b544e6 Mon Sep 17 00:00:00 2001
-From: "H. Vetinari" <h.vetinari@gmx.com>
-Date: Tue, 4 Mar 2025 08:53:30 +1100
-Subject: [PATCH 11/18] build grpcio-tools from source
-
----
- .../python/grpcio_tools/protoc_lib_deps.py    | 30 ++++++------
- tools/distrib/python/grpcio_tools/setup.py    | 49 ++++++++++++++-----
- 2 files changed, 51 insertions(+), 28 deletions(-)
-
----
-
-diff --git c/tools/distrib/python/grpcio_tools/protoc_lib_deps.py i/tools/distrib/python/grpcio_tools/protoc_lib_deps.py
-index dface2f..b9cc2df 100644
---- c/tools/distrib/python/grpcio_tools/protoc_lib_deps.py
-+++ i/tools/distrib/python/grpcio_tools/protoc_lib_deps.py
-@@ -387,21 +387,21 @@ CC_FILES=[
+diff --git a/tools/distrib/python/grpcio_tools/protoc_lib_deps.py b/tools/distrib/python/grpcio_tools/protoc_lib_deps.py
+index 7d0342a793..fdac60f381 100644
+--- a/tools/distrib/python/grpcio_tools/protoc_lib_deps.py
++++ b/tools/distrib/python/grpcio_tools/protoc_lib_deps.py
+@@ -391,21 +391,21 @@ CC_FILES_WINDOWS_ONLY=[
  ]
  
  PROTO_FILES=[
@@ -51,10 +39,10 @@ index dface2f..b9cc2df 100644
  ]
  
  CC_INCLUDES=[
-diff --git c/tools/distrib/python/grpcio_tools/setup.py i/tools/distrib/python/grpcio_tools/setup.py
-index 2cd129e..36e418f 100644
---- c/tools/distrib/python/grpcio_tools/setup.py
-+++ i/tools/distrib/python/grpcio_tools/setup.py
+diff --git a/tools/distrib/python/grpcio_tools/setup.py b/tools/distrib/python/grpcio_tools/setup.py
+index 722c5afdae..41d3a69f61 100644
+--- a/tools/distrib/python/grpcio_tools/setup.py
++++ b/tools/distrib/python/grpcio_tools/setup.py
 @@ -15,6 +15,7 @@
  import errno
  import os
@@ -78,29 +66,31 @@ index 2cd129e..36e418f 100644
          # Required to build upb from protobuf 33.x
          # https://github.com/grpc/grpc/issues/41951
          EXTRA_ENV_COMPILE_ARGS += " /Zc:preprocessor"
-@@ -247,15 +245,17 @@ EXTRA_LINK_ARGS = shlex.split(EXTRA_ENV_LINK_ARGS)
- if BUILD_WITH_STATIC_LIBSTDCXX:
-     EXTRA_LINK_ARGS.append("-static-libstdc++")
+@@ -255,17 +253,19 @@ def _get_cc_files():
+     return [os.path.normpath(cc_file) for cc_file in cc_files]
  
--CC_FILES = [os.path.normpath(cc_file) for cc_file in protoc_lib_deps.CC_FILES]
+ 
+-CC_FILES = _get_cc_files()
 +CC_FILES = []
+ 
++prefix = "LIBRARY_PREFIX" if "win32" in sys.platform else "PREFIX"
++prefix_include = os.path.join(os.environ[prefix], "include")
+ 
  PROTO_FILES = [
      os.path.normpath(proto_file) for proto_file in protoc_lib_deps.PROTO_FILES
  ]
-+prefix = "LIBRARY_PREFIX" if "win32" in sys.platform else "PREFIX"
-+prefix_include = os.path.join(os.environ[prefix], "include")
  CC_INCLUDES = [
--    os.path.normpath(include_dir) for include_dir in protoc_lib_deps.CC_INCLUDES
-+    prefix_include
- ]
+     os.path.normpath(include_dir) for include_dir in protoc_lib_deps.CC_INCLUDES
+-]
 -PROTO_INCLUDE = os.path.normpath(protoc_lib_deps.PROTO_INCLUDE)
 -PROTO_PATH_PREFIX = os.path.normpath("google/protobuf")
++] + [prefix_include]
 +PROTO_INCLUDE = prefix_include
 +PROTO_PATH_PREFIX = prefix_include
  
  GRPC_PYTHON_TOOLS_PACKAGE = "grpc_tools"
  GRPC_PYTHON_PROTO_RESOURCES_NAME = "_proto"
-@@ -298,16 +298,38 @@ def package_data():
+@@ -308,16 +308,38 @@ def package_data():
      return {GRPC_PYTHON_TOOLS_PACKAGE: proto_files}
  
  
@@ -141,7 +131,7 @@ index 2cd129e..36e418f 100644
      ] + CC_FILES
  
      plugin_ext = Extension(
-@@ -315,10 +337,11 @@ def extension_modules():
+@@ -325,10 +347,11 @@ def extension_modules():
          sources=plugin_sources,
          include_dirs=[
              ".",

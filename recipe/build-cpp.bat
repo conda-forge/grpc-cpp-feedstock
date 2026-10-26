@@ -5,7 +5,7 @@ echo %CXXFLAGS%
 
 :: copy a necessary helper to source directory
 copy %RECIPE_DIR%\generate_def.py %SRC_DIR%\generate_def.py
-
+cd grpc-source
 mkdir build-cpp
 cd build-cpp
 

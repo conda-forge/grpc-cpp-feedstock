@@ -3,6 +3,7 @@ set -ex
 
 export CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_CXX_STANDARD=17"
 
+cd grpc-source
 mkdir -p build-cpp
 pushd build-cpp
 
