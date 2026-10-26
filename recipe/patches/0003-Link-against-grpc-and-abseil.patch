@@ -1,15 +1,17 @@
-From 052c25e71a78bbac932126284bf34bfce051dfb0 Mon Sep 17 00:00:00 2001
+From 9fd7cde09f05c9644ddef691f0b0b82b26897c5a Mon Sep 17 00:00:00 2001
 From: Marius van Niekerk <marius.v.niekerk@gmail.com>
 Date: Mon, 13 Jun 2022 17:13:07 -0400
-Subject: [PATCH 03/18] Link against grpc and abseil
+Subject: [PATCH 03/17] Link against grpc and abseil
 
 Co-Authored-By: H. Vetinari <h.vetinari@gmx.com>
 ---
+ setup.py | 24 +++++++++++++++++++-----
+ 1 file changed, 19 insertions(+), 5 deletions(-)
 
-diff --git c/setup.py i/setup.py
-index 888e684..f6e1716 100644
---- c/setup.py
-+++ i/setup.py
+diff --git a/setup.py b/setup.py
+index 888e684fd4..f6e1716cdd 100644
+--- a/setup.py
++++ b/setup.py
 @@ -172,6 +172,8 @@ BUILD_WITH_STATIC_LIBSTDCXX = _env_bool_value(
      "GRPC_PYTHON_BUILD_WITH_STATIC_LIBSTDCXX", "False"
  )

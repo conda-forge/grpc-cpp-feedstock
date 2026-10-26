@@ -1,18 +1,20 @@
-From 429b0243e5c15a4eff433b81cde7a1ae796eb380 Mon Sep 17 00:00:00 2001
+From 7aca6e7289a2ca775fdb780734c9e9e267b92718 Mon Sep 17 00:00:00 2001
 From: Mike Sarahan <msarahan@gmail.com>
 Date: Tue, 18 Feb 2020 13:53:05 -0600
-Subject: [PATCH 02/18] fix win setup cmds
+Subject: [PATCH 02/17] fix win setup cmds
 
 Co-Authored-By: Julien Schueller <schueller@phimeca.com>
 Co-Authored-By: Nicholas Bollweg <nick.bollweg@gmail.com>
 Co-Authored-By: Marius van Niekerk <marius.v.niekerk@gmail.com>
 Co-Authored-By: H. Vetinari <h.vetinari@gmx.com>
 ---
+ setup.py | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git c/setup.py i/setup.py
-index 9838d83..888e684 100644
---- c/setup.py
-+++ i/setup.py
+diff --git a/setup.py b/setup.py
+index 9838d83ec6..888e684fd4 100644
+--- a/setup.py
++++ b/setup.py
 @@ -201,6 +201,9 @@ ENABLE_DOCUMENTATION_BUILD = _env_bool_value(
  
  
