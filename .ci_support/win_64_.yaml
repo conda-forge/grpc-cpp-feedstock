@@ -11,9 +11,9 @@ channel_targets:
 cxx_compiler:
 - vs2022
 libabseil:
-- '20260526'
+- '20260817'
 libgrpc:
-- '1.82'
+- '1.85'
 libprotobuf:
 - 7.35.1
 openssl:
