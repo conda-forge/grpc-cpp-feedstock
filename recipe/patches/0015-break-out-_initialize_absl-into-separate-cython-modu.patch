@@ -1,4 +1,4 @@
-From 4f185594d090a68a5599563fded35d5b4a7687e9 Mon Sep 17 00:00:00 2001
+From df1c887b8feda08d983bb583e232c7ccb2915702 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sat, 21 Feb 2026 14:29:28 +1100
 Subject: [PATCH 15/17] break out _initialize_absl into separate cython module

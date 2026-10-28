@@ -1,4 +1,4 @@
-From e266f3776de2480cc48637246bebcf895c5d1d87 Mon Sep 17 00:00:00 2001
+From 4bea94b513830dae2f29e95388efe042206aff28 Mon Sep 17 00:00:00 2001
 From: Julien Jerphanion <git@jjerphan.xyz>
 Date: Tue, 9 Jun 2026 12:30:00 +0000
 Subject: [PATCH 17/17] silence absl Mutex Lock/Unlock deprecation warnings

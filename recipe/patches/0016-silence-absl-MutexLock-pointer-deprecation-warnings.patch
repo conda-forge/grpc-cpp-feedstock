@@ -1,4 +1,4 @@
-From bb214afa5af43eee9fdebdca77f12888ba5084ca Mon Sep 17 00:00:00 2001
+From 61143d8bd863b596e522af5ad0d0a1fa4169d5fd Mon Sep 17 00:00:00 2001
 From: Julien Jerphanion <git@jjerphan.xyz>
 Date: Tue, 9 Jun 2026 12:00:00 +0000
 Subject: [PATCH 16/17] silence absl MutexLock pointer deprecation warnings
