@@ -1,4 +1,5 @@
 if "%ARCH%" == "32" (set PLATFORM=x86) else (set PLATFORM=x64)
+if "%target_platform%" == "win-arm64" set PLATFORM=arm64
 
 set "GRPC_BUILD_WITH_BORING_SSL_ASM="
 set "GRPC_PYTHON_BUILD_SYSTEM_ABSL=True"
