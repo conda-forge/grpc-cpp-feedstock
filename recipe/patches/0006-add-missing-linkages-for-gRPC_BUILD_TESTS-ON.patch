@@ -1,4 +1,4 @@
-From b04e2474e6be8d8f0e49d7ffdbded53883e6e404 Mon Sep 17 00:00:00 2001
+From 15226f922c453723f70030b8075d92fa3c60c4d5 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 26 Sep 2023 18:25:54 +1100
 Subject: [PATCH 06/17] add missing linkages for gRPC_BUILD_TESTS=ON
@@ -14,10 +14,10 @@ For some tests, re2 and c-ares have just been forgotten as dependencies.
  1 file changed, 9 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index bf9afa3d3d..7450d53a2a 100644
+index 08cefda28f..e1d34fd8b7 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -3399,6 +3399,7 @@ target_link_libraries(grpc_test_util
+@@ -3400,6 +3400,7 @@ target_link_libraries(grpc_test_util
    ${_gRPC_ALLTARGETS_LIBRARIES}
    absl::failure_signal_handler
    absl::stacktrace
@@ -25,7 +25,7 @@ index bf9afa3d3d..7450d53a2a 100644
    absl::symbolize
    absl::log_initialize
    grpc
-@@ -3474,6 +3475,7 @@ target_link_libraries(grpc_test_util_unsecure
+@@ -3475,6 +3476,7 @@ target_link_libraries(grpc_test_util_unsecure
    ${_gRPC_ALLTARGETS_LIBRARIES}
    absl::failure_signal_handler
    absl::stacktrace

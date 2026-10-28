@@ -26,7 +26,7 @@ source:
       - patches/0003-Link-against-grpc-and-abseil.patch
       - patches/0004-force-protoc-executable.patch
       # mark target_link_libraries for grpc as PRIVATE where possible
-      - patches/0005-mark-linkages-of-grpc-_unsecure-as-private.patch
+      - patches/0005-mark-linkages-of-grpc-.-as-private.patch
       # get gRPC_BUILD_TESTS=ON to build
       - patches/0006-add-missing-linkages-for-gRPC_BUILD_TESTS-ON.patch
       # see https://github.com/grpc/grpc/pull/38893
@@ -84,7 +84,7 @@ source:
     git_rev: ee656c7534f5d7dc23d44dd611689568f72017a6
 
 build:
-  number: 1
+  number: 2
 
 outputs:
   - name: libgrpc
@@ -122,7 +122,10 @@ outputs:
         - re2
         - zlib
       run:
-        - ucrt  # [win and not arm64]
+        # even though we link systemd privately (see patches), linking grpc++
+        # (using CMake) requires finding the unversioned libsystemd.so
+        - libsystemd    # [linux]
+        - ucrt          # [win and not arm64]
       run_constrained:
         # make sure we don't co-install with old version of previous package name
         - grpc-cpp ={{ version }}
@@ -135,7 +138,6 @@ outputs:
         - cmake
         - ninja
         - pkg-config
-        - libsystemd    # [linux]
         # only required for pkg-config test (which wants to find zlib.pc)
         - zlib
       files:

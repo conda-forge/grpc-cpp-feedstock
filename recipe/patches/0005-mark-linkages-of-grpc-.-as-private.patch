@@ -1,0 +1,150 @@
+From dc6f6c8752628412a5537cc5054574e17dee1b49 Mon Sep 17 00:00:00 2001
+From: "H. Vetinari" <h.vetinari@gmx.com>
+Date: Tue, 23 Aug 2022 11:45:20 +0200
+Subject: [PATCH 05/17] mark linkages of grpc{,++,...} as private
+
+except openssl, libprotobuf (& other targets that are part of grpc),
+which are needed by dependents
+
+See also: https://github.com/grpc/grpc/issues/30838
+
+Co-Authored-By: Mark Harfouche <mark.harfouche@gmail.com>
+---
+ CMakeLists.txt | 94 ++++++++++++++++++++++++++++----------------------
+ 1 file changed, 52 insertions(+), 42 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index a6b8b410b6..08cefda28f 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -3230,34 +3230,40 @@ target_include_directories(grpc
+     ${_gRPC_ZLIB_INCLUDE_DIR}
+ )
+ target_link_libraries(grpc
+-  ${_gRPC_ALLTARGETS_LIBRARIES}
+-  upb_json_lib
+-  upb_textformat_lib
+-  ${_gRPC_RE2_LIBRARIES}
+-  ${_gRPC_ZLIB_LIBRARIES}
+-  absl::algorithm_container
+-  absl::no_destructor
+-  absl::btree
+-  absl::flat_hash_map
+-  absl::flat_hash_set
+-  absl::inlined_vector
+-  absl::node_hash_map
+-  absl::function_ref
+-  absl::hash
+-  absl::type_traits
+-  absl::random_bit_gen_ref
+-  absl::random_distributions
+-  absl::statusor
+-  absl::string_view
+-  absl::span
+-  absl::utility
+-  ${_gRPC_CARES_LIBRARIES}
+-  gpr
+-  ${_gRPC_SSL_LIBRARIES}
+-  ${_gRPC_ADDRESS_SORTING_LIBRARIES}
++  # core support libs
++  PRIVATE ${_gRPC_ALLTARGETS_LIBRARIES}
++  # vendored libs
++  PRIVATE ${_gRPC_ADDRESS_SORTING_LIBRARIES}
++  PRIVATE upb_json_lib
++  PRIVATE upb_textformat_lib
++  # external dependencies used within grpc
++  PRIVATE ${_gRPC_CARES_LIBRARIES}
++  PRIVATE ${_gRPC_RE2_LIBRARIES}
++  PRIVATE ${_gRPC_ZLIB_LIBRARIES}
++  # external dependencies that need to available at runtime
++  PUBLIC  ${_gRPC_SSL_LIBRARIES}
++  # abseil
++  PRIVATE absl::algorithm_container
++  PRIVATE absl::no_destructor
++  PRIVATE absl::btree
++  PRIVATE absl::flat_hash_map
++  PRIVATE absl::flat_hash_set
++  PRIVATE absl::inlined_vector
++  PRIVATE absl::node_hash_map
++  PRIVATE absl::function_ref
++  PRIVATE absl::hash
++  PRIVATE absl::type_traits
++  PRIVATE absl::random_bit_gen_ref
++  PRIVATE absl::random_distributions
++  PRIVATE absl::statusor
++  PRIVATE absl::string_view
++  PRIVATE absl::span
++  PRIVATE absl::utility
++  # targets which belong to grpc anyway
++  PUBLIC  gpr
+ )
+ if(_gRPC_PLATFORM_IOS OR _gRPC_PLATFORM_MAC)
+-  target_link_libraries(grpc "-framework CoreFoundation")
++  target_link_libraries(grpc PUBLIC "-framework CoreFoundation")
+ endif()
+ 
+ foreach(_hdr
+@@ -5101,16 +5107,20 @@ target_include_directories(grpc++
+     ${_gRPC_PROTO_GENS_DIR}
+ )
+ target_link_libraries(grpc++
+-  ${_gRPC_ALLTARGETS_LIBRARIES}
+-  absl::dynamic_annotations
+-  absl::prefetch
+-  absl::layout
+-  absl::absl_check
+-  absl::absl_log
+-  absl::charset
+-  absl::strings_internal
+-  grpc
+-  ${_gRPC_PROTOBUF_LIBRARIES}
++  # core support libs
++  PRIVATE ${_gRPC_ALLTARGETS_LIBRARIES}
++  # external dependencies that need to available at runtime
++  PUBLIC  ${_gRPC_PROTOBUF_LIBRARIES}
++  # abseil
++  PRIVATE absl::dynamic_annotations
++  PRIVATE absl::prefetch
++  PRIVATE absl::layout
++  PRIVATE absl::absl_check
++  PRIVATE absl::absl_log
++  PRIVATE absl::charset
++  PRIVATE absl::strings_internal
++  # targets which belong to grpc anyway
++  PUBLIC  grpc
+ )
+ 
+ foreach(_hdr
+@@ -5392,8 +5402,8 @@ target_include_directories(grpc++_alts
+     ${_gRPC_PROTO_GENS_DIR}
+ )
+ target_link_libraries(grpc++_alts
+-  ${_gRPC_ALLTARGETS_LIBRARIES}
+-  grpc++
++  PRIVATE ${_gRPC_ALLTARGETS_LIBRARIES}
++  PUBLIC  grpc++
+ )
+ 
+ foreach(_hdr
+@@ -5464,8 +5474,8 @@ target_include_directories(grpc++_error_details
+     ${_gRPC_PROTO_GENS_DIR}
+ )
+ target_link_libraries(grpc++_error_details
+-  ${_gRPC_ALLTARGETS_LIBRARIES}
+-  grpc++
++  PRIVATE ${_gRPC_ALLTARGETS_LIBRARIES}
++  PUBLIC  grpc++
+ )
+ 
+ foreach(_hdr
+@@ -5546,8 +5556,8 @@ target_include_directories(grpc++_reflection
+     ${_gRPC_PROTO_GENS_DIR}
+ )
+ target_link_libraries(grpc++_reflection
+-  ${_gRPC_ALLTARGETS_LIBRARIES}
+-  grpc++
++  PRIVATE ${_gRPC_ALLTARGETS_LIBRARIES}
++  PUBLIC  grpc++
+ )
+ 
+ foreach(_hdr
