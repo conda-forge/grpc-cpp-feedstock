@@ -1,7 +1,7 @@
-From 2c846440f40e63a3ad7dbbec286fbe41e7e6feb9 Mon Sep 17 00:00:00 2001
+From a615771ad1b91b569429e221a8ee4b8d158735e7 Mon Sep 17 00:00:00 2001
 From: Julien Jerphanion <git@jjerphan.xyz>
 Date: Tue, 9 Jun 2026 12:30:00 +0000
-Subject: [PATCH 18/18] silence absl Mutex Lock/Unlock deprecation warnings
+Subject: [PATCH 18/19] silence absl Mutex Lock/Unlock deprecation warnings
 
 Newer abseil versions deprecate absl::Mutex::Lock()/Unlock()/TryLock() in
 favor of lock()/unlock()/try_lock(). gRPC still uses the CamelCase names

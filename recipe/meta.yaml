@@ -52,6 +52,8 @@ source:
       - patches/0017-silence-absl-MutexLock-pointer-deprecation-warnings.patch
       # silence absl::Mutex::Lock()/Unlock() deprecation warnings on newer abseil
       - patches/0018-silence-absl-Mutex-Lock-Unlock-deprecation-warnings.patch
+      # backport https://github.com/grpc/grpc/pull/43771
+      - patches/0019-Backport-v1.82.x-security-Update-gRPC-repo-roots.-43.patch
 
   {% if build_platform == target_platform and not win %}
   - folder: third_party/benchmark
@@ -84,7 +86,7 @@ source:
   {% endif %}
 
 build:
-  number: 1
+  number: 2
 
 outputs:
   - name: libgrpc

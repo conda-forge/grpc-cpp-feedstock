@@ -1,7 +1,7 @@
-From 1146932c40c9d42b8b2c0a34f067228abad36c66 Mon Sep 17 00:00:00 2001
+From 6e4f74eb2d1679a4bcf097f00aacfe38f913286e Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 2 Mar 2025 08:22:39 +1100
-Subject: [PATCH 10/18] reduce buildtests_cxx target to end2end tests
+Subject: [PATCH 10/19] reduce buildtests_cxx target to end2end tests
 
 as of v1.69, the whole set of tests takes extremely long to build (>6h),
 so reduce it to only "end2end" tests. This has the advantage of being
@@ -81,7 +81,7 @@ to compile, compare with the timings below.
  1 file changed, 46 insertions(+), 738 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 8b4b1cce9d..5b089f177f 100644
+index 6a480e4ffb..b47ec47645 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -47,11 +47,12 @@ set(gRPC_INSTALL_SHAREDIR "share/grpc" CACHE STRING "Installation directory for
