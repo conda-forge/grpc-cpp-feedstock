@@ -1,7 +1,7 @@
-From 43cce39c1c324528114b2bd7b35e332a021272fa Mon Sep 17 00:00:00 2001
+From e669831caebda0b92ef20c622519d4f563788246 Mon Sep 17 00:00:00 2001
 From: Julien Jerphanion <git@jjerphan.xyz>
 Date: Tue, 9 Jun 2026 12:00:00 +0000
-Subject: [PATCH 17/18] silence absl MutexLock pointer deprecation warnings
+Subject: [PATCH 17/19] silence absl MutexLock pointer deprecation warnings
 
 Newer abseil versions deprecate absl::MutexLock(Mutex*) in favor of
 MutexLock(Mutex&). gRPC still uses the pointer form in hundreds of

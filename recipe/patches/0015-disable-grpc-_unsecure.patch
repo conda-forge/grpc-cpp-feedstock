@@ -1,7 +1,7 @@
-From c3ce73eca20b3e10dcb1a809816e287ace93f40b Mon Sep 17 00:00:00 2001
+From 921805fc2217107248480cd4e309c500d4934690 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sun, 11 Jan 2026 22:45:25 +1100
-Subject: [PATCH 15/18] disable grpc{,++}_unsecure
+Subject: [PATCH 15/19] disable grpc{,++}_unsecure
 
 there's no reason to ship the unsecure version (which has almost fully duplicated sources to grpc,
 except the parts that pull in openssl etc.) if we always bundle the full variant anyway. Same for
@@ -19,7 +19,7 @@ the avoidance of which is the entire point of `grpc_unsecure`.
  1 file changed, 18 insertions(+), 10 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 65b5e0a6ab..0832c74900 100644
+index d59a48ec96..6f6204ab2b 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -2694,7 +2694,7 @@ endif()

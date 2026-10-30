@@ -1,7 +1,7 @@
-From fb360213b69720f63b31ccf4f091e5f461b544e6 Mon Sep 17 00:00:00 2001
+From a70cc5e3ac5eb4939b68066784c372dc300b6110 Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Tue, 4 Mar 2025 08:53:30 +1100
-Subject: [PATCH 11/18] build grpcio-tools from source
+Subject: [PATCH 11/19] build grpcio-tools from source
 
 ---
  .../python/grpcio_tools/protoc_lib_deps.py    | 30 ++++++------
@@ -50,7 +50,7 @@ index 8a42929c90..40ec0fc61d 100644
  
  CC_INCLUDES=[
 diff --git a/tools/distrib/python/grpcio_tools/setup.py b/tools/distrib/python/grpcio_tools/setup.py
-index f0d759dafb..32b5a4c92a 100644
+index 82775dd3f1..a22a8818a0 100644
 --- a/tools/distrib/python/grpcio_tools/setup.py
 +++ b/tools/distrib/python/grpcio_tools/setup.py
 @@ -15,6 +15,7 @@

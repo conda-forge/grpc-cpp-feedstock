@@ -1,7 +1,7 @@
-From 9506087de3c749a0b081eb8518eba341ac4d9e98 Mon Sep 17 00:00:00 2001
+From 498b24568b2faed9b9268a418e183d075990233e Mon Sep 17 00:00:00 2001
 From: "H. Vetinari" <h.vetinari@gmx.com>
 Date: Sat, 21 Feb 2026 14:29:28 +1100
-Subject: [PATCH 16/18] break out _initialize_absl into separate cython module
+Subject: [PATCH 16/19] break out _initialize_absl into separate cython module
 
 ---
  setup.py                                                       | 3 ++-
@@ -36,7 +36,7 @@ index dbd69dc50e..ed32051472 100644
              libraries=list(EXTENSION_LIBRARIES),
              define_macros=list(DEFINE_MACROS),
 diff --git a/src/python/grpcio/grpc/__init__.py b/src/python/grpcio/grpc/__init__.py
-index efee8bcfcb..3d872c73dc 100644
+index eebe0024f3..e5b4c3d2c9 100644
 --- a/src/python/grpcio/grpc/__init__.py
 +++ b/src/python/grpcio/grpc/__init__.py
 @@ -21,6 +21,9 @@ import sys
