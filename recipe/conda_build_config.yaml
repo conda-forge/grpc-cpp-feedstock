@@ -1,0 +1,4 @@
+libabseil:
+  - '20260107'
+libprotobuf:
+  - 6.33.5
