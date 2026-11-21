@@ -1,4 +1,4 @@
-{% set version = "1.85.3" %}
+{% set version = "1.85.4" %}
 
 # core package & vendored libs use different version scheme than CPP libs, see
 # top of https://github.com/grpc/grpc/blob/v{{ version }}/CMakeLists.txt
@@ -19,7 +19,7 @@ package:
 
 source:
   - url: https://github.com/grpc/grpc/archive/v{{ version.replace(".pre", "-pre") }}.tar.gz
-    sha256: b5e7b8d7685dd635155a426c4a519eef06b6903d9b9dcd2bb6058d1d3bf0344e
+    sha256: e2382869a2837e2e4f9d5ad291ae8e4b256d44def4d6839c2930a9f7b433249a
     patches:
       - patches/0001-windows-ssl-lib-names.patch
       - patches/0002-fix-win-setup-cmds.patch
